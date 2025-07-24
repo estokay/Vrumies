@@ -1,5 +1,5 @@
 Vrumies - The Automotive Marketplace
 
-Whitepaper: httpsL//whitepaper.vrumies.com
+Whitepaper: https://whitepaper.vrumies.com
 
 Website: www.vrumies.com
