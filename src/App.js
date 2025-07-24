@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <Navbar />
       <header className="App-header">
-        <img src="/logo-clear.png" className="App-logo" alt="logo" />
+        <img src={`${process.env.PUBLIC_URL}/logo-clear.png`} className="App-logo" alt="logo" />
         <p>
           The Automotive Marketplace
         </p>
