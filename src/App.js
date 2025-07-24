@@ -1,24 +1,26 @@
 import './App.css';
 import Navbar from './Navbar';
+import VideoPost from './VideoPost';
+import Header from './Header';
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <header className="App-header">
-        <img src={`${process.env.PUBLIC_URL}/logo-clear.png`} className="App-logo" alt="logo" />
-        <p>
-          The Automotive Marketplace
-        </p>
-        <a
-          className="App-link"
-          href="https://vrumies.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Go to the Vrumies Website
-        </a>
-      </header>
+      <Header />
+      <VideoPost
+        thumbnail={`${process.env.PUBLIC_URL}/jumpstart-thumb.jpg`}
+        title="The Future of Jumpstarters"
+        creator="Gryan Duminson"
+        date="Dec 20, 2024"
+        views={1200}
+        likes={60}
+        comments={9}
+        duration="13:31"
+        profilePic={`${process.env.PUBLIC_URL}/gryan-pfp.jpg`}
+      />
+      
+      <VideoPost />
     </div>
   );
 }

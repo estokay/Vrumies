@@ -14,6 +14,17 @@ function Navbar() {
         <li><a href="/contact">Directory</a></li>
       </ul>
       </div>
+
+       <div className="navbar-buttons">
+        <button><img src={`${process.env.PUBLIC_URL}/post.png`} alt="Post" /></button>
+        <button><img src={`${process.env.PUBLIC_URL}/orders.png`} alt="orders" /></button>
+        <button><img src={`${process.env.PUBLIC_URL}/cart.png`} alt="Cart" /></button>
+        <button><img src={`${process.env.PUBLIC_URL}/messages.png`} alt="Messages" /></button>
+        <button><img src={`${process.env.PUBLIC_URL}/tokens.png`} alt="Tokens" /></button>
+        <button><img src={`${process.env.PUBLIC_URL}/notifications.png`} alt="Notifications" /></button>
+        <button><img src={`${process.env.PUBLIC_URL}/profile.png`} alt="Profile" /></button>
+        
+      </div>
     </nav>
   );
 }
