@@ -2,25 +2,25 @@ import './App.css';
 import Navbar from './Navbar';
 import VideoPost from './VideoPost';
 import Header from './Header';
+import ExamplePosts from './ExamplePosts';
+import ExampleData from './ExampleData';
+import ViewData from './ViewData';
 
 function App() {
+
+      console.log('ExampleData:', ExampleData);
+      console.log('ViewData:', ViewData);
+
   return (
     <div className="App">
+
       <Navbar />
       <Header />
-      <VideoPost
-        thumbnail={`${process.env.PUBLIC_URL}/jumpstart-thumb.jpg`}
-        title="The Future of Jumpstarters"
-        creator="Gryan Duminson"
-        date="Dec 20, 2024"
-        views={1200}
-        likes={60}
-        comments={9}
-        duration="13:31"
-        profilePic={`${process.env.PUBLIC_URL}/gryan-pfp.jpg`}
-      />
+      <ExamplePosts />
       
-      <VideoPost />
+      <ExampleData />
+      {/*<ViewData />*/}
+
     </div>
   );
 }
