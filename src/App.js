@@ -5,6 +5,9 @@ import Header from './Header';
 import ExamplePosts from './ExamplePosts';
 import ExampleData from './ExampleData';
 import ViewData from './ViewData';
+import CreatePost from './CreatePost';
+import ContentHeader from './ContentHeader';
+import NavbarWithPost from './NavbarWithPost';
 
 function App() {
 
@@ -14,12 +17,15 @@ function App() {
   return (
     <div className="App">
 
-      <Navbar />
-      <Header />
+      {/*<Navbar />*/}
+      <NavbarWithPost />
+      <ContentHeader />
+      {/*<Header />*/}
       <ExamplePosts />
       
       <ExampleData />
       {/*<ViewData />*/}
+      {/*<CreatePost />*/}
 
     </div>
   );
