@@ -8,25 +8,17 @@ import ViewData from './ViewData';
 import CreatePost from './CreatePost';
 import ContentHeader from './ContentHeader';
 import NavbarWithPost from './NavbarWithPost';
+import RequestHeader from './RequestHeader';
+import ContentPage from './ContentPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RequestPage from './RequestPage';
+import PageRouter from './PageRouter';
+
 
 function App() {
-
-      console.log('ExampleData:', ExampleData);
-      console.log('ViewData:', ViewData);
-
   return (
     <div className="App">
-
-      {/*<Navbar />*/}
-      <NavbarWithPost />
-      <ContentHeader />
-      {/*<Header />*/}
-      <ExamplePosts />
-      
-      <ExampleData />
-      {/*<ViewData />*/}
-      {/*<CreatePost />*/}
-
+      <PageRouter />
     </div>
   );
 }
