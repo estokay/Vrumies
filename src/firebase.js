@@ -1,9 +1,9 @@
-// Import Firebase modules
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
-// Your Firebase configuration object
 const firebaseConfig = {
   apiKey: "AIzaSyAtCkrmxQ0pu78XMkkKuHIIM9AsNMOx8vQ",
   authDomain: "vrumies-github.firebaseapp.com",
@@ -14,14 +14,21 @@ const firebaseConfig = {
   measurementId: "G-76VZ3HR687"
 };
 
-// Initialize Firebase app instance
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase app (only once)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
-// Initialize optional Analytics
-const analytics = getAnalytics(app);
+// Initialize Analytics (optional, wrapped to avoid SSR errors)
+let analytics;
+try {
+  analytics = getAnalytics(app);
+} catch (e) {
+  // Analytics not supported or error occurred
+  analytics = null;
+}
 
-// Initialize Firestore database instance
+// Initialize Firestore, Auth and Storage
 const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
 
-// Export the Firestore instance for use in other modules
-export { db };
+export { app, db, auth, storage };

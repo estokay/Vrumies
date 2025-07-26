@@ -1,28 +1,28 @@
-// src/PostGrid.js
 import React from 'react';
-import VideoPost from './VideoPost';
 import './PostGrid.css';
+import VideoPost from './VideoPost';
 
-const dummyData = Array.from({ length: 16 }).map((_, i) => ({
-  thumbnail: `${process.env.PUBLIC_URL}/thumbnail-${(i % 5) + 1}.jpg`,
-  title: `Post ${i + 1}`,
-  creator: `Creator ${i + 1}`,
-  date: 'Jul 25, 2025',
-  views: 1000 + i * 5,
-  likes: 150 + i,
-  comments: 20 + i * 2,
-  duration: '12:34',
-  profilePic: `${process.env.PUBLIC_URL}/profile-${(i % 3) + 1}.jpg`,
-}));
+function PostGrid({ post }) {
+  if (!post) {
+    return <p>No post data provided.</p>;
+  }
 
-const PostGrid = () => {
+  const posts = Array.from({ length: 16 }, (_, i) => ({
+    ...post,
+    id: i,
+    title: `${post.title} #${i + 1}`,
+    views: (post.views || 0) + i * 10,
+    likes: (post.likes || 0) + i,
+    comments: (post.comments || 0) + i,
+  }));
+
   return (
-    <div className="post-grid-container">
-      {dummyData.map((post, index) => (
-        <VideoPost key={index} {...post} />
+    <div className="post-grid">
+      {posts.map(p => (
+        <VideoPost key={p.id} {...p} />
       ))}
     </div>
   );
-};
+}
 
 export default PostGrid;

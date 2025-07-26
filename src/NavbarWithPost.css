@@ -1,0 +1,53 @@
+/* NavbarWithPost.css */
+
+.navbar {
+  background-color: #000000;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 4px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+  margin-right: 40px;
+}
+
+.navbar-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-buttons button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.navbar-buttons img {
+  height: 90px;
+  width: 90px;
+}

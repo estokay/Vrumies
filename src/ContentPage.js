@@ -4,6 +4,7 @@ import ContentHeader from './ContentHeader';
 import './App.css'; // Assuming this is where the shared styles live
 import PostGrid from './PostGrid';
 import VideoPost from './VideoPost';
+import ExamplePosts from './ExamplePosts';
 
 
 const ContentPage = () => {
@@ -12,7 +13,7 @@ const ContentPage = () => {
       <NavbarWithPost />
       <ContentHeader />
       <PostGrid />
-      <VideoPost />
+      <ExamplePosts />
     </div>
   );
 };

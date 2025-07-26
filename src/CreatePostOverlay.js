@@ -1,96 +1,75 @@
-/* global __firebase_config, __initial_auth_token, __app_id */
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-import { initializeApp, getApps, getApp } from 'firebase/app'; // Import getApps and getApp
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import {
+  onAuthStateChanged,
+  signInAnonymously
+} from 'firebase/auth';
+import { db, auth } from './firebase';
+import PostForms from './PostForms';  // Import PostForms
 import './CreatePostOverlay.css';
 
-// Initialize Firebase only if it hasn't been initialized already
-let app;
-if (!getApps().length) {
-  const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApp(); // If already initialized, get the existing app
-}
-
-const db = getFirestore(app);
-const auth = getAuth(app);
-
 const initialPostState = {
+  postType: '',
+  address: '',
+  thumbnailImage: null,
+  videoFile: null,
+  websiteLink: '',
+  tokens: '',
   title: '',
-  postType: '', // This will be set by button clicks
   description: '',
-  image: '',
+  image: null,
+  urgency: '',
   username: ''
 };
 
-const fields = [
-  { name: 'title', placeholder: 'Title', required: true },
-  // { name: 'postType', placeholder: 'Post Type', required: true }, // Removed, now handled by buttons
-  { name: 'description', placeholder: 'Description', required: true },
-  { name: 'image', placeholder: 'Image URL or Path', required: false },
-  { name: 'username', placeholder: 'Username', required: true }
-];
-
-function CreatePostOverlay({ isOpen, onClose }) {
-  // Log to check if the component is rendering
-  console.log('CreatePostOverlay rendering. isOpen:', isOpen);
-
+function CreatePostOverlay({ isOpen, onClose, appId = 'default-app-id' }) {
   const [post, setPost] = useState(initialPostState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [message, setMessage] = useState(''); // For custom message box
-  const [userId, setUserId] = useState(null); // To store authenticated user ID
+  const [message, setMessage] = useState('');
+  const [userId, setUserId] = useState(null);
 
-  // Authenticate user on component mount
   useEffect(() => {
     const authenticateUser = async () => {
       try {
-        if (typeof __initial_auth_token !== 'undefined') {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
+        await signInAnonymously(auth);
       } catch (e) {
-        console.error("Error during Firebase authentication:", e);
+        console.error("Firebase authentication error:", e);
       }
     };
 
-    // Listen for auth state changes to get the user ID
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserId(user.uid);
-        // Set a default username if not already set
         if (!post.username) {
-          setPost(prev => ({ ...prev, username: `User_${user.uid.substring(0, 8)}` }));
+          setPost(prev => ({ ...prev, username: `User_${user.uid.slice(0, 8)}` }));
         }
       } else {
-        setUserId(null); // User logged out or not authenticated
+        setUserId(null);
       }
     });
 
     authenticateUser();
-    return () => unsubscribe(); // Cleanup auth listener
+    return () => unsubscribe();
   }, []);
 
   if (!isOpen) return null;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setPost(prev => ({ ...prev, [name]: value }));
   };
 
   const handlePostTypeSelect = (type) => {
-    setPost(prev => ({ ...prev, postType: type }));
+    setPost({
+      ...initialPostState,
+      postType: type,
+      username: post.username || ''
+    });
   };
 
   const showMessage = (msg) => {
     setMessage(msg);
-    setTimeout(() => {
-      setMessage('');
-    }, 3000); // Message disappears after 3 seconds
+    setTimeout(() => setMessage(''), 3000);
   };
 
   const handleSubmit = async (e) => {
@@ -98,28 +77,38 @@ function CreatePostOverlay({ isOpen, onClose }) {
     setLoading(true);
     setError('');
 
-    // Ensure postType is selected
     if (!post.postType) {
       setError('Please select a post type.');
       setLoading(false);
       return;
     }
 
-    // Add userId to the post data if available
+    // Prepare post data for Firestore (handle files accordingly)
     const postData = { ...post, userId: userId || 'anonymous' };
 
+    // Note: You need to upload files (thumbnailImage, videoFile, image) to Firebase Storage separately,
+    // then save their URLs in postData before saving to Firestore.
+    // For now, just omit files or handle file uploads separately.
+
+    // Remove file objects before saving or convert to URLs after upload
+    delete postData.thumbnailImage;
+    delete postData.videoFile;
+    delete postData.image;
+
     try {
-      // Store public data in /artifacts/{appId}/public/data/posts
-      const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-      const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/posts`), postData);
+      const docRef = await addDoc(
+        collection(db, `artifacts/${appId}/public/data/posts`),
+        postData
+      );
       console.log('Document written with ID:', docRef.id);
       showMessage('✅ Post added!');
-      setPost(initialPostState); // Reset form
-      onClose(); // Close overlay after success
+      setPost(initialPostState);
+      onClose();
     } catch (err) {
       console.error('Error adding post:', err);
       setError('Failed to add post. Please try again.');
     }
+
     setLoading(false);
   };
 
@@ -144,21 +133,17 @@ function CreatePostOverlay({ isOpen, onClose }) {
         </div>
 
         <form onSubmit={handleSubmit}>
-          {fields.map(({ name, placeholder, required }) => (
-            <input
-              key={name}
-              name={name}
-              placeholder={placeholder}
-              value={post[name]}
-              onChange={handleChange}
-              required={required}
-              disabled={loading}
-            />
-          ))}
+          <PostForms
+            postType={post.postType}
+            post={post}
+            onChange={handleChange}
+            disabled={loading}
+          />
           <button type="submit" disabled={loading}>
             {loading ? 'Submitting...' : 'Submit'}
           </button>
         </form>
+
         {error && <p className="error">{error}</p>}
         {message && <div className="message-box">{message}</div>}
       </div>
