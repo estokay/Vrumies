@@ -55,7 +55,7 @@ const styles = {
     padding: '20px 40px',
     fontFamily: "'Arial', sans-serif",
     backgroundImage:
-      'url("https://media.istockphoto.com/id/1271779268/photo/calling-roadside-assistance.jpg?s=612x612&w=0&k=20&c=JxOZbwpnSE_vxFWZ5Te1-Y4QrUMsiLFaDyXu_uMX1ok=")',
+      'url("https://assets.goaaa.com/image/upload/w_2880,c_fill,q_auto,f_auto/v1742591982/AAAGilbert-428_retouched.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',

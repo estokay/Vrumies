@@ -55,7 +55,7 @@ const styles = {
     padding: '20px 40px',
     fontFamily: "'Arial', sans-serif",
     backgroundImage:
-      'url("https://media.istockphoto.com/id/1271779268/photo/calling-roadside-assistance.jpg?s=612x612&w=0&k=20&c=JxOZbwpnSE_vxFWZ5Te1-Y4QrUMsiLFaDyXu_uMX1ok=")',
+      'url("https://images.squarespace-cdn.com/content/v1/6598c8e83ff0af0197ff19f9/a05c7d5e-3711-48bb-a4c8-f3ce0f076355/JCCI-2024-Banner.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
