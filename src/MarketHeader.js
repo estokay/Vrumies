@@ -1,20 +1,20 @@
 import React from 'react';
 
-const RequestHeader = () => {
+const MarketHeader = () => {
   return (
     <div style={{ ...styles.container, height: '260px', minHeight: undefined }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
-          <span style={styles.greenHighlight}>REQUEST POSTS</span>
+          <span style={styles.greenHighlight}>MARKET POSTS</span>
         </h1>
         <p style={styles.subtitle}>
-          MAKE A REQUEST POST TO ALL USERS FOR THE AUTOMOTIVE PRODUCTS OR SERVICES YOU ARE LOOKING FOR
+          MAKE A MARKET POST TO PROMOTE YOUR AUTOMOTIVE PRODUCTS
         </p>
       </div>
       <div style={styles.rightSide}>
         <img
           src={`${process.env.PUBLIC_URL}/request-icon.png`}
-          alt="Request Icon"
+          alt="Market Icon"
           width="70"
           height="70"
           style={{ filter: 'drop-shadow(0 0 3px #39FF14)' }}
@@ -87,7 +87,7 @@ const styles = {
     opacity: 0.8,
   },
   bottomBar: {
-    marginTop: '94px',  // Increased margin to replicate tabs gap
+    marginTop: '94px',
     display: 'flex',
     alignItems: 'center',
     gap: '15px',
@@ -120,4 +120,4 @@ const styles = {
   },
 };
 
-export default RequestHeader;
+export default MarketHeader;

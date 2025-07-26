@@ -2,10 +2,10 @@ import React from 'react';
 
 const ContentHeader = () => {
   return (
-    <div style={styles.container}>
+    <div style={{ ...styles.container, height: '260px' }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
-          <span style={styles.greenHighlight}>CONT</span>ENT
+          <span style={styles.greenHighlight}>CONTENT POSTS</span>
         </h1>
         <p style={styles.subtitle}>PROMOTE AND SHARE YOUR AUTOMOTIVE CONTENT</p>
       </div>
@@ -64,11 +64,12 @@ const styles = {
     color: '#fff',
     padding: '20px 40px',
     fontFamily: "'Arial', sans-serif",
-    backgroundImage: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80")', // placeholder background image
+    backgroundImage: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
     overflow: 'hidden',
+    // height will be overridden inline to 260px
   },
   leftSide: {
     maxWidth: '50%',

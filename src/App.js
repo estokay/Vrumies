@@ -1,5 +1,4 @@
 import './App.css';
-import Navbar from './Navbar';
 import VideoPost from './VideoPost';
 import Header from './Header';
 import ExamplePosts from './ExamplePosts';
@@ -7,7 +6,7 @@ import ExampleData from './ExampleData';
 import ViewData from './ViewData';
 import CreatePost from './CreatePost';
 import ContentHeader from './ContentHeader';
-import NavbarWithPost from './Navbar';
+import NavbarWithPost from './NavbarWithPost';
 import RequestHeader from './RequestHeader';
 import ContentPage from './ContentPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
