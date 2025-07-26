@@ -2,14 +2,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ContentPage from './ContentPage';
-// import RequestPage from './RequestPage'; // Uncomment when needed
+import RequestPage from './RequestPage';
 
 const PageRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<ContentPage />} />
-        {/* <Route path="/request" element={<RequestPage />} /> */}
+        <Route path="/request" element={<RequestPage />} />
         {/* Add more pages here as needed */}
       </Routes>
     </Router>

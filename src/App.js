@@ -7,7 +7,7 @@ import ExampleData from './ExampleData';
 import ViewData from './ViewData';
 import CreatePost from './CreatePost';
 import ContentHeader from './ContentHeader';
-import NavbarWithPost from './NavbarWithPost';
+import NavbarWithPost from './Navbar';
 import RequestHeader from './RequestHeader';
 import ContentPage from './ContentPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';

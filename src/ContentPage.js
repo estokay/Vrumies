@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarWithPost from './NavbarWithPost';
+import NavbarWithPost from './Navbar';
 import ContentHeader from './ContentHeader';
 import './App.css'; // Assuming this is where the shared styles live
 
