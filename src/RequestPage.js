@@ -6,7 +6,7 @@ import './App.css'; // Assuming this is where the shared styles live
 
 const RequestPage = () => {
   return (
-    <div className="request-page">
+    <div className="content-page">
       <NavbarWithPost />
       <RequestHeader />
     </div>

@@ -1,11 +1,18 @@
+/* Global Styles */
+body {
+  background-color: red; /* 🔴 Red background */
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* App Container */
 .App {
   text-align: center;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-}
-
+/* Optional: Remove if not using logo or header */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -17,21 +24,24 @@ body {
   }
 }
 
+/* Optional: Clear out default header styling */
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+  /* background-color: #282c34; */
+  /* min-height: 100vh; */
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: center; */
+  /* font-size: calc(10px + 2vmin);
+  color: white; */
 }
 
+/* Optional Link Styling */
 .App-link {
   color: #61dafb;
 }
 
+/* Logo Animation */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
