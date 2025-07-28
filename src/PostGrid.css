@@ -1,24 +1,28 @@
 .post-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* ← FIXED */
   gap: 20px;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1200px) {
   .post-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
   }
 }
 
 @media (max-width: 800px) {
   .post-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 
 @media (max-width: 500px) {
   .post-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 }

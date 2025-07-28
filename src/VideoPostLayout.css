@@ -1,4 +1,4 @@
-.video-card {
+.video-post-layout {
   display: block;
   background: #0a0f0a;
   border: 2px solid #00ff66;
@@ -13,7 +13,7 @@
   transition: transform 0.2s;
 }
 
-.video-card:hover {
+.video-post-layout:hover {
   transform: scale(1.02);
 }
 
@@ -98,7 +98,7 @@
   color: white;
 }
 
-.video-title {
+.video-post-title {
   text-align: center;
   font-size: 16px;
   font-weight: bold;

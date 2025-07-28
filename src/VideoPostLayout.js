@@ -1,9 +1,9 @@
 import React from 'react';
-import './VideoPost.css';
+import './VideoPostLayout.css';
 
-function VideoPost({ thumbnail, title, creator, date, views, likes, comments, duration, profilePic }) {
+function VideoPostLayout({ thumbnail, title, creator, date, views, likes, comments, duration, profilePic }) {
   return (
-    <a href="/video/123" className="video-card">
+    <a href="/video/123" className="video-post-layout">
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt={creator} className="profile-pic" />
@@ -27,7 +27,7 @@ function VideoPost({ thumbnail, title, creator, date, views, likes, comments, du
         <span className="duration">{duration}</span>
       </div>
 
-      <h4 className="video-title">{(title || 'Title of Video Post').toUpperCase()}</h4>
+      <h4 className="video-post-title">{(title || 'Title of Video Post').toUpperCase()}</h4>
 
       <div className="card-footer">
         <span className="likes">
@@ -43,4 +43,4 @@ function VideoPost({ thumbnail, title, creator, date, views, likes, comments, du
   );
 }
 
-export default VideoPost;
+export default VideoPostLayout;

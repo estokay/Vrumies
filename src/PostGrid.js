@@ -1,25 +1,22 @@
 import React from 'react';
 import './PostGrid.css';
-import VideoPost from './VideoPost';
+import VideoPostLayout from './VideoPostLayout';
 
-function PostGrid({ post }) {
-  if (!post) {
-    return <p>No post data provided.</p>;
+function PostGrid({ posts }) {
+  if (!posts || posts.length === 0) {
+    return <p>No Data Found.</p>;
   }
 
-  const posts = Array.from({ length: 16 }, (_, i) => ({
-    ...post,
-    id: i,
-    title: `${post.title} #${i + 1}`,
-    views: (post.views || 0) + i * 10,
-    likes: (post.likes || 0) + i,
-    comments: (post.comments || 0) + i,
-  }));
+  // Limit posts to max 16
+  const displayedPosts = posts.slice(0, 16);
 
   return (
     <div className="post-grid">
-      {posts.map(p => (
-        <VideoPost key={p.id} {...p} />
+      {displayedPosts.map((post, index) => (
+        <VideoPostLayout
+          key={post.id || index}
+          {...post}
+        />
       ))}
     </div>
   );
