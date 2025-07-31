@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // ✅ import Link for routing
 import './PostGrid.css';
 import VideoPostLayout from './VideoPostLayout';
 
@@ -7,16 +8,25 @@ function PostGrid({ posts }) {
     return <p>No Data Found.</p>;
   }
 
-  // Limit posts to max 16
   const displayedPosts = posts.slice(0, 16);
 
   return (
     <div className="post-grid">
       {displayedPosts.map((post, index) => (
-        <VideoPostLayout
-          key={post.id || index}
-          {...post}
-        />
+        <div key={post.id || index}>
+          <Link
+            to={`/videopost/${post.id}`}
+            style={{
+              textDecoration: 'none',
+              color: 'inherit',
+              display: 'block',
+              height: '100%',
+              width: '100%',
+            }}
+          >
+            <VideoPostLayout {...post} />
+          </Link>
+        </div>
       ))}
     </div>
   );

@@ -79,6 +79,7 @@ const styles = {
     fontWeight: '900',
     margin: 0,
     letterSpacing: '2px',
+    textAlign: 'left', // <-- Left aligned title
   },
   greenHighlight: {
     color: '#00FF00',
@@ -89,6 +90,7 @@ const styles = {
     fontWeight: '600',
     fontSize: '18px',
     letterSpacing: '1.5px',
+    textAlign: 'left', // <-- Left aligned subtitle
   },
   rightSide: {
     position: 'absolute',
@@ -125,7 +127,7 @@ const styles = {
   },
   locationButton: {
     border: '1px solid #00FF00',
-    background: 'transparent',
+    background: 'black',
     color: '#00FF00',
     fontWeight: '600',
     padding: '8px 12px',
@@ -134,7 +136,7 @@ const styles = {
   },
   select: {
     border: '1px solid #00FF00',
-    background: 'transparent',
+    background: 'black',
     color: '#fff',
     fontWeight: '600',
     padding: '8px 12px',

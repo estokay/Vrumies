@@ -6,6 +6,7 @@ import RequestPage from './RequestPage';
 import MarketPage from './MarketPage';
 import EventsPage from './EventsPage';
 import DirectoryPage from './DirectoryPage';
+import ViewVideoPostPage from './ViewVideoPostPage';
 
 const PageRouter = () => {
   return (
@@ -16,6 +17,7 @@ const PageRouter = () => {
         <Route path="/market" element={<MarketPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/directory" element={<DirectoryPage />} />
+        <Route path="/videopost/:id" element={<ViewVideoPostPage />} />
         {/* Add more pages here as needed */}
       </Routes>
     </Router>

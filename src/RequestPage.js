@@ -2,6 +2,7 @@ import React from 'react';
 import NavbarWithPost from './NavbarWithPost';
 import RequestHeader from './RequestHeader';
 import './App.css'; // Assuming this is where the shared styles live
+import ViewContentPostHeader from './ViewContentPostHeader';
 
 
 const RequestPage = () => {
