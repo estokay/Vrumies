@@ -1,12 +1,12 @@
 // src/PageRouter.js
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import ContentPage from './ContentPage';
-import RequestPage from './RequestPage';
-import MarketPage from './MarketPage';
-import EventsPage from './EventsPage';
-import DirectoryPage from './DirectoryPage';
-import ViewVideoPostPage from './ViewVideoPostPage';
+import ContentPage from '../Pages/MainCategories/Videos/ContentPage';
+import RequestPage from '../Pages/MainCategories/Requests/RequestPage';
+import MarketPage from '../Pages/MainCategories/Market/MarketPage';
+import EventsPage from '../Pages/MainCategories/Events/EventsPage';
+import DirectoryPage from '../Pages/MainCategories/Directory/DirectoryPage';
+import ViewVideoPostPage from '../Pages/ViewPosts/Videos/ViewVideoPostPage';
 
 const PageRouter = () => {
   return (

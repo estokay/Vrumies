@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import NavbarWithPost from './NavbarWithPost';
-import './App.css';
+import NavbarWithPost from '../../../Components/NavbarWithPost';
+import '../../../App.css';
 import ViewContentPostHeader from './ViewContentPostHeader';
 import VideoPostImageBanner from './VideoPostImageBanner';
-import { examplePosts } from './VideoDummyData';
+import { examplePosts } from '../../../Data/VideoDummyData';
 import VideoSubHeader from './VideoSubHeader';
 
 const ViewVideoPostPage = () => {

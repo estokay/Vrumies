@@ -1,7 +1,7 @@
 import React from 'react';
-import NavbarWithPost from './NavbarWithPost';
+import NavbarWithPost from '../../../Components/NavbarWithPost';
 import DirectoryHeader from './DirectoryHeader';
-import './App.css';
+import '../../../App.css';
 
 const DirectoryPage = () => {
   return (

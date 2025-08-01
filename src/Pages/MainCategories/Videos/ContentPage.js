@@ -1,10 +1,9 @@
 import React from 'react';
-import NavbarWithPost from './NavbarWithPost';
+import NavbarWithPost from '../../../Components/NavbarWithPost';
 import ContentHeader from './ContentHeader';
-import './App.css'; // Assuming this is where the shared styles live
+import '../../../App.css'; // Assuming this is where the shared styles live
 import PostGrid from './PostGrid';
-import ExampleVideoPost from './ExampleVideoPost';
-import { examplePosts } from './VideoDummyData';
+import { examplePosts } from '../../../Data/VideoDummyData';
 import './ContentPage.css';
 import RightSidePanel from './RightSidePanel';
 

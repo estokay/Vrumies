@@ -1,7 +1,7 @@
 import React from 'react';
-import NavbarWithPost from './NavbarWithPost';
+import NavbarWithPost from '../../../Components/NavbarWithPost';
 import MarketHeader from './MarketHeader';
-import './App.css';
+import '../../../App.css';
 
 const MarketPage = () => {
   return (

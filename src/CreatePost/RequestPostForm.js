@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { db } from './firebase';
+import { db } from '../Components/firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import './VideoPostForm.css';
+import './RequestPostForm.css';
 
-function VideoPostForm() {
+function RequestPostForm() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    video: '',
     image: '',
     address: '',
     link: '',
-    tokens: 0
+    tokens: 0,
+    urgency: 'I Can Wait'
   });
   const [message, setMessage] = useState('');
 
@@ -23,16 +23,16 @@ function VideoPostForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'videoPosts'), formData);
-      setMessage('✅ Video post added!');
+      await addDoc(collection(db, 'requestPosts'), formData);
+      setMessage('✅ Request post added!');
       setFormData({
         title: '',
         description: '',
-        video: '',
         image: '',
         address: '',
         link: '',
-        tokens: 0
+        tokens: 0,
+        urgency: 'I Can Wait'
       });
     } catch (err) {
       setMessage('❌ Failed to add post.');
@@ -41,12 +41,14 @@ function VideoPostForm() {
 
   return (
     <form className="post-form" onSubmit={handleSubmit}>
-      {['title', 'description', 'address', 'link', 'video', 'image'].map((field) => (
+      {['title', 'description', 'image', 'address', 'link'].map((field) => (
         <div key={field}>
-          <label className="form-label" htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+          <label className="form-label" htmlFor={field}>
+            {field.charAt(0).toUpperCase() + field.slice(1)}
+          </label>
           <input
-            name={field}
             id={field}
+            name={field}
             value={formData[field]}
             onChange={handleChange}
             placeholder={field}
@@ -58,8 +60,8 @@ function VideoPostForm() {
       <div>
         <label className="form-label" htmlFor="tokens">Tokens</label>
         <input
-          name="tokens"
           id="tokens"
+          name="tokens"
           type="number"
           value={formData.tokens}
           onChange={handleChange}
@@ -68,10 +70,24 @@ function VideoPostForm() {
         />
       </div>
 
+      <div>
+        <label className="form-label" htmlFor="urgency">Urgency</label>
+        <select
+          id="urgency"
+          name="urgency"
+          value={formData.urgency}
+          onChange={handleChange}
+        >
+          <option value="Urgent">Urgent</option>
+          <option value="I Can Wait">I Can Wait</option>
+          <option value="Just Looking">Just Looking</option>
+        </select>
+      </div>
+
       <button className="submit-btn" type="submit">Submit</button>
       {message && <p>{message}</p>}
     </form>
   );
 }
 
-export default VideoPostForm;
+export default RequestPostForm;

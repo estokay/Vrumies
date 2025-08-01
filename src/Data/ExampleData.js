@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewData from './ViewData'; // This is the correct import
+import ViewData from '../Testing/ViewData'; // This is the correct import
 
 const posts = [
   {
