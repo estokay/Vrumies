@@ -4,19 +4,17 @@ import NavbarWithPost from '../../../Components/NavbarWithPost';
 import '../../../App.css';
 import ViewContentPostHeader from './ViewContentPostHeader';
 import VideoPostImageBanner from './VideoPostImageBanner';
-import { examplePosts } from '../../../Data/VideoDummyData';
 import VideoSubHeader from './VideoSubHeader';
+import { examplePosts } from '../../../Data/VideoDummyData';
+import BottomSection from './BottomSection';
 
 const ViewVideoPostPage = () => {
   const { id } = useParams();
+  const post = examplePosts.find((p) => p.id === Number(id));
 
-  console.log('useParams() id:', id); // ✅
-  console.log('Converted to Number(id):', Number(id)); // ✅
-  console.log('All available post IDs:', examplePosts.map(p => p.id)); // ✅
-  const post = examplePosts.find((p) => p.id === Number(id)); // ✅
-  console.log('Matched post:', post); // ✅
-
-  if (!post) return <p style={{ color: 'white', textAlign: 'center' }}>Post not found.</p>;
+  if (!post) {
+    return <p style={{ color: 'white', textAlign: 'center' }}>Post not found.</p>;
+  }
 
   return (
     <div className="content-page">
@@ -34,6 +32,7 @@ const ViewVideoPostPage = () => {
         onPlay={() => console.log(`Play video for post ${post.id}`)}
       />
       <VideoSubHeader />
+      <BottomSection />
     </div>
   );
 };

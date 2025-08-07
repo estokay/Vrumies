@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import CreatePostOverlay from '../CreatePost/CreatePostOverlay';
+import DropDownButtons from './DropDownButtons';
 
 function NavbarWithPost() {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handlePostClick = () => {
     setShowOverlay(true);
@@ -13,6 +16,33 @@ function NavbarWithPost() {
   const handleCloseOverlay = () => {
     setShowOverlay(false);
   };
+
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !event.target.closest('.profile-btn')
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
 
   return (
     <>
@@ -51,10 +81,27 @@ function NavbarWithPost() {
           <button>
             <img src={`${process.env.PUBLIC_URL}/notifications.png`} alt="Notifications" />
           </button>
-          <button>
+          <button
+            className="profile-btn"
+            onClick={toggleDropdown}
+          >
             <img src={`${process.env.PUBLIC_URL}/profile.png`} alt="Profile" />
           </button>
         </div>
+
+        {showDropdown && (
+          <div
+            ref={dropdownRef}
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '100%', // flush with navbar bottom
+              zIndex: 1000
+            }}
+          >
+            <DropDownButtons />
+          </div>
+        )}
       </nav>
 
       <CreatePostOverlay isOpen={showOverlay} onClose={handleCloseOverlay} />

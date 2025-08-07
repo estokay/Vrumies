@@ -1,0 +1,46 @@
+/* Container */
+.dropdown-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* decreased gap */
+  padding: 10px;
+}
+
+/* Button style */
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 26px; /* increased padding for bigger buttons */
+  background-color: #000000;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 20px; /* slightly bigger text */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 260px; /* slightly wider */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover effect */
+.dropdown-btn:hover {
+  background-color: #0a0a0a;
+  transform: scale(1.02);
+}
+
+/* Icon style */
+.icon {
+  font-size: 26px; /* slightly bigger icons */
+}
+
+/* Neon green color */
+.green {
+  color: #00ff33;
+}
+
+/* Prevent text selection */
+.dropdown-btn span {
+  user-select: none;
+}
