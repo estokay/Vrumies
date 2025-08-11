@@ -12,11 +12,7 @@
 }
 
 .overlay-content {
-  background-image: url('https://res.cloudinary.com/dmjvngk3o/image/upload/v1754905258/create-post-background_idljik.png');
-  background-size: cover;       /* Make the image cover the entire container */
-  background-position: center;  /* Center the image */
-  background-repeat: no-repeat; /* Prevent tiling */
-  
+  background: #0a0a0a;
   padding: 2rem;
   border-radius: 12px;
   width: 90%;

@@ -3,16 +3,16 @@ import './Navbar.css';
 import { Link } from 'react-router-dom';
 import CreatePostOverlay from '../CreatePost/CreatePostOverlay';
 import DropDownButtons from './DropDownButtons';
-import Notifications from './Notifications';
+import Notifications from './Notifications'; // Import the Notifications component
 import { useNavigate } from 'react-router-dom';
 
 function NavbarWithPost() {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false); // State for Notifications component
   const dropdownRef = useRef(null);
-  const notificationsRef = useRef(null);
+  const notificationsRef = useRef(null); // Ref for the Notifications *wrapper* div
 
   const handlePostClick = () => {
     setShowOverlay(true);
@@ -22,32 +22,30 @@ function NavbarWithPost() {
     setShowOverlay(false);
   };
 
-  const toggleDropdown = (event) => {
-    event.stopPropagation();
-    if (showDropdown) {
-      // Close profile if open
-      setShowDropdown(false);
-    } else {
-      // Open profile and close notifications
-      setShowDropdown(true);
+  const toggleDropdown = (event) => { // Accept event object
+    event.stopPropagation(); // Stop click from bubbling up to document
+    // If the dropdown is currently closed and about to open, close notifications
+    if (!showDropdown) {
       setShowNotifications(false);
     }
+    setShowDropdown((prev) => !prev);
   };
 
-  const handleNotificationsClick = (event) => {
-    event.stopPropagation();
-    if (showNotifications) {
-      // Close notifications if open
-      setShowNotifications(false);
-    } else {
-      // Open notifications and close profile
-      setShowNotifications(true);
+  // Function to toggle Notifications component visibility
+  const handleNotificationsClick = (event) => { // Accept event object
+    event.stopPropagation(); // Stop click from bubbling up to document
+    // If notifications are currently closed and about to open, close the dropdown
+    if (!showNotifications) {
       setShowDropdown(false);
     }
+    setShowNotifications((prev) => !prev);
   };
 
+  // Effect to handle clicks outside the dropdown and notifications panel
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Close dropdown logic:
+      // If dropdown is open AND click is outside the dropdown ref
       if (
         showDropdown &&
         dropdownRef.current &&
@@ -55,6 +53,9 @@ function NavbarWithPost() {
       ) {
         setShowDropdown(false);
       }
+
+      // Close notifications logic:
+      // If notifications are open AND click is outside the notifications ref
       if (
         showNotifications &&
         notificationsRef.current &&
@@ -64,19 +65,23 @@ function NavbarWithPost() {
       }
     };
 
+    // Add event listener to the document only when a panel is open
+    // The timeout here is essential to prevent the immediate closing due to event bubbling.
     const listenerTimeout = setTimeout(() => {
       if (showDropdown || showNotifications) {
         document.addEventListener('mousedown', handleClickOutside);
       } else {
         document.removeEventListener('mousedown', handleClickOutside);
       }
-    }, 100);
+    }, 100); // Small delay to ensure the component has rendered before listener is active
 
+    // Cleanup function to remove the event listener and clear timeout
     return () => {
       clearTimeout(listenerTimeout);
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showDropdown, showNotifications]);
+
 
   return (
     <>
@@ -112,10 +117,8 @@ function NavbarWithPost() {
           <button type="button" onClick={() => navigate('/tokens')}>
             <img src={`${process.env.PUBLIC_URL}/tokens.png`} alt="Tokens" />
           </button>
-          <button
-            className="notifications-btn"
-            onClick={handleNotificationsClick}
-          >
+          {/* Notifications button with onClick handler */}
+          <button className="notifications-btn" onClick={handleNotificationsClick}>
             <img src={`${process.env.PUBLIC_URL}/notifications.png`} alt="Notifications" />
           </button>
           <button
@@ -126,43 +129,40 @@ function NavbarWithPost() {
           </button>
         </div>
 
+        {/* Dropdown component, rendered conditionally */}
         {showDropdown && (
           <div
             ref={dropdownRef}
             style={{
               position: 'absolute',
               right: '20px',
-              top: '100%',
-              zIndex: 1000
+              top: '100%', // Positioned just below the navbar
+              zIndex: 1000 // Ensures it appears above other content
             }}
           >
             <DropDownButtons />
           </div>
         )}
 
+        {/* Notifications component, rendered conditionally and positioned */}
         {showNotifications && (
           <div
-            ref={notificationsRef}
+            ref={notificationsRef} // Ref attached to this wrapper div for click-outside detection
             style={{
               position: 'absolute',
               right: '20px',
-              top: '100%',
-              zIndex: 1000,
-              transform: 'translateY(10px)'
+              top: '100%', // Positioned just below the navbar
+              zIndex: 1000, // Ensures it appears above other content
+              transform: 'translateY(10px)' // Small offset for visual separation
             }}
           >
-            <Notifications
-              isOpen={showNotifications}
-              onClose={() => setShowNotifications(false)}
-            />
+            <Notifications isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
           </div>
         )}
       </nav>
 
-      <CreatePostOverlay
-        isOpen={showOverlay}
-        onClose={handleCloseOverlay}
-      />
+      {/* CreatePostOverlay component */}
+      <CreatePostOverlay isOpen={showOverlay} onClose={handleCloseOverlay} />
     </>
   );
 }

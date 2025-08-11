@@ -1,75 +1,126 @@
 import React, { useState } from 'react';
 import { db } from '../Components/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import './ForumPostForm.css';
 
-function ForumPostForm() {
+const ForumPostForm = () => {
+  const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     address: '',
     link: '',
-    tokens: 0
+    tokens: '',
   });
   const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const toggleField = (field) => {
+    setActiveField((prev) => (prev === field ? null : field));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'tokens' ? Number(value) : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'forumPosts'), formData);
-      setMessage('✅ Forum post added!');
-      setFormData({
-        title: '',
-        description: '',
-        address: '',
-        link: '',
-        tokens: 0
+      await addDoc(collection(db, 'forumPosts'), {
+        ...formData,
+        createdAt: Timestamp.now(),
       });
+      setMessage('✅ Forum post added!');
+      setSubmitted(true);
     } catch (err) {
+      console.error('Firestore error:', err);
       setMessage('❌ Failed to add post.');
     }
   };
 
-  return (
+  return submitted ? (
+    <div className="post-success-message">
+      <p>{message}</p>
+    </div>
+  ) : (
     <form className="post-form" onSubmit={handleSubmit}>
-      {['title', 'description', 'address', 'link'].map((field) => (
-        <div key={field}>
-          <label className="form-label" htmlFor={field}>
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-          </label>
-          <input
-            id={field}
-            name={field}
-            value={formData[field]}
-            onChange={handleChange}
-            placeholder={field}
-            required
-          />
-        </div>
-      ))}
+      {/* Title */}
+      <label className="form-label">Title</label>
+      <input
+        type="text"
+        name="title"
+        value={formData.title}
+        onChange={handleChange}
+        required
+      />
 
-      <div>
-        <label className="form-label" htmlFor="tokens">Tokens</label>
-        <input
-          id="tokens"
-          name="tokens"
-          type="number"
-          value={formData.tokens}
-          onChange={handleChange}
-          placeholder="Tokens"
-          required
+      {/* Description */}
+      <label className="form-label">Description</label>
+      <textarea
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        required
+      />
+
+      {/* Toggle Buttons */}
+      <div className="toggle-buttons-row">
+        <img
+          src={`${process.env.PUBLIC_URL}/PostCreationIcons/Map-Icon.png`}
+          alt="Address"
+          onClick={() => toggleField('address')}
+        />
+        <img
+          src={`${process.env.PUBLIC_URL}/PostCreationIcons/Link-Icon.png`}
+          alt="Link"
+          onClick={() => toggleField('link')}
+        />
+        <img
+          src={`${process.env.PUBLIC_URL}/PostCreationIcons/Token-Icon.png`}
+          alt="Tokens"
+          onClick={() => toggleField('tokens')}
         />
       </div>
 
-      <button className="submit-btn" type="submit">Submit</button>
+      {/* Address */}
+      <input
+        type="text"
+        name="address"
+        placeholder="Enter address"
+        value={formData.address}
+        onChange={handleChange}
+        className={activeField === 'address' ? '' : 'hidden-input'}
+      />
+
+      {/* Link */}
+      <input
+        type="text"
+        name="link"
+        placeholder="Enter link"
+        value={formData.link}
+        onChange={handleChange}
+        className={activeField === 'link' ? '' : 'hidden-input'}
+      />
+
+      {/* Tokens */}
+      <input
+        type="number"
+        name="tokens"
+        placeholder="Enter token amount"
+        value={formData.tokens}
+        onChange={handleChange}
+        className={activeField === 'tokens' ? '' : 'hidden-input'}
+      />
+
+      <button type="submit" className="submit-btn">Submit</button>
+
       {message && <p>{message}</p>}
     </form>
   );
-}
+};
 
 export default ForumPostForm;

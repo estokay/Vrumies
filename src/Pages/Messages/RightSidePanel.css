@@ -1,0 +1,84 @@
+/* Main panel container */
+.rsp-panel {
+  width: 25%;
+  padding: 16px;
+  border-left: 1px solid #555;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Profile section */
+.rsp-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.rsp-profile-pic-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.rsp-profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.rsp-online-dot {
+  width: 20px;
+  height: 20px;
+  background: green;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  border: 3px solid #2d2d2d;
+}
+
+.rsp-profile-name {
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* Chat Media section */
+.rsp-media-title {
+  margin-top: 16px;
+  font-size: 1.6rem; /* bigger heading */
+  font-weight: bold;
+}
+
+.rsp-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px; /* more space for bigger images */
+  margin-top: 1px;
+  justify-items: center;
+}
+
+.rsp-media-item {
+  width: 119px;  /* bigger images */
+  height: 119px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid #444;
+}
+
+/* Block button */
+.rsp-block-button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: flex-start;
+}

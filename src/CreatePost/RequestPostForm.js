@@ -1,93 +1,203 @@
 import React, { useState } from 'react';
-import { db } from '../Components/firebase';
-import { collection, addDoc } from 'firebase/firestore';
 import './RequestPostForm.css';
+import { db } from '../Components/firebase';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import axios from 'axios';
 
-function RequestPostForm() {
+const RequestPostForm = () => {
+  const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     image: '',
     address: '',
     link: '',
-    tokens: 0,
-    urgency: 'I Can Wait'
+    tokens: '',
+    urgency: 'I Can Wait',
   });
   const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const CLOUDINARY_PRESET = 'vrumies_preset';
+  const CLOUDINARY_CLOUD_NAME = 'dmjvngk3o';
+
+  const toggleField = (field) => {
+    setActiveField((prev) => (prev === field ? null : field));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'tokens' ? Number(value) : value,
+    }));
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+
+    const formDataUpload = new FormData();
+    formDataUpload.append('file', file);
+    formDataUpload.append('upload_preset', CLOUDINARY_PRESET);
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formDataUpload
+      );
+      setFormData((prev) => ({
+        ...prev,
+        image: res.data.secure_url,
+      }));
+    } catch (err) {
+      console.error('Upload failed:', err);
+      alert('Image upload failed');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await addDoc(collection(db, 'requestPosts'), formData);
-      setMessage('✅ Request post added!');
-      setFormData({
-        title: '',
-        description: '',
-        image: '',
-        address: '',
-        link: '',
-        tokens: 0,
-        urgency: 'I Can Wait'
+      await addDoc(collection(db, 'requestPosts'), {
+        ...formData,
+        createdAt: Timestamp.now(),
       });
+      setMessage('✅ Request post added!');
+      setSubmitted(true);
     } catch (err) {
+      console.error('Firestore error:', err);
       setMessage('❌ Failed to add post.');
     }
   };
 
-  return (
-    <form className="post-form" onSubmit={handleSubmit}>
-      {['title', 'description', 'image', 'address', 'link'].map((field) => (
-        <div key={field}>
-          <label className="form-label" htmlFor={field}>
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-          </label>
-          <input
-            id={field}
-            name={field}
-            value={formData[field]}
-            onChange={handleChange}
-            placeholder={field}
-            required
-          />
-        </div>
-      ))}
+  const publicPath = process.env.PUBLIC_URL;
 
-      <div>
-        <label className="form-label" htmlFor="tokens">Tokens</label>
-        <input
-          id="tokens"
-          name="tokens"
-          type="number"
-          value={formData.tokens}
-          onChange={handleChange}
-          placeholder="Tokens"
-          required
+  return submitted ? (
+    <div className="post-success-message">
+      <p>{message}</p>
+    </div>
+  ) : (
+    <form className="post-form" onSubmit={handleSubmit}>
+      {/* Title */}
+      <label className="form-label">Title</label>
+      <input
+        type="text"
+        name="title"
+        value={formData.title}
+        onChange={handleChange}
+        required
+      />
+
+      {/* Description */}
+      <label className="form-label">Description</label>
+      <textarea
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        required
+      />
+
+      {/* Toggle Buttons */}
+      <div className="toggle-buttons-row">
+        <img
+          src={`${publicPath}/PostCreationIcons/Map-Icon.png`}
+          alt="Address"
+          onClick={() => toggleField('address')}
+        />
+        <img
+          src={`${publicPath}/PostCreationIcons/Link-Icon.png`}
+          alt="Link"
+          onClick={() => toggleField('link')}
+        />
+        <img
+          src={`${publicPath}/PostCreationIcons/Image-Icon.png`}
+          alt="Image"
+          onClick={() => toggleField('image')}
+        />
+        <img
+          src={`${publicPath}/PostCreationIcons/Token-Icon.png`}
+          alt="Tokens"
+          onClick={() => toggleField('tokens')}
+        />
+        <img
+          src={`${publicPath}/PostCreationIcons/Urgency-Icon.png`}
+          alt="Urgency"
+          onClick={() => toggleField('urgency')}
         />
       </div>
 
-      <div>
-        <label className="form-label" htmlFor="urgency">Urgency</label>
+      {/* Address */}
+      <input
+        type="text"
+        name="address"
+        placeholder="Enter address"
+        value={formData.address}
+        onChange={handleChange}
+        className={activeField === 'address' ? '' : 'hidden-input'}
+      />
+
+      {/* Link */}
+      <input
+        type="text"
+        name="link"
+        placeholder="Enter link"
+        value={formData.link}
+        onChange={handleChange}
+        className={activeField === 'link' ? '' : 'hidden-input'}
+      />
+
+      {/* Image Upload */}
+      {activeField === 'image' && (
+        <div className="upload-container">
+          <label className="form-label">Upload Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+          />
+          {uploading && <p className="uploading-text">Uploading image...</p>}
+          {formData.image && (
+            <img src={formData.image} alt="Uploaded" className="preview-media" />
+          )}
+        </div>
+      )}
+
+      {/* Tokens */}
+      <input
+        type="number"
+        name="tokens"
+        placeholder="Enter token amount"
+        value={formData.tokens}
+        onChange={handleChange}
+        className={activeField === 'tokens' ? '' : 'hidden-input'}
+      />
+
+      {/* Urgency */}
+      {activeField === 'urgency' && (
         <select
-          id="urgency"
           name="urgency"
           value={formData.urgency}
           onChange={handleChange}
+          className="urgency-select"
         >
           <option value="Urgent">Urgent</option>
           <option value="I Can Wait">I Can Wait</option>
           <option value="Just Looking">Just Looking</option>
         </select>
-      </div>
+      )}
 
-      <button className="submit-btn" type="submit">Submit</button>
+      <button type="submit" className="submit-btn">Submit</button>
+
       {message && <p>{message}</p>}
     </form>
   );
-}
+};
 
 export default RequestPostForm;

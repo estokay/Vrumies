@@ -37,3 +37,74 @@
 .post-form .submit-btn:hover {
   background: #33ff33;
 }
+
+/* Toggle icon buttons */
+.toggle-buttons-row {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.toggle-buttons-row img {
+  width: 48px;
+  height: 48px;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.toggle-buttons-row img:hover {
+  background-color: #00ff00;
+  transform: scale(1.05);
+}
+
+/* Hidden fields */
+.hidden-input {
+  display: none;
+}
+
+/* Upload previews */
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-media {
+  border: 2px solid #00ff00;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Uploading text */
+.uploading-text {
+  color: #999;
+  font-style: italic;
+}
+
+/* Urgency select styling */
+.urgency-select {
+  width: 100%;
+  background-color: #0d0d0d;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Success message */
+.post-success-message {
+  background-color: #0d0d0d;
+  color: #00ff00;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+}

@@ -11,6 +11,10 @@ import AdminPanel from '../Pages/Admin Panel/AdminPanel';
 import BlogContentPage from '../Pages/MainCategories/Blogs/BlogContentPage';
 import VehiclePage from '../Pages/MainCategories/Vehicles/VehiclePage';
 import ForumPage from '../Pages/MainCategories/Forums/ForumPage';
+import OrdersPage from '../Pages/Orders/OrdersPage';
+import InboxPage from '../Pages/Messages/InboxPage';
+import TokenPage from '../Pages/Tokens/TokenPage';
+import SignIn from '../Pages/SignIn/SignIn';
 
 const PageRouter = () => {
   return (
@@ -26,6 +30,10 @@ const PageRouter = () => {
         <Route path="/directory" element={<DirectoryPage />} />
         <Route path="/videopost/:id" element={<ViewVideoPostPage />} />
         <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/inbox" element={<InboxPage />} />
+        <Route path="/tokens" element={<TokenPage />} />
+        <Route path="/signin" element={<SignIn />} />
         {/* Add more pages here as needed */}
       </Routes>
     </Router>

@@ -28,7 +28,7 @@ const DropDownButtons = () => {
         <span>Settings</span>
       </button>
 
-      <button className="dropdown-btn">
+      <button className="dropdown-btn" onClick={() => navigate('/signin')}>
         <FaSignOutAlt className="icon green" />
         <span>Sign Out</span>
       </button>

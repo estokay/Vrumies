@@ -3,16 +3,13 @@ import './Navbar.css';
 import { Link } from 'react-router-dom';
 import CreatePostOverlay from '../CreatePost/CreatePostOverlay';
 import DropDownButtons from './DropDownButtons';
-import Notifications from './Notifications';
 import { useNavigate } from 'react-router-dom';
 
 function NavbarWithPost() {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef(null);
-  const notificationsRef = useRef(null);
 
   const handlePostClick = () => {
     setShowOverlay(true);
@@ -22,65 +19,36 @@ function NavbarWithPost() {
     setShowOverlay(false);
   };
 
-  const toggleDropdown = (event) => {
-    event.stopPropagation();
-    if (showDropdown) {
-      // Close profile if open
-      setShowDropdown(false);
-    } else {
-      // Open profile and close notifications
-      setShowDropdown(true);
-      setShowNotifications(false);
-    }
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
   };
 
-  const handleNotificationsClick = (event) => {
-    event.stopPropagation();
-    if (showNotifications) {
-      // Close notifications if open
-      setShowNotifications(false);
-    } else {
-      // Open notifications and close profile
-      setShowNotifications(true);
-      setShowDropdown(false);
-    }
-  };
-
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        showDropdown &&
         dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
+        !dropdownRef.current.contains(event.target) &&
+        !event.target.closest('.profile-btn')
       ) {
         setShowDropdown(false);
       }
-      if (
-        showNotifications &&
-        notificationsRef.current &&
-        !notificationsRef.current.contains(event.target)
-      ) {
-        setShowNotifications(false);
-      }
     };
 
-    const listenerTimeout = setTimeout(() => {
-      if (showDropdown || showNotifications) {
-        document.addEventListener('mousedown', handleClickOutside);
-      } else {
-        document.removeEventListener('mousedown', handleClickOutside);
-      }
-    }, 100);
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
 
     return () => {
-      clearTimeout(listenerTimeout);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showDropdown, showNotifications]);
+  }, [showDropdown]);
 
   return (
     <>
-      <nav className="navbar" style={{ position: 'relative', zIndex: 10 }}>
+      <nav className="navbar">
         <div className="navbar-left">
           <img
             src={`${process.env.PUBLIC_URL}/logo-black.png`}
@@ -112,10 +80,7 @@ function NavbarWithPost() {
           <button type="button" onClick={() => navigate('/tokens')}>
             <img src={`${process.env.PUBLIC_URL}/tokens.png`} alt="Tokens" />
           </button>
-          <button
-            className="notifications-btn"
-            onClick={handleNotificationsClick}
-          >
+          <button>
             <img src={`${process.env.PUBLIC_URL}/notifications.png`} alt="Notifications" />
           </button>
           <button
@@ -132,37 +97,16 @@ function NavbarWithPost() {
             style={{
               position: 'absolute',
               right: '20px',
-              top: '100%',
+              top: '100%', // flush with navbar bottom
               zIndex: 1000
             }}
           >
             <DropDownButtons />
           </div>
         )}
-
-        {showNotifications && (
-          <div
-            ref={notificationsRef}
-            style={{
-              position: 'absolute',
-              right: '20px',
-              top: '100%',
-              zIndex: 1000,
-              transform: 'translateY(10px)'
-            }}
-          >
-            <Notifications
-              isOpen={showNotifications}
-              onClose={() => setShowNotifications(false)}
-            />
-          </div>
-        )}
       </nav>
 
-      <CreatePostOverlay
-        isOpen={showOverlay}
-        onClose={handleCloseOverlay}
-      />
+      <CreatePostOverlay isOpen={showOverlay} onClose={handleCloseOverlay} />
     </>
   );
 }
