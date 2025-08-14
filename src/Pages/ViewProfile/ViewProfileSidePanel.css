@@ -1,0 +1,140 @@
+.vpsp-profile-card {
+  width: 420px;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  padding: 30px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Profile image */
+.vpsp-profile-image-wrapper {
+  position: relative; /* Added so icon positions correctly */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.vpsp-profile-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Fullscreen icon */
+.vpsp-maximize-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px;
+  border-radius: 50%;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  color: white;
+}
+
+/* Hover effects */
+.vpsp-profile-image-wrapper:hover .vpsp-maximize-icon {
+  opacity: 1;
+}
+.vpsp-profile-image-wrapper:hover .vpsp-profile-image {
+  filter: brightness(0.6);
+}
+
+/* Name */
+.vpsp-profile-name {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.vpsp-first-name {
+  font-weight: 700;
+}
+
+.vpsp-last-name {
+  font-weight: 400;
+}
+
+/* Email */
+.vpsp-profile-email {
+  text-align: center;
+  font-size: 15px;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+/* Stars */
+.vpsp-stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.vpsp-star {
+  color: gold;
+}
+
+/* Buttons stacked vertically */
+.vpsp-button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.vpsp-action-btn {
+  display: block;
+  width: 100%;
+  background: #00b300;
+  color: white;
+  font-weight: 500;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.vpsp-action-btn:hover {
+  background: #009900;
+}
+
+.vpsp-follow-btn {
+  background: transparent;
+  border: 2px solid #9b59b6;
+  color: white;
+}
+
+.vpsp-follow-btn:hover {
+  background: #9b59b6;
+  color: white;
+}
+
+/* About section */
+.vpsp-about-section {
+  font-size: 15px;
+}
+
+.vpsp-about-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.vpsp-about-text {
+  color: #ccc;
+  line-height: 1.5;
+}

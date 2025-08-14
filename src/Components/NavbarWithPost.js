@@ -103,7 +103,7 @@ function NavbarWithPost() {
           <button type="button" onClick={() => navigate('/orders')}>
             <img src={`${process.env.PUBLIC_URL}/orders.png`} alt="Orders" />
           </button>
-          <button>
+          <button type="button" onClick={() => navigate('/cart')}>
             <img src={`${process.env.PUBLIC_URL}/cart.png`} alt="Cart" />
           </button>
           <button type="button" onClick={() => navigate('/inbox')}>

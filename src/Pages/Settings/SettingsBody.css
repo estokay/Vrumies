@@ -1,0 +1,6 @@
+.settings-body {
+  flex: 1;
+  background: black;
+  padding: 30px;
+  overflow-y: auto;
+}

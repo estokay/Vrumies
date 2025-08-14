@@ -15,6 +15,11 @@ import OrdersPage from '../Pages/Orders/OrdersPage';
 import InboxPage from '../Pages/Messages/InboxPage';
 import TokenPage from '../Pages/Tokens/TokenPage';
 import SignIn from '../Pages/SignIn/SignIn';
+import ShoppingCart from '../Pages/Cart/ShoppingCart';
+import MarketPost from '../Pages/ViewPosts/Market/MarketPost';
+import SettingsPage from '../Pages/Settings/SettingsPage';
+import MyProfile from '../Pages/MyProfile/MyProfile';
+import ViewProfile from '../Pages/ViewProfile/ViewProfile';
 
 const PageRouter = () => {
   return (
@@ -26,6 +31,7 @@ const PageRouter = () => {
         <Route path="/vehicles" element={<VehiclePage />} />
         <Route path="/request" element={<RequestPage />} />
         <Route path="/market" element={<MarketPage />} />
+        <Route path="/marketpost/:id" element={<MarketPost />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/directory" element={<DirectoryPage />} />
         <Route path="/videopost/:id" element={<ViewVideoPostPage />} />
@@ -34,6 +40,10 @@ const PageRouter = () => {
         <Route path="/inbox" element={<InboxPage />} />
         <Route path="/tokens" element={<TokenPage />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/viewprofile" element={<ViewProfile />} />
         {/* Add more pages here as needed */}
       </Routes>
     </Router>

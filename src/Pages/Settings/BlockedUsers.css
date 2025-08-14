@@ -1,0 +1,83 @@
+.blocked-users-container {
+  color: white;
+}
+
+.blocked-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.block-input-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.block-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 250px;
+}
+
+.block-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.blocked-card {
+  background: #07161c;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.blocked-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.blocked-info {
+  flex: 1;
+}
+
+.why-block {
+  color: limegreen;
+  font-size: 14px;
+}
+
+.blocked-textarea {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid gray;
+  background: transparent;
+  color: white;
+}
+
+.unblock-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.unblock-btn {
+  background: limegreen;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}

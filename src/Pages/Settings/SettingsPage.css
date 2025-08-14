@@ -1,0 +1,11 @@
+.settings-page {
+  display: flex;
+  min-height: 100vh;
+  background: black;
+}
+
+@media (max-width: 768px) {
+  .settings-page {
+    flex-direction: column;
+  }
+}

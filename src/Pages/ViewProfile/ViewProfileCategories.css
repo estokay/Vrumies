@@ -1,0 +1,52 @@
+.vpc-profile-categories {
+  display: flex;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 12px;
+
+  width: 100%;
+  margin: 20px;
+  box-sizing: border-box;
+}
+
+.vpc-category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  padding: 15px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  flex: 1;
+  aspect-ratio: 1 / 1;
+
+  color: #00ff66; /* green text when not selected */
+  filter: brightness(70%);
+}
+
+.vpc-category-card img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.vpc-category-card span {
+  font-size: 14px;
+  text-align: center;
+}
+
+.vpc-category-card.vpc-selected {
+  border-color: #00ff66;
+  background: rgba(0, 255, 102, 0.1);
+  color: white; /* text turns white when selected */
+  filter: brightness(100%);
+}
+
+.vpc-category-card.vpc-selected span {
+  color: white; /* ensures label text is white */
+}

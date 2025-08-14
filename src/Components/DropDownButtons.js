@@ -8,7 +8,7 @@ const DropDownButtons = () => {
     const navigate = useNavigate();
   return (
     <div className="dropdown-buttons">
-      <button className="dropdown-btn">
+      <button className="dropdown-btn" onClick={() => navigate('/myprofile')}>
         <FaUserTie className="icon green" />
         <span>Profile</span>
       </button>
@@ -23,7 +23,7 @@ const DropDownButtons = () => {
         <span>Seller</span>
       </button>
 
-      <button className="dropdown-btn" onClick={() => navigate('/adminpanel')}>
+      <button className="dropdown-btn" onClick={() => navigate('/settings')}>
         <FaCog className="icon green" />
         <span>Settings</span>
       </button>
