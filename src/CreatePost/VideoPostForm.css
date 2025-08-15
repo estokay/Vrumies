@@ -17,6 +17,7 @@
   border-radius: 6px;
   font-size: 1rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .post-form textarea {

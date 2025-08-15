@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ForumHeader = () => {
   return (
     <div style={{ ...styles.container, height: '260px' }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
-          <span style={styles.greenHighlight}>CONTENT POSTS</span>
+          <span style={styles.greenHighlight}>FORUM POSTS</span>
         </h1>
         <p style={styles.subtitle}>PROMOTE AND SHARE YOUR AUTOMOTIVE CONTENT</p>
       </div>
@@ -24,10 +25,10 @@ const ForumHeader = () => {
 
       <nav style={styles.nav}>
         <ul style={styles.navList}>
-          <li style={styles.navItem}>Videos</li>
-          <li style={styles.navItem}>Blogs</li>
+          <li style={styles.navItem}><Link to="/" style={{ color: "white", textDecoration: "none" }}>Videos</Link></li>
+          <li style={styles.navItem}><Link to="/blogs" style={{ color: "white", textDecoration: "none" }}>Blogs</Link></li>
           <li style={{ ...styles.navItem, ...styles.activeNavItem }}>Forums</li>
-          <li style={styles.navItem}>Vehicles</li>
+          <li style={styles.navItem}><Link to="/vehicles" style={{ color: "white", textDecoration: "none" }}>Vehicles</Link></li>
         </ul>
       </nav>
 
