@@ -2,13 +2,13 @@ import React from 'react';
 
 const OrdersPageHeader = () => {
   return (
-    <div style={styles.container}>
+    <div style={{ ...styles.container, height: '260px' }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
-          <span style={styles.greenHighlight}>ORDERS</span>
+          <span style={styles.greenHighlight}>SELLER</span>
         </h1>
         <p style={styles.subtitle}>
-          View and track your orders here.
+          View and track your customer orders here.
         </p>
       </div>
       <div style={styles.rightSide}>
@@ -31,12 +31,11 @@ const styles = {
     padding: '20px 40px',
     fontFamily: "'Arial', sans-serif",
     backgroundImage:
-      'url("https://completebusinessgroup.com/wp-content/uploads/2017/08/orders-post.jpg")',
+      'url("https://uptivity.co.uk/wp-content/uploads/2021/07/female-seller-scanning-ecommerce-shipping-box-in-d-Y9FABLM-scaled.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
     overflow: 'hidden',
-    minHeight: '260px', // keep height consistent
   },
   leftSide: {
     maxWidth: '50%',
@@ -50,7 +49,7 @@ const styles = {
   },
   greenHighlight: {
     color: '#00FF00',
-    textShadow: '2px 2px 6px #000',
+    textShadow: '1px 1px 0 #000',
   },
   subtitle: {
     marginTop: '8px',
@@ -58,7 +57,6 @@ const styles = {
     fontSize: '18px',
     letterSpacing: '1.5px',
     textAlign: 'left',
-    textShadow: '2px 2px 6px rgba(0,0,0,0.6)',
   },
   rightSide: {
     position: 'absolute',

@@ -18,7 +18,7 @@ const DropDownButtons = () => {
         <span>Bookmarks</span>
       </button>
 
-      <button className="dropdown-btn">
+      <button className="dropdown-btn" onClick={() => navigate('/seller')}>
         <FaStore className="icon green" />
         <span>Seller</span>
       </button>

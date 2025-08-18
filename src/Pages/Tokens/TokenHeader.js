@@ -38,11 +38,7 @@ const TokenHeader = () => {
           color: #00FF00;
           font-size: 3rem;
           white-space: nowrap;
-          text-shadow:
-            -1px -1px 0 #000,  
-            1px -1px 0 #000,
-            -1px  1px 0 #000,
-            1px  1px 0 #000;
+          textShadow: '2px 2px 6px #000',
         }
 
         @media (max-width: 640px) {

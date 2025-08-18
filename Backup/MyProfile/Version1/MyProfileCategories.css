@@ -4,9 +4,10 @@
   background: rgba(0, 0, 0, 0.6);
   padding: 20px;
   border-radius: 12px;
-  margin-top: 20px;
-  margin-left: 40px;
-  margin-right: 40px;
+
+  width: 100%;
+  margin: 20px;
+  box-sizing: border-box;
 }
 
 .category-card {
@@ -43,7 +44,7 @@
   border-color: #00ff66;
   background: rgba(0, 255, 102, 0.1);
   color: white; /* text turns white when selected */
-  filter: brightness(100%);
+  filter: brightness(100%); /* remove darkening */
 }
 
 .category-card.selected span {

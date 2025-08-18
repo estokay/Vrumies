@@ -20,6 +20,7 @@ import MarketPost from '../Pages/ViewPosts/Market/MarketPost';
 import SettingsPage from '../Pages/Settings/SettingsPage';
 import MyProfile from '../Pages/MyProfile/MyProfile';
 import ViewProfile from '../Pages/ViewProfile/ViewProfile';
+import SellerPage from '../Pages/Seller/SellerPage';
 
 const PageRouter = () => {
   return (
@@ -44,6 +45,7 @@ const PageRouter = () => {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/viewprofile" element={<ViewProfile />} />
+        <Route path="/seller" element={<SellerPage />} />
         {/* Add more pages here as needed */}
       </Routes>
     </Router>

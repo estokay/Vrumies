@@ -1,6 +1,7 @@
 .my-profile {
   display: flex;
   flex-direction: row;
+  /* background-color: #121212; /* Dark background like screenshot */
   min-height: calc(100vh - 60px); /* account for navbar height */
 }
 
@@ -14,17 +15,11 @@
   border-radius: 12px;
 }
 
-/* Right side wrapper */
-.my-profile-right {
+/* Right side content */
+.my-profile-categories {
   flex: 1;
+  padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center; /* center the sections horizontally */
-}
-
-/* Shared section wrapper for categories and body */
-.my-profile-section {
-  width: 100%;
-  margin: 20px;
-  box-sizing: border-box;
+  justify-content: center; /* centers horizontally */
+  align-items: flex-start; /* top aligned */
 }

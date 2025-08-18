@@ -70,6 +70,7 @@ const styles = {
     margin: 0,
     letterSpacing: '2px',
     textAlign: 'left',  // added for left alignment
+    textShadow: '2px 2px 6px #000',
   },
   greenHighlight: {
     color: '#00FF00',
@@ -81,6 +82,7 @@ const styles = {
     fontSize: '18px',
     letterSpacing: '1.5px',
     textAlign: 'left',  // added for left alignment
+    textShadow: '2px 2px 6px #000',
   },
   rightSide: {
     position: 'absolute',

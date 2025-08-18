@@ -1,36 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const ContentHeader = () => {
+const OrdersPageHeader = () => {
   return (
-    <div style={{ ...styles.container, height: '260px' }}>
+    <div style={{ ...styles.container, height: '260px', minHeight: undefined }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
-          <span style={styles.greenHighlight}>VIDEO POSTS</span>
+          <span style={styles.greenHighlight}>SELLER</span>
         </h1>
-        <p style={styles.subtitle}>PROMOTE AND SHARE YOUR AUTOMOTIVE CONTENT</p>
+        <p style={styles.subtitle}>
+          View and track your customer orders here.
+        </p>
       </div>
       <div style={styles.rightSide}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="#39FF14"
-          width="70px"
-          height="70px"
+        <img
+          src={`${process.env.PUBLIC_URL}/request-icon.png`}
+          alt="OrdersPage Icon"
+          width="70"
+          height="70"
           style={{ filter: 'drop-shadow(0 0 3px #39FF14)' }}
-        >
-          <path d="M20 5h-3.586l-1.707-1.707A.996.996 0 0014 3H10c-.265 0-.52.105-.707.293L7.586 5H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V7a2 2 0 00-2-2zM12 17a5 5 0 110-10 5 5 0 010 10zM12 9a3 3 0 100 6 3 3 0 000-6z"/>
-        </svg>
+        />
       </div>
-
-      <nav style={styles.nav}>
-        <ul style={styles.navList}>
-          <li style={{ ...styles.navItem, ...styles.activeNavItem }}>Videos</li>
-          <li style={styles.navItem}><Link to="/blogs" style={{ color: "white", textDecoration: "none" }}>Blogs</Link></li>
-          <li style={styles.navItem}><Link to="/forums" style={{ color: "white", textDecoration: "none" }}>Forums</Link></li>
-          <li style={styles.navItem}><Link to="/vehicles" style={{ color: "white", textDecoration: "none" }}>Vehicles</Link></li>
-        </ul>
-      </nav>
 
       <div style={styles.bottomBar}>
         <button style={styles.locationButton}>
@@ -65,12 +54,12 @@ const styles = {
     color: '#fff',
     padding: '20px 40px',
     fontFamily: "'Arial', sans-serif",
-    backgroundImage: 'url("https://cdn.skoda-storyboard.com/2018/08/influencer-bloger-event-skoda-classic-car.jpg")',
+    backgroundImage:
+      'url("https://uptivity.co.uk/wp-content/uploads/2021/07/female-seller-scanning-ecommerce-shipping-box-in-d-Y9FABLM-scaled.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
     overflow: 'hidden',
-    // height will be overridden inline to 260px
   },
   leftSide: {
     maxWidth: '50%',
@@ -80,8 +69,7 @@ const styles = {
     fontWeight: '900',
     margin: 0,
     letterSpacing: '2px',
-    textAlign: 'left', // <-- Left aligned title
-    textShadow: '2px 2px 6px #000',
+    textAlign: 'left',  // added for left alignment
   },
   greenHighlight: {
     color: '#00FF00',
@@ -92,8 +80,7 @@ const styles = {
     fontWeight: '600',
     fontSize: '18px',
     letterSpacing: '1.5px',
-    textAlign: 'left', // <-- Left aligned subtitle
-    textShadow: '2px 2px 6px #000',
+    textAlign: 'left',  // added for left alignment
   },
   rightSide: {
     position: 'absolute',
@@ -101,29 +88,8 @@ const styles = {
     right: '40px',
     opacity: 0.8,
   },
-  nav: {
-    marginTop: '40px',
-  },
-  navList: {
-    listStyle: 'none',
-    padding: 0,
-    display: 'flex',
-    gap: '30px',
-    fontWeight: '700',
-    fontSize: '20px',
-  },
-  navItem: {
-    color: '#aaa',
-    cursor: 'pointer',
-  },
-  activeNavItem: {
-    color: '#00FF00',
-    fontWeight: '900',
-    borderBottom: '2px solid #00FF00',
-    paddingBottom: '4px',
-  },
   bottomBar: {
-    marginTop: '30px',
+    marginTop: '94px',
     display: 'flex',
     alignItems: 'center',
     gap: '15px',
@@ -153,7 +119,7 @@ const styles = {
     border: '1px solid #333',
     backgroundColor: '#111',
     color: '#fff',
-  }
+  },
 };
 
-export default ContentHeader;
+export default OrdersPageHeader;

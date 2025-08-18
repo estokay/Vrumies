@@ -65,7 +65,7 @@ const styles = {
     color: '#fff',
     padding: '20px 40px',
     fontFamily: "'Arial', sans-serif",
-    backgroundImage: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80")',
+    backgroundImage: 'url("https://hips.hearstapps.com/autoweek/assets/craing_0.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
@@ -81,6 +81,7 @@ const styles = {
     margin: 0,
     letterSpacing: '2px',
     textAlign: 'left', // <-- Left aligned title
+    textShadow: '2px 2px 6px #000',
   },
   greenHighlight: {
     color: '#00FF00',
@@ -92,6 +93,7 @@ const styles = {
     fontSize: '18px',
     letterSpacing: '1.5px',
     textAlign: 'left', // <-- Left aligned subtitle
+    textShadow: '2px 2px 6px #000',
   },
   rightSide: {
     position: 'absolute',
