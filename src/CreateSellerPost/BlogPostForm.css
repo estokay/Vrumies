@@ -1,4 +1,4 @@
-.post-form {
+.bpf-post-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -6,10 +6,10 @@
 }
 
 /* Inputs */
-.post-form input,
-.post-form textarea {
+.bpf-post-form input,
+.bpf-post-form textarea {
   background-color: #0d0d0d;
-  border: 1px solid #00ff00;
+  border: 1px solid #f72b07;
   color: #ffffff;
   padding: 10px 14px;
   border-radius: 6px;
@@ -18,20 +18,20 @@
   box-sizing: border-box;
 }
 
-.post-form textarea {
+.bpf-post-form textarea {
   height: 100px;
   resize: vertical;
 }
 
 /* Labels */
-.post-form .form-label {
+.bpf-post-form .bpf-form-label {
   font-weight: bold;
-  color: #00ff00;
+  color: #f72b07;
 }
 
 /* Submit button */
-.post-form .submit-btn {
-  background-color: #00ff00;
+.bpf-post-form .bpf-submit-btn {
+  background-color: #f72b07;
   color: #000;
   border: none;
   padding: 12px;
@@ -42,19 +42,19 @@
   transition: background-color 0.2s ease;
 }
 
-.post-form .submit-btn:hover {
-  background-color: #33ff33;
+.bpf-post-form .bpf-submit-btn:hover {
+  background-color: #f8150d;
 }
 
 /* Toggle icon buttons */
-.toggle-buttons-row {
+.bpf-toggle-buttons-row {
   display: flex;
   gap: 10px;
   margin: 10px 0;
   justify-content: center;
 }
 
-.toggle-buttons-row img {
+.bpf-toggle-buttons-row img {
   width: 48px;
   height: 48px;
   background-color: #1a1a1a;
@@ -64,40 +64,40 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.toggle-buttons-row img:hover {
-  background-color: #00ff00;
+.bpf-toggle-buttons-row img:hover {
+  background-color: #f72b07;
   transform: scale(1.05);
 }
 
 /* Hidden fields */
-.hidden-input {
+.bpf-hidden-input {
   display: none;
 }
 
 /* Upload previews */
-.upload-container {
+.bpf-upload-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.preview-media {
-  border: 2px solid #00ff00;
+.bpf-preview-media {
+  border: 2px solid #f72b07;
   border-radius: 8px;
   max-width: 100%;
   height: auto;
 }
 
 /* Uploading text */
-.uploading-text {
+.bpf-uploading-text {
   color: #999;
   font-style: italic;
 }
 
 /* Success message */
-.post-success-message {
+.bpf-post-success-message {
   background-color: #0d0d0d;
-  color: #00ff00;
+  color: #f72b07;
   padding: 20px;
   border-radius: 10px;
   font-weight: bold;

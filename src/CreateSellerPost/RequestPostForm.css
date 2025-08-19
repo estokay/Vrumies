@@ -1,60 +1,55 @@
-.post-form {
+.request-post-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  
 }
 
-/* Inputs */
-.post-form input,
-.post-form textarea {
+.request-post-form input,
+.request-post-form textarea,
+.request-post-form select {
   background-color: #0d0d0d;
-  border: 1px solid #00ff00;
-  color: #ffffff;
-  padding: 10px 14px;
+  color: white;
+  border: 1px solid #f72b07;
   border-radius: 6px;
+  padding: 10px;
   font-size: 1rem;
-  width: 100%;
   box-sizing: border-box;
 }
 
-.post-form textarea {
+.request-post-form textarea {
   height: 100px;
   resize: vertical;
 }
 
-/* Labels */
-.post-form .form-label {
+.request-form-label {
+  color: #f72b07;
   font-weight: bold;
-  color: #00ff00;
 }
 
-/* Submit button */
-.post-form .submit-btn {
-  background-color: #00ff00;
+.request-submit-btn {
+  background: #f72b07;
   color: #000;
   border: none;
   padding: 12px;
-  border-radius: 8px;
   font-weight: bold;
   font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-.post-form .submit-btn:hover {
-  background-color: #33ff33;
+.request-submit-btn:hover {
+  background: #ff4415;
 }
 
 /* Toggle icon buttons */
-.toggle-buttons-row {
+.request-toggle-buttons-row {
   display: flex;
   gap: 10px;
   margin: 10px 0;
   justify-content: center;
 }
 
-.toggle-buttons-row img {
+.request-toggle-buttons-row img {
   width: 48px;
   height: 48px;
   background-color: #1a1a1a;
@@ -64,40 +59,52 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.toggle-buttons-row img:hover {
-  background-color: #00ff00;
+.request-toggle-buttons-row img:hover {
+  background-color: #f72b07;
   transform: scale(1.05);
 }
 
 /* Hidden fields */
-.hidden-input {
+.request-hidden-input {
   display: none;
 }
 
 /* Upload previews */
-.upload-container {
+.request-upload-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.preview-media {
-  border: 2px solid #00ff00;
+.request-preview-media {
+  border: 2px solid #f72b07;
   border-radius: 8px;
   max-width: 100%;
   height: auto;
 }
 
 /* Uploading text */
-.uploading-text {
+.request-uploading-text {
   color: #999;
   font-style: italic;
 }
 
-/* Success message */
-.post-success-message {
+/* Urgency select styling */
+.request-urgency-select {
+  width: 100%;
   background-color: #0d0d0d;
-  color: #00ff00;
+  border: 1px solid #f72b07;
+  color: #f72b07;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Success message */
+.request-success-message {
+  background-color: #0d0d0d;
+  color: #f72b07;
   padding: 20px;
   border-radius: 10px;
   font-weight: bold;

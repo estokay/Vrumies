@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import PaymentMethodsOverlay from "./PaymentMethodsOverlay";
-import CreateSellerPostOverlay from "../../CreateSellerPost/CreateSellerPostOverlay";
 
 const SellerPageHeader = () => {
   const [showPaymentOverlay, setShowPaymentOverlay] = useState(false);
-  const [showSellerOverlay, setShowSellerOverlay] = useState(false);
 
   return (
     <div style={{ ...styles.container, height: "260px" }}>
@@ -31,13 +29,8 @@ const SellerPageHeader = () => {
 
       {/* Bottom bar */}
       <div style={styles.bottomBar}>
-        {/* Left: Create Seller Post */}
-        <button
-          style={styles.createPostButton}
-          onClick={() => setShowSellerOverlay(true)}
-        >
-          Create Sell Post
-        </button>
+        {/* Left: Create Sell Post */}
+        <button style={styles.createPostButton}>Create Sell Post</button>
 
         {/* Right: Balance + Payout */}
         <div style={styles.balanceContainer}>
@@ -52,13 +45,9 @@ const SellerPageHeader = () => {
         </div>
       </div>
 
-      {/* Overlays */}
+      {/* Payment Methods Overlay */}
       {showPaymentOverlay && (
         <PaymentMethodsOverlay onClose={() => setShowPaymentOverlay(false)} />
-      )}
-
-      {showSellerOverlay && (
-        <CreateSellerPostOverlay onClose={() => setShowSellerOverlay(false)} isOpen={showSellerOverlay} />
       )}
     </div>
   );
