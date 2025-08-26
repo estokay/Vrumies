@@ -8,7 +8,7 @@ import { examplePosts } from '../../../Data/DirectoryDummyData';
 const DirectoryPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <DirectoryHeader />
       <div className="main-content">
         <DirectoryPostGrid posts={examplePosts} />

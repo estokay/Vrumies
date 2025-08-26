@@ -8,7 +8,7 @@ import { examplePosts } from '../../../Data/MarketDummyData';
 const MarketPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <MarketHeader />
       <div className="main-content">
         <MarketPostGrid posts={examplePosts} />

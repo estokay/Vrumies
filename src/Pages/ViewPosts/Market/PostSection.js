@@ -20,7 +20,7 @@ function PostSection() {
       <div className="post-left">
         <div className="post-content">
           <div className="post-header">
-            <div className="breadcrumbs">VRUMIES / MARKET / AUTO PARTS</div>
+            <div className="breadcrumbs">VRUMIES / MARKET</div>
             <div className="date">DATE POSTED: August, 29, 2024</div>
           </div>
           <h2 className="post-title">HAMMAKA HITCH STAND COMBO</h2>

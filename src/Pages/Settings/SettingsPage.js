@@ -9,7 +9,7 @@ const SettingsPage = () => {
   const [selected, setSelected] = useState("referral");
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <div className="settings-page">
       <SettingsSidePanel onSelect={setSelected} selected={selected} />
       <SettingsBody selected={selected} />

@@ -9,7 +9,7 @@ const ViewProfile = () => {
 
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <div className="view-profile">
               <div className="view-profile-sidepanel">
                 <ViewProfileSidePanel />

@@ -10,7 +10,7 @@ import ForumRightSidePanel from './ForumRightSidePanel';
 const ForumPage = () => {
   return (
     <div className="forum-page">
-      <NavbarWithPost />
+      
       <ForumHeader />
       <div className="main-content">
         <ForumPostGrid posts={examplePosts} />

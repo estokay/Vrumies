@@ -9,7 +9,7 @@ import './InboxPage.css';
 const InboxPage = () => {
   return (
     <div className="inbox-page">
-      <NavbarWithPost />
+      
       <div className="inbox-layout">
         <LeftSidePanel />
         <CenterPanel />

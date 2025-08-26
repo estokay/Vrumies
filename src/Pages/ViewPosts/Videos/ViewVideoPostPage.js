@@ -18,7 +18,7 @@ const ViewVideoPostPage = () => {
 
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <ViewContentPostHeader
         userName={post.creator}
         userImage={post.profilePic}

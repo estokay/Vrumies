@@ -3,7 +3,7 @@ export const examplePosts = [
   {
     id: 0,
     thumbnail: `${process.env.PUBLIC_URL}/jumpstart-thumb.jpg`,
-    title: `The Future of Jumpstarters`,
+    title: `Firt Market Post`,
     creator: `Gryan Duminson`,
     date: `Dec 20, 2024`,
     views: 1200,

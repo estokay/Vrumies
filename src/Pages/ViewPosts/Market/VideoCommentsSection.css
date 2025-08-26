@@ -3,6 +3,10 @@
   color: #fff;
   padding: 20px;
   font-family: 'Segoe UI', sans-serif;
+  
+  max-height: 1200px;
+  min-height: 300px;
+  overflow-y: auto;
 }
 
 .section-header {

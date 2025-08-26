@@ -9,7 +9,7 @@ import OrdersBody from './OrdersBody';
 const OrdersPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <OrdersPageHeader />
       {/*<OrdersSidePanel />*/}
       <OrdersBody />

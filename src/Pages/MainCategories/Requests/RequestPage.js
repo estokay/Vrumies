@@ -11,7 +11,7 @@ import RequestRightSidePanel from './RequestRightSidePanel';
 const RequestPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <RequestHeader />
       <div className="main-content">
         <RequestPostGrid posts={examplePosts} />

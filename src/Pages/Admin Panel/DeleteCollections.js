@@ -7,6 +7,11 @@ const collectionsToDelete = [
   { key: "blogPosts", label: "Delete BlogCollection" },
   { key: "forumPosts", label: "Delete ForumCollection" },
   { key: "requestPosts", label: "Delete RequestCollection" },
+  { key: "vehiclePosts", label: "Delete VehicleCollection" },
+  { key: "marketPosts", label: "Delete MarketCollection" },
+  { key: "eventPosts", label: "Delete EventCollection" },
+  { key: "directoryPosts", label: "Delete DirectoryCollection" },
+  { key: "Posts", label: "Delete PostsCollection" },
 ];
 
 export default function DeleteCollections() {

@@ -1,6 +1,8 @@
-// src/PageRouter.js
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import NavbarWithPost from './NavbarWithPost';
+
+// import your pages
 import ContentPage from '../Pages/MainCategories/Videos/ContentPage';
 import RequestPage from '../Pages/MainCategories/Requests/RequestPage';
 import MarketPage from '../Pages/MainCategories/Market/MarketPage';
@@ -21,35 +23,45 @@ import SettingsPage from '../Pages/Settings/SettingsPage';
 import MyProfile from '../Pages/MyProfile/MyProfile';
 import ViewProfile from '../Pages/ViewProfile/ViewProfile';
 import SellerPage from '../Pages/Seller/SellerPage';
+import EventPost from '../Pages/ViewPosts/Events/EventPost';
 
-const PageRouter = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<ContentPage />} />
-        <Route path="/blogs" element={<BlogContentPage />} />
-        <Route path="/forums" element={<ForumPage />} />
-        <Route path="/vehicles" element={<VehiclePage />} />
-        <Route path="/request" element={<RequestPage />} />
-        <Route path="/market" element={<MarketPage />} />
-        <Route path="/marketpost/:id" element={<MarketPost />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/directory" element={<DirectoryPage />} />
-        <Route path="/videopost/:id" element={<ViewVideoPostPage />} />
-        <Route path="/adminpanel" element={<AdminPanel />} />
-        <Route path="/orders" element={<OrdersPage />} />
-        <Route path="/inbox" element={<InboxPage />} />
-        <Route path="/tokens" element={<TokenPage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/myprofile" element={<MyProfile />} />
-        <Route path="/viewprofile" element={<ViewProfile />} />
-        <Route path="/seller" element={<SellerPage />} />
-        {/* Add more pages here as needed */}
-      </Routes>
-    </Router>
-  );
-};
+// Layout for pages with Navbar
+const PageWithNavbar = ({ children }) => (
+  <>
+    <NavbarWithPost />
+    {children}
+  </>
+);
+
+const PageRouter = () => (
+  <Routes>
+    <Route path="/" element={<Navigate to="/signin" replace />} />
+
+    {/* Pages without Navbar */}
+    <Route path="/signin" element={<SignIn />} />
+
+    {/* Pages with Navbar */}
+    <Route path="/videos" element={<PageWithNavbar><ContentPage /></PageWithNavbar>} />
+    <Route path="/blogs" element={<PageWithNavbar><BlogContentPage /></PageWithNavbar>} />
+    <Route path="/forums" element={<PageWithNavbar><ForumPage /></PageWithNavbar>} />
+    <Route path="/vehicles" element={<PageWithNavbar><VehiclePage /></PageWithNavbar>} />
+    <Route path="/request" element={<PageWithNavbar><RequestPage /></PageWithNavbar>} />
+    <Route path="/market" element={<PageWithNavbar><MarketPage /></PageWithNavbar>} />
+    <Route path="/marketpost/:id" element={<PageWithNavbar><MarketPost /></PageWithNavbar>} />
+    <Route path="/events" element={<PageWithNavbar><EventsPage /></PageWithNavbar>} />
+    <Route path="/eventpost/:id" element={<PageWithNavbar><EventPost /></PageWithNavbar>} />
+    <Route path="/directory" element={<PageWithNavbar><DirectoryPage /></PageWithNavbar>} />
+    <Route path="/videopost/:id" element={<PageWithNavbar><ViewVideoPostPage /></PageWithNavbar>} />
+    <Route path="/adminpanel" element={<PageWithNavbar><AdminPanel /></PageWithNavbar>} />
+    <Route path="/orders" element={<PageWithNavbar><OrdersPage /></PageWithNavbar>} />
+    <Route path="/inbox" element={<PageWithNavbar><InboxPage /></PageWithNavbar>} />
+    <Route path="/tokens" element={<PageWithNavbar><TokenPage /></PageWithNavbar>} />
+    <Route path="/cart" element={<PageWithNavbar><ShoppingCart /></PageWithNavbar>} />
+    <Route path="/settings" element={<PageWithNavbar><SettingsPage /></PageWithNavbar>} />
+    <Route path="/myprofile" element={<PageWithNavbar><MyProfile /></PageWithNavbar>} />
+    <Route path="/viewprofile" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} />
+    <Route path="/seller" element={<PageWithNavbar><SellerPage /></PageWithNavbar>} />
+  </Routes>
+);
 
 export default PageRouter;

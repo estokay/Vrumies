@@ -10,7 +10,7 @@ import PaymentMethodsOverlay from './PaymentMethodsOverlay';
 const SellerPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <SellerPageHeader />
       
       <SellerBody />

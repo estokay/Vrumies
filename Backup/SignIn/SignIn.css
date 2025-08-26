@@ -1,0 +1,54 @@
+.vrumies-signin-screen {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://res.cloudinary.com/dmjvngk3o/image/upload/v1754732911/Background_e8diwk.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Top-left logo */
+.vrumies-signin-logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 160px;
+  z-index: 10;
+}
+
+/* Center container for stacked images */
+.vrumies-signin-center {
+  position: relative;
+  width: 800px;
+  height: 600px;
+}
+
+/* Welcome image - 1/6th bigger again and moved left 3rem */
+.vrumies-signin-welcome-image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(calc(-50% - 3rem));
+  width: 136%; /* approx 1/6th bigger than previous */
+  height: auto;
+  z-index: 5;
+}
+
+/* Google Sign-In image - below with gap */
+.vrumies-signin-google-image {
+  position: absolute;
+  top: 425px; /* gap from Welcome image */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+  z-index: 1;
+  cursor: pointer;
+}

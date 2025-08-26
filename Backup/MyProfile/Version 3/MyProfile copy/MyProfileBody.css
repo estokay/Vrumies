@@ -1,0 +1,20 @@
+.my-profile-body {
+  display: flex;
+  justify-content: center;   /* centers grid horizontally */
+  align-items: flex-start;   /* aligns grid to top */
+  padding: 20px;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  margin: 0 40px 20px 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.my-profile-body .post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 280px); /* 3 columns, fixed width */
+  grid-auto-rows: 280px;                  /* square cards */
+  gap: 30px;
+  justify-content: center;                /* centers grid within container */
+}

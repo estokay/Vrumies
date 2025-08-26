@@ -3,7 +3,7 @@ import ViewData from '../Testing/ViewData'; // This is the correct import
 
 const posts = [
   {
-    title: "Future of Jumpstarters",
+    title: "Firest example Post",
     postType: "Video",
     description: "Preview of the next-gen jumpstarter tech.",
     image: process.env.PUBLIC_URL + "/jumpstart.jpg",

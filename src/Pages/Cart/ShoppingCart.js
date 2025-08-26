@@ -8,7 +8,7 @@ import CartSidePanel from './CartSidePanel';
 const ShoppingCart = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <ShoppingCartHeader />
       <div className="shopping-cart">
         <div className="cart-body-container">

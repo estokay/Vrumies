@@ -6,7 +6,7 @@
   width: 280px;          /* fixed width like post grid column */
   box-sizing: border-box;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-
+  height: 1300px;
   /* Optional: If you want the panel itself to be centered in its container */
   /* margin: 0 auto; */
 }

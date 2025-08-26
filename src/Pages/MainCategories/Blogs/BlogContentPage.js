@@ -11,7 +11,7 @@ import BlogRightSidePanel from './BlogRightSidePanel';
 const BlogContentPage = () => {
   return (
     <div className="blog-page">
-      <NavbarWithPost />
+      
       <BlogContentHeader />
       <div className="main-content">
         <BlogPostGrid posts={examplePosts} />

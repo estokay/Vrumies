@@ -18,7 +18,7 @@ const MarketPost = () => {
 
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <MarketHeader />
       <PostSection />
       <div className="bottom-section-container">

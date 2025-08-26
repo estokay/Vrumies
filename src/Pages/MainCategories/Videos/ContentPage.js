@@ -11,7 +11,7 @@ import RightSidePanel from './RightSidePanel';
 const ContentPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      {/* <NavbarWithPost /> */}
       <ContentHeader />
       <div className="main-content">
         <PostGrid posts={examplePosts} />

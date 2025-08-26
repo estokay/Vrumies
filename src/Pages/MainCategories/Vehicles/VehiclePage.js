@@ -10,7 +10,7 @@ import VehicleRightSidePanel from './VehicleRightSidePanel';
 const VehiclePage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <VehicleHeader />
       <div className="main-content">
         <VehiclePostGrid posts={examplePosts} />

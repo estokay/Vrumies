@@ -8,7 +8,7 @@ import TokenHistory from './TokenHistory';
 const TokenPage = () => {
   return (
     <div className="content-page">
-      <NavbarWithPost />
+      
       <TokenHeader />
       <div className="main-content-area">
         <TokenSidePanel />

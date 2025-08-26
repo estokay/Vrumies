@@ -15,7 +15,7 @@ function EventsPostGrid({ posts }) {
       {displayedPosts.map((post, index) => (
         <div key={post.id || index}>
           <Link
-            to={`/eventspost/${post.id}`}
+            to={`/eventpost/${post.id}`}
             style={{
               textDecoration: 'none',
               color: 'inherit',
