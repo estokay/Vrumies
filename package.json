@@ -2,7 +2,7 @@
   "name": "vrumies-web-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/",
+  "homepage": "https://estokay.github.io/Vrumies",
   "dependencies": {
     "@cloudinary/react": "^1.14.3",
     "@cloudinary/url-gen": "^1.21.0",
