@@ -1,0 +1,211 @@
+import React, { useState } from 'react';
+import './VideoPostForm.css';
+import { db } from '../Components/firebase';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import axios from 'axios';
+
+const VideoPostForm = () => {
+  const [activeField, setActiveField] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    location: '',
+    link: '',
+    tokens: '',
+    image: '',
+    video: '',
+  });
+  const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [uploading, setUploading] = useState({ image: false, video: false });
+
+  const CLOUDINARY_PRESET = 'vrumies_preset';
+  const CLOUDINARY_CLOUD_NAME = 'dmjvngk3o';
+
+  const toggleField = (field) => {
+    setActiveField((prev) => (prev === field ? null : field));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'tokens' ? (Number(value) || 0) : value,
+    }));
+  };
+
+  const handleFileUpload = async (e, type) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading((prev) => ({ ...prev, [type]: true }));
+
+    const formDataUpload = new FormData();
+    formDataUpload.append('file', file);
+    formDataUpload.append('upload_preset', CLOUDINARY_PRESET);
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${type}/upload`,
+        formDataUpload
+      );
+      setFormData((prev) => ({
+        ...prev,
+        [type]: res.data.secure_url,
+      }));
+    } catch (err) {
+      console.error(`Upload failed for ${type}:`, err);
+      alert(`Upload failed for ${type}`);
+    } finally {
+      setUploading((prev) => ({ ...prev, [type]: false }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const postData = {
+      ...formData,
+      tokens: formData.tokens || 0,
+      createdAt: Timestamp.now(),
+      type: 'video',
+      likesCounter: 0,
+      dislikesCounter: 0,
+      likes: [],
+      dislikes: [],
+    };
+
+    try {
+      await addDoc(collection(db, 'Posts'), postData);
+      setMessage('✅ Video post added!');
+      setSubmitted(true);
+    } catch (err) {
+      console.error('❌ Firestore error:', err);
+      setMessage('❌ Failed to add post.');
+    }
+  };
+
+  const publicPath = process.env.PUBLIC_URL;
+
+  return submitted ? (
+    <div className="post-success-message">
+      <p>{message}</p>
+    </div>
+  ) : (
+    <form className="post-form" onSubmit={handleSubmit}>
+      <label className="form-label">Title</label>
+      <input
+        type="text"
+        name="title"
+        value={formData.title}
+        onChange={handleChange}
+        required
+      />
+
+      <label className="form-label">Description</label>
+      <textarea
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        required
+      />
+
+      <div className="toggle-buttons-row">
+        <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} alt="Location" onClick={() => toggleField('location')} />
+        <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} alt="Link" onClick={() => toggleField('link')} />
+        <img src={`${publicPath}/PostCreationIcons/Video-Icon.png`} alt="Video" onClick={() => toggleField('video')} />
+        <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} alt="Image" onClick={() => toggleField('image')} />
+        <img src={`${publicPath}/PostCreationIcons/Token-Icon.png`} alt="Tokens" onClick={() => toggleField('tokens')} />
+      </div>
+
+      {/* location */}
+      <input
+        type="text"
+        name="location"
+        placeholder="Enter location"
+        value={formData.location}
+        onChange={handleChange}
+        className={activeField === 'location' ? '' : 'hidden-input'}
+      />
+
+      {/* Link */}
+      <input
+        type="text"
+        name="link"
+        placeholder="Enter link"
+        value={formData.link}
+        onChange={handleChange}
+        className={activeField === 'link' ? '' : 'hidden-input'}
+      />
+
+      {/* Video Upload */}
+      {activeField === 'video' && (
+        <div className="upload-container">
+          <label className="form-label">Upload Video</label>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={(e) => handleFileUpload(e, 'video')}
+          />
+          {uploading.video && <p className="uploading-text">Uploading video...</p>}
+          {formData.video && (
+            <div className="preview-gallery">
+              <div className="preview-wrapper">
+                <video src={formData.video} controls className="preview-media" />
+                <button
+                  type="button"
+                  className="remove-image-btn"
+                  onClick={() => setFormData((prev) => ({ ...prev, video: '' }))}
+                >
+                  ✖
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Image Upload */}
+      {activeField === 'image' && (
+        <div className="upload-container">
+          <label className="form-label">Upload Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFileUpload(e, 'image')}
+          />
+          {uploading.image && <p className="uploading-text">Uploading image...</p>}
+          {formData.image && (
+            <div className="preview-gallery">
+              <div className="preview-wrapper">
+                <img src={formData.image} alt="Uploaded" className="preview-media" />
+                <button
+                  type="button"
+                  className="remove-image-btn"
+                  onClick={() => setFormData((prev) => ({ ...prev, image: '' }))}
+                >
+                  ✖
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tokens */}
+      <input
+        type="number"
+        name="tokens"
+        placeholder="Enter token amount"
+        value={formData.tokens}
+        onChange={handleChange}
+        className={activeField === 'tokens' ? '' : 'hidden-input'}
+      />
+
+      <button type="submit" className="submit-btn">Submit</button>
+      {message && <p>{message}</p>}
+    </form>
+  );
+};
+
+export default VideoPostForm;

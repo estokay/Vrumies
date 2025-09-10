@@ -1,0 +1,21 @@
+.inbox-page {
+  height: 100vh;
+  background-color: #000000;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.inbox-layout {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.left-panel,
+.center-panel,
+.right-panel {
+  background-color: #ffffff;
+  color: #000000;
+  overflow-y: auto;
+}

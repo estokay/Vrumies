@@ -13,7 +13,7 @@ const DropDownButtons = () => {
         <span>Profile</span>
       </button>
 
-      <button className="dropdown-btn">
+      <button className="dropdown-btn" onClick={() => navigate('/bookmarks')}>
         <FaBookmark className="icon green" />
         <span>Bookmarks</span>
       </button>

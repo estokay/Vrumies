@@ -1,4 +1,4 @@
-.market-panel {
+.mv-panel {
   background: linear-gradient(180deg, #292727, #3a3737);
   border-radius: 25px;
   padding: 20px;
@@ -7,17 +7,17 @@
   margin: 20px;
 }
 
-.market-title {
+.mv-title {
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 15px;
 }
 
-.market-section {
+.mv-section {
   margin-bottom: 20px;
 }
 
-.market-section h3 {
+.mv-section h3 {
   font-size: 18px;
   font-weight: bold;
   border-bottom: 2px solid black;
@@ -25,32 +25,26 @@
   margin-bottom: 10px;
 }
 
-.market-info {
+.mv-info {
   display: flex;
   gap: 40px;
   margin-bottom: 10px;
 }
 
-.market-tracking {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.market-item {
+.mv-item {
   display: flex;
   gap: 15px;
   align-items: center;
 }
 
-.market-item img {
+.mv-item img {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
 }
 
-.market-btn-view {
+.mv-btn-view {
   background: linear-gradient(to right, purple, magenta);
   color: white;
   border: none;
@@ -59,13 +53,13 @@
   margin-top: 5px;
 }
 
-.market-payment {
+.mv-payment {
   display: flex;
   justify-content: space-between;
   gap: 40px;
 }
 
-.market-btn-message {
+.mv-btn-message {
   background: #444;
   color: white;
   border: none;
@@ -73,21 +67,21 @@
   border-radius: 12px;
 }
 
-/* Timeline Styles (from EventVariant) */
-.timeline-wrapper {
+/* Timeline */
+.mv-timeline-wrapper {
   display: flex;
   align-items: center;
   gap: 15px;
   margin-top: 10px;
 }
 
-.timeline-step {
+.mv-timeline-step {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.circle {
+.mv-circle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -99,36 +93,36 @@
   color: gray;
 }
 
-.circle.active {
+.mv-circle.active {
   background: white;
   color: green;
   border-color: green;
 }
 
-.timeline-label {
+.mv-timeline-label {
   font-size: 12px;
   text-align: center;
   margin-top: 5px;
   color: gray;
 }
 
-.timeline-label.active-label {
+.mv-timeline-label.active-label {
   color: green;
   font-weight: bold;
 }
 
-.arrow {
+.mv-arrow {
   font-size: 20px;
   color: black;
 }
 
-.status-buttons {
+.mv-status-buttons {
   margin-top: 15px;
   display: flex;
   gap: 10px;
 }
 
-.btn-complete {
+.mv-btn-complete {
   background: green;
   color: white;
   border: none;
@@ -136,10 +130,63 @@
   border-radius: 8px;
 }
 
-.btn-dispute {
+.mv-btn-dispute {
   background: #444;
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 8px;
+}
+
+/* Tracking Fields */
+.mv-tracking-fields {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  align-items: flex-end;
+}
+
+.mv-tracking-fields div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.mv-tracking-fields input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+  font-size: 14px;
+  height: 36px;
+}
+
+/* Buttons for both inputs */
+.mv-tracking-btn-wrapper {
+  display: flex;          /* horizontal row */
+  gap: 8px;               /* spacing between buttons */
+  align-items: center;    /* vertically aligned with inputs */
+  margin-top: 6px;        /* space below inputs */
+  flex-wrap: nowrap;      /* prevent stacking */
+}
+
+.mv-btn-save,
+.mv-btn-clear {
+  padding: 0 14px;
+  height: 36px;           /* same height as inputs */
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+}
+
+.mv-btn-save {
+  background: green;   /* left */
+  order: 1;
+}
+
+.mv-btn-clear {
+  background: red;     /* right */
+  order: 2;
 }

@@ -17,12 +17,7 @@ export default function DirectoryVariant() {
         </div>
         <div>
           <strong>Service Location</strong>
-          <p>Customer Address</p>
-        </div>
-        <div className="address-input">
-          <input type="text" placeholder="Enter Address Here..." />
-          <button className="btn-cancel">Cancel</button>
-          <button className="btn-save">Save</button>
+          <p>13251 Marylane Drive, Houston TX 77024</p>
         </div>
       </section>
 
@@ -30,10 +25,13 @@ export default function DirectoryVariant() {
       <section className="section">
         <h3>Ordered Items</h3>
         <div className="item-card">
-          <img src="https://jntautomotive.com/wp-content/uploads/2025/01/hm-brake-repair-service-01.jpg" alt="Product" />
+          <img
+            src="https://jntautomotive.com/wp-content/uploads/2025/01/hm-brake-repair-service-01.jpg"
+            alt="Product"
+          />
           <div>
             <div><strong>Title</strong><p>Hammaka Hitch Stand Combo</p></div>
-            <div><strong>Price</strong><p>$375.99</p></div>
+            <div><strong>Price</strong><p>$550.00</p></div>
             <button className="btn-view">View Post</button>
           </div>
         </div>
@@ -44,9 +42,9 @@ export default function DirectoryVariant() {
         <h3>Payment Information</h3>
         <div className="payment-info">
           <div>
-            <strong>Subtotal</strong><p>$375.99</p>
-            <strong>Transaction Fee (15%)</strong><p>$56.40</p>
-            <strong>Total</strong><p>$432.39</p>
+            <strong>Subtotal</strong><p>$550.00</p>
+            <strong>Transaction Fee (15%)</strong><p>$82.50</p>
+            <strong>Total</strong><p>$632.50</p>
           </div>
           <div>
             <strong>Payment Method</strong><p>Card</p>
@@ -55,10 +53,10 @@ export default function DirectoryVariant() {
         </div>
       </section>
 
-      {/* Seller Information */}
+      {/* Buyer Information */}
       <section className="section">
-        <h3>Seller Information</h3>
-        <div><strong>Seller</strong><p>Gryan Dumimson</p></div>
+        <h3>Buyer Information</h3>
+        <div><strong>Buyer</strong><p>Gryan Dumimson</p></div>
         <div><strong>Location</strong><p>Dallas, TX</p></div>
         <button className="btn-message">Message User</button>
       </section>
@@ -74,7 +72,7 @@ export default function DirectoryVariant() {
           <div className="arrow">→</div>
           <div className="timeline-step">
             <div className="circle"></div>
-            <p className="timeline-label">Marked Completed by Seller</p>
+            <p className="timeline-label">Marked Completed by Buyer</p>
           </div>
           <div className="arrow">→</div>
           <div className="timeline-step">

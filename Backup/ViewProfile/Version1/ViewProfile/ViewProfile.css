@@ -1,0 +1,25 @@
+.view-profile {
+  display: flex;
+  flex-direction: row;
+  /* background-color: #121212; /* Dark background like screenshot */
+  min-height: calc(100vh - 60px); /* account for navbar height */
+}
+
+/* Left side panel */
+.view-profile-sidepanel {
+  flex: 0 0 250px; /* fixed width */
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 40px 0 40px 40px;
+  border-radius: 12px;
+}
+
+/* Right side content */
+.view-profile-categories {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: flex-start; /* top aligned */
+}

@@ -1,0 +1,46 @@
+.cart-side-panel {
+  width: 500px;
+  background: linear-gradient(90deg, #1a1a1a, #3b3b3b);
+  border-radius: 10px;
+  padding: 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 10px 0;
+}
+
+.checkout-btn {
+  margin-top: 15px;
+  background: linear-gradient(90deg, #3a014f, #b000ff);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 12px 0;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.checkout-btn:hover {
+  opacity: 0.85;
+}

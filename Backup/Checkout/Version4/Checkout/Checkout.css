@@ -1,0 +1,12 @@
+.co-content-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.co-checkout-main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

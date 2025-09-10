@@ -24,6 +24,9 @@ import MyProfile from '../Pages/MyProfile/MyProfile';
 import ViewProfile from '../Pages/ViewProfile/ViewProfile';
 import SellerPage from '../Pages/Seller/SellerPage';
 import EventPost from '../Pages/ViewPosts/Events/EventPost';
+import BookmarksPage from '../Pages/Bookmarks/BookmarksPage';
+import TestPage from '../Test/TestPage';
+import Checkout from '../Pages/Checkout/Checkout';
 
 // Layout for pages with Navbar
 const PageWithNavbar = ({ children }) => (
@@ -59,8 +62,12 @@ const PageRouter = () => (
     <Route path="/cart" element={<PageWithNavbar><ShoppingCart /></PageWithNavbar>} />
     <Route path="/settings" element={<PageWithNavbar><SettingsPage /></PageWithNavbar>} />
     <Route path="/myprofile" element={<PageWithNavbar><MyProfile /></PageWithNavbar>} />
-    <Route path="/viewprofile" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} />
+    {/* <Route path="/viewprofile" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} /> */}
+    <Route path="/viewprofile/:userId" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} />
     <Route path="/seller" element={<PageWithNavbar><SellerPage /></PageWithNavbar>} />
+    <Route path="/bookmarks" element={<PageWithNavbar><BookmarksPage /></PageWithNavbar>} />
+    <Route path="/testpage" element={<PageWithNavbar><TestPage /></PageWithNavbar>} />
+    <Route path="/checkout" element={<PageWithNavbar><Checkout /></PageWithNavbar>} />
   </Routes>
 );
 

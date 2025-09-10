@@ -31,15 +31,61 @@
   margin-bottom: 10px;
 }
 
+/* Drag & Drop / Upload Styles */
 .ticket-file {
   margin-top: 10px;
+}
+
+.drag-drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 5px;
+  color: white;
+  font-size: 14px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.drag-drop-area:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: magenta;
+}
+
+.file-input {
+  display: none; /* hidden, handled by drag-drop click */
+}
+
+.upload-clear-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-upload {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-clear {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
 }
 
 .ticket-download {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .ticket-icon {
@@ -52,12 +98,7 @@
   font-weight: bold;
 }
 
-.ticket-link {
-  color: magenta;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
+/* Ordered Items */
 .item-card {
   display: flex;
   gap: 15px;
@@ -67,8 +108,8 @@
 .item-card img {
   width: 160px;
   height: 160px;
-  object-fit: cover; /* Ensures the image fills the square without distortion */
-  border-radius: 8px; /* optional: gives a slightly rounded look */
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .btn-view {
@@ -80,12 +121,14 @@
   margin-top: 5px;
 }
 
+/* Payment Info */
 .payment-info {
   display: flex;
   justify-content: space-between;
   gap: 40px;
 }
 
+/* Seller Info */
 .btn-message {
   background: #444;
   color: white;
@@ -94,7 +137,7 @@
   border-radius: 12px;
 }
 
-/* Timeline Styles */
+/* Timeline */
 .timeline-wrapper {
   display: flex;
   align-items: center;

@@ -1,36 +1,79 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ViewProfileSidePanel.css";
-import { FaStar, FaExpand } from "react-icons/fa"; // Added FaExpand
+import { FaStar, FaExpand } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { db } from "../../Components/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const ViewProfileSidePanel = () => {
-  const profilePicUrl =
-    "https://media.altphotos.com/cache/images/2017/07/04/07/752/portrait-man-dark.jpg";
+  const { userId } = useParams(); // Grab the userId from the URL
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      try {
+        // Query Users collection where "userid" field matches the URL
+        const q = query(collection(db, "Users"), where("userid", "==", userId));
+        const snap = await getDocs(q);
+
+        if (!snap.empty) {
+          setUser(snap.docs[0].data());
+        } else {
+          console.warn("User not found");
+          setUser(null);
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  const toggleFollow = () => setIsFollowing(!isFollowing);
+
+  if (loading)
+    return (
+      <div className="vpsp-profile-card">
+        <p style={{ color: "white", textAlign: "center" }}>Loading...</p>
+      </div>
+    );
+
+  if (!user)
+    return (
+      <div className="vpsp-profile-card">
+        <p style={{ color: "white", textAlign: "center" }}>User not found</p>
+      </div>
+    );
 
   return (
     <div className="vpsp-profile-card">
       {/* Profile image */}
       <div className="vpsp-profile-image-wrapper">
         <img
-          src={profilePicUrl}
-          alt="Profile"
+          src={user.profilepic || "https://via.placeholder.com/150"}
+          alt={user.username}
           className="vpsp-profile-image"
         />
-
-        {/* Fullscreen icon */}
         <FaExpand
           className="vpsp-maximize-icon"
-          onClick={() => window.open(profilePicUrl, "_blank")}
+          onClick={() => window.open(user.profilepic, "_blank")}
         />
       </div>
 
-      {/* Name */}
+      {/* Username */}
       <div className="vpsp-profile-name">
-        <span className="vpsp-first-name">Wendy</span>
-        <span className="vpsp-last-name">Florence</span>
+        <span className="vpsp-first-name">{user.username}</span>
       </div>
 
       {/* Email */}
-      <div className="vpsp-profile-email">florencewendy32@gmail.com</div>
+      <div className="vpsp-profile-email">{user.email}</div>
 
       {/* Stars */}
       <div className="vpsp-stars">
@@ -39,9 +82,16 @@ const ViewProfileSidePanel = () => {
         ))}
       </div>
 
-      {/* Buttons stacked vertically */}
+      {/* Buttons */}
       <div className="vpsp-button-stack">
-        <button className="vpsp-action-btn vpsp-follow-btn">Follow</button>
+        <button
+          className={`vpsp-action-btn vpsp-follow-btn ${
+            isFollowing ? "following" : ""
+          }`}
+          onClick={toggleFollow}
+        >
+          {isFollowing ? "Following" : "Follow"}
+        </button>
         <button className="vpsp-action-btn">Message Me</button>
         <button className="vpsp-action-btn">View Reviews</button>
       </div>
@@ -50,13 +100,9 @@ const ViewProfileSidePanel = () => {
       <div className="vpsp-about-section">
         <div className="vpsp-about-header">About me</div>
         <p className="vpsp-about-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-          purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor
-          rhoncus dolor purus non enim praesent elementum facilisis leo, vel
-          fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis
-          enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra
-          orci sagittis eu volutpat odio facilisis mauris sit amet massa vitae
-          tortor condimentum lacinia quis vel eros donec ac odio.
+          {user.aboutme && user.aboutme.trim() !== ""
+            ? user.aboutme
+            : "No bio yet."}
         </p>
       </div>
     </div>

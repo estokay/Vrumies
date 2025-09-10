@@ -19,23 +19,17 @@ const TokenSidePanel = () => {
           color: #fff;
         }
 
-        .token-side-panel .logo-circle {
-          width: 80px;
-          height: 80px;
-          background-color: #FFC107;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .token-side-panel .logo-icon {
+          width: 160px;
+          height: 160px;
           margin-bottom: 1.5rem;
-          position: relative;
-          box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
         }
 
-        .token-side-panel .logo-star {
-          color: #000;
-          font-size: 3rem;
-          line-height: 1;
+        .token-side-panel .logo-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
         }
 
         .token-side-panel h2 {
@@ -97,8 +91,11 @@ const TokenSidePanel = () => {
           }
         }
       `}</style>
-      <div className="logo-circle">
-        <span className="logo-star">★</span>
+      <div className="logo-icon">
+        <img 
+          src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1756806527/Tokens-Icon_bhee9s.png" 
+          alt="Tokens Icon" 
+        />
       </div>
       <h2>Vrumies Bump Tokens</h2>
       <p>You have:</p>

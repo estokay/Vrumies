@@ -1,0 +1,77 @@
+.orders-side-panel {
+  width: 350px;
+  height: 1000px;
+  background: linear-gradient(180deg, #636363, #2f2f2f);
+  border-radius: 25px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin: 40px;
+}
+
+.orders-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 900px;
+  padding-right: 5px;
+}
+
+.order-card {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Highlighted card styles */
+.order-card.highlight {
+  background-color: #d9d9d9;
+  color: black; /* main text color */
+}
+
+/* Details text on highlighted card */
+.order-card.highlight .order-details {
+  color: black;
+}
+
+.order-type {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: black; /* always black */
+  text-transform: uppercase;
+}
+
+.order-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.order-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #ccc; /* default color for non-highlighted cards */
+}

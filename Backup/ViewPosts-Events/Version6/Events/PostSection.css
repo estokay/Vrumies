@@ -1,0 +1,242 @@
+.post-section {
+  display: flex;
+  gap: 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+/* Left panel */
+.post-left {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 20px;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  height: 600px; /* adjust height as needed */
+}
+
+.post-content {
+  /* just natural stacking, no special styles */
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.post-title {
+  margin: 10px 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.seller-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.seller-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.seller-name {
+  font-weight: bold;
+}
+
+.seller-reviews {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.review-count {
+  margin-left: 5px;
+  opacity: 0.7;
+}
+
+.message-user {
+  margin-left: auto;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tab {
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.tab.active {
+  font-weight: bold;
+  border-bottom: 2px solid white;
+}
+
+.description {
+  margin: 15px 0;
+  font-size: 0.9rem;
+}
+
+/* Post Details Tab */
+.post-details {
+  margin: 15px 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.post-details p {
+  margin: 8px 0;
+}
+
+.post-details strong {
+  color: #b0ffb0; /* light green highlight for labels */
+}
+
+.post-details a {
+  color: #80c0ff;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.post-details a:hover {
+  color: #ffffff;
+}
+
+/* New container to push this block to bottom */
+.bottom-left-actions {
+  margin-top: auto; /* push to bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.buy-now {
+  background: linear-gradient(90deg, #3a014f, #b000ff);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+/* Updated actions buttons to match VideoSubHeader style */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  background: linear-gradient(to bottom, #444, #000);
+  color: #00ff00;
+  border: 1px solid #666;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.action-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Right panel */
+.post-right {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 10px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.main-image {
+  width: 800px;
+  height: 533px;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #222; /* fallback background so it’s not empty */
+  display: block;
+}
+
+.expand-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  color: green;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.arrow {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.thumb.active {
+  border: 2px solid green;
+  opacity: 1;
+}

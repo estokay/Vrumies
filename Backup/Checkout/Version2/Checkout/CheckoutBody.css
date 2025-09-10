@@ -1,0 +1,171 @@
+.cb-checkout-body {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 25px;
+  border-radius: 12px;
+  color: white;
+  font-family: Arial, sans-serif;
+  max-width: 500px;
+  margin: auto;
+}
+
+.cb-checkout-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cb-checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cb-section {
+  margin-bottom: 25px;
+}
+
+.cb-section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cb-checkout-form input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: white;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.cb-checkout-form input::placeholder {
+  color: #bbb;
+}
+
+.cb-two-col {
+  display: flex;
+  gap: 10px;
+}
+
+.cb-card-element {
+  padding: 12px;
+  border-radius: 8px;
+  background: #222;
+}
+
+/* Billing Fields */
+.cb-billing-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 10px;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  margin-top: 10px;
+}
+
+/* Two-column layout for billing fields */
+.cb-billing-fields .cb-two-col {
+  gap: 10px;
+}
+
+/* Order summary styles */
+.cb-order-summary {
+  padding: 12px;
+  background: rgba(50, 50, 50, 0.5);
+  border-radius: 12px;
+}
+
+.cb-order-summary .cb-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+
+.cb-order-summary .cb-total {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.cb-order-summary hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 10px 0;
+}
+
+/* Toggle switch for shipping = billing */
+.cb-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  margin-left: 10px;
+}
+
+.cb-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cb-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #444;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.cb-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.cb-toggle input:checked + .cb-slider {
+  background: linear-gradient(90deg, #3a014f, #b000ff);
+}
+
+.cb-toggle input:checked + .cb-slider:before {
+  transform: translateX(24px);
+}
+
+.cb-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 10px;
+}
+
+/* Pay Now button */
+.cb-submit-btn {
+  background: linear-gradient(90deg, #3a014f, #b000ff);
+  border: none;
+  padding: 14px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.cb-submit-btn:hover {
+  opacity: 0.9;
+}

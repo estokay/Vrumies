@@ -1,0 +1,40 @@
+.dummy-seeder {
+  background: #1c1c1c;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.dummy-seeder h2 {
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.button-group button {
+  background: #3a8ef6;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button-group button:hover {
+  background: #2f6ecb;
+}
+
+.status-message {
+  font-size: 14px;
+  margin-top: 10px;
+}

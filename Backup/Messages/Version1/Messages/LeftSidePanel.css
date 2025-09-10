@@ -1,0 +1,94 @@
+.lsp-panel {
+  width: 25%;
+  padding: 16px;
+  border-right: 1px solid #555;
+  background-color: #000000;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.lsp-search {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  background-color: #3a3a3a;
+  color: #ffffff;
+}
+
+.lsp-user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lsp-user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.lsp-user-item:hover {
+  background-color: #3a3a3a;
+}
+
+.lsp-user-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lsp-pic-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.lsp-user-pic {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.lsp-online-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  border: 2px solid #2d2d2d;
+}
+
+.lsp-user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lsp-user-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.lsp-user-info p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+.lsp-timestamp {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-left: auto;
+  flex-shrink: 0;
+}

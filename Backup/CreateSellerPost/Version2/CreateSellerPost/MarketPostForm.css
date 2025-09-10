@@ -1,0 +1,150 @@
+.mpf-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Inputs, Textarea, Dropdowns */
+.mpf-post-form input,
+.mpf-post-form textarea,
+.mpf-dropdown {
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mpf-post-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+/* Labels */
+.mpf-post-form .mpf-form-label {
+  font-weight: bold;
+  color: #f72b07;
+}
+
+/* Submit button */
+.mpf-post-form .mpf-submit-btn {
+  background-color: #f72b07;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mpf-post-form .mpf-submit-btn:hover {
+  background-color: #f8150d;
+}
+
+/* Toggle icon buttons */
+.mpf-toggle-buttons-row {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.mpf-toggle-buttons-row img {
+  width: 48px;
+  height: 48px;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mpf-toggle-buttons-row img:hover {
+  background-color: #f72b07;
+  transform: scale(1.05);
+}
+
+/* Hidden fields */
+.mpf-hidden-input {
+  display: none;
+}
+
+/* Upload previews */
+.mpf-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mpf-upload-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mpf-preview-wrapper {
+  position: relative;
+}
+
+.mpf-preview-media {
+  border: 2px solid #f72b07;
+  border-radius: 8px;
+  max-width: 150px;
+  height: auto;
+}
+
+/* Remove button for each preview */
+.mpf-remove-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: red;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Uploading text */
+.mpf-uploading-text {
+  color: #999;
+  font-style: italic;
+}
+
+/* Success message */
+.mpf-post-success-message {
+  background-color: #0d0d0d;
+  color: #f72b07;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Dropdown styling (Condition + Shipping Time) */
+.mpf-dropdown {
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mpf-dropdown:focus {
+  outline: none;
+  border-color: #f8150d;
+  box-shadow: 0 0 5px #f8150d;
+}

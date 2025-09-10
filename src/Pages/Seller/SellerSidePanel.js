@@ -3,10 +3,9 @@ import "./SellerSidePanel.css";
 
 export default function SellerSidePanel({ selectedIndex, onCardClick }) {
   const orders = [
-    { title: "Hammaka Hitch Stand Combo", id: "#254685", date: "06/06/2023", price: "$65.00", type: "Market" },
-    { title: "Cars & Coffee Meetup", id: "#254686", date: "06/06/2023", price: "$65.00", type: "Event" },
-    { title: "Frame & Body Repair Service", id: "#254687", date: "06/06/2023", price: "$65.00", type: "Directory" },
-    { title: "Hammaka Hitch Stand Combo", id: "#254688", date: "06/06/2023", price: "$65.00", type: "Market" },
+    { title: "Hammaka Hitch Stand Combo", id: "#254685", date: "06/06/2023", price: "$375.99", type: "Market" },
+    { title: "Cars & Coffee Meetup", id: "#254686", date: "06/06/2023", price: "$25.00", type: "Event" },
+    { title: "Frame & Body Repair Service", id: "#254687", date: "06/06/2023", price: "$550.00", type: "Directory" },
   ];
 
   const typeColors = {

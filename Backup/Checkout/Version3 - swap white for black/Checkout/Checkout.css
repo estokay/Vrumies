@@ -1,0 +1,13 @@
+.content-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Optional: center checkout form */
+.checkout-main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

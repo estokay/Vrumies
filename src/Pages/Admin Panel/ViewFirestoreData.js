@@ -7,6 +7,8 @@ import Requests from "./Collections/Requests";
 import Market from "./Collections/Market";
 import Events from "./Collections/Events";
 import Directory from "./Collections/Directory";
+import Reports from "./Collections/Reports";
+import Orders from "./Collections/Orders";
 
 function ViewFirestoreData() {
   const tabs = [
@@ -18,6 +20,8 @@ function ViewFirestoreData() {
     "Market",
     "Events",
     "Directory",
+    "Reports",
+    "Orders",
   ];
 
   const [activeTab, setActiveTab] = useState("Users");
@@ -40,6 +44,10 @@ function ViewFirestoreData() {
         return <Events />;
       case "Directory":
         return <Directory />;
+      case "Reports":
+        return <Reports />;
+      case "Orders":
+        return <Orders />;
       default:
         return null;
     }
