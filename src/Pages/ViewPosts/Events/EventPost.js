@@ -8,7 +8,7 @@ import PostSection from './PostSection';
 import EventCommentsSection from './EventCommentsSection';
 import EventPostSidePanel from './EventPostSidePanel';
 import '../../../App.css';
-import './PostSection.css';
+import './EventPost.css'; // renamed for clarity
 
 const EventPost = () => {
   const { id } = useParams();
@@ -32,17 +32,20 @@ const EventPost = () => {
     checkPostExists();
   }, [id]);
 
-  if (loading) return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;
+  if (loading)
+    return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;
 
   return (
-    <div className="content-page">
+    <div className="vpe-content-page">
       <EventHeader />
-      <PostSection postId={id} />  {/* Pass only the post ID */}
-      <div className="bottom-section-container">
-        <div className="bottom-section-main-content">
+      <PostSection postId={id} />
+
+      <div className="vpe-bottom-section-container">
+        <div className="vpe-bottom-section-main-content">
           <EventCommentsSection postId={id} />
         </div>
-        <div className="bottom-section-side-panel">
+
+        <div className="vpe-bottom-section-side-panel">
           <EventPostSidePanel postId={id} />
         </div>
       </div>

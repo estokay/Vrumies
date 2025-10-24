@@ -3,14 +3,14 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import NavbarWithPost from './NavbarWithPost';
 
 // import your pages
-import ContentPage from '../Pages/MainCategories/Videos/ContentPage';
+import VideosPage from '../Pages/MainCategories/Videos/VideosPage';
 import RequestPage from '../Pages/MainCategories/Requests/RequestPage';
 import MarketPage from '../Pages/MainCategories/Market/MarketPage';
 import EventsPage from '../Pages/MainCategories/Events/EventsPage';
 import DirectoryPage from '../Pages/MainCategories/Directory/DirectoryPage';
 import ViewVideoPostPage from '../Pages/ViewPosts/Videos/ViewVideoPostPage';
 import AdminPanel from '../Pages/Admin Panel/AdminPanel';
-import BlogContentPage from '../Pages/MainCategories/Blogs/BlogContentPage';
+import BlogPage from '../Pages/MainCategories/Blogs/BlogPage';
 import VehiclePage from '../Pages/MainCategories/Vehicles/VehiclePage';
 import ForumPage from '../Pages/MainCategories/Forums/ForumPage';
 import OrdersPage from '../Pages/Orders/OrdersPage';
@@ -24,6 +24,11 @@ import MyProfile from '../Pages/MyProfile/MyProfile';
 import ViewProfile from '../Pages/ViewProfile/ViewProfile';
 import SellerPage from '../Pages/Seller/SellerPage';
 import EventPost from '../Pages/ViewPosts/Events/EventPost';
+import DirectoryPost from '../Pages/ViewPosts/Directory/DirectoryPost';
+import ForumPost from '../Pages/ViewPosts/Forums/ForumPost';
+import BlogPost from '../Pages/ViewPosts/Blogs/BlogPost';
+import RequestPost from '../Pages/ViewPosts/Requests/RequestPost';
+import VehiclePost from '../Pages/ViewPosts/Vehicles/VehiclePost';
 import BookmarksPage from '../Pages/Bookmarks/BookmarksPage';
 import TestPage from '../Test/TestPage';
 import Checkout from '../Pages/Checkout/Checkout';
@@ -44,8 +49,8 @@ const PageRouter = () => (
     <Route path="/signin" element={<SignIn />} />
 
     {/* Pages with Navbar */}
-    <Route path="/videos" element={<PageWithNavbar><ContentPage /></PageWithNavbar>} />
-    <Route path="/blogs" element={<PageWithNavbar><BlogContentPage /></PageWithNavbar>} />
+    <Route path="/videos" element={<PageWithNavbar><VideosPage /></PageWithNavbar>} />
+    <Route path="/blogs" element={<PageWithNavbar><BlogPage /></PageWithNavbar>} />
     <Route path="/forums" element={<PageWithNavbar><ForumPage /></PageWithNavbar>} />
     <Route path="/vehicles" element={<PageWithNavbar><VehiclePage /></PageWithNavbar>} />
     <Route path="/request" element={<PageWithNavbar><RequestPage /></PageWithNavbar>} />
@@ -53,6 +58,11 @@ const PageRouter = () => (
     <Route path="/marketpost/:id" element={<PageWithNavbar><MarketPost /></PageWithNavbar>} />
     <Route path="/events" element={<PageWithNavbar><EventsPage /></PageWithNavbar>} />
     <Route path="/eventpost/:id" element={<PageWithNavbar><EventPost /></PageWithNavbar>} />
+    <Route path="/directorypost/:id" element={<PageWithNavbar><DirectoryPost /></PageWithNavbar>} />
+    <Route path="/blogpost/:id" element={<PageWithNavbar><BlogPost /></PageWithNavbar>} />
+    <Route path="/requestpost/:id" element={<PageWithNavbar><RequestPost /></PageWithNavbar>} />
+    <Route path="/forumpost/:id" element={<PageWithNavbar><ForumPost /></PageWithNavbar>} />
+    <Route path="/vehiclepost/:id" element={<PageWithNavbar><VehiclePost /></PageWithNavbar>} />
     <Route path="/directory" element={<PageWithNavbar><DirectoryPage /></PageWithNavbar>} />
     <Route path="/videopost/:id" element={<PageWithNavbar><ViewVideoPostPage /></PageWithNavbar>} />
     <Route path="/adminpanel" element={<PageWithNavbar><AdminPanel /></PageWithNavbar>} />

@@ -24,7 +24,7 @@ const MarketHeader = () => {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          background-image: url('https://kupiiline.com/wp-content/uploads/2023/08/capture-51.webp');
+          background-image: url('https://www.roadangelgroup.com/cdn/shop/articles/Driving_Into_The_Future_Featured.png?v=1687957466&width=1500');
           background-size: cover;       /* Makes image fill container */
         background-position: center;  /* Centers the image */
           border-radius: 0rem;

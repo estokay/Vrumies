@@ -1,4 +1,4 @@
-.orders-side-panel {
+.osp-panel {
   width: 350px;
   height: 1000px;
   background: linear-gradient(180deg, #636363, #2f2f2f);
@@ -9,23 +9,26 @@
   margin: 40px;
 }
 
-.orders-title {
+.osp-title {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
+  color: rgb(2, 194, 2);
+  text-shadow: '2px 2px 6px #000';
 }
 
-.orders-list {
+.osp-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
   max-height: 900px;
-  padding-right: 5px;
+  padding: 10px 5px 5px 5px;
+  box-sizing: border-box;
 }
 
-.order-card {
+.osp-card {
   background-color: #1f1f1f;
   border-radius: 12px;
   padding: 15px;
@@ -33,45 +36,55 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.order-card:hover {
+.osp-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
 }
 
-/* Highlighted card styles */
-.order-card.highlight {
+.osp-highlight {
   background-color: #d9d9d9;
-  color: black; /* main text color */
-}
-
-/* Details text on highlighted card */
-.order-card.highlight .order-details {
   color: black;
 }
 
-.order-type {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 3px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: bold;
-  color: black; /* always black */
-  text-transform: uppercase;
+.osp-highlight .osp-card-bottom span {
+  color: black;
 }
 
-.order-title {
+.osp-card-title {
   font-weight: bold;
   margin-bottom: 10px;
   font-size: 16px;
 }
 
-.order-details {
+/* Bottom row: type left, date center, price right */
+.osp-card-bottom {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 14px;
-  color: #ccc; /* default color for non-highlighted cards */
+  color: #ccc;
+}
+
+.osp-card-type {
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.osp-card-date {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.osp-card-price {
+  text-align: right;
 }

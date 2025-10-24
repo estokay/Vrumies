@@ -1,37 +1,125 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { db } from '../../../Components/firebase';
+import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { FaComment } from 'react-icons/fa';
 import './ForumPostLayout.css';
 
-function ForumPostLayout({ thumbnail, title, creator, date, views, likes, comments, profilePic }) {
+function ForumPostLayout({ id, images, title, createdAt, userId }) {
+  const [profilePic, setProfilePic] = useState(`${process.env.PUBLIC_URL}/default-profile.png`);
+  const [username, setUsername] = useState("Unknown");
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+  const [commentsCount, setCommentsCount] = useState(0);
+  const [tokens, setTokens] = useState(0);
+
+  const formattedDate = createdAt
+    ? new Date(createdAt.seconds * 1000).toLocaleDateString()
+    : 'Date not available';
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!userId) return;
+      try {
+        const userRef = doc(db, "Users", userId);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          setUsername(data.username || "Unknown");
+          setProfilePic(data.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUserData();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchPostStats = async () => {
+      try {
+        const postRef = doc(db, "Posts", id);
+        const postSnap = await getDoc(postRef);
+        if (postSnap.exists()) {
+          const data = postSnap.data();
+          setLikes(data.likesCounter || 0);
+          setDislikes(data.dislikesCounter || 0);
+          setTokens(data.tokens || 0);
+        }
+        const commentsSnap = await getDocs(collection(db, "Posts", id, "comments"));
+        setCommentsCount(commentsSnap.size);
+      } catch (error) {
+        console.error("Error fetching post stats:", error);
+      }
+    };
+    fetchPostStats();
+  }, [id]);
+
   return (
-    <a href="/forum/123" className="forum-post-layout">
+    <Link to={`/forumpost/${id}`} className="events-post-layout">
       <div className="card-header">
         <div className="header-left">
-          <img src={profilePic} alt={creator} className="profile-pic" />
+          <img src={profilePic} alt="Creator" className="profile-pic" />
           <div className="creator-info">
-            <p className="creator-name">{creator}</p>
-            <p className="date">{date}</p>
+            <p className="creator-name">{username}</p>
+            <span className="date">{formattedDate}</span>
           </div>
         </div>
-        <span className="points">13 <span className="star">⭐</span></span>
+        <div className="header-right">
+          <img 
+            src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1756830937/star_wvusn3.png" 
+            alt="Star" 
+            className="star-icon"
+          />
+          <span className="review-text">N/A</span>
+        </div>
       </div>
 
       <div className="thumbnail-container">
-        <img src={thumbnail} alt={title} className="thumbnail" />
+        <img
+          src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
+          alt={title || 'Event Thumbnail'}
+          className="thumbnail"
+        />
       </div>
 
-      <h4 className="forum-post-title">{(title || 'Title of Forum Post').toUpperCase()}</h4>
+      <h4 className="events-post-title">{(title || 'Untitled Event').toUpperCase()}</h4>
 
       <div className="card-footer">
-        <span className="likes">
-          <img src={`${process.env.PUBLIC_URL}/like.png`} alt="Likes" />
-          {likes}
-        </span>
-        <span className="comments">
-          <img src={`${process.env.PUBLIC_URL}/comment.jpg`} alt="Comments" />
-          {comments}
-        </span>
+        <div className="footer-left">
+          <span className="footer-item">
+            <img 
+              src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1756829309/like_elthi2.png"
+              alt="Like"
+              className="footer-icon custom-like"
+            />
+            {likes}
+          </span>
+          <span className="footer-item">
+            <img 
+              src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1756829309/dislike_wivlom.png"
+              alt="Dislike"
+              className="footer-icon custom-dislike"
+            />
+            {dislikes}
+          </span>
+        </div>
+        <div className="footer-right">
+          <span className="footer-item">
+            <img 
+              src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1756806527/Tokens-Icon_bhee9s.png" 
+              alt="Tokens Icon" 
+              className="footer-icon token-icon-small"
+            />
+            {tokens}
+          </span>
+          <span className="footer-item">
+            <FaComment className="footer-icon comment" />
+            {commentsCount}
+          </span>
+        </div>
       </div>
-    </a>
+    </Link>
   );
 }
 

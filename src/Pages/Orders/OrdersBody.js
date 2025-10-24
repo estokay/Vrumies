@@ -1,25 +1,35 @@
 import React, { useState } from "react";
 import OrdersSidePanel from "./OrdersSidePanel";
-import DirectoryVariant from "./DirectoryVariant";
-import EventVariant from "./EventVariant";
-import MarketVariant from "./MarketVariant";
+import DirectoryVariant from "./OrderDetails/DirectoryVariant";
+import EventVariant from "./OrderDetails/EventVariant";
+import MarketVariant from "./OrderDetails/MarketVariant";
 import "./OrdersBody.css";
 
 export default function OrdersBody() {
-  const [selectedIndex, setSelectedIndex] = useState(null); // no selection initially
+  const [selectedOrder, setSelectedOrder] = useState(null); // store full order object
 
   const renderRightComponent = () => {
-    if (selectedIndex === 0) return <MarketVariant />;
-    if (selectedIndex === 1) return <EventVariant />;
-    if (selectedIndex === 2) return <DirectoryVariant />;
-    return <div>Select an order to see details</div>;
+    if (!selectedOrder) return <div>Select an order to see details</div>;
+
+    const { id, type } = selectedOrder;
+
+    switch (type) {
+      case "market":
+        return <MarketVariant orderId={id} />;
+      case "event":
+        return <EventVariant orderId={id} />;
+      case "directory":
+        return <DirectoryVariant orderId={id} />;
+      default:
+        return <div>Unknown order type</div>;
+    }
   };
 
   return (
     <div className="orders-body-container">
       <OrdersSidePanel
-        selectedIndex={selectedIndex}
-        onCardClick={(index) => setSelectedIndex(index)}
+        selectedOrder={selectedOrder}
+        onCardClick={(order) => setSelectedOrder(order)}
       />
       <div className="orders-body-right">{renderRightComponent()}</div>
     </div>

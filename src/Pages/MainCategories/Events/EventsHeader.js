@@ -18,7 +18,7 @@ const EventsHeader = () => {
 
       <div className="right-side">
         <img
-          src={`${process.env.PUBLIC_URL}/request-icon.png`}
+          src={`${process.env.PUBLIC_URL}/category-icons/event.png`}
           alt="Events Icon"
           width="70"
           height="70"

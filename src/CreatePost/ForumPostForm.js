@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../Components/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import './ForumPostForm.css';
 
 const ForumPostForm = () => {
@@ -80,6 +81,14 @@ const ForumPostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      setMessage('❌ You must be signed in to submit a post.');
+      return;
+    }
+
     const postData = {
       title: formData.title || '',
       description: formData.description || '',
@@ -88,6 +97,7 @@ const ForumPostForm = () => {
       tokens: formData.tokens || 0,
       createdAt: Timestamp.now(),
       type: 'forum',
+      userId: user.uid,
       likesCounter: 0,
       dislikesCounter: 0,
       likes: [],

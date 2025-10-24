@@ -1,4 +1,4 @@
-// ForumRightSidePanel.js
+// EventsRightSidePanel.js
 import React from 'react';
 import './ForumRightSidePanel.css';
 import ForumPostLayout from './ForumPostLayout';

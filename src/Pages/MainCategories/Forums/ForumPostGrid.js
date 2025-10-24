@@ -11,7 +11,7 @@ function ForumPostGrid({ posts }) {
   const displayedPosts = posts.slice(0, 16);
 
   return (
-    <div className="forum-post-grid">
+    <div className="events-post-grid">
       {displayedPosts.map((post, index) => (
         <div key={post.id || index}>
           <Link

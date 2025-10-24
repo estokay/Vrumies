@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './BlogPostForm.css';
 import { db } from '../Components/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 
 const BlogPostForm = () => {
@@ -124,6 +125,14 @@ const BlogPostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      setMessage('❌ You must be signed in to submit a post.');
+      return;
+    }
+
     const postData = {
       title: formData.title || '',
       description: formData.description || '',
@@ -133,6 +142,7 @@ const BlogPostForm = () => {
       tokens: formData.tokens || 0,
       createdAt: Timestamp.now(),
       type: 'blog',
+      userId: user.uid,
       likesCounter: 0,
       dislikesCounter: 0,
       likes: [],

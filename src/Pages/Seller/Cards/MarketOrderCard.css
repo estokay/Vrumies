@@ -1,0 +1,50 @@
+.market-card {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.market-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+.market-card-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.market-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.market-card-type {
+  background-color: #ff6b6b;
+  color: black;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.market-card-status.status-in-progress {
+  color: orange;
+}
+
+.market-card-status.status-completed {
+  color: limegreen;
+}
+
+.market-card-status.status-dispute {
+  color: red;
+}

@@ -1,4 +1,4 @@
-// RightSidePanel.js
+// EventsRightSidePanel.js
 import React from 'react';
 import './VehicleRightSidePanel.css';
 import VehiclePostLayout from './VehiclePostLayout';

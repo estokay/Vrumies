@@ -1,0 +1,13 @@
+.video-text-area {
+  background-color: #0a0f0a;
+  color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.video-text-area p {
+  margin: 0 0 20px 0;
+}

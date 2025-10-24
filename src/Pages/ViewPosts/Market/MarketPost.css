@@ -1,4 +1,4 @@
-.bottom-section-container {
+.vpe-bottom-section-container {
   display: flex;
   gap: 20px;
   align-items: flex-start;
@@ -6,14 +6,22 @@
   box-sizing: border-box;
 }
 
-.bottom-section-main-content {
+.vpe-bottom-section-main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.bottom-section-side-panel {
+.vpe-bottom-section-side-panel {
   width: 350px;
   flex-shrink: 0;
+}
+
+/* Optional wrapper styles */
+.vpe-content-page {
+  background-color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

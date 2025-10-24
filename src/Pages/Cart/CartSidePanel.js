@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements, Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from "../../AuthContext";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "firebase/firestore";
 import { db } from "../../Components/firebase";
 import "./CartSidePanel.css";
 
-const stripePromise = loadStripe("pk_test_XXXX"); // Replace with your Stripe key
+const stripePromise = loadStripe("pk_test_51JN8mDDR30hjV6c2f6WkKbqaLIJ91qsbyfK9Ho1Ge3hCwL2b3aZnWim7Ew9RhfprRoiInPWDRsXC8gqcdW6v4ST700vBUAakpE"); // Replace with your Stripe key
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -92,6 +100,7 @@ function CheckoutForm() {
       },
     };
 
+    // Create Stripe payment method
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
@@ -100,9 +109,53 @@ function CheckoutForm() {
 
     if (error) {
       setMessage(`Error: ${error.message}`);
-    } else {
-      setMessage("Success! Payment method created.");
-      console.log(paymentMethod);
+      return;
+    }
+
+    // Payment successful — create orders in Firestore
+    try {
+      for (let item of cartItems) {
+        // Determine collection type (Market, Event, Directory)
+        let postCollection = "Posts";
+        if (item.type === "Market") postCollection = "MarketPosts";
+        else if (item.type === "Event") postCollection = "EventPosts";
+        else if (item.type === "Directory") postCollection = "DirectoryPosts";
+
+        const postRef = doc(db, postCollection, item.postId);
+        const postSnap = await getDoc(postRef);
+        if (!postSnap.exists()) continue;
+
+        const postData = postSnap.data();
+
+        // Create order document
+        const orderRef = doc(collection(db, "Orders"));
+        await setDoc(orderRef, {
+          postId: item.postId,
+          postType: item.type,
+          postData: postData, // copy all post data
+          buyerInfo: {
+            fullName: formData.fullName,
+            email: formData.email,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zip: formData.zip,
+          },
+          price: parsePrice(item.price),
+          paymentMethod: "Card",
+          timestamp: serverTimestamp(),
+          status: 1, // 1 = Order Started
+          sellerId: postData.sellerId || postData.sellerUID || "",
+        });
+
+        // Remove item from cart
+        await deleteDoc(doc(db, "Users", currentUser.uid, "cart", item.id));
+      }
+
+      setMessage("Payment successful! Orders created.");
+    } catch (err) {
+      console.error("Error creating orders:", err);
+      setMessage("Error creating orders. Check console.");
     }
   };
 

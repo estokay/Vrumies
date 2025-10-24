@@ -1,0 +1,151 @@
+.mv-custom-panel {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  border-radius: 25px;
+  padding: 20px;
+  width: 700px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.mv-custom-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: rgb(2, 194, 2);
+}
+
+.mv-custom-section {
+  margin-bottom: 20px;
+}
+
+.mv-custom-section h3 {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.mv-custom-info {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+
+.mv-custom-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.mv-custom-item img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.mv-custom-btn-view {
+  background: linear-gradient(to right, purple, magenta);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-top: 5px;
+}
+
+.mv-custom-payment {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.mv-custom-btn-message {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 12px;
+}
+
+.mv-custom-timeline-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.mv-custom-timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mv-custom-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: gray;
+}
+
+.mv-custom-circle.active {
+  background: white;
+  color: green;
+  border-color: green;
+}
+
+.mv-custom-timeline-label {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+  color: gray;
+}
+
+.mv-custom-timeline-label.active-label {
+  color: green;
+  font-weight: bold;
+}
+
+.mv-custom-arrow {
+  font-size: 20px;
+  color: black;
+}
+
+.mv-custom-status-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.mv-custom-btn-complete {
+  background: green;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.mv-custom-btn-dispute {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* Carrier + Tracking side by side */
+.mv-custom-tracking-display {
+  display: flex;
+  gap: 100px;
+  margin-top: 10px;
+}
+
+.mv-custom-tracking-display div {
+  display: flex;
+  flex-direction: column;
+}

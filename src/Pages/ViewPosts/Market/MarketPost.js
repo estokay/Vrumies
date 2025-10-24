@@ -1,34 +1,53 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import NavbarWithPost from '../../../Components/NavbarWithPost';
-import '../../../App.css';
-import './MarketPost.css';
-import { examplePosts } from '../../../Data/MarketDummyData';
-import PostSection from './PostSection';
-import VideoCommentsSection from './VideoCommentsSection';
-import VideoPostSidePanel from './VideoPostSidePanel';
+import { db } from '../../../Components/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import MarketHeader from './MarketHeader';
+import PostSection from './PostSection';
+import MarketCommentsSection from './MarketCommentsSection';
+import MarketPostSidePanel from './MarketPostSidePanel';
+import '../../../App.css';
+import './MarketPost.css'; // renamed for clarity
 
 const MarketPost = () => {
   const { id } = useParams();
-  const post = examplePosts.find((p) => p.id === Number(id));
+  const [loading, setLoading] = useState(true);
 
-  if (!post) {
-    return <p style={{ color: 'white', textAlign: 'center' }}>Post not found.</p>;
-  }
+  useEffect(() => {
+    const checkPostExists = async () => {
+      setLoading(true);
+      try {
+        const postRef = doc(db, 'Posts', id);
+        const postSnap = await getDoc(postRef);
+        if (!postSnap.exists() || postSnap.data().type !== 'market') {
+          console.warn('Post not found or not an market post');
+        }
+      } catch (err) {
+        console.error('Error fetching post:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkPostExists();
+  }, [id]);
+
+  if (loading)
+    return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;
 
   return (
-    <div className="content-page">
-      
+    <div className="vpe-content-page">
       <MarketHeader />
-      <PostSection />
-      <div className="bottom-section-container">
-      <div className="bottom-section-main-content">
-        <VideoCommentsSection />
+      <PostSection postId={id} />
+
+      <div className="vpe-bottom-section-container">
+        <div className="vpe-bottom-section-main-content">
+          <MarketCommentsSection postId={id} />
+        </div>
+
+        <div className="vpe-bottom-section-side-panel">
+          <MarketPostSidePanel postId={id} />
+        </div>
       </div>
-      <div className="bottom-section-side-panel">
-        <VideoPostSidePanel />
-      </div>
-    </div>
     </div>
   );
 };

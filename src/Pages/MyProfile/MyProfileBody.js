@@ -1,6 +1,6 @@
 import React from "react";
 import "./MyProfileBody.css";
-import PostGrid from "../MainCategories/Videos/PostGrid";
+import VideosPostGrid from "../MainCategories/Videos/VideosPostGrid";
 import BlogPostGrid from "../MainCategories/Blogs/BlogPostGrid";
 import ForumPostGrid from "../MainCategories/Forums/ForumPostGrid";
 import VehiclePostGrid from "../MainCategories/Vehicles/VehiclePostGrid";
@@ -53,7 +53,7 @@ export default function MyProfileBody({ selectedCategory }) {
       {/* Dynamic title */}
       <h2 className="profile-body-title">{categoryLabels[selectedCategory]}</h2>
 
-      <PostGrid posts={postsToShow} />
+      <VideosPostGrid posts={postsToShow} />
     </div>
   );
 }

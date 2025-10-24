@@ -1,0 +1,167 @@
+.oe-event-details-panel {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  border-radius: 25px;
+  padding: 20px;
+  width: 700px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.oe-panel-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: rgb(2, 194, 2);
+}
+
+.oe-section {
+  margin-bottom: 20px;
+}
+
+.oe-section h3 {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.oe-order-info {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+
+.oe-ticket-file {
+  margin-top: 10px;
+}
+
+.oe-ticket-download {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.oe-ticket-icon {
+  font-size: 40px;
+  color: magenta;
+}
+
+.oe-ticket-name {
+  color: magenta;
+  font-weight: bold;
+}
+
+.oe-ticket-link {
+  color: magenta;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.oe-item-card {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.oe-item-card img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.oe-btn-view {
+  background: linear-gradient(to right, purple, magenta);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-top: 5px;
+}
+
+.oe-payment-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.oe-btn-message {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 12px;
+}
+
+/* Timeline Styles */
+.oe-timeline-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.oe-timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.oe-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: gray;
+}
+
+.oe-circle.active {
+  background: white;
+  color: green;
+  border-color: green;
+}
+
+.oe-timeline-label {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+  color: gray;
+}
+
+.oe-timeline-label.active-label {
+  color: green;
+  font-weight: bold;
+}
+
+.oe-arrow {
+  font-size: 20px;
+  color: black;
+}
+
+.oe-status-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.oe-btn-complete {
+  background: green;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.oe-btn-dispute {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}

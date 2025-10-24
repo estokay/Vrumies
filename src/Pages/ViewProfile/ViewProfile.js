@@ -1,4 +1,3 @@
-import NavbarWithPost from '../../Components/NavbarWithPost';
 import '../../App.css';
 import './ViewProfile.css';
 import React, { useState } from "react";

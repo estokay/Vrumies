@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
-import NavbarWithPost from '../../../Components/NavbarWithPost';
+
 import EventsHeader from './EventsHeader';
 import '../../../App.css';
 import EventsRightSidePanel from './EventsRightSidePanel';

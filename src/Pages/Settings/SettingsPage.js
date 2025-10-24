@@ -1,4 +1,3 @@
-import NavbarWithPost from '../../Components/NavbarWithPost';
 import '../../App.css';
 import SettingsSidePanel from './SettingsSidePanel';
 import SettingsBody from "./SettingsBody";

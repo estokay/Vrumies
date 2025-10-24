@@ -1,24 +1,55 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { db } from '../../Components/firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+
+
 import BookmarksHeader from './BookmarksHeader';
-import '../../App.css'; // Assuming this is where the shared styles live
-import PostGrid from './PostGrid';
-import { examplePosts } from '../../Data/VideoDummyData';
+import '../../App.css';
+import BookmarksRightSidePanel from './BookmarksRightSidePanel';
 import './BookmarksPage.css';
-import RightSidePanel from './RightSidePanel';
+import BookmarksPostGrid from './BookmarksPostGrid';
 
+const BookmarksPage = () => {
+  const [posts, setPosts] = useState([]);
 
-const ContentPage = () => {
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // Build query: only posts where type == "event"
+        const postsRef = collection(db, 'Posts');
+        const q = query(postsRef, where('type', '==', 'event'));
+
+        const querySnapshot = await getDocs(q);
+
+        const data = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching event posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
-    <div className="content-page">
-      {/* <NavbarWithPost /> */}
+    <div className="events-page">
       <BookmarksHeader />
-      <div className="main-content">
-        <PostGrid posts={examplePosts} />
-        <RightSidePanel posts={examplePosts} />
+      <div className="main-events">
+        {posts.length === 0 ? (
+          <p className="no-events">No bookmarks yet...</p>
+        ) : (
+          <>
+            <BookmarksPostGrid posts={posts} />
+            <BookmarksRightSidePanel posts={posts} />
+          </>
+        )}
       </div>
-      
     </div>
   );
 };
 
-export default ContentPage;
+export default BookmarksPage;

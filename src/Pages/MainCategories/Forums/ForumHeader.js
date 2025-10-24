@@ -25,7 +25,7 @@ const ForumHeader = () => {
 
       <nav style={styles.nav}>
         <ul style={styles.navList}>
-          <li style={styles.navItem}><Link to="/" style={{ color: "white", textDecoration: "none" }}>Videos</Link></li>
+          <li style={styles.navItem}><Link to="/videos" style={{ color: "white", textDecoration: "none" }}>Videos</Link></li>
           <li style={styles.navItem}><Link to="/blogs" style={{ color: "white", textDecoration: "none" }}>Blogs</Link></li>
           <li style={{ ...styles.navItem, ...styles.activeNavItem }}>Forums</li>
           <li style={styles.navItem}><Link to="/vehicles" style={{ color: "white", textDecoration: "none" }}>Vehicles</Link></li>

@@ -24,7 +24,7 @@ const EventHeader = () => {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          background-image: url('https://kupiiline.com/wp-content/uploads/2023/08/capture-51.webp');
+          background-image: url('https://images.squarespace-cdn.com/content/v1/6598c8e83ff0af0197ff19f9/a05c7d5e-3711-48bb-a4c8-f3ce0f076355/JCCI-2024-Banner.jpg');
           background-size: cover;       /* Makes image fill container */
         background-position: center;  /* Centers the image */
           border-radius: 0rem;

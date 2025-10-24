@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaTimes, FaStar } from "react-icons/fa";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 import "./CartBody.css";
 import { db } from "../../Components/firebase";
-import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import { collection, onSnapshot, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../AuthContext";
 
 export default function CartBody() {
@@ -49,9 +49,12 @@ export default function CartBody() {
           const priceNumber = parsePrice(item.price);
           return (
             <div className="cart-item" key={item.id}>
+              {/* Remove item */}
               <div className="cart-remove" onClick={() => handleRemove(item.id)}>
                 <FaTimes />
               </div>
+
+              {/* Seller info */}
               <div className="cart-top">
                 <img
                   src={item.sellerAvatar || "https://randomuser.me/api/portraits/men/32.jpg"}
@@ -71,14 +74,14 @@ export default function CartBody() {
                   </div>
                 </div>
               </div>
+
+              {/* Product info */}
               <div className="cart-content">
-                {/* Image as link */}
                 <Link to={`/eventpost/${item.postId}`}>
                   <img src={item.image} alt={item.title} className="product-image" />
                 </Link>
 
                 <div className="product-info">
-                  {/* Title as link with inline style for white color */}
                   <Link
                     to={`/eventpost/${item.postId}`}
                     style={{ color: "white", textDecoration: "none" }}

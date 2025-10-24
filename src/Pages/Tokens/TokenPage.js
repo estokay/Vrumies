@@ -1,4 +1,3 @@
-import NavbarWithPost from '../../Components/NavbarWithPost';
 import '../../App.css';
 import TokenHeader from './TokenHeader';
 import TokenSidePanel from './TokenSidePanel';

@@ -1,4 +1,4 @@
-// DirectoryRightSidePanel.js
+// EventsRightSidePanel.js
 import React from 'react';
 import './DirectoryRightSidePanel.css';
 import DirectoryPostLayout from './DirectoryPostLayout';

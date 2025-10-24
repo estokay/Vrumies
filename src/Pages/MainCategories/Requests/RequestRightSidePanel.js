@@ -1,4 +1,4 @@
-// RightSidePanel.js
+// RequestRightSidePanel.js
 import React from 'react';
 import './RequestRightSidePanel.css';
 import RequestPostLayout from './RequestPostLayout';

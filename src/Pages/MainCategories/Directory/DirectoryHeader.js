@@ -1,127 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './DirectoryHeader.css';
 
 const DirectoryHeader = () => {
+  const [location, setLocation] = useState('');
+  const [filter, setFilter] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  const [search, setSearch] = useState('');
+
   return (
-    <div style={{ ...styles.container, height: '260px', minHeight: undefined }}>
-      <div style={styles.leftSide}>
-        <h1 style={styles.title}>
-          <span style={styles.greenHighlight}>DIRECTORY POSTS</span>
+    <div className="directory-header-container">
+      <div className="left-side">
+        <h1 className="title">
+          <span className="green-highlight">DIRECTORY POSTS</span>
         </h1>
-        <p style={styles.subtitle}>
-          MAKE A DIRECTORY POST TO PROMOTE YOUR AUTOMOTIVE SERVICES
-        </p>
+        <p className="subtitle">MAKE A DIRECTORY POST TO PROMOTE YOUR AUTOMOTIVE SERVICES</p>
       </div>
-      <div style={styles.rightSide}>
+
+      <div className="right-side">
         <img
-          src={`${process.env.PUBLIC_URL}/request-icon.png`}
-          alt="Directory Icon"
+          src={`${process.env.PUBLIC_URL}/category-icons/directory.png`}
+          alt="Events Icon"
           width="70"
           height="70"
-          style={{ filter: 'drop-shadow(0 0 3px #39FF14)' }}
+          className="events-icon"
         />
       </div>
 
-      <div style={styles.bottomBar}>
-        <button style={styles.locationButton}>
-          <span role="img" aria-label="location">📍</span> Location of Post
-        </button>
+      <div className="bottom-bar">
+        {/* Location Dropdown */}
+        <div className="select-wrapper">
+          <label className="select-label">Location of Post</label>
+          <select
+            className="select location-select"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          >
+            <option>Show All</option>
+            <option>Houston, TX</option>
+            <option>Dallas, TX</option>
+            <option>San Antonio, TX</option>
+          </select>
+        </div>
 
-        <select style={styles.select}>
-          <option>Filter Options ▼</option>
-          <option>Option 1</option>
-          <option>Option 2</option>
-        </select>
+        {/* Filter Dropdown */}
+        <div className="select-wrapper">
+          <label className="select-label">Filter Options</label>
+          <select
+            className="select filter-select"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option>Show All</option>
+            <option>Today</option>
+            <option>This Week</option>
+            <option>This Month</option>
+          </select>
+        </div>
 
-        <select style={styles.select}>
-          <option>Sort By Best Match ▼</option>
-          <option>Newest</option>
-          <option>Oldest</option>
-        </select>
+        {/* Sort By Dropdown */}
+        <div className="select-wrapper">
+          <label className="select-label">Sort By</label>
+          <select
+            className="select sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option>Show All</option>
+            <option>Newest</option>
+            <option>Likes</option>
+            <option>Highest Rating</option>
+          </select>
+        </div>
 
-        <input
-          type="search"
-          placeholder="Type your search here..."
-          style={styles.searchInput}
-        />
+        {/* Search Input */}
+        <div className="search-wrapper">
+          <label className="select-label">Search</label>
+          <input
+            type="search"
+            placeholder="Type your search here..."
+            className="search-input"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    position: 'relative',
-    color: '#fff',
-    padding: '20px 40px',
-    fontFamily: "'Arial', sans-serif",
-    backgroundImage:
-      'url("https://assets.goaaa.com/image/upload/w_2880,c_fill,q_auto,f_auto/v1742591982/AAAGilbert-428_retouched.jpg")',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    borderRadius: '8px',
-    overflow: 'hidden',
-  },
-  leftSide: {
-    maxWidth: '50%',
-  },
-  title: {
-    fontSize: '48px',
-    fontWeight: '900',
-    margin: 0,
-    letterSpacing: '2px',
-    textAlign: 'left',  // added
-    textShadow: '2px 2px 6px #000',
-  },
-  greenHighlight: {
-    color: '#00FF00',
-    textShadow: '1px 1px 0 #000',
-  },
-  subtitle: {
-    marginTop: '8px',
-    fontWeight: '600',
-    fontSize: '18px',
-    letterSpacing: '1.5px',
-    textAlign: 'left',  // added
-    textShadow: '2px 2px 6px #000',
-  },
-  rightSide: {
-    position: 'absolute',
-    top: '20px',
-    right: '40px',
-    opacity: 0.8,
-  },
-  bottomBar: {
-    marginTop: '94px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-  },
-  locationButton: {
-    border: '1px solid #00FF00',
-    background: 'black',
-    color: '#00FF00',
-    fontWeight: '600',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  select: {
-    border: '1px solid #00FF00',
-    background: 'black',
-    color: '#fff',
-    fontWeight: '600',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  searchInput: {
-    flexGrow: 1,
-    padding: '8px 12px',
-    borderRadius: '4px',
-    border: '1px solid #333',
-    backgroundColor: '#111',
-    color: '#fff',
-  },
 };
 
 export default DirectoryHeader;
