@@ -1,0 +1,46 @@
+/* Container */
+.loadboard-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* space between buttons */
+  padding: 0;
+}
+
+/* Button style */
+.loadboard-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px;
+  background-color: #000000;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 180px; /* button width */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover effect */
+.loadboard-btn:hover {
+  background-color: #0a0a0a;
+  transform: scale(1.02);
+}
+
+/* Icon style */
+.loadboard-icon {
+  font-size: 26px;
+}
+
+/* Neon green color */
+.loadboard-green {
+  color: #00ff33;
+}
+
+/* Prevent text selection */
+.loadboard-btn span {
+  user-select: none;
+}

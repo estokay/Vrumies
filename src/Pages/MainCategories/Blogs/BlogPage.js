@@ -4,9 +4,11 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 
 import BlogHeader from './BlogHeader';
 import '../../../App.css';
-import BlogRightSidePanel from './BlogRightSidePanel';
-import './BlogPage.css';
+import RightSidePanel from './RightSidePanel';
 import BlogPostGrid from './BlogPostGrid';
+import SearchBar from './SearchBar';
+import FilterPanel from './FilterPanel';
+import '../../../Components/Css/MainPage.css';
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
@@ -14,10 +16,8 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Build query: only posts where type == "event"
         const postsRef = collection(db, 'Posts');
         const q = query(postsRef, where('type', '==', 'blog'));
-
         const querySnapshot = await getDocs(q);
 
         const data = querySnapshot.docs.map(doc => ({
@@ -27,7 +27,7 @@ const BlogPage = () => {
 
         setPosts(data);
       } catch (error) {
-        console.error('Error fetching event posts:', error);
+        console.error('Error fetching blog posts:', error);
       }
     };
 
@@ -35,17 +35,17 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <div className="events-page">
+    <div className="mainpage">
       <BlogHeader />
-      <div className="main-events">
+      <SearchBar />
+      <div className="videos-main">
+        <FilterPanel posts={posts} />
         {posts.length === 0 ? (
           <p className="no-events">No blog posts yet...</p>
         ) : (
-          <>
-            <BlogPostGrid posts={posts} />
-            <BlogRightSidePanel posts={posts} />
-          </>
+          <BlogPostGrid posts={posts} />
         )}
+        <RightSidePanel posts={posts} />
       </div>
     </div>
   );

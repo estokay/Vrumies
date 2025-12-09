@@ -1,7 +1,7 @@
 import React from 'react';
 import VideoTextArea from './VideoTextArea';
 import VideoCommentsSection from './VideoCommentsSection';
-import VideoPostSidePanel from './VideoPostSidePanel';
+import RightSidePanel from './RightSidePanel';
 import './BottomSection.css';
 
 const BottomSection = () => {
@@ -12,7 +12,7 @@ const BottomSection = () => {
         <VideoCommentsSection />
       </div>
       <div className="bottom-section-side-panel">
-        <VideoPostSidePanel />
+        <RightSidePanel />
       </div>
     </div>
   );

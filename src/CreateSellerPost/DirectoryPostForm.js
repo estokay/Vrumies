@@ -208,7 +208,7 @@ const DirectoryPostForm = () => {
             required
           />
           {suggestions.length > 0 && (
-            <ul className="autocomplete-suggestions">
+            <ul className="directory-suggestions">
               {suggestions.map((s) => (
                 <li key={s.place_id} onClick={() => selectLocation(s)}>
                   {s.structured_formatting.main_text}, {s.structured_formatting.secondary_text}

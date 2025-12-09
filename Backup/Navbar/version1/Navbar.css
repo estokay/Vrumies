@@ -1,0 +1,85 @@
+/* Navbar container */
+.navbar {
+  background-color: #000000;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Left side: logo and nav links */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 4px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Logo */
+.logo {
+  height: 100px;
+  width: auto;
+  margin-right: 40px;
+}
+
+/* Navbar buttons */
+.navbar-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-buttons button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* All button images */
+.navbar-buttons img {
+  height: 90px;
+  width: 90px;
+}
+
+/* Profile button container */
+.profile-btn {
+  position: relative; /* needed for overlay photo */
+  width: 90px;
+  height: 90px;
+}
+
+/* Overlay user photo */
+.profile-photo {
+  position: absolute;
+  top: 50%;       /* centered vertically */
+  left: 50%;      /* centered horizontally */
+  transform: translate(-50%, -50%);
+  width: 45px;    /* half the button size */
+  height: 45px;
+  border-radius: 50%; /* circular */
+  object-fit: cover;  /* fill circle nicely */
+  outline: 2px solid rgb(0, 0, 0); /* optional white border */
+  outline-offset: -2px;
+  pointer-events: none; /* allow button clicks to go through */
+}
+
+/* Optional: notifications and dropdown buttons adjustments */
+.notifications-btn,
+.profile-btn {
+  position: relative;
+}

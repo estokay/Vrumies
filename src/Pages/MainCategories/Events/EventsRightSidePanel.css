@@ -1,39 +1,71 @@
-.right-side-panel {
+/* Right side panel container */
+.events-main-right-side-panel {
   background-color: #093f1b;
   border-radius: 10px;
-  padding: 15px;
   color: #ffffff;
-  width: 280px;          /* fixed width like post grid column */
+  width: 17vw !important; /* fixed width like post grid column */
+  height: 1300px !important;
   box-sizing: border-box;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-  height: 1300px;
-  /* Optional: If you want the panel itself to be centered in its container */
-  /* margin: 0 auto; */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow: hidden; /* prevent parent from scrolling */
 }
 
-.panel-title {
+/* Panel title */
+.events-main-panel-title {
   font-size: 1.2rem;
   font-weight: bold;
   color: #72ff6a;
   margin-bottom: 10px;
+  flex-shrink: 0; /* prevent title from shrinking */
 }
 
-.panel-posts {
+/* Posts container */
+.events-main-panel-posts {
+  flex-grow: 1; /* take remaining height */
   display: flex;
   flex-direction: column;
-  gap: 20px; /* spacing between cards */
-  align-items: center; /* centers cards horizontally */
+  gap: 30px;
+  align-items: center;
+  overflow-y: auto; /* enable scrolling for posts */
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: white transparent;
 }
 
-/* Style individual cards inside panel-posts */
-.panel-posts > * {
-  width: 280px;            /* match grid column width */
-  height: 280px;           /* fixed height for square cards */
-  box-sizing: border-box;
+/* WebKit scrollbar (Chrome, Safari, Edge) */
+.events-main-panel-posts::-webkit-scrollbar {
+  width: 4px; /* extremely thin */
+}
+
+.events-main-panel-posts::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.events-main-panel-posts::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* Individual cards inside posts container */
+.events-main-panel-posts > * {
+  width: 270px !important;
+  height: 270px !important;
+  box-sizing: border-box; /* include padding/border in width/height */
   border-radius: 10px;
-  background-color: #0a0f0a; /* example background */
-  box-shadow: 0 0 12px #00ff66; /* similar to video post card */
-  padding: 12px;
+  background-color: #0a0f0a;
+  box-shadow: 0 0 12px #00ff66;
   color: white;
-  text-align: left; /* optional, in case text is getting centered */
+  text-align: left;
+  overflow: hidden; /* prevent internal content from breaking square */
+  flex-shrink: 0; /* prevent flex shrinking */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* optional, aligns content nicely */
+  padding: 12px; /* internal padding if needed */
 }

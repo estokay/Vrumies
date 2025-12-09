@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './BlogHeader.css';
 
-const BlogContentHeader = () => {
+const BlogHeader = () => {
+  const [location, setLocation] = useState('');
+  const [filter, setFilter] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  const [search, setSearch] = useState('');
+
   return (
     <div style={{ ...styles.container, height: '260px' }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
           <span style={styles.greenHighlight}>BLOG POSTS</span>
         </h1>
-        <p style={styles.subtitle}>PROMOTE AND SHARE YOUR AUTOMOTIVE CONTENT</p>
+        <p style={styles.subtitle}>PROMOTE AND SHARE YOUR AUTOMOTIVE BLOGS</p>
       </div>
       <div style={styles.rightSide}>
         <svg
@@ -23,38 +29,10 @@ const BlogContentHeader = () => {
         </svg>
       </div>
 
-      <nav style={styles.nav}>
-        <ul style={styles.navList}>
-          <li style={styles.navItem}><Link to="/videos" style={{ color: "white", textDecoration: "none" }}>Videos</Link></li>
-          <li style={{ ...styles.navItem, ...styles.activeNavItem }}>Blogs</li>
-          <li style={styles.navItem}><Link to="/forums" style={{ color: "white", textDecoration: "none" }}>Forums</Link></li>
-          <li style={styles.navItem}><Link to="/vehicles" style={{ color: "white", textDecoration: "none" }}>Vehicles</Link></li>
-        </ul>
-      </nav>
+      
 
-      <div style={styles.bottomBar}>
-        <button style={styles.locationButton}>
-          <span role="img" aria-label="location">📍</span> Location of Post
-        </button>
-
-        <select style={styles.select}>
-          <option>Filter Options ▼</option>
-          <option>Option 1</option>
-          <option>Option 2</option>
-        </select>
-
-        <select style={styles.select}>
-          <option>Sort By Best Match ▼</option>
-          <option>Newest</option>
-          <option>Oldest</option>
-        </select>
-
-        <input
-          type="search"
-          placeholder="Type your search here..."
-          style={styles.searchInput}
-        />
-      </div>
+      
+      
     </div>
   );
 };
@@ -70,7 +48,6 @@ const styles = {
     backgroundPosition: 'center',
     borderRadius: '8px',
     overflow: 'hidden',
-    // height will be overridden inline to 260px
   },
   leftSide: {
     maxWidth: '50%',
@@ -80,7 +57,7 @@ const styles = {
     fontWeight: '900',
     margin: 0,
     letterSpacing: '2px',
-    textAlign: 'left', // <-- Left aligned title
+    textAlign: 'left',
     textShadow: '2px 2px 6px #000',
   },
   greenHighlight: {
@@ -92,7 +69,7 @@ const styles = {
     fontWeight: '600',
     fontSize: '18px',
     letterSpacing: '1.5px',
-    textAlign: 'left', // <-- Left aligned subtitle
+    textAlign: 'left',
   },
   rightSide: {
     position: 'absolute',
@@ -121,38 +98,6 @@ const styles = {
     borderBottom: '2px solid #00FF00',
     paddingBottom: '4px',
   },
-  bottomBar: {
-    marginTop: '30px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-  },
-  locationButton: {
-    border: '1px solid #00FF00',
-    background: 'black',
-    color: '#00FF00',
-    fontWeight: '600',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  select: {
-    border: '1px solid #00FF00',
-    background: 'black',
-    color: '#fff',
-    fontWeight: '600',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  searchInput: {
-    flexGrow: 1,
-    padding: '8px 12px',
-    borderRadius: '4px',
-    border: '1px solid #333',
-    backgroundColor: '#111',
-    color: '#fff',
-  }
 };
 
-export default BlogContentHeader;
+export default BlogHeader;

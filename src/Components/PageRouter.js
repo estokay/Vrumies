@@ -8,11 +8,12 @@ import RequestPage from '../Pages/MainCategories/Requests/RequestPage';
 import MarketPage from '../Pages/MainCategories/Market/MarketPage';
 import EventsPage from '../Pages/MainCategories/Events/EventsPage';
 import DirectoryPage from '../Pages/MainCategories/Directory/DirectoryPage';
+import TruckPage from '../Pages/MainCategories/Trucks/TruckPage';
+import LoadPage from '../Pages/MainCategories/Loads/LoadPage';
 import ViewVideoPostPage from '../Pages/ViewPosts/Videos/ViewVideoPostPage';
 import AdminPanel from '../Pages/Admin Panel/AdminPanel';
 import BlogPage from '../Pages/MainCategories/Blogs/BlogPage';
 import VehiclePage from '../Pages/MainCategories/Vehicles/VehiclePage';
-import ForumPage from '../Pages/MainCategories/Forums/ForumPage';
 import OrdersPage from '../Pages/Orders/OrdersPage';
 import InboxPage from '../Pages/Messages/InboxPage';
 import TokenPage from '../Pages/Tokens/TokenPage';
@@ -25,10 +26,11 @@ import ViewProfile from '../Pages/ViewProfile/ViewProfile';
 import SellerPage from '../Pages/Seller/SellerPage';
 import EventPost from '../Pages/ViewPosts/Events/EventPost';
 import DirectoryPost from '../Pages/ViewPosts/Directory/DirectoryPost';
-import ForumPost from '../Pages/ViewPosts/Forums/ForumPost';
 import BlogPost from '../Pages/ViewPosts/Blogs/BlogPost';
 import RequestPost from '../Pages/ViewPosts/Requests/RequestPost';
 import VehiclePost from '../Pages/ViewPosts/Vehicles/VehiclePost';
+import TruckPost from '../Pages/ViewPosts/Trucks/TruckPost';
+import LoadPost from '../Pages/ViewPosts/Loads/LoadPost';
 import BookmarksPage from '../Pages/Bookmarks/BookmarksPage';
 import TestPage from '../Test/TestPage';
 import Checkout from '../Pages/Checkout/Checkout';
@@ -51,7 +53,6 @@ const PageRouter = () => (
     {/* Pages with Navbar */}
     <Route path="/videos" element={<PageWithNavbar><VideosPage /></PageWithNavbar>} />
     <Route path="/blogs" element={<PageWithNavbar><BlogPage /></PageWithNavbar>} />
-    <Route path="/forums" element={<PageWithNavbar><ForumPage /></PageWithNavbar>} />
     <Route path="/vehicles" element={<PageWithNavbar><VehiclePage /></PageWithNavbar>} />
     <Route path="/request" element={<PageWithNavbar><RequestPage /></PageWithNavbar>} />
     <Route path="/market" element={<PageWithNavbar><MarketPage /></PageWithNavbar>} />
@@ -59,9 +60,12 @@ const PageRouter = () => (
     <Route path="/events" element={<PageWithNavbar><EventsPage /></PageWithNavbar>} />
     <Route path="/eventpost/:id" element={<PageWithNavbar><EventPost /></PageWithNavbar>} />
     <Route path="/directorypost/:id" element={<PageWithNavbar><DirectoryPost /></PageWithNavbar>} />
+    <Route path="/trucks" element={<PageWithNavbar><TruckPage /></PageWithNavbar>} />
+    <Route path="/truckpost/:id" element={<PageWithNavbar><TruckPost /></PageWithNavbar>} />
+    <Route path="/loads" element={<PageWithNavbar><LoadPage /></PageWithNavbar>} />
+    <Route path="/loadpost/:id" element={<PageWithNavbar><LoadPost /></PageWithNavbar>} />
     <Route path="/blogpost/:id" element={<PageWithNavbar><BlogPost /></PageWithNavbar>} />
     <Route path="/requestpost/:id" element={<PageWithNavbar><RequestPost /></PageWithNavbar>} />
-    <Route path="/forumpost/:id" element={<PageWithNavbar><ForumPost /></PageWithNavbar>} />
     <Route path="/vehiclepost/:id" element={<PageWithNavbar><VehiclePost /></PageWithNavbar>} />
     <Route path="/directory" element={<PageWithNavbar><DirectoryPage /></PageWithNavbar>} />
     <Route path="/videopost/:id" element={<PageWithNavbar><ViewVideoPostPage /></PageWithNavbar>} />

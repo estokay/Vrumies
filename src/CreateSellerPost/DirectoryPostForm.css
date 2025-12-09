@@ -142,7 +142,7 @@
 /* Dropdown styling (Service Location) */
 .directory-dropdown {
   background-color: #0d0d0d;
-  border: 1px solid #f72b07;
+  border: 1px solid #f72b07 !important;
   color: #ffffff;
   padding: 10px 14px;
   border-radius: 6px;
@@ -155,8 +155,8 @@
 
 .directory-dropdown:focus {
   outline: none;
-  border-color: #fd1818;
-  box-shadow: 0 0 5px #fd1818;
+  border-color: #fd1818 !important;
+  box-shadow: 0 0 5px #fd1818 !important;
 }
 
 /* Input for Business Address */
@@ -170,4 +170,27 @@
   width: 100%;
   box-sizing: border-box;
   margin-top: 10px;
+}
+
+/* Autocomplete suggestions for all forms using red */
+.directory-suggestions {
+  background: #0d0d0d;          /* dark background */
+  border: 1px solid #f72b07;    /* red border */
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.directory-suggestions li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #fff;                  /* white text */
+}
+
+.directory-suggestions li:hover {
+  background-color: #f72b07;    /* red highlight */
+  color: #000;                  /* black text on hover */
 }

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import NavbarWithPost from '../../../Components/NavbarWithPost';
-import EventHeader from './EventHeader';
+
 import PostSection from './PostSection';
 import EventCommentsSection from './EventCommentsSection';
-import EventPostSidePanel from './EventPostSidePanel';
+import RightSidePanel from './RightSidePanel';
+import PageHeader from '../../../Components/PageHeader';
 import '../../../App.css';
 import './EventPost.css'; // renamed for clarity
 
@@ -37,7 +37,13 @@ const EventPost = () => {
 
   return (
     <div className="vpe-content-page">
-      <EventHeader />
+     
+      <PageHeader 
+        title="Event Post" 
+        backgroundUrl="https://images.squarespace-cdn.com/content/v1/6598c8e83ff0af0197ff19f9/a05c7d5e-3711-48bb-a4c8-f3ce0f076355/JCCI-2024-Banner.jpg" 
+      />
+    
+
       <PostSection postId={id} />
 
       <div className="vpe-bottom-section-container">
@@ -46,7 +52,7 @@ const EventPost = () => {
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <EventPostSidePanel postId={id} />
+          <RightSidePanel />
         </div>
       </div>
     </div>

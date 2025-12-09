@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './RequestHeader.css';
 
 const RequestHeader = () => {
@@ -8,82 +9,31 @@ const RequestHeader = () => {
   const [search, setSearch] = useState('');
 
   return (
-    <div className="requests-header-container">
+    <div className="request-header-container">
       <div className="left-side">
         <h1 className="title">
           <span className="green-highlight">REQUEST POSTS</span>
         </h1>
-        <p className="subtitle">MAKE A REQUEST POST TO ALL USERS FOR THE AUTOMOTIVE PRODUCTS OR SERVICES YOU ARE LOOKING FOR</p>
+        <p className="subtitle">
+          MAKE A REQUEST POST TO ALL USERS FOR THE AUTOMOTIVE PRODUCTS OR SERVICES YOU ARE LOOKING FOR
+        </p>
       </div>
 
       <div className="right-side">
-        <img
-          src={`${process.env.PUBLIC_URL}/request-icon.png`}
-          alt="Events Icon"
-          width="70"
-          height="70"
-          className="events-icon"
-        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="#39FF14"
+          width="70px"
+          height="70px"
+          style={{ filter: 'drop-shadow(0 0 3px #39FF14)' }}
+        >
+          <path d="M20 5h-3.586l-1.707-1.707A.996.996 0 0014 3H10c-.265 0-.52.105-.707.293L7.586 5H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V7a2 2 0 00-2-2zM12 17a5 5 0 110-10 5 5 0 010 10zM12 9a3 3 0 100 6 3 3 0 000-6z"/>
+        </svg>
       </div>
 
-      <div className="bottom-bar">
-        {/* Location Dropdown */}
-        <div className="select-wrapper">
-          <label className="select-label">Location of Post</label>
-          <select
-            className="select location-select"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
-            <option>Show All</option>
-            <option>Houston, TX</option>
-            <option>Dallas, TX</option>
-            <option>San Antonio, TX</option>
-          </select>
-        </div>
-
-        {/* Filter Dropdown */}
-        <div className="select-wrapper">
-          <label className="select-label">Filter Options</label>
-          <select
-            className="select filter-select"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option>Show All</option>
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-          </select>
-        </div>
-
-        {/* Sort By Dropdown */}
-        <div className="select-wrapper">
-          <label className="select-label">Sort By</label>
-          <select
-            className="select sort-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option>Show All</option>
-            <option>Newest</option>
-            <option>Likes</option>
-            <option>Highest Rating</option>
-          </select>
-        </div>
-
-        {/* Search Input */}
-        <div className="search-wrapper">
-          <label className="select-label">Search</label>
-          <input
-            type="search"
-            placeholder="Type your search here..."
-            className="search-input"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </div>
+      
+      
     </div>
   );
 };

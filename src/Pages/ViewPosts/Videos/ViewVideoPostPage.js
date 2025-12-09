@@ -8,6 +8,8 @@ import VideoPostImageBanner from './VideoPostImageBanner';
 import VideoSubHeader from './VideoSubHeader';
 import BottomSection from './BottomSection';
 import VideoHeader from './VideoHeader';
+import PageHeader from '../../../Components/PageHeader';
+
 
 const ViewVideoPostPage = () => {
   const { id } = useParams();
@@ -42,7 +44,10 @@ const ViewVideoPostPage = () => {
 
   return (
     <div className="video-main-page">
-      <VideoHeader postId={id} />
+      <PageHeader 
+        title="Video Post" 
+        backgroundUrl="https://cdn.skoda-storyboard.com/2018/08/influencer-bloger-event-skoda-classic-car.jpg" 
+      />
       
       <VideoPostImageBanner postId={id} />
       

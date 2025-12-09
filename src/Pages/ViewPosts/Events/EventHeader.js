@@ -16,27 +16,26 @@ const EventHeader = () => {
         }
 
         .tokens-header-wrapper {
-          width: 100%;
-          max-width: flex;
-          margin-left: auto;
-          margin-right: auto;
-          padding: 2rem 3rem;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
+  width: 100%;                  /* full width */
+  max-width: 100%;              /* never exceed parent/container */
+  margin: 0;                     /* no extra margins */
+  padding: 0;                    /* remove extra horizontal padding */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
           background-image: url('https://images.squarespace-cdn.com/content/v1/6598c8e83ff0af0197ff19f9/a05c7d5e-3711-48bb-a4c8-f3ce0f076355/JCCI-2024-Banner.jpg');
-          background-size: cover;       /* Makes image fill container */
-        background-position: center;  /* Centers the image */
-          border-radius: 0rem;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-          height: 60px;
-          overflow: hidden;
-        }
+  background-size: cover;
+  background-position: center;
+  height: 120px;                /* adjust to match navbar/logo */
+  box-sizing: border-box;       /* include padding in width */
+  overflow: hidden;             /* prevent horizontal scroll */
+}
 
         .poppins-font {
           font-family: 'Poppins', sans-serif;
           color: #00FF00;
           font-size: 3rem;
+          margin-left: 50px;
           white-space: nowrap;
           text-shadow:
             -1px -1px 0 #000,  

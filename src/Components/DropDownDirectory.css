@@ -1,0 +1,46 @@
+/* Container */
+.directory-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* decreased gap */
+  padding: 0;
+}
+
+/* Button style */
+.directory-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px; /* increased padding for bigger buttons */
+  background-color: #000000;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 18px; /* slightly bigger text */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 180px; /* slightly wider */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover effect */
+.directory-btn:hover {
+  background-color: #0a0a0a;
+  transform: scale(1.02);
+}
+
+/* Icon style */
+.directory-icon {
+  font-size: 26px; /* slightly bigger icons */
+}
+
+/* Neon green color */
+.directory-green {
+  color: #00ff33;
+}
+
+/* Prevent text selection */
+.directory-btn span {
+  user-select: none;
+}

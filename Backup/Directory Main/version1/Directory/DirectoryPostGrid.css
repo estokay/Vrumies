@@ -1,0 +1,35 @@
+/* Container for all directory posts */
+.directory-post-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* default: 4 columns */
+  gap: 20px; /* space between cards */
+  padding: 20px;
+  background-color: #000000;
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  justify-items: center;
+}
+
+/* 3 columns for medium screens */
+@media (max-width: 1200px) {
+  .directory-post-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 columns for smaller screens */
+@media (max-width: 800px) {
+  .directory-post-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* 1 column for very small screens */
+@media (max-width: 500px) {
+  .directory-post-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

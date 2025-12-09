@@ -1,0 +1,44 @@
+.my-profile-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.6); /* keeps dark transparent background */
+  border-radius: 12px;
+  margin: 0 40px 20px 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.my-profile-body .post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 280px); /* 3 columns, fixed width */
+  grid-auto-rows: 280px;                  /* square cards */
+  gap: 30px;
+  justify-content: center;
+}
+
+.profile-body-title {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 24px;
+  color: #00ff66;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.profile-body-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background-color: #00ff66;
+  margin-left: 15px;
+}
+
+.no-posts-message {
+  color: #ffffff;
+  font-size: 18px;
+  margin-top: 20px;
+}

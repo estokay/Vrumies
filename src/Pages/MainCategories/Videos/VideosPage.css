@@ -3,32 +3,32 @@
   min-height: 100vh; /* ensures it covers the full screen height */
 }
 
-.events-page .main-events {
+.events-page .videos-main {
   display: flex;
-  justify-events: space-between;
-  gap: 30px;
-  padding: 20px;
+  justify-content: flex-start;
+  gap: 0.25vw;
+  padding: 1vw;
   flex-wrap: wrap;
 }
 
 /* Adjust main section (post grid) to account for new panel width */
 .events-page .main-grid {
-  flex: 1;
-  max-width: calc(100% - 380px); /* 350px panel + 30px gap */
+  flex: 1 1 auto;
+  max-width: 0;
 }
 
 /* Right Side Panel scoped */
 .events-page .right-side-panel {
   background-color: #093f1b;
   border-radius: 10px;
-  padding: 15px;
+  padding: 0.8vw;
   color: #ffffff;
-  width: 350px; /* reduced from 420px to 350px */
-  height: fit-events;
+  box-sizing: border-box;
+  height: 1300px !important;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.25vw;
 }
 
 .events-page .right-side-panel .panel-title {

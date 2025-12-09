@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import MarketHeader from './MarketHeader';
+import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
 import MarketCommentsSection from './MarketCommentsSection';
-import MarketPostSidePanel from './MarketPostSidePanel';
+import RightSidePanel from './RightSidePanel';
 import '../../../App.css';
 import './MarketPost.css'; // renamed for clarity
 
@@ -36,7 +36,10 @@ const MarketPost = () => {
 
   return (
     <div className="vpe-content-page">
-      <MarketHeader />
+      <PageHeader 
+        title="Market Post" 
+        backgroundUrl="https://www.roadangelgroup.com/cdn/shop/articles/Driving_Into_The_Future_Featured.png?v=1687957466&width=1500" 
+      />
       <PostSection postId={id} />
 
       <div className="vpe-bottom-section-container">
@@ -45,7 +48,7 @@ const MarketPost = () => {
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <MarketPostSidePanel postId={id} />
+          <RightSidePanel />
         </div>
       </div>
     </div>

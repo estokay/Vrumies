@@ -352,21 +352,21 @@ function PostSection({ postId }) {
             className={`action-btn share ${copied ? "active" : ""}`}
             onClick={handleShare}
           >
-            <FaShareAlt />
+            <FaShareAlt className="action-icon" />
             SHARE
           </button>
           <button
             className={`action-btn bookmark ${bookmarked ? "active" : ""}`}
             onClick={handleBookmark}
           >
-            <FaBookmark />
+            <FaBookmark className="action-icon" />
             BOOKMARK
           </button>
           <button
             className={`action-btn report ${reported ? "active" : ""}`}
             onClick={handleReport}
           >
-            <FaFlag />
+            <FaFlag className="action-icon" />
             REPORT
           </button>
         </div>

@@ -330,7 +330,12 @@ function PostSection({ postId }) {
           {activeTab === "details" && (
             <div className="post-details">
               <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
-              <p><strong>Location:</strong> {post.location ?? "N/A"}</p>
+              <p>
+  <strong>Location:</strong>{" "}
+  {post.location
+    ? `${post.location.city || ""}, ${post.location.state || ""}`
+    : "N/A"}
+</p>
               <p><strong>Link:</strong>{" "}
                 {post.link ? (
                   <a href={formatLink(post.link)} target="_blank" rel="noopener noreferrer">
@@ -352,21 +357,21 @@ function PostSection({ postId }) {
             className={`action-btn share ${copied ? "active" : ""}`}
             onClick={handleShare}
           >
-            <FaShareAlt />
+            <FaShareAlt className="action-icon" />
             SHARE
           </button>
           <button
             className={`action-btn bookmark ${bookmarked ? "active" : ""}`}
             onClick={handleBookmark}
           >
-            <FaBookmark />
+            <FaBookmark className="action-icon" />
             BOOKMARK
           </button>
           <button
             className={`action-btn report ${reported ? "active" : ""}`}
             onClick={handleReport}
           >
-            <FaFlag />
+            <FaFlag className="action-icon" />
             REPORT
           </button>
         </div>

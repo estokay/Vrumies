@@ -1,0 +1,72 @@
+/* Right side panel container */
+.events-main-right-side-panel {
+  background-color: #093f1b;
+  border-radius: 10px;
+  color: #ffffff;
+  width: 320px !important; /* fixed width like post grid column */
+  height: 1300px !important;
+  box-sizing: border-box;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow: hidden; /* prevent parent from scrolling */
+  flex-shrink: 0;
+}
+
+/* Panel title */
+.events-main-panel-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #72ff6a;
+  margin-bottom: 10px;
+  flex-shrink: 0; /* prevent title from shrinking */
+}
+
+/* Posts container */
+.events-main-panel-posts {
+  flex-grow: 1; /* take remaining height */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  overflow-y: auto; /* enable scrolling for posts */
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: white transparent;
+}
+
+/* WebKit scrollbar (Chrome, Safari, Edge) */
+.events-main-panel-posts::-webkit-scrollbar {
+  width: 4px; /* extremely thin */
+}
+
+.events-main-panel-posts::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.events-main-panel-posts::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* Individual cards inside posts container */
+.events-main-panel-posts > * {
+  width: 270px !important;
+  height: 270px !important;
+  box-sizing: border-box; /* include padding/border in width/height */
+  border-radius: 10px;
+  background-color: #0a0f0a;
+  box-shadow: 0 0 12px #00ff66;
+  color: white;
+  text-align: left;
+  overflow: hidden; /* prevent internal content from breaking square */
+  flex-shrink: 0; /* prevent flex shrinking */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* optional, aligns content nicely */
+  padding: 12px; /* internal padding if needed */
+}

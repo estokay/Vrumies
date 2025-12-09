@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './CreateSellerPostOverlay.css';
 
 import MarketPostForm from './MarketPostForm';
-import EventPostForm from './EventPostForm';
+
 import DirectoryPostForm from './DirectoryPostForm';
 
 const POST_TYPES = {
   Market: MarketPostForm,
-  Event: EventPostForm,
   Directory: DirectoryPostForm,
 };
 

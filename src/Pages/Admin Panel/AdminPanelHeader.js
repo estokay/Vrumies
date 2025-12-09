@@ -2,7 +2,7 @@ import React from 'react';
 
 const MarketHeader = () => {
   return (
-    <div style={{ ...styles.container, height: '260px', minHeight: undefined }}>
+    <div style={{ ...styles.container, height: '130px', minHeight: undefined }}>
       <div style={styles.leftSide}>
         <h1 style={styles.title}>
           <span style={styles.greenHighlight}>ADMIN PANEL</span>
@@ -20,30 +20,7 @@ const MarketHeader = () => {
           style={{ filter: 'drop-shadow(0 0 3px #39FF14)' }}
         />
       </div>
-
-      <div style={styles.bottomBar}>
-        <button style={styles.locationButton}>
-          <span role="img" aria-label="location">📍</span> Location of Post
-        </button>
-
-        <select style={styles.select}>
-          <option>Filter Options ▼</option>
-          <option>Option 1</option>
-          <option>Option 2</option>
-        </select>
-
-        <select style={styles.select}>
-          <option>Sort By Best Match ▼</option>
-          <option>Newest</option>
-          <option>Oldest</option>
-        </select>
-
-        <input
-          type="search"
-          placeholder="Type your search here..."
-          style={styles.searchInput}
-        />
-      </div>
+      {/* bottomBar removed completely */}
     </div>
   );
 };
@@ -69,7 +46,7 @@ const styles = {
     fontWeight: '900',
     margin: 0,
     letterSpacing: '2px',
-    textAlign: 'left',  // added for left alignment
+    textAlign: 'left',
   },
   greenHighlight: {
     color: '#00FF00',
@@ -80,45 +57,13 @@ const styles = {
     fontWeight: '600',
     fontSize: '18px',
     letterSpacing: '1.5px',
-    textAlign: 'left',  // added for left alignment
+    textAlign: 'left',
   },
   rightSide: {
     position: 'absolute',
     top: '20px',
     right: '40px',
     opacity: 0.8,
-  },
-  bottomBar: {
-    marginTop: '94px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-  },
-  locationButton: {
-    border: '1px solid #00FF00',
-    background: 'black',
-    color: '#00FF00',
-    fontWeight: '600',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  select: {
-    border: '1px solid #00FF00',
-    background: 'black',
-    color: '#fff',
-    fontWeight: '600',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  searchInput: {
-    flexGrow: 1,
-    padding: '8px 12px',
-    borderRadius: '4px',
-    border: '1px solid #333',
-    backgroundColor: '#111',
-    color: '#fff',
   },
 };
 

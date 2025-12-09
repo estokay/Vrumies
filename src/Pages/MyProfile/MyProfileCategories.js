@@ -1,29 +1,43 @@
 import React from "react";
-import "./MyProfileCategories.css";
+import '../../Components/Css/ProfileCategories.css';
+import {
+  FaVideo,
+  FaPenFancy,
+  FaCar,
+  FaCalendarAlt,
+  FaStore,
+  FaBook,
+  FaClipboardList,
+  FaTruck,
+  FaListAlt,
+} from "react-icons/fa";
 
 const categories = [
-  { id: "content", label: "My Content Posts", icon: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164529/Content_fbid4j.png", iconSelected: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164521/Content-Selected_qoroo3.png" },
-  { id: "request", label: "My Request Posts", icon: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164530/Request_jvwi6g.png", iconSelected: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164520/Request-Selected_xbnyfs.png" },
-  { id: "market", label: "My Market Posts", icon: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164523/Market-Selected_q99jmx.png", iconSelected: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164523/Market-Selected_q99jmx.png" },
-  { id: "event", label: "My Event Posts", icon: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164532/Event_ytzll2.png", iconSelected: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164522/Event-Selected_igrcff.png" },
-  { id: "directory", label: "My Directory Posts", icon: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164531/Directory_gchfhm.png", iconSelected: "https://res.cloudinary.com/dmjvngk3o/image/upload/v1755164521/Directory-Selected_ae5jpp.png" },
+  { id: "videos", label: "Videos", icon: <FaVideo /> },
+  { id: "blogs", label: "Blogs", icon: <FaPenFancy /> },
+  { id: "vehicles", label: "Vehicles", icon: <FaCar /> },
+  { id: "events", label: "Events", icon: <FaCalendarAlt /> },
+  { id: "market", label: "Market", icon: <FaStore /> },
+  { id: "directory", label: "Directory", icon: <FaBook /> },
+  { id: "requests", label: "Requests", icon: <FaListAlt /> },
+  { id: "loads", label: "Loads", icon: <FaClipboardList /> },
+  { id: "trucks", label: "Trucks", icon: <FaTruck /> },
 ];
 
 export default function MyProfileCategories({ selected, setSelected }) {
   return (
-    <div className="profile-categories">
+    <div className="profile-categories-grid">
       {categories.map((cat) => (
-        <div
+        <button
           key={cat.id}
-          className={`category-card ${selected === cat.id ? "selected" : ""}`}
+          className={`profile-category-btn ${
+            selected === cat.id ? "selected" : ""
+          }`}
           onClick={() => setSelected(cat.id)}
         >
-          <img
-            src={selected === cat.id ? cat.iconSelected : cat.icon}
-            alt={cat.label}
-          />
-          <span>{cat.label}</span>
-        </div>
+          <span className="profile-category-icon">{cat.icon}</span>
+          <span className="profile-category-label">{cat.label}</span>
+        </button>
       ))}
     </div>
   );

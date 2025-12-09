@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-import DirectoryHeader from './DirectoryHeader';
+import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
 import DirectoryCommentsSection from './DirectoryCommentsSection';
-import DirectoryPostSidePanel from './DirectoryPostSidePanel';
+import RightSidePanel from './RightSidePanel';
 import '../../../App.css';
 import './DirectoryPost.css'; // renamed for clarity
 
@@ -37,7 +37,10 @@ const DirectoryPost = () => {
 
   return (
     <div className="vpe-content-page">
-      <DirectoryHeader />
+      <PageHeader 
+        title="Directory Post" 
+        backgroundUrl="https://assets.goaaa.com/image/upload/w_2880,c_fill,q_auto,f_auto/v1742591982/AAAGilbert-428_retouched.jpg" 
+      />
       <PostSection postId={id} />
 
       <div className="vpe-bottom-section-container">
@@ -46,7 +49,7 @@ const DirectoryPost = () => {
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <DirectoryPostSidePanel postId={id} />
+          <RightSidePanel />
         </div>
       </div>
     </div>

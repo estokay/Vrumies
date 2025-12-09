@@ -3,9 +3,11 @@ import { db } from '../../../Components/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import MarketHeader from './MarketHeader';
 import '../../../App.css';
-import MarketRightSidePanel from './MarketRightSidePanel';
-import './MarketPage.css';
+import RightSidePanel from './RightSidePanel';
 import MarketPostGrid from './MarketPostGrid';
+import SearchBar from './SearchBar';
+import FilterPanel from './FilterPanel';
+import '../../../Components/Css/MainPage.css'; // Updated CSS import
 
 const MarketPage = () => {
   const [posts, setPosts] = useState([]);
@@ -13,10 +15,8 @@ const MarketPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Build query: only posts where type == "event"
         const postsRef = collection(db, 'Posts');
         const q = query(postsRef, where('type', '==', 'market'));
-
         const querySnapshot = await getDocs(q);
 
         const data = querySnapshot.docs.map(doc => ({
@@ -26,7 +26,7 @@ const MarketPage = () => {
 
         setPosts(data);
       } catch (error) {
-        console.error('Error fetching event posts:', error);
+        console.error('Error fetching market posts:', error);
       }
     };
 
@@ -34,17 +34,17 @@ const MarketPage = () => {
   }, []);
 
   return (
-    <div className="events-page">
+    <div className="mainpage">
       <MarketHeader />
-      <div className="main-events">
+      <SearchBar />
+      <div className="videos-main"> {/* Use shared layout class */}
+        <FilterPanel posts={posts} /> {/* Left panel */}
         {posts.length === 0 ? (
           <p className="no-events">No market posts yet...</p>
         ) : (
-          <>
-            <MarketPostGrid posts={posts} />
-            <MarketRightSidePanel posts={posts} />
-          </>
+          <MarketPostGrid posts={posts} /> 
         )}
+        <RightSidePanel posts={posts} /> {/* Right panel */}
       </div>
     </div>
   );

@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-import RequestHeader from './RequestHeader';
+import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
 import RequestCommentsSection from './RequestCommentsSection';
-import RequestPostSidePanel from './RequestPostSidePanel';
+import RightSidePanel from './RightSidePanel';
 import '../../../App.css';
 import './RequestPost.css'; // renamed for clarity
+import ViewOffers from '../../../Custom Offers/ViewOffers';
 
 const RequestPost = () => {
   const { id } = useParams();
@@ -37,16 +38,19 @@ const RequestPost = () => {
 
   return (
     <div className="vpe-content-page">
-      <RequestHeader />
+      <PageHeader 
+        title="Request Post" 
+        backgroundUrl="https://media.istockphoto.com/id/1271779268/photo/calling-roadside-assistance.jpg?s=612x612&w=0&k=20&c=JxOZbwpnSE_vxFWZ5Te1-Y4QrUMsiLFaDyXu_uMX1ok=" 
+      />
       <PostSection postId={id} />
-
+      <ViewOffers />
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
           <RequestCommentsSection postId={id} />
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <RequestPostSidePanel postId={id} />
+          <RightSidePanel />
         </div>
       </div>
     </div>

@@ -31,7 +31,7 @@ const MarketPostForm = () => {
   const CLOUDINARY_PRESET = 'vrumies_preset';
   const CLOUDINARY_CLOUD_NAME = 'dmjvngk3o';
   const MAX_IMAGES = 7;
-  const GOOGLE_API_KEY = 'YOUR_GOOGLE_PLACES_API_KEY'; // Replace with your key
+  const GOOGLE_API_KEY = 'AIzaSyAF-Y9M2YTMmMBu6RU7sDh4vRM9gFdC5MI';
 
   // Load Google Places API
   useEffect(() => {
@@ -215,7 +215,7 @@ const MarketPostForm = () => {
             required
           />
           {suggestions.length > 0 && (
-            <ul className="autocomplete-suggestions">
+            <ul className="market-suggestions">
               {suggestions.map((s) => (
                 <li key={s.place_id} onClick={() => selectLocation(s)}>
                   {s.structured_formatting.main_text}, {s.structured_formatting.secondary_text}

@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
-
 import VideosHeader from './VideosHeader';
 import '../../../App.css';
-import VideosRightSidePanel from './VideosRightSidePanel';
-import './VideosPage.css';
+import '../../../Components/Css/MainPage.css';
 import VideosPostGrid from './VideosPostGrid';
+import SearchBar from './SearchBar';
+import FilterPanel from './FilterPanel';
+import RightSidePanel from './RightSidePanel';
 
 const VideosPage = () => {
   const [posts, setPosts] = useState([]);
@@ -15,7 +16,7 @@ const VideosPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Build query: only posts where type == "event"
+        // Build query: only posts where type == "video"
         const postsRef = collection(db, 'Posts');
         const q = query(postsRef, where('type', '==', 'video'));
 
@@ -36,17 +37,17 @@ const VideosPage = () => {
   }, []);
 
   return (
-    <div className="events-page">
+    <div className="mainpage">
       <VideosHeader />
-      <div className="main-events">
+      <SearchBar />
+      <div className="videos-main">
+        <FilterPanel posts={posts} />
         {posts.length === 0 ? (
           <p className="no-events">No videos yet...</p>
         ) : (
-          <>
-            <VideosPostGrid posts={posts} />
-            <VideosRightSidePanel posts={posts} />
-          </>
+          <VideosPostGrid posts={posts} />
         )}
+        <RightSidePanel posts={posts} />
       </div>
     </div>
   );

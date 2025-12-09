@@ -1,0 +1,61 @@
+/* Grid container WITH original background */
+.profile-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+
+  background: rgba(0, 0, 0, 0.6); /* ← original background restored */
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 40px;
+}
+
+/* Button style (same concept as DropDownSocials) */
+.profile-category-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #000;
+  border: 2px solid #ffffff;
+  border-radius: 12px;
+
+  padding: 18px 12px;
+  cursor: pointer;
+
+  transition: 0.2s ease-in-out;
+  color: white;
+
+  height: 120px;
+}
+
+/* Icons */
+.profile-category-icon {
+  font-size: 28px;
+  color: #00ff33; /* neon green */
+  margin-bottom: 8px;
+  transition: 0.2s ease;
+}
+
+.profile-category-label {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Hover */
+.profile-category-btn:hover {
+  background-color: #0a0a0a;
+  transform: scale(1.04);
+}
+
+/* Selected effect */
+.profile-category-btn.selected {
+  border-color: #00ff33;
+  background: rgba(0, 255, 102, 0.15);
+}
+
+.profile-category-btn.selected .profile-category-icon {
+  color: white;
+}

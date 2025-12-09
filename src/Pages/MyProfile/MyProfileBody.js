@@ -1,59 +1,106 @@
-import React from "react";
-import "./MyProfileBody.css";
-import VideosPostGrid from "../MainCategories/Videos/VideosPostGrid";
-import BlogPostGrid from "../MainCategories/Blogs/BlogPostGrid";
-import ForumPostGrid from "../MainCategories/Forums/ForumPostGrid";
-import VehiclePostGrid from "../MainCategories/Vehicles/VehiclePostGrid";
-import MarketPostGrid from "../MainCategories/Market/MarketPostGrid";
-import EventsPostGrid from "../MainCategories/Events/EventsPostGrid";
-import DirectoryPostGrid from "../MainCategories/Directory/DirectoryPostGrid";
+import React, { useEffect, useState } from "react";
+import { collection, getDocs, query, where, limit } from "firebase/firestore";
+import { db } from "../../Components/firebase";
+import { getAuth } from "firebase/auth";
+import '../../Components/Css/ProfileBody.css';
 
-// import all post sources
-import { examplePosts as videoPosts } from "../../Data/VideoDummyData";
-import { examplePosts as requestPosts } from "../../Data/RequestDummyData";
-import { examplePosts as marketPosts } from "../../Data/MarketDummyData";
-import { examplePosts as eventPosts } from "../../Data/EventsDummyData";
-import { examplePosts as directoryPosts } from "../../Data/DirectoryDummyData";
+// Import all post layouts
+import VideosPostLayout from "../MainCategories/Videos/VideosPostLayout";
+import BlogPostLayout from "../MainCategories/Blogs/BlogPostLayout";
+import VehiclePostLayout from "../MainCategories/Vehicles/VehiclePostLayout";
+import MarketPostLayout from "../MainCategories/Market/MarketPostLayout";
+import EventsPostLayout from "../MainCategories/Events/EventsPostLayout";
+import DirectoryPostLayout from "../MainCategories/Directory/DirectoryPostLayout";
+import RequestPostLayout from "../MainCategories/Requests/RequestPostLayout";
+import LoadPostLayout from "../MainCategories/Loads/LoadPostLayout";
+import TruckPostLayout from "../MainCategories/Trucks/TruckPostLayout";
 
-const categoryLabels = {
-  content: "My Content Posts",
-  request: "My Request Posts",
-  market: "My Market Posts",
-  event: "My Event Posts",
-  directory: "My Directory Posts",
+// Map selectedCategory ID to Firestore type
+const categoryTypeMap = {
+  videos: "video",
+  blogs: "blog",
+  vehicles: "vehicle",
+  events: "event",
+  market: "market",
+  directory: "directory",
+  requests: "request",
+  loads: "loads",
+  trucks: "trucks",
+};
+
+// Map selectedCategory ID to Layout and label
+const categoryMap = {
+  videos: { Layout: VideosPostLayout, label: "Videos" },
+  blogs: { Layout: BlogPostLayout, label: "Blogs" },
+  vehicles: { Layout: VehiclePostLayout, label: "Vehicles" },
+  events: { Layout: EventsPostLayout, label: "Events" },
+  market: { Layout: MarketPostLayout, label: "Market" },
+  directory: { Layout: DirectoryPostLayout, label: "Directory" },
+  requests: { Layout: RequestPostLayout, label: "Requests" },
+  loads: { Layout: LoadPostLayout, label: "Loads" },
+  trucks: { Layout: TruckPostLayout, label: "Trucks" },
 };
 
 export default function MyProfileBody({ selectedCategory }) {
-  let postsToShow = [];
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
-  switch (selectedCategory) {
-    case "content":
-      postsToShow = videoPosts;
-      break;
-    case "request":
-      postsToShow = requestPosts;
-      break;
-    case "market":
-      postsToShow = marketPosts;
-      break;
-    case "event":
-      postsToShow = eventPosts;
-      break;
-    case "directory":
-      postsToShow = directoryPosts;
-      break;
-    default:
-      postsToShow = [];
-  }
+  useEffect(() => {
+    if (!selectedCategory || !currentUser) return;
 
-  postsToShow = postsToShow.slice(0, 9);
+    const fetchPosts = async () => {
+      setLoading(true);
+      try {
+        const typeForQuery = categoryTypeMap[selectedCategory];
+        const collectionRef = collection(db, "Posts");
+
+        // Query: filter by type AND current user's UID
+        const q = query(
+          collectionRef,
+          where("type", "==", typeForQuery),
+          where("userId", "==", currentUser.uid),
+          limit(16)
+        );
+
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setPosts([]);
+      }
+      setLoading(false);
+    };
+
+    fetchPosts();
+  }, [selectedCategory, currentUser]);
+
+  const { Layout, label } = categoryMap[selectedCategory] || {};
 
   return (
     <div className="my-profile-body">
-      {/* Dynamic title */}
-      <h2 className="profile-body-title">{categoryLabels[selectedCategory]}</h2>
-
-      <VideosPostGrid posts={postsToShow} />
+      {selectedCategory ? (
+        <>
+          <h2 className="profile-body-title">{label}</h2>
+          {loading ? (
+            <div className="no-posts-message">Loading posts...</div>
+          ) : posts.length === 0 ? (
+            <div className="no-posts-message">
+              You have no posts in this category.
+            </div>
+          ) : (
+            <div className="post-grid">
+              {posts.map((post) => (
+                <Layout key={post.id} {...post} />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="no-posts-message">Select a category to view posts.</div>
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import "./TestPage.css";
 import TestPageHeader from "./TestPageHeader";
 import ImageUploadTest from "./ImageUploadTest";
 import DummyOrderSeeder from "./DummyOrderSeeder";
+import ViewOffers from "../Custom Offers/ViewOffers";
 
 const TestPage = () => {
   return (
@@ -10,6 +11,7 @@ const TestPage = () => {
     <TestPageHeader />
     <ImageUploadTest />
     <DummyOrderSeeder />
+    <ViewOffers />
     </div>
   );
 };

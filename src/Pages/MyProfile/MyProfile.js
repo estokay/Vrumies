@@ -1,6 +1,5 @@
-import NavbarWithPost from '../../Components/NavbarWithPost';
 import '../../App.css';
-import './MyProfile.css';
+import '../../Components/Css/Profile.css';
 import React, { useState } from "react";
 import MyProfileSidePanel from './MyProfileSidePanel';
 import MyProfileCategories from "./MyProfileCategories";

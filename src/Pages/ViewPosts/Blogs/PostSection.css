@@ -299,3 +299,19 @@
   90% { opacity: 1; transform: translateX(-50%) translateY(0); }
   100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
 }
+
+.action-icon {
+  color: #00ff00; /* icon color */
+}
+
+.action-btn.share.active .action-icon {
+  color: #34c5ff; /* icon color when active */
+}
+
+.action-btn.bookmark.active .action-icon {
+  color: #ff4dff;
+}
+
+.action-btn.report.active .action-icon {
+  color: #ff4f4f;
+}
