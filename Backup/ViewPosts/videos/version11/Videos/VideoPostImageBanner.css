@@ -1,0 +1,37 @@
+.video-banner-container {
+  position: relative;
+  width: 100%;
+  background-color: black;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.video-banner-inner {
+  padding: 50px 100px; /* black space above and below */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.video-banner-image {
+  width: 100%;
+  height: 700px;           /* fixed height */
+  display: block;
+  object-fit: cover;        /* scales image/video to fill 700px */
+  border-radius: 6px;
+}
+
+.video-banner-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.video-banner-inner:hover .video-banner-play {
+  transform: translate(-50%, -50%) scale(1.1);
+}

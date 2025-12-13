@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-import VehicleHeader from './VehicleHeader';
+
 import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
 import VehicleCommentsSection from './VehicleCommentsSection';

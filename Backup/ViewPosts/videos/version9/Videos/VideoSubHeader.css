@@ -1,0 +1,50 @@
+.video-sub-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Title on left, actions on right */
+  position: relative;
+  background-color: black;
+  padding: 15px 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 80px;
+}
+
+/* Post Title */
+.video-post-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00ff00;
+  line-height: 1.2;
+}
+
+/* Actions */
+.video-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.video-action-btn {
+  background: linear-gradient(to bottom, #444, #000);
+  color: white;
+  border: 1px solid #666;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.video-action-btn:hover {
+  transform: scale(1.05);
+}
+
+.video-text-area h2 {
+  color: #ffffff; /* or whatever green you want */
+  margin-bottom: 15px;
+  text-align: left;
+}

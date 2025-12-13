@@ -12,6 +12,7 @@ function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
   const [dislikes, setDislikes] = useState(0);
   const [commentsCount, setCommentsCount] = useState(0);
   const [tokens, setTokens] = useState(0);
+  const [postType, setPostType] = useState('event'); // default to event if unknown
 
   const formattedDate = createdAt
     ? new Date(createdAt.seconds * 1000).toLocaleDateString()
@@ -36,7 +37,7 @@ function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
   }, [userId]);
 
   useEffect(() => {
-    const fetchPostStats = async () => {
+    const fetchPostData = async () => {
       try {
         const postRef = doc(db, "Posts", id);
         const postSnap = await getDoc(postRef);
@@ -45,18 +46,36 @@ function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
           setLikes(data.likesCounter || 0);
           setDislikes(data.dislikesCounter || 0);
           setTokens(data.tokens || 0);
+          setPostType(data.type || 'event'); // dynamically set post type
         }
+
         const commentsSnap = await getDocs(collection(db, "Posts", id, "comments"));
         setCommentsCount(commentsSnap.size);
       } catch (error) {
-        console.error("Error fetching post stats:", error);
+        console.error("Error fetching post data:", error);
       }
     };
-    fetchPostStats();
+    fetchPostData();
   }, [id]);
 
+  // Determine the route based on post type
+  const postRouteMap = {
+    video: 'videopost',
+    blog: 'blogpost',
+    vehicle: 'vehiclepost',
+    event: 'eventpost',
+    market: 'marketpost',
+    directory: 'directorypost',
+    request: 'requestpost',
+    loads: 'loadpost',
+    trucks: 'truckpost',
+    offer: 'offerpost'
+  };
+
+  const linkTo = `/${postRouteMap[postType] || 'eventpost'}/${id}`;
+
   return (
-    <Link to={`/eventpost/${id}`} className="events-post-layout">
+    <Link to={linkTo} className="events-post-layout">
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt="Creator" className="profile-pic" />
@@ -78,7 +97,7 @@ function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
       <div className="thumbnail-container">
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
-          alt={title || 'Event Thumbnail'}
+          alt={title || 'Post Thumbnail'}
           className="thumbnail"
         />
       </div>

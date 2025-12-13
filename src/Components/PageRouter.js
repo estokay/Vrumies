@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import NavbarWithPost from './NavbarWithPost';
+import ProtectedRoute from "./ProtectedRoute";
 
 // import your pages
 import VideosPage from '../Pages/MainCategories/Videos/VideosPage';
@@ -10,7 +11,7 @@ import EventsPage from '../Pages/MainCategories/Events/EventsPage';
 import DirectoryPage from '../Pages/MainCategories/Directory/DirectoryPage';
 import TruckPage from '../Pages/MainCategories/Trucks/TruckPage';
 import LoadPage from '../Pages/MainCategories/Loads/LoadPage';
-import ViewVideoPostPage from '../Pages/ViewPosts/Videos/ViewVideoPostPage';
+import VideoPost from '../Pages/ViewPosts/Videos/VideoPost';
 import AdminPanel from '../Pages/Admin Panel/AdminPanel';
 import BlogPage from '../Pages/MainCategories/Blogs/BlogPage';
 import VehiclePage from '../Pages/MainCategories/Vehicles/VehiclePage';
@@ -22,6 +23,7 @@ import ShoppingCart from '../Pages/Cart/ShoppingCart';
 import MarketPost from '../Pages/ViewPosts/Market/MarketPost';
 import SettingsPage from '../Pages/Settings/SettingsPage';
 import MyProfile from '../Pages/MyProfile/MyProfile';
+import MyReviews from '../Pages/MyProfileReviews/MyReviews';
 import ViewProfile from '../Pages/ViewProfile/ViewProfile';
 import SellerPage from '../Pages/Seller/SellerPage';
 import EventPost from '../Pages/ViewPosts/Events/EventPost';
@@ -68,20 +70,21 @@ const PageRouter = () => (
     <Route path="/requestpost/:id" element={<PageWithNavbar><RequestPost /></PageWithNavbar>} />
     <Route path="/vehiclepost/:id" element={<PageWithNavbar><VehiclePost /></PageWithNavbar>} />
     <Route path="/directory" element={<PageWithNavbar><DirectoryPage /></PageWithNavbar>} />
-    <Route path="/videopost/:id" element={<PageWithNavbar><ViewVideoPostPage /></PageWithNavbar>} />
-    <Route path="/adminpanel" element={<PageWithNavbar><AdminPanel /></PageWithNavbar>} />
+    <Route path="/videopost/:id" element={<PageWithNavbar><VideoPost /></PageWithNavbar>} />
+
     <Route path="/orders" element={<PageWithNavbar><OrdersPage /></PageWithNavbar>} />
     <Route path="/inbox" element={<PageWithNavbar><InboxPage /></PageWithNavbar>} />
     <Route path="/tokens" element={<PageWithNavbar><TokenPage /></PageWithNavbar>} />
     <Route path="/cart" element={<PageWithNavbar><ShoppingCart /></PageWithNavbar>} />
     <Route path="/settings" element={<PageWithNavbar><SettingsPage /></PageWithNavbar>} />
     <Route path="/myprofile" element={<PageWithNavbar><MyProfile /></PageWithNavbar>} />
-    {/* <Route path="/viewprofile" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} /> */}
+    <Route path="/myreviews" element={<PageWithNavbar><MyReviews /></PageWithNavbar>} />
     <Route path="/viewprofile/:userId" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} />
     <Route path="/seller" element={<PageWithNavbar><SellerPage /></PageWithNavbar>} />
     <Route path="/bookmarks" element={<PageWithNavbar><BookmarksPage /></PageWithNavbar>} />
     <Route path="/testpage" element={<PageWithNavbar><TestPage /></PageWithNavbar>} />
     <Route path="/checkout" element={<PageWithNavbar><Checkout /></PageWithNavbar>} />
+    <Route path="/adminpanel" element={<ProtectedRoute allowedEmail="mitchellalvizures@gmail.com"><PageWithNavbar><AdminPanel /></PageWithNavbar></ProtectedRoute>} />
   </Routes>
 );
 

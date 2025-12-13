@@ -1,0 +1,157 @@
+.myreviews-profile-body {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 25px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  margin: 0px 40px 20px 40px;
+  min-height: 90vh;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* ===== TITLE ===== */
+.myreviews-review-header-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #00ff66;
+  display: flex;
+  align-items: center;
+}
+
+.myreviews-review-header-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: #00ff66;
+  margin-left: 20px;
+}
+
+/* ===== TOP STATS ===== */
+.myreviews-review-stats-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 5px;
+}
+
+.myreviews-review-stat-box {
+  display: flex;
+  gap: 10px;
+}
+
+.myreviews-stat-label {
+  color: #00ff66;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.myreviews-stat-value {
+  font-size: 18px;
+  color: white;
+}
+
+.myreviews-review-line {
+  height: 1px;
+  background: #ffffff33;
+  width: 100%;
+  margin: 15px 0;
+}
+
+/* ===== REVIEW CARD ===== */
+.myreviews-review-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+/* Top row layout: avatar, name, date, stars */
+.myreviews-review-top {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.myreviews-review-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.myreviews-review-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.myreviews-review-username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ff66;
+}
+
+.myreviews-review-date {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Stars */
+.myreviews-review-rating {
+  margin-left: auto;
+  font-size: 20px;
+}
+
+.myreviews-star-filled {
+  color: #00ff66;
+}
+
+.myreviews-star-empty {
+  color: #888;
+}
+
+/* Write review section */
+.myreviews-write-review-box {
+  width: 100%;
+}
+
+.myreviews-review-textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  padding: 10px;
+  background: transparent;
+  border: 2px solid #ffffff66;
+  color: white;
+  resize: none;
+}
+
+.myreviews-review-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.myreviews-char-limit-text {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.myreviews-submit-review-btn {
+  background: #00ff66;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Real review text */
+.myreviews-review-text {
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.9;
+}

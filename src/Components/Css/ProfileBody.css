@@ -6,8 +6,8 @@
   gap: 20px;
   background: rgba(0, 0, 0, 0.6); /* keeps dark transparent background */
   border-radius: 12px;
-  margin: 0 40px 20px 40px;
-  min-height: 100vh;
+  margin: 0px 40px 20px 40px;
+  min-height: 90vh;
   box-sizing: border-box;
 }
 

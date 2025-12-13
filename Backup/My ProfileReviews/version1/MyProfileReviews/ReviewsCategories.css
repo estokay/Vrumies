@@ -1,0 +1,30 @@
+/* KEEPING original container background */
+.profile-categories-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 40px;
+}
+
+/* New summary items */
+.review-summary-item {
+  text-align: center;
+  color: white;
+}
+
+.review-summary-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00ff33; /* neon green highlight */
+}
+
+.review-summary-label {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.85;
+}

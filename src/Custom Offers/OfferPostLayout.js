@@ -56,7 +56,7 @@ function OfferPostLayout({ id, images, title, createdAt, userId, price }) {
   }, [id]);
 
   return (
-    <Link to={`/loadpost/${id}`} className="events-post-layout">
+    <Link to={`/offerpost/${id}`} className="events-post-layout">
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt="Creator" className="profile-pic" />

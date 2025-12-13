@@ -1,0 +1,31 @@
+.my-profile {
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 60px); /* account for navbar height */
+}
+
+/* Left side panel */
+.my-profile-sidepanel {
+  flex: 0 0 250px; /* fixed width */
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 40px 0 40px 40px;
+  border-radius: 12px;
+}
+
+/* Right side wrapper */
+.my-profile-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center the sections horizontally */
+}
+
+/* Shared section wrapper for categories and body */
+.my-profile-section {
+  width: 100%;
+  margin: 20px;
+  box-sizing: border-box;
+}
+

@@ -1,0 +1,113 @@
+.post-section {
+  display: flex;
+  gap: 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+/* Left panel */
+.post-left {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+}
+
+/* Post header, seller, tabs, actions, price (same as before) */
+/* ...keep all your previous left-panel styles unchanged ... */
+
+/* Right panel / video-image */
+.post-right {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 10px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-banner-container {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-banner-inner {
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.video-banner-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  background-color: #222;
+}
+
+.video-banner-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.video-banner-inner:hover .video-banner-play {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Notification and action icons */
+.copy-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00ff00;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}
+
+.action-icon {
+  color: #00ff00;
+}
+
+.action-btn.share.active .action-icon {
+  color: #34c5ff;
+}
+
+.action-btn.bookmark.active .action-icon {
+  color: #ff4dff;
+}
+
+.action-btn.report.active .action-icon {
+  color: #ff4f4f;
+}

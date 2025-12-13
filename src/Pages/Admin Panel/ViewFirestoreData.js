@@ -2,26 +2,30 @@ import React, { useState } from "react";
 import Users from "./Collections/Users";
 import Videos from "./Collections/Videos";
 import Blogs from "./Collections/Blogs";
-import Forums from "./Collections/Forums";
 import Requests from "./Collections/Requests";
 import Market from "./Collections/Market";
 import Events from "./Collections/Events";
 import Directory from "./Collections/Directory";
+import Loads from "./Collections/Loads";
+import Trucks from "./Collections/Trucks";
 import Reports from "./Collections/Reports";
 import Orders from "./Collections/Orders";
+import Offers from "./Collections/Offers";
 
 function ViewFirestoreData() {
   const tabs = [
     "Users",
     "Videos",
     "Blogs",
-    "Forums",
     "Requests",
     "Market",
     "Events",
     "Directory",
+    "Loads",
+    "Trucks",
     "Reports",
     "Orders",
+    "Offers",
   ];
 
   const [activeTab, setActiveTab] = useState("Users");
@@ -34,8 +38,6 @@ function ViewFirestoreData() {
         return <Videos />;
       case "Blogs":
         return <Blogs />;
-      case "Forums":
-        return <Forums />;
       case "Requests":
         return <Requests />;
       case "Market":
@@ -44,10 +46,16 @@ function ViewFirestoreData() {
         return <Events />;
       case "Directory":
         return <Directory />;
+      case "Loads":
+        return <Loads />;
+      case "Trucks":
+        return <Trucks />;
       case "Reports":
         return <Reports />;
       case "Orders":
         return <Orders />;
+      case "Offers":
+        return <Offers />;
       default:
         return null;
     }

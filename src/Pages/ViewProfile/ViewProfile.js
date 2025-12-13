@@ -19,6 +19,11 @@ const ViewProfile = () => {
         {/* Right side (categories + body stacked) */}
         <div className="my-profile-right">
           <div className="my-profile-section">
+            <div className="profile-top-nav">
+              <span className="top-nav-item selected">Posts</span>
+              <span className="top-nav-item">Photos</span>
+              <span className="top-nav-item">Reviews</span>
+            </div>
             <ViewProfileCategories 
               selected={selectedCategory} 
               setSelected={setSelectedCategory} 
