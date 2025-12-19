@@ -5,7 +5,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import VideosHeader from './VideosHeader';
 import '../../../App.css';
 import '../../../Components/Css/MainPage.css';
-import VideosPostGrid from './VideosPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import RightSidePanel from './RightSidePanel';
@@ -45,7 +45,7 @@ const VideosPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No videos yet...</p>
         ) : (
-          <VideosPostGrid posts={posts} />
+          <MainPostGrid posts={posts} />
         )}
         <RightSidePanel posts={posts} />
       </div>

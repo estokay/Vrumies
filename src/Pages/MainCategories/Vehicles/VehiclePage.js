@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import VehicleHeader from './VehicleHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
-import VehiclePostGrid from './VehiclePostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css';
@@ -42,7 +42,7 @@ const VehiclePage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No vehicle posts yet...</p>
         ) : (
-          <VehiclePostGrid posts={posts} />
+          <MainPostGrid posts={posts} />
         )}
         <RightSidePanel posts={posts} />
       </div>

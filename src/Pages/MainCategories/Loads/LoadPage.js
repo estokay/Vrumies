@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import LoadHeader from './LoadHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
-import LoadPostGrid from './LoadPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css'; // Updated CSS import
@@ -42,7 +42,7 @@ const LoadPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No load posts yet...</p>
         ) : (
-          <LoadPostGrid posts={posts} /> 
+          <MainPostGrid posts={posts} /> 
         )}
         <RightSidePanel posts={posts} /> {/* Right panel */}
       </div>

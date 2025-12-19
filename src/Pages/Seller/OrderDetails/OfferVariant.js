@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./EventVariant.css";
+import "./OfferVariant.css";
 import { FaFilePdf, FaCheck } from "react-icons/fa";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 
-export default function EventVariant({ orderId }) {
+export default function OfferVariant({ orderId }) {
   const [order, setOrder] = useState(null);
   const [buyerName, setBuyerName] = useState("N/A");
-  const [ticketFile, setTicketFile] = useState("");
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const fileInputRef = useRef(null);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +26,7 @@ export default function EventVariant({ orderId }) {
             id: orderSnap.id,
           });
 
-          setTicketFile(data.eventSpecific?.ticketFile || "");
+          
 
           // fetch buyer username
           if (data.buyerInfo?.buyerId) {
@@ -47,32 +45,14 @@ export default function EventVariant({ orderId }) {
     if (orderId) fetchOrder();
   }, [orderId]);
 
-  // File handling
-  const handleFileChange = (e) => setUploadedFile(e.target.files[0]);
+  
 
-  const handleUpload = async () => {
-    if (!uploadedFile) {
-      alert("No file selected!");
-      return;
-    }
+  
 
-    try {
-      // In real app, you’d upload to storage and save URL, here we just store file name
-      const orderRef = doc(db, "Orders", orderId);
-      await updateDoc(orderRef, {
-        "eventSpecific.ticketFile": uploadedFile.name,
-      });
-      setTicketFile(uploadedFile.name);
-      alert(`File "${uploadedFile.name}" uploaded!`);
-    } catch (err) {
-      console.error("Error saving ticket file:", err);
-    }
-  };
+    
+  
 
-  const handleClear = () => {
-    setUploadedFile(null);
-    if (fileInputRef.current) fileInputRef.current.value = null;
-  };
+  
 
   if (!order) return <div className="seller-event-details-panel">Loading order...</div>;
 
@@ -120,36 +100,7 @@ export default function EventVariant({ orderId }) {
           <div><strong>Order ID</strong><p>{id}</p></div>
         </div>
 
-        {/* Ticket File */}
-        <div className="seller-ticket-file">
-          <strong>Ticket File:</strong>
-          <div
-            className="seller-drag-drop-area"
-            onClick={() => fileInputRef.current.click()}
-          >
-            {uploadedFile ? uploadedFile.name : ticketFile || "Drag & Drop PDF here or click to select file"}
-          </div>
-
-          <input
-            type="file"
-            accept=".pdf"
-            ref={fileInputRef}
-            className="seller-file-input"
-            onChange={handleFileChange}
-          />
-
-          <div className="seller-upload-clear-buttons">
-            <button onClick={handleUpload} className="seller-btn-upload">Upload</button>
-            <button onClick={handleClear} className="seller-btn-clear">Clear</button>
-          </div>
-
-          {ticketFile && (
-            <div className="seller-ticket-download">
-              <FaFilePdf className="seller-ticket-icon" />
-              <div><p className="seller-ticket-name">{ticketFile}</p></div>
-            </div>
-          )}
-        </div>
+        
       </section>
 
       {/* Ordered Items */}

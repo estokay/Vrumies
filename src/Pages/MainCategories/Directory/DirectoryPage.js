@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import DirectoryHeader from './DirectoryHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
-import DirectoryPostGrid from './DirectoryPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css';
@@ -42,7 +42,7 @@ const DirectoryPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No directory posts yet...</p>
         ) : (
-          <DirectoryPostGrid posts={posts} />
+          <MainPostGrid posts={posts} />
         )}
         <RightSidePanel posts={posts} />
       </div>

@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import MarketHeader from './MarketHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
-import MarketPostGrid from './MarketPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css'; // Updated CSS import
@@ -42,7 +42,7 @@ const MarketPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No market posts yet...</p>
         ) : (
-          <MarketPostGrid posts={posts} /> 
+          <MainPostGrid posts={posts} /> 
         )}
         <RightSidePanel posts={posts} /> {/* Right panel */}
       </div>

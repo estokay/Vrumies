@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase";
-import "./EventOrderCard.css";
+import "./OfferOrderCard.css";
 
-export default function EventOrderCard({ orderId }) {
+export default function OfferOrderCard({ orderId }) {
   const [order, setOrder] = useState({
     title: "N/A",
     date: "N/A",

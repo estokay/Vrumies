@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./EventVariant.css";
+import "./OfferVariant.css";
 import { FaFilePdf, FaCheck } from "react-icons/fa";
 import { db } from "../../../Components/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-export default function EventVariant({ orderId }) {
+export default function OfferVariant({ orderId }) {
   const [order, setOrder] = useState(null);
   const [sellerName, setSellerName] = useState("N/A");
 
@@ -52,7 +52,7 @@ export default function EventVariant({ orderId }) {
 
   const type = order.type || "N/A";
   const orderID = order.id || "N/A";
-  const ticketFile = order.eventSpecific?.ticketFile || "N/A";
+
   const image = order.postData?.images?.[0] || "";
   const postId = order.postData?.postId || "N/A";
   const title = order.postData?.title || "N/A";
@@ -92,20 +92,7 @@ export default function EventVariant({ orderId }) {
           <div><strong>Order ID</strong><p>{orderID}</p></div>
         </div>
 
-        <div className="oe-ticket-file">
-          <strong>Ticket File:</strong>
-          <div className="oe-ticket-download">
-            <FaFilePdf className="oe-ticket-icon" />
-            <div>
-              <p className="oe-ticket-name">{ticketFile}</p>
-              {ticketFile !== "N/A" && (
-                <a href={ticketFile} target="_blank" rel="noreferrer" className="oe-ticket-link">
-                  Download File
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
+        
       </section>
 
       {/* Ordered Items */}

@@ -93,7 +93,7 @@ const ViewProfileSidePanel = () => {
           {isFollowing ? "Following" : "Follow"}
         </button>
         <button className="vpsp-action-btn">Message Me</button>
-        <button className="vpsp-action-btn">View Reviews</button>
+        <button className="vpsp-action-btn">Share Profile</button>
       </div>
 
       {/* About section */}

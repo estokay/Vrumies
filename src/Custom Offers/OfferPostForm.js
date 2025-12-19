@@ -4,8 +4,12 @@ import { db } from '../Components/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
-const OfferPostForm = () => {
+const OfferPostForm = ({ originalPost }) => {
+  
+
+
   const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -164,6 +168,7 @@ const OfferPostForm = () => {
       createdAt: Timestamp.now(),
       type: 'offer',
       userId: user.uid,
+      originalPost: originalPost || null,
       likesCounter: 0,
       dislikesCounter: 0,
       likes: [],
@@ -172,7 +177,7 @@ const OfferPostForm = () => {
 
     try {
       await addDoc(collection(db, 'Posts'), postData);
-      setMessage('✅ Market post added!');
+      setMessage('✅ Offer post added!');
       setSubmitted(true);
     } catch (err) {
       console.error('❌ Firestore error:', err);

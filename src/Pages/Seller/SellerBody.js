@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SellerSidePanel from "./SellerSidePanel";
 import DirectoryVariant from "./OrderDetails/DirectoryVariant";
-import EventVariant from "./OrderDetails/EventVariant";
+import OfferVariant from "./OrderDetails/OfferVariant";
 import MarketVariant from "./OrderDetails/MarketVariant";
 import "./SellerBody.css";
 
@@ -16,8 +16,8 @@ export default function SellerBody() {
     switch (type) {
       case "market":
         return <MarketVariant orderId={id} />;
-      case "event":
-        return <EventVariant orderId={id} />;
+      case "offer":
+        return <OfferVariant orderId={id} />;
       case "directory":
         return <DirectoryVariant orderId={id} />;
       default:

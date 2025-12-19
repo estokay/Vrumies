@@ -24,7 +24,7 @@ const MyReviews = () => {
             {/* Top sub-navigation above categories */}
             <div className="myreviews-top-nav">
               <Link to="/myprofile" className="myreviews-top-nav-item">Posts</Link>
-              <span className="myreviews-top-nav-item">Photos</span>
+              <Link to="/myphotos" className="myreviews-top-nav-item">Photos</Link>
               <span className="myreviews-top-nav-item selected">Reviews</span>
             </div>
 

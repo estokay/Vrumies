@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 
 import EventsHeader from './EventsHeader';
 import '../../../App.css';
-import EventsPostGrid from './EventsPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import FilterPanel from './FilterPanel';
 import RightSidePanel from './RightSidePanel';
 import SearchBar from './SearchBar';
@@ -43,7 +43,7 @@ const EventsPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No events yet...</p>
         ) : (
-          <EventsPostGrid posts={posts} />
+          <MainPostGrid posts={posts} />
         )}
         <RightSidePanel posts={posts} /> 
       </div>

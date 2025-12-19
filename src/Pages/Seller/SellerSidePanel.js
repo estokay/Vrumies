@@ -3,7 +3,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../Components/firebase";
 import { useAuth } from "../../AuthContext";
 import MarketOrderCard from "./Cards/MarketOrderCard";
-import EventOrderCard from "./Cards/EventOrderCard";
+import OfferOrderCard from "./Cards/OfferOrderCard";
 import DirectoryOrderCard from "./Cards/DirectoryOrderCard";
 import "./SellerSidePanel.css";
 
@@ -53,8 +53,8 @@ export default function SellerSidePanel({ selectedOrder, onCardClick }) {
       case "market":
         CardComponent = MarketOrderCard;
         break;
-      case "event":
-        CardComponent = EventOrderCard;
+      case "offer":
+        CardComponent = OfferOrderCard;
         break;
       case "directory":
         CardComponent = DirectoryOrderCard;

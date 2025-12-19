@@ -7,7 +7,7 @@ const POST_TYPES = {
   Offer: OfferPostForm,
 };
 
-function CreateCustomOfferPostOverlay({ isOpen, onClose }) {
+function CreateCustomOfferPostOverlay({ isOpen, onClose, originalPost }) {
   const [selectedType, setSelectedType] = useState('Offer'); // default selection
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function CreateCustomOfferPostOverlay({ isOpen, onClose }) {
 
         {/* Form */}
         <div className="cspo-form-container">
-          <SelectedForm onClose={onClose} />
+          <SelectedForm onClose={onClose} originalPost={originalPost} />
         </div>
       </div>
     </div>

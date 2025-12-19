@@ -5,7 +5,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import BlogHeader from './BlogHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
-import BlogPostGrid from './BlogPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css';
@@ -43,7 +43,7 @@ const BlogPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No blog posts yet...</p>
         ) : (
-          <BlogPostGrid posts={posts} />
+          <MainPostGrid posts={posts} />
         )}
         <RightSidePanel posts={posts} />
       </div>

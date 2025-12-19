@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import RequestHeader from './RequestHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
-import RequestPostGrid from './RequestPostGrid';
+import MainPostGrid from '../../../Components/MainPostGrid';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css';
@@ -42,7 +42,7 @@ const RequestPage = () => {
         {posts.length === 0 ? (
           <p className="no-events">No request posts yet...</p>
         ) : (
-          <RequestPostGrid posts={posts} />
+          <MainPostGrid posts={posts} />
         )}
         <RightSidePanel posts={posts} />
       </div>

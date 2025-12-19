@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import ViewProfileSidePanel from './ViewProfileSidePanel';
 import ViewProfileCategories from "./ViewProfileCategories";
 import ViewProfileBody from "./ViewProfileBody";
+import { useParams, Link } from "react-router-dom";
 
 const ViewProfile = () => {
+  const { userId } = useParams();
   const [selectedCategory, setSelectedCategory] = useState("content"); // default
 
   return (
@@ -21,8 +23,8 @@ const ViewProfile = () => {
           <div className="my-profile-section">
             <div className="profile-top-nav">
               <span className="top-nav-item selected">Posts</span>
-              <span className="top-nav-item">Photos</span>
-              <span className="top-nav-item">Reviews</span>
+              <Link to={`/viewphotos/${userId}`} className="myreviews-top-nav-item">Photos</Link>
+              <Link to={`/viewreviews/${userId}`} className="myreviews-top-nav-item">Reviews</Link>
             </div>
             <ViewProfileCategories 
               selected={selectedCategory} 

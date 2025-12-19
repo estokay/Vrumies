@@ -23,11 +23,15 @@ import ShoppingCart from '../Pages/Cart/ShoppingCart';
 import MarketPost from '../Pages/ViewPosts/Market/MarketPost';
 import SettingsPage from '../Pages/Settings/SettingsPage';
 import MyProfile from '../Pages/MyProfile/MyProfile';
+import MyPhotos from '../Pages/MyProfilePhotos/MyPhotos';
 import MyReviews from '../Pages/MyProfileReviews/MyReviews';
 import ViewProfile from '../Pages/ViewProfile/ViewProfile';
+import ViewPhotos from '../Pages/ViewProfilePhotos/ViewPhotos';
+import ViewReviews from '../Pages/ViewProfileReviews/ViewReviews';
 import SellerPage from '../Pages/Seller/SellerPage';
 import EventPost from '../Pages/ViewPosts/Events/EventPost';
 import DirectoryPost from '../Pages/ViewPosts/Directory/DirectoryPost';
+import OfferPost from '../Pages/ViewPosts/CustomOffers/OfferPost';
 import BlogPost from '../Pages/ViewPosts/Blogs/BlogPost';
 import RequestPost from '../Pages/ViewPosts/Requests/RequestPost';
 import VehiclePost from '../Pages/ViewPosts/Vehicles/VehiclePost';
@@ -62,6 +66,7 @@ const PageRouter = () => (
     <Route path="/events" element={<PageWithNavbar><EventsPage /></PageWithNavbar>} />
     <Route path="/eventpost/:id" element={<PageWithNavbar><EventPost /></PageWithNavbar>} />
     <Route path="/directorypost/:id" element={<PageWithNavbar><DirectoryPost /></PageWithNavbar>} />
+    <Route path="/offerpost/:id" element={<PageWithNavbar><OfferPost /></PageWithNavbar>} />
     <Route path="/trucks" element={<PageWithNavbar><TruckPage /></PageWithNavbar>} />
     <Route path="/truckpost/:id" element={<PageWithNavbar><TruckPost /></PageWithNavbar>} />
     <Route path="/loads" element={<PageWithNavbar><LoadPage /></PageWithNavbar>} />
@@ -78,8 +83,11 @@ const PageRouter = () => (
     <Route path="/cart" element={<PageWithNavbar><ShoppingCart /></PageWithNavbar>} />
     <Route path="/settings" element={<PageWithNavbar><SettingsPage /></PageWithNavbar>} />
     <Route path="/myprofile" element={<PageWithNavbar><MyProfile /></PageWithNavbar>} />
+    <Route path="/myphotos" element={<PageWithNavbar><MyPhotos /></PageWithNavbar>} />
     <Route path="/myreviews" element={<PageWithNavbar><MyReviews /></PageWithNavbar>} />
     <Route path="/viewprofile/:userId" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} />
+    <Route path="/viewphotos/:userId" element={<PageWithNavbar><ViewPhotos /></PageWithNavbar>} />
+    <Route path="/viewreviews/:userId" element={<PageWithNavbar><ViewReviews /></PageWithNavbar>} />
     <Route path="/seller" element={<PageWithNavbar><SellerPage /></PageWithNavbar>} />
     <Route path="/bookmarks" element={<PageWithNavbar><BookmarksPage /></PageWithNavbar>} />
     <Route path="/testpage" element={<PageWithNavbar><TestPage /></PageWithNavbar>} />

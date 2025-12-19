@@ -100,7 +100,7 @@ export default function MyProfileSidePanel() {
             ))}
           </div>
 
-          <button className="mpsp-reviews-btn">Show All Reviews</button>
+          <button className="mpsp-reviews-btn">Share Profile</button>
 
           <div className="mpsp-about-section">
             <div className="mpsp-about-header">

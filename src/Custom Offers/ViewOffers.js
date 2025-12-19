@@ -3,18 +3,33 @@ import OfferPostLayout from './OfferPostLayout';
 import { db } from '../Components/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import './ViewOffers.css';
+import { useParams } from 'react-router-dom';
 
 import CreateCustomOfferPostOverlay from './CreateCustomOfferPostOverlay';
 
 function ViewOffers() {
+  
+  const { id } = useParams();
+  const postId = id;
+
   const [posts, setPosts] = useState([]);
   const [showCreateOverlay, setShowCreateOverlay] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!postId) {
+      setLoading(false);
+      return;
+    }
+
     const fetchDirectoryPosts = async () => {
       try {
         const postsRef = collection(db, "Posts");
-        const q = query(postsRef, where("type", "==", "event"));
+
+        const q = query(
+          postsRef,
+          where("originalPost", "==", postId)
+        );
 
         const querySnapshot = await getDocs(q);
 
@@ -25,20 +40,19 @@ function ViewOffers() {
 
         setPosts(loadedPosts);
       } catch (error) {
-        console.error("Error loading event posts:", error);
+        console.error("Error loading filtered offer posts:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDirectoryPosts();
-  }, []);
-
-  if (!posts || posts.length === 0) return null;
+  }, [postId]);
 
   const filteredPosts = posts
     .filter((post) => typeof post.tokens === 'number')
     .sort((a, b) => b.tokens - a.tokens);
 
-  // Handler for the "Create Custom Offer" card
   const handleCreateCustomOffer = () => {
     setShowCreateOverlay(true);
   };
@@ -49,7 +63,7 @@ function ViewOffers() {
         <h3 className="view-offers-panel-title">Custom Offers</h3>
 
         <div className="view-offers-panel-posts">
-          {/* First card: Create Custom Offer */}
+          {/* Create Custom Offer card always visible */}
           <div
             className="view-offers-create-card"
             onClick={handleCreateCustomOffer}
@@ -57,17 +71,33 @@ function ViewOffers() {
             <span className="create-card-text">+ CREATE CUSTOM OFFER</span>
           </div>
 
-          {/* Remaining posts */}
+          {/* Loading state */}
+          {loading && (
+            <p className="view-offers-loading">Loading offers...</p>
+          )}
+
+          {/* No offers yet */}
+          {!loading && filteredPosts.length === 0 && (
+            <p className="view-offers-empty">
+              No offers yet — be the first to create one.
+            </p>
+          )}
+
+          {/* Offers list */}
           {filteredPosts.map((post) => (
-            <OfferPostLayout key={post.id} {...post} compact />
+            <OfferPostLayout
+              key={post.id}
+              {...post}
+              compact
+            />
           ))}
         </div>
       </div>
 
-      {/* CREATE OFFER OVERLAY */}
       <CreateCustomOfferPostOverlay
         isOpen={showCreateOverlay}
         onClose={() => setShowCreateOverlay(false)}
+        originalPost={postId}
       />
     </>
   );

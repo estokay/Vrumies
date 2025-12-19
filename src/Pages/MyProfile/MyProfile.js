@@ -23,7 +23,7 @@ const MyProfile = () => {
             {/* Top sub-navigation above categories */}
             <div className="profile-top-nav">
               <span className="top-nav-item selected">Posts</span>
-              <span className="top-nav-item">Photos</span>
+              <Link to="/myphotos" className="myreviews-top-nav-item">Photos</Link>
               <Link to="/myreviews" className="myreviews-top-nav-item">Reviews</Link>
             </div>
 

@@ -54,13 +54,10 @@ export default function DummyOrderSeeder() {
             paymentSuccessful: true,
           },
         };
-      } else if (type === "event") {
+      } else if (type === "offer") {
         orderData = {
           orderCreated: serverTimestamp(),
-          type: "event",
-          eventSpecific: {
-            ticketFile: "",
-          },
+          type: "offer",
           sellerInfo: {
             sellerId: "WGuHMRLO3GckbNVLFdf3VbnJaZi1",
             sellerMarkedCompleted: false,
@@ -72,27 +69,15 @@ export default function DummyOrderSeeder() {
             buyerDispute: false,
           },
           postData: {
-            postId: "U2drlp1CDkPorUVh280K",
-            title: "Cars & Cofee Meetup",
+            postId: "U2drlp1CDkPorUVh5555",
+            title: "I can do the task required today",
             description:
-              "Start your weekend engines and fuel your passion for automobiles at the Cars & Coffee Meetup! Join fellow car enthusiasts for a casual, fun-filled morning where exotic cars, classic rides, and everything in between come together. Enjoy a relaxed atmosphere with coffee, great conversation, and the chance to show off your ride or admire others. Whether you're a seasoned collector, a weekend hobbyist, or simply a car fan, this meetup is the perfect way to connect with like-minded enthusiasts.",
+              "I'm making an offer to do this task for a good price. Message me if you want more information.",
             images: [
-              "https://www.nrgpark.com/wp-content/uploads/event-super-car-show.webp",
-              "https://res.cloudinary.com/dmjvngk3o/image/upload/v1756576955/edojkhhabccqlflsvlbp.jpg",
+              "https://mobilemechanicnearmehouston.com/wp-content/uploads/2021/01/dasdasdasda.jpg",
+              "https://nebula.wsimg.com/43a8c9ca85ed1d08afcbe1acf5418686?AccessKeyId=38B566A353184F8DD19F&disposition=0&alloworigin=1",
             ],
             price: "$25",
-            eventDateTime: {
-              type: "firestore/timestamp/1.0",
-              seconds: 1767203940,
-              nanoseconds: 0,
-            },
-          },
-          deliveryInfo: {
-            deliveryName: "",
-            deliveryStreetAddress: "",
-            deliveryCity: "",
-            deliveryState: "",
-            deliveryZipCode: "",
           },
           paymentInfo: {
             paymentmethod: "Card",
@@ -154,8 +139,8 @@ export default function DummyOrderSeeder() {
         <button onClick={() => createDummyOrder("market")}>
           Add Market Order
         </button>
-        <button onClick={() => createDummyOrder("event")}>
-          Add Event Order
+        <button onClick={() => createDummyOrder("offer")}>
+          Add Offer Order
         </button>
         <button onClick={() => createDummyOrder("directory")}>
           Add Directory Order
