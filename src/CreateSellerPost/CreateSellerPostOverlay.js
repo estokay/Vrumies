@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './CreateSellerPostOverlay.css';
 
-import MarketPostForm from './MarketPostForm';
+import MarketPostForm from './MarketPostForm/MarketPostForm';
 
-import DirectoryPostForm from './DirectoryPostForm';
+import DirectoryPostForm from './DirectoryPostForm/DirectoryPostForm';
 
 const POST_TYPES = {
   Market: MarketPostForm,

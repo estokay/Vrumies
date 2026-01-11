@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './CreatePostOverlay.css';
 
-import VideoPostForm from './VideoPostForm';
-import BlogPostForm from './BlogPostForm';
-import RequestPostForm from './RequestPostForm';
-import VehiclePostForm from './VehiclePostForm';
-import EventPostForm from './EventPostForm';
-import LoadPostForm from './LoadPostForm';
-import TruckPostForm from './TruckPostForm';
+import VideoPostForm from './VideoPostForm/VideoPostForm';
+import BlogPostForm from './BlogPostForm/BlogPostForm';
+import RequestPostForm from './RequestPostForm/RequestPostForm';
+import VehiclePostForm from './VehiclePostForm/VehiclePostForm';
+import EventPostForm from './EventPostForm/EventPostForm';
+import LoadPostForm from './LoadPostForm/LoadPostForm';
+import TruckPostForm from './TruckPostForm/TruckPostForm';
 
 const POST_TYPES = {
   Video: VideoPostForm,

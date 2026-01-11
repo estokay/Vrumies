@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import VideosPostLayout from '../Pages/MainCategories/Videos/VideosPostLayout';
 import BlogPostLayout from '../Pages/MainCategories/Blogs/BlogPostLayout';
@@ -21,38 +21,39 @@ const postTypeMap = {
   directory: DirectoryPostLayout,
   request: RequestPostLayout,
   loads: LoadPostLayout,
-  trucks: TruckPostLayout
+  trucks: TruckPostLayout,
 };
 
+const POSTS_PER_BATCH = 16;
+
 function MainPostGrid({ posts }) {
-  const displayedPosts = posts?.slice(0, 16) || [];
-
-  if (displayedPosts.length === 0) {
-    return <p className="no-posts">No posts found.</p>;
-  }
-
   return (
     <div className="main-post-grid">
-      {displayedPosts.map((post, index) => {
-        const LayoutComponent = postTypeMap[post.type] || EventsPostLayout;
-
-        return (
-          <div key={post.id || index}>
-            <Link
-              to={post.type === 'video' ? `/videopost/${post.id}` : '#'}
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-                display: 'block',
-                width: '100%',
-                height: '100%',
-              }}
-            >
-              <LayoutComponent {...post} />
-            </Link>
-          </div>
-        );
-      })}
+      {posts.length === 0 ? (
+        <div className="no-post-block">
+          <p>No posts found.</p>
+        </div>
+      ) : (
+        posts.map((post, index) => {
+          const LayoutComponent = postTypeMap[post.type] || VideosPostLayout;
+          return (
+            <div key={post.id || index}>
+              <Link
+                to={post.type === 'video' ? `/videopost/${post.id}` : '#'}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  display: 'block',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <LayoutComponent {...post} />
+              </Link>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 }

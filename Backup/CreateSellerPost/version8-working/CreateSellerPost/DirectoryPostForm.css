@@ -1,0 +1,201 @@
+.directory-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Inputs */
+.directory-post-form input,
+.directory-post-form textarea {
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.directory-post-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+/* Labels */
+.directory-form-label {
+  font-weight: bold;
+  color: #f72b07;
+}
+
+/* Submit button */
+.directory-submit-btn {
+  background-color: #f72b07;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.directory-submit-btn:hover {
+  background-color: #fd1818;
+}
+
+/* Toggle icon buttons */
+.directory-toggle-buttons-row {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.directory-toggle-buttons-row img.active {
+  background-color: #f72b07;
+  transform: scale(1.1);
+}
+
+.directory-toggle-buttons-row img {
+  width: 48px;
+  height: 48px;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.directory-toggle-buttons-row img:hover {
+  background-color: #f72b07;
+  transform: scale(1.05);
+}
+
+/* Hidden fields */
+.directory-hidden-input {
+  display: none;
+}
+
+/* Upload container */
+.directory-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Row of multiple previews */
+.directory-preview-images-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Wrapper for individual preview and remove button */
+.directory-preview-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Individual image preview */
+.directory-preview-media {
+  border: 2px solid #f72b07;
+  border-radius: 8px;
+  max-width: 120px;
+  height: auto;
+}
+
+/* Remove image button */
+.directory-remove-image-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Uploading text */
+.directory-uploading-text {
+  color: #999;
+  font-style: italic;
+}
+
+/* Success message */
+.directory-success-message {
+  background-color: #0d0d0d;
+  color: #f72b07;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Dropdown styling (Service Location) */
+.directory-dropdown {
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07 !important;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.directory-dropdown:focus {
+  outline: none;
+  border-color: #fd1818 !important;
+  box-shadow: 0 0 5px #fd1818 !important;
+}
+
+/* Input for Business Address */
+.directory-post-form-input {
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+/* Autocomplete suggestions for all forms using red */
+.directory-suggestions {
+  background: #0d0d0d;          /* dark background */
+  border: 1px solid #f72b07;    /* red border */
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.directory-suggestions li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #fff;                  /* white text */
+}
+
+.directory-suggestions li:hover {
+  background-color: #f72b07;    /* red highlight */
+  color: #000;                  /* black text on hover */
+}

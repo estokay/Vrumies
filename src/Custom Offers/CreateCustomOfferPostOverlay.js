@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CreateCustomOfferPostOverlay.css';
 
-import OfferPostForm from './OfferPostForm';
+import OfferPostForm from './OfferPostForm/OfferPostForm';
 
 const POST_TYPES = {
   Offer: OfferPostForm,

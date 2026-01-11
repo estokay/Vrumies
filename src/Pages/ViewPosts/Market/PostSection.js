@@ -338,6 +338,8 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p><strong>Shipping Time:</strong> {post.shippingTime ?? "N/A"}</p>
+              <p><strong>Condition:</strong> {post.condition ?? "N/A"}</p>
             </div>
           )}
           {activeTab === "reviews" && (

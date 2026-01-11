@@ -338,6 +338,30 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p>
+      <strong>Available Date:</strong>{" "}
+      {post.routes?.availableDate
+        ? new Date(post.routes.availableDate).toLocaleDateString()
+        : "N/A"}
+    </p>
+              <p><strong>Truck Type:</strong> {post.truckType ?? "N/A"}</p>
+              <p><strong>Origin Cities:</strong>{" "}
+      {post.routes?.originCities?.length
+        ? post.routes.originCities
+            .map(c => `${c.city}, ${c.state}`)
+            .join(" • ")
+        : "N/A"}</p>
+                  <p>
+      <strong>Destination Cities:</strong>{" "}
+      {post.routes?.destinationCities?.length
+        ? post.routes.destinationCities
+            .map(c => `${c.city}, ${c.state}`)
+            .join(" • ")
+        : "N/A"}
+    </p>
+              <p><strong>Load Weight Max:</strong> {post.loadWeightMax ?? "N/A"}</p>
+              <p><strong>Load Length Max:</strong> {post.loadLengthMax ?? "N/A"}</p>
+              <p><strong>Min Per Mile Rate:</strong> ${post.minPerMile ?? "N/A"}</p>
             </div>
           )}
           {activeTab === "reviews" && (
@@ -372,10 +396,8 @@ function PostSection({ postId }) {
         </div>
 
         <div className="price-row">
-          <span className="price">{post.price ?? "Price: N/A"}</span>
-          <button className="addtoCart" onClick={handleAddToCart}>
-            ADD TO CART
-          </button>
+          <span className="price">Min Per Mile Rate: <span className="rate-amount">${post.minPerMile ?? "N/A"}</span></span>
+          
         </div>
       </div>
 

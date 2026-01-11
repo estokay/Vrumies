@@ -338,6 +338,18 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p>
+  <strong>Event Date:</strong>{" "}
+  {post.eventDateTime
+    ? new Date(post.eventDateTime.seconds * 1000).toLocaleDateString()
+    : "N/A"}
+</p>
+<p>
+  <strong>Event Time:</strong>{" "}
+  {post.eventDateTime
+    ? new Date(post.eventDateTime.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : "N/A"}
+</p>
             </div>
           )}
           {activeTab === "reviews" && (
@@ -372,10 +384,8 @@ function PostSection({ postId }) {
         </div>
 
         <div className="price-row">
-          <span className="price">{post.price ?? "Price: N/A"}</span>
-          <button className="addtoCart" onClick={handleAddToCart}>
-            ADD TO CART
-          </button>
+          <span className="price">Event Date: <span className="eventdate-highlighted">{post.eventDateTime ? new Date(post.eventDateTime.seconds * 1000).toLocaleString() : "N/A"}</span></span>
+          
         </div>
       </div>
 

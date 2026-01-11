@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Backup\\CreatePost",
+    "\\src",
+    "\\src\\CreatePost",
+    "\\src\\CreatePost\\EventPostForm",
+    "\\src\\CreatePost\\LoadPostForm",
+    "\\src\\CreatePost\\RequestPostForm",
+    "\\src\\CreatePost\\TruckPostForm",
+    "\\src\\CreatePost\\VehiclePostForm",
+    "\\src\\CreatePost\\VideoPostForm"
+  ],
+  "SelectedNode": "\\src\\CreatePost\\EventPostForm\\EventImagesToggle.js",
+  "PreviewInSolutionExplorer": false
+}

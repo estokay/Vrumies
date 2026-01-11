@@ -1,182 +1,546 @@
-import React, { useState } from 'react';
-import '../../../Components/Css/FilterPanel.css';
+import { useEffect, useState } from 'react';
+import { db } from '../../../Components/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import '../../../Components/Css/MainFilterPanel.css';
 
-const locationsList = ['Houston, TX', 'Dallas, TX', 'San Antonio, TX'];
-const filterOptionsList = ['Today', 'This Week', 'This Month'];
-const sortByList = ['Newest', 'Likes', 'Highest Rating'];
+const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
+  const [allPosts, setAllPosts] = useState([]);
+  const [availableLocations, setAvailableLocations] = useState([]);
 
-const FilterPanel = () => {
-  const [keyword, setKeyword] = useState('');
-  const [keywords, setKeywords] = useState([]);
-  const [expanded, setExpanded] = useState({
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [dateFilter, setDateFilter] = useState('Show All');
+  const [sortBy, setSortBy] = useState('Show All');
+
+  const [minPayout, setMinPayout] = useState('');
+  const [maxPayout, setMaxPayout] = useState('');
+
+  const [minLoadLength, setMinLoadLength] = useState('');
+  const [maxLoadLength, setMaxLoadLength] = useState('');
+
+  const [minLoadWeight, setMinLoadWeight] = useState('');
+  const [maxLoadWeight, setMaxLoadWeight] = useState('');
+
+  const [availableTruckTypes, setAvailableTruckTypes] = useState([]);
+  const [selectedTruckTypes, setSelectedTruckTypes] = useState([]);
+
+  const [availablePickupCities, setAvailablePickupCities] = useState([]);
+  const [selectedPickupCities, setSelectedPickupCities] = useState([]);
+
+  const [availableDropoffCities, setAvailableDropoffCities] = useState([]);
+  const [selectedDropoffCities, setSelectedDropoffCities] = useState([]);
+
+  const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
-    filterOptions: true,
-    sortBy: true,
+    date: true,
+    pickup: true,
+    dropoff: true,
+    payout: true,
+    loadLength: true,
+    loadWeight: true,
+    truckType: true,
+    sort: true,
   });
-  const [selectedLocations, setSelectedLocations] = useState(['Show All']);
-  const [selectedFilters, setSelectedFilters] = useState(['Show All']);
-  const [selectedSortBy, setSelectedSortBy] = useState('Show All');
 
-  const toggleExpand = (section) => {
-    setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
+  // 🔹 Fetch directory posts + extract locations
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const ref = collection(db, 'Posts');
+      const q = query(ref, where('type', '==', 'loads'));
+      const snap = await getDocs(q);
 
-  const handleMultiSelect = (value, setSelected, selected) => {
-    if (value === 'Show All') {
-      setSelected(['Show All']);
-    } else {
-      let updated = selected.includes('Show All')
-        ? [value]
-        : selected.includes(value)
-        ? selected.filter((v) => v !== value)
-        : [...selected, value];
-      if (updated.length === 0) updated = ['Show All'];
-      setSelected(updated);
+      const posts = snap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setAllPosts(posts);
+
+      // 🔹 Get unique locations from Firestore posts
+      const locations = Array.from(
+        new Set(posts.map(p => p.location).filter(Boolean))
+      );
+
+      setAvailableLocations(locations);
+
+      // 🔹 Get unique truck types
+      const truckTypes = Array.from(
+        new Set(posts.map(p => p.truckType).filter(Boolean))
+      );
+
+      setAvailableTruckTypes(truckTypes);
+
+      // 🔹 Get unique pickup cities
+      const pickupCities = Array.from(
+        new Set(posts.map(p => p.pickupCity).filter(Boolean))
+      );
+
+      setAvailablePickupCities(pickupCities);
+
+      // 🔹 Get unique drop-off cities
+      const dropoffCities = Array.from(
+        new Set(posts.map(p => p.dropoffCity).filter(Boolean))
+      );
+
+      setAvailableDropoffCities(dropoffCities);
+      
+
+    };
+
+    fetchPosts();
+  }, []);
+
+  // 🔹 Apply filters + sorting
+  useEffect(() => {
+    let filtered = [...allPosts];
+
+    // Search
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(post =>
+        (post.title || '').toLowerCase().includes(q) ||
+        (post.description || '').toLowerCase().includes(q)
+      );
     }
-  };
 
-  // Add keyword if valid
-  const handleAddKeyword = () => {
-    const trimmed = keyword.trim();
-    if (trimmed && !keywords.includes(trimmed) && keywords.length < 20) {
-      setKeywords([...keywords, trimmed]);
-      setKeyword('');
+    
+
+    // Post Locations (Show All = none selected)
+    if (selectedLocations.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedLocations.includes(p.location)
+      );
     }
-  };
 
-  // Handle pressing Enter
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleAddKeyword();
+    // Payout filter
+    if (minPayout !== '') {
+      filtered = filtered.filter(
+        p => typeof p.payout === 'number' && p.payout >= Number(minPayout)
+      );
     }
-  };
 
-  // Remove keyword
-  const handleRemoveKeyword = (word) => {
-    setKeywords(keywords.filter((k) => k !== word));
+    if (maxPayout !== '') {
+      filtered = filtered.filter(
+        p => typeof p.payout === 'number' && p.payout <= Number(maxPayout)
+      );
+    }
+
+    // Load Length filter (ft)
+    if (minLoadLength !== '') {
+      filtered = filtered.filter(
+        p =>
+          typeof p.loadLength === 'number' &&
+          p.loadLength >= Number(minLoadLength)
+      );
+    }
+
+    if (maxLoadLength !== '') {
+      filtered = filtered.filter(
+        p =>
+          typeof p.loadLength === 'number' &&
+          p.loadLength <= Number(maxLoadLength)
+      );
+    }
+
+    // Load Weight filter (lbs)
+    if (minLoadWeight !== '') {
+      filtered = filtered.filter(
+        p =>
+          typeof p.loadWeight === 'number' &&
+          p.loadWeight >= Number(minLoadWeight)
+      );
+    }
+
+    if (maxLoadWeight !== '') {
+      filtered = filtered.filter(
+        p =>
+          typeof p.loadWeight === 'number' &&
+          p.loadWeight <= Number(maxLoadWeight)
+      );
+    }
+
+    // Truck Type filter (Show All = none selected)
+    if (selectedTruckTypes.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedTruckTypes.includes(p.truckType)
+      );
+    }
+
+    // Pickup City filter (Show All = none selected)
+    if (selectedPickupCities.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedPickupCities.includes(p.pickupCity)
+      );
+    }
+
+    // Drop-Off City filter (Show All = none selected)
+    if (selectedDropoffCities.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedDropoffCities.includes(p.dropoffCity)
+      );
+    }
+
+    // Date filter
+    if (dateFilter !== 'Show All') {
+      const now = new Date();
+      filtered = filtered.filter(p => {
+        const postDate = new Date(p.createdAt?.seconds * 1000);
+        if (dateFilter === 'Today') {
+          return postDate.toDateString() === now.toDateString();
+        }
+        if (dateFilter === 'This Week') {
+          return now - postDate <= 7 * 86400000;
+        }
+        if (dateFilter === 'This Month') {
+          return (
+            postDate.getMonth() === now.getMonth() &&
+            postDate.getFullYear() === now.getFullYear()
+          );
+        }
+        if (dateFilter === 'Last Three Months') {
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(now.getMonth() - 3);
+        return postDate >= threeMonthsAgo && postDate <= now;
+        }
+        return true;
+      });
+    }
+
+
+    // Sorting
+    if (sortBy === 'Newest') {
+      filtered.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
+    }
+    if (sortBy === 'Oldest') {
+      filtered.sort((a, b) => a.createdAt?.seconds - b.createdAt?.seconds);
+    }
+    if (sortBy === 'Most Liked') {
+    filtered.sort(
+    (a, b) =>
+      (b.likes?.length || 0) - (a.likes?.length || 0)
+    );
+}
+
+    onFilteredPosts(filtered);
+  }, [
+    searchQuery,
+    selectedLocations,
+    dateFilter,
+    sortBy,
+    minPayout,
+    maxPayout,
+    minLoadLength,
+    maxLoadLength,
+    minLoadWeight,
+    maxLoadWeight,
+    selectedTruckTypes,
+    selectedPickupCities,
+    selectedDropoffCities,
+    allPosts,
+    onFilteredPosts,
+  ]);
+
+  const toggleSection = (key) => {
+    setSectionsOpen(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
     <div className="filterpanel">
-      <div className="filterpanel-scroll">
-        {/* Keyword Filter Section */}
-        <div className="filterpanel-section">
-          <label className="filterpanel-label">Keyword Filter</label>
-          <div className="filterpanel-keyword-input-container">
-            <input
-              type="text"
-              className="filterpanel-input"
-              placeholder="Add keyword..."
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={keywords.length >= 20}
-            />
-            <button
-              className="filterpanel-add-button"
-              onClick={handleAddKeyword}
-              disabled={keywords.length >= 20 || !keyword.trim()}
-            >
-              +
-            </button>
-          </div>
-          {/* Display added keywords */}
-          <div className="filterpanel-keywords-list">
-            {keywords.map((word) => (
-              <div key={word} className="filterpanel-keyword-chip">
-                <span>{word}</span>
-                <button
-                  className="filterpanel-remove-chip"
-                  onClick={() => handleRemoveKeyword(word)}
-                >
-                  ×
-                </button>
-              </div>
+
+      {/* POST LOCATIONS */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('location')}>
+          Post Locations <span>{sectionsOpen.location ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.location && (
+          <div className="filterpanel-options">
+
+            {/* SHOW ALL */}
+            <label className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedLocations.length === 0}
+                onChange={() => setSelectedLocations([])}
+              />
+              Show All
+            </label>
+
+            {/* FIRESTORE LOCATIONS */}
+            {availableLocations.map(loc => (
+              <label key={loc} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedLocations.includes(loc)}
+                  onChange={() =>
+                    setSelectedLocations(prev =>
+                      prev.includes(loc)
+                        ? prev.filter(l => l !== loc)
+                        : [...prev, loc]
+                    )
+                  }
+                />
+                {loc}
+              </label>
             ))}
           </div>
-        </div>
-
-        {/* Location */}
-        <div className="filterpanel-section">
-          <div
-            className="filterpanel-header"
-            onClick={() => toggleExpand('location')}
-          >
-            <span>Location</span>
-            <span>{expanded.location ? '-' : '+'}</span>
-          </div>
-          {expanded.location && (
-            <div className="filterpanel-options">
-              {['Show All', ...locationsList].map((loc) => (
-                <label key={loc} className="filterpanel-option">
-                  <input
-                    type="checkbox"
-                    checked={selectedLocations.includes(loc)}
-                    onChange={() =>
-                      handleMultiSelect(loc, setSelectedLocations, selectedLocations)
-                    }
-                  />
-                  <span>{loc}</span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Filter Options */}
-        <div className="filterpanel-section">
-          <div
-            className="filterpanel-header"
-            onClick={() => toggleExpand('filterOptions')}
-          >
-            <span>Filter Options</span>
-            <span>{expanded.filterOptions ? '-' : '+'}</span>
-          </div>
-          {expanded.filterOptions && (
-            <div className="filterpanel-options">
-              {['Show All', ...filterOptionsList].map((opt) => (
-                <label key={opt} className="filterpanel-option">
-                  <input
-                    type="checkbox"
-                    checked={selectedFilters.includes(opt)}
-                    onChange={() =>
-                      handleMultiSelect(opt, setSelectedFilters, selectedFilters)
-                    }
-                  />
-                  <span>{opt}</span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Sort By */}
-        <div className="filterpanel-section">
-          <div
-            className="filterpanel-header"
-            onClick={() => toggleExpand('sortBy')}
-          >
-            <span>Sort By</span>
-            <span>{expanded.sortBy ? '-' : '+'}</span>
-          </div>
-          {expanded.sortBy && (
-            <div className="filterpanel-options">
-              {['Show All', ...sortByList].map((sort) => (
-                <label key={sort} className="filterpanel-option">
-                  <input
-                    type="radio"
-                    name="sortBy"
-                    checked={selectedSortBy === sort}
-                    onChange={() => setSelectedSortBy(sort)}
-                  />
-                  <span>{sort}</span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
       </div>
+
+      {/* DATE */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('date')}>
+          Date Posted <span>{sectionsOpen.date ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.date && (
+          <div className="filterpanel-options">
+            {['Show All', 'Today', 'This Week', 'This Month', 'Last Three Months'].map(opt => (
+              <label key={opt} className="filterpanel-option">
+                <input
+                  type="radio"
+                  checked={dateFilter === opt}
+                  onChange={() => setDateFilter(opt)}
+                />
+                {opt}
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* PICKUP CITY */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('pickup')}>
+          Pickup City <span>{sectionsOpen.pickup ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.pickup && (
+        <div className="filterpanel-options">
+
+          {/* SHOW ALL */}
+          <label className="filterpanel-option">
+            <input
+              type="checkbox"
+              checked={selectedPickupCities.length === 0}
+              onChange={() => setSelectedPickupCities([])}
+            />
+            Show All
+          </label>
+
+          {/* FIRESTORE PICKUP CITIES */}
+          {availablePickupCities.map(city => (
+            <label key={city} className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedPickupCities.includes(city)}
+                onChange={() =>
+                  setSelectedPickupCities(prev =>
+                    prev.includes(city)
+                      ? prev.filter(c => c !== city)
+                      : [...prev, city]
+                  )
+                }
+              />
+              {city}
+            </label>
+          ))}
+        </div>
+        )}
+      </div>
+    
+      {/* DROP-OFF CITY */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('dropoff')}>
+          Drop-Off City <span>{sectionsOpen.dropoff ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.dropoff && (
+        <div className="filterpanel-options">
+
+          {/* SHOW ALL */}
+          <label className="filterpanel-option">
+            <input
+              type="checkbox"
+              checked={selectedDropoffCities.length === 0}
+              onChange={() => setSelectedDropoffCities([])}
+            />
+            Show All
+          </label>
+
+          {/* FIRESTORE DROP-OFF CITIES */}
+          {availableDropoffCities.map(city => (
+            <label key={city} className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedDropoffCities.includes(city)}
+                onChange={() =>
+                  setSelectedDropoffCities(prev =>
+                    prev.includes(city)
+                      ? prev.filter(c => c !== city)
+                      : [...prev, city]
+                  )
+                }
+              />
+              {city}
+            </label>
+          ))}
+        </div>
+        )}
+      </div>
+
+      {/* PAYOUT */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('payout')}>
+          Payout <span>{sectionsOpen.payout ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.payout && (
+        <div className="filterpanel-options">
+          <div className="filterpanel-price-inline">
+            <span className="filterpanel-price-label">Min ($)</span>
+            <input
+              type="number"
+              className="filterpanel-input"
+              placeholder="0"
+              value={minPayout}
+              onChange={(e) => setMinPayout(e.target.value)}
+            />
+
+            <span className="filterpanel-price-separator">–</span>
+
+            <span className="filterpanel-price-label">Max ($)</span>
+            <input
+              type="number"
+              className="filterpanel-input"
+              placeholder="Any"
+              value={maxPayout}
+              onChange={(e) => setMaxPayout(e.target.value)}
+            />
+          </div>
+        </div>
+        )}
+      </div>
+
+      {/* LOAD LENGTH */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('loadLength')}>
+          Load Length <span>{sectionsOpen.loadLength ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.loadLength && (
+        <div className="filterpanel-options">
+          <div className="filterpanel-price-inline">
+            <span className="filterpanel-price-label">Min (ft)</span>
+            <input
+              type="number"
+              className="filterpanel-input"
+              placeholder="0"
+              value={minLoadLength}
+              onChange={(e) => setMinLoadLength(e.target.value)}
+            />
+
+            <span className="filterpanel-price-separator">–</span>
+
+            <span className="filterpanel-price-label">Max (ft)</span>
+            <input
+              type="number"
+              className="filterpanel-input"
+              placeholder="Any"
+              value={maxLoadLength}
+              onChange={(e) => setMaxLoadLength(e.target.value)}
+            />
+          </div>
+        </div>
+        )}
+      </div>
+
+      {/* LOAD WEIGHT */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('loadWeight')}>
+          Load Weight <span>{sectionsOpen.loadWeight ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.loadWeight && (
+        <div className="filterpanel-options">
+          <div className="filterpanel-price-inline">
+            <span className="filterpanel-price-label">Min (lb)</span>
+            <input
+              type="number"
+              className="filterpanel-input"
+              placeholder="0"
+              value={minLoadWeight}
+              onChange={(e) => setMinLoadWeight(e.target.value)}
+            />
+
+            <span className="filterpanel-price-separator">–</span>
+
+            <span className="filterpanel-price-label">Max (lb)</span>
+            <input
+              type="number"
+              className="filterpanel-input"
+              placeholder="Any"
+              value={maxLoadWeight}
+              onChange={(e) => setMaxLoadWeight(e.target.value)}
+            />
+          </div>
+        </div>
+        )}
+      </div>
+
+      {/* TRUCK TYPE */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('truckType')}>
+          Required Truck Type <span>{sectionsOpen.truckType ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.truckType && (
+        <div className="filterpanel-options">
+
+          {/* SHOW ALL */}
+          <label className="filterpanel-option">
+            <input
+              type="checkbox"
+              checked={selectedTruckTypes.length === 0}
+              onChange={() => setSelectedTruckTypes([])}
+            />
+            Show All
+          </label>
+
+          {/* FIRESTORE TRUCK TYPES */}
+          {availableTruckTypes.map(type => (
+            <label key={type} className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedTruckTypes.includes(type)}
+                onChange={() =>
+                  setSelectedTruckTypes(prev =>
+                    prev.includes(type)
+                      ? prev.filter(t => t !== type)
+                      : [...prev, type]
+                  )
+                }
+              />
+              {type}
+            </label>
+          ))}
+        </div>
+        )}
+      </div>
+
+      {/* SORT */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('sort')}>
+          Sort By <span>{sectionsOpen.sort ? '−' : '+'}</span>
+        </div>
+        {sectionsOpen.sort && (
+          <div className="filterpanel-options">
+            {['Show All', 'Newest', 'Oldest', 'Most Liked'].map(opt => (
+              <label key={opt} className="filterpanel-option">
+                <input
+                  type="radio"
+                  checked={sortBy === opt}
+                  onChange={() => setSortBy(opt)}
+                />
+                {opt}
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };

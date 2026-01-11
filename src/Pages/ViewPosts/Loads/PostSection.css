@@ -315,3 +315,8 @@
 .action-btn.report.active .action-icon {
   color: #ff4f4f;
 }
+
+.payout-amount {
+  color: #00ff00;
+  font-weight: bold;
+}

@@ -338,6 +338,14 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p><strong>Available Date:</strong> {post.availableDate ?? "N/A"}</p>
+              <p><strong>Truck Type:</strong> {post.truckType ?? "N/A"}</p>
+              <p><strong>Pickup Address:</strong> {post.pickupLocations ?? "N/A"}</p>
+              <p><strong>Drop-Off Address:</strong> {post.dropoffLocations ?? "N/A"}</p>
+              <p><strong>Load Weight:</strong> {post.loadWeight ?? "N/A"} Pounds</p>
+              <p><strong>Load Length:</strong> {post.loadLength ?? "N/A"} Feet</p>
+              <p><strong>Payout:</strong> ${post.payout ?? "N/A"}</p>
+              
             </div>
           )}
           {activeTab === "reviews" && (
@@ -372,10 +380,7 @@ function PostSection({ postId }) {
         </div>
 
         <div className="price-row">
-          <span className="price">{post.price ?? "Price: N/A"}</span>
-          <button className="addtoCart" onClick={handleAddToCart}>
-            ADD TO CART
-          </button>
+          <span className="price">Payout: <span className="payout-amount">${post.payout ?? "N/A"}</span></span>
         </div>
       </div>
 

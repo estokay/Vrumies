@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Users from "./Collections/Users";
 import Videos from "./Collections/Videos";
 import Blogs from "./Collections/Blogs";
+import Vehicles from "./Collections/Vehicles";
 import Requests from "./Collections/Requests";
 import Market from "./Collections/Market";
 import Events from "./Collections/Events";
@@ -17,6 +18,7 @@ function ViewFirestoreData() {
     "Users",
     "Videos",
     "Blogs",
+    "Vehicles",
     "Requests",
     "Market",
     "Events",
@@ -38,6 +40,8 @@ function ViewFirestoreData() {
         return <Videos />;
       case "Blogs":
         return <Blogs />;
+      case "Vehicles":
+        return <Vehicles />;
       case "Requests":
         return <Requests />;
       case "Market":

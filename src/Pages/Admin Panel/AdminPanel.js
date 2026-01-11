@@ -4,6 +4,7 @@ import AdminPanelHeader from './AdminPanelHeader';
 import '../../App.css';
 import DeleteCollections from './DeleteCollections';
 import ViewFirestoreData from './ViewFirestoreData';
+import DeletePost from './DeletePost';
 
 const AdminPanel = () => {
   return (
@@ -12,6 +13,7 @@ const AdminPanel = () => {
       <AdminPanelHeader />
       <ViewFirestoreData />
       <DeleteCollections />
+      <DeletePost />
     </div>
   );
 };

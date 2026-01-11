@@ -330,12 +330,7 @@ function PostSection({ postId }) {
           {activeTab === "details" && (
             <div className="post-details">
               <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
-              <p>
-  <strong>Location:</strong>{" "}
-  {post.location
-    ? `${post.location.city || ""}, ${post.location.state || ""}`
-    : "N/A"}
-</p>
+              <p><strong>Location:</strong> {typeof post.location === "string" ? post.location : "N/A"}</p>
               <p><strong>Link:</strong>{" "}
                 {post.link ? (
                   <a href={formatLink(post.link)} target="_blank" rel="noopener noreferrer">
@@ -343,6 +338,7 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p><strong>Urgency:</strong>{" "} {post.urgency ?? "N/A"}</p>
             </div>
           )}
           {activeTab === "reviews" && (
@@ -377,10 +373,8 @@ function PostSection({ postId }) {
         </div>
 
         <div className="price-row">
-          <span className="price">{post.price ?? "Price: N/A"}</span>
-          <button className="addtoCart" onClick={handleAddToCart}>
-            ADD TO CART
-          </button>
+          
+          
         </div>
       </div>
 

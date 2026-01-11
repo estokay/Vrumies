@@ -338,6 +338,10 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p><strong>Service Location:</strong>{" "} {post.serviceLocation ?? "N/A"}</p>
+              {post.serviceLocation === "Business Address" && (
+              <p><strong>Business Address:</strong>{" "} {post.businessAddress ?? "N/A"}</p>
+              )}
             </div>
           )}
           {activeTab === "reviews" && (

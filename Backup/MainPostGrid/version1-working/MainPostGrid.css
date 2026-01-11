@@ -1,0 +1,64 @@
+/* Match VideosPostGrid exactly */
+.main-post-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  grid-auto-rows: 270px;
+  gap: 18px !important;
+  padding: 20px;
+  background-color: #000000;
+  border-radius: 10px;
+  box-sizing: border-box;
+  max-width: calc(270px * 4 + 20px * 3 + 40px); /* grid width + gaps + padding */
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .main-post-grid {
+    grid-template-columns: repeat(3, 270px);
+    grid-auto-rows: 270px;
+    gap: 18px !important;
+    max-width: calc(270px * 3 + 18px * 2 + 40px);
+  }
+}
+
+@media (max-width: 800px) {
+  .main-post-grid {
+    grid-template-columns: repeat(2, 270px);
+    grid-auto-rows: 270px;
+    gap: 16px !important;
+    max-width: calc(270px * 2 + 16px + 40px);
+  }
+}
+
+@media (max-width: 500px) {
+  .main-post-grid {
+    grid-template-columns: 270px;
+    grid-auto-rows: 270px;
+    gap: 12px !important;
+    max-width: calc(270px + 40px);
+  }
+}
+
+/* Empty / no posts text */
+.no-posts {
+  text-align: center;
+  color: #ccc;
+  font-size: 1rem;
+  margin: auto;
+}
+
+/* Empty post block */
+.no-post-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #111; /* match your grid styling */
+  border-radius: 10px;
+  color: #ccc;
+  font-size: 1rem;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}

@@ -1,50 +1,31 @@
 import { useEffect, useState } from 'react';
-import { db } from '../../../Components/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
 import RequestHeader from './RequestHeader';
 import '../../../App.css';
 import RightSidePanel from './RightSidePanel';
 import MainPostGrid from '../../../Components/MainPostGrid';
-import SearchBar from './SearchBar';
+import SearchBar from '../../../Components/SearchBar';
 import FilterPanel from './FilterPanel';
 import '../../../Components/Css/MainPage.css';
 
 const RequestPage = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsRef = collection(db, 'Posts');
-        const q = query(postsRef, where('type', '==', 'request'));
-        const querySnapshot = await getDocs(q);
-
-        const data = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setPosts(data);
-      } catch (error) {
-        console.error('Error fetching request posts:', error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  
   return (
     <div className="mainpage">
       <RequestHeader />
-      <SearchBar />
+
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
       <div className="videos-main">
-        <FilterPanel posts={posts} />
-        {posts.length === 0 ? (
-          <p className="no-events">No request posts yet...</p>
-        ) : (
-          <MainPostGrid posts={posts} />
-        )}
-        <RightSidePanel posts={posts} />
+        <FilterPanel
+          searchQuery={searchQuery}
+          onFilteredPosts={setFilteredPosts}
+        />
+        
+        <MainPostGrid posts={filteredPosts} />
+
+        <RightSidePanel posts={filteredPosts} />
       </div>
     </div>
   );
