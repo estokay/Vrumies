@@ -1,59 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
 import ViewPhotoOverlay from "../../Components/ViewPhotoOverlay";
 import "./PhotosBody.css";
+import { auth } from "../../Components/firebase";
+import UploadPhotoOverlay from "../../Components/UploadPhotoOverlay";
+import useGetPhotos from "../../Components/Hooks/useGetPhotos";
+import useDeletePhoto from "../../Components/Hooks/useDeletePhoto";
 
 export default function MyPhotosBody() {
-  const INITIAL_COUNT = 25; // initial photos
-  const LOAD_COUNT = 10;    // photos to load each scroll
-  const [photos, setPhotos] = useState(
-    Array.from({ length: INITIAL_COUNT }, (_, i) => `https://picsum.photos/400/400?random=${i + 1}`)
-  );
+  const user = auth.currentUser;
+  const userId = user?.uid;
+  const [uploadOverlayOpen, setUploadOverlayOpen] = useState(false);
+  const { photos: userPhotos, loading, error } = useGetPhotos(userId);
+  const { deletePhoto, loading: deleting, error: deleteError } = useDeletePhoto();
 
-  const [page, setPage] = useState(1);
+  
   const galleryRef = useRef(null);
 
   // Overlay state
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // Load more photos on scroll
-  const handleScroll = () => {
-    if (!galleryRef.current) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = galleryRef.current;
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      setPage((prev) => prev + 1);
-    }
-  };
-
-  useEffect(() => {
-    if (page === 1) return;
-    const newPhotos = Array.from(
-      { length: LOAD_COUNT },
-      (_, i) => `https://picsum.photos/400/400?random=${INITIAL_COUNT + (page - 1) * LOAD_COUNT + i + 1}`
-    );
-    setPhotos((prev) => [...prev, ...newPhotos]);
-  }, [page]);
-
-  // Upload photos (appear at top)
-  const handleUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const newPhotos = files.map((file) => URL.createObjectURL(file));
-    setPhotos((prev) => [...newPhotos, ...prev]);
-  };
 
   // Delete photo
-  const handleDelete = (index) => {
-    setPhotos((prev) => prev.filter((_, i) => i !== index));
-  };
+  const handleDelete = async (photoId) => {
+    if (!userId) return;
 
-  // Open overlay
-  const handlePhotoClick = (photoUrl) => {
-    setSelectedPhoto(photoUrl);
-  };
+    // 🔒 Confirm first
+    if (!window.confirm("Delete this photo?")) return;
 
-  // Close overlay
-  const handleCloseOverlay = () => {
-    setSelectedPhoto(null);
+    await deletePhoto(userId, photoId);
   };
 
   return (
@@ -61,39 +35,35 @@ export default function MyPhotosBody() {
       {/* Header */}
       <div className="myphotos-gallery-header">
         <h2 className="myphotos-body-title">Photos</h2>
-        <label className="myphotos-upload-btn">
+        <button
+          className="myphotos-upload-btn"
+          onClick={() => setUploadOverlayOpen(true)}
+        >
           Upload Photos
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleUpload}
-            hidden
-          />
-        </label>
+        </button>
       </div>
 
       {/* Scrollable Gallery */}
       <div
         className="myphotos-gallery-scroll"
         ref={galleryRef}
-        onScroll={handleScroll}
       >
-        {photos.length === 0 ? (
+        {userPhotos.length === 0 ? (
           <div className="myphotos-no-posts-message">No photos uploaded yet.</div>
         ) : (
           <div className="myphotos-gallery-grid">
-            {photos.map((src, index) => (
-              <div className="myphotos-card" key={index}>
+            {userPhotos.map((photo) => (
+              <div className="myphotos-card" key={photo.id}>
                 <img
-                  src={src}
-                  alt={`User upload ${index}`}
-                  onClick={() => handlePhotoClick(src)} // click to open overlay
+                  src={photo.photoUrl}
+                  alt="User upload"
+                  onClick={() => setSelectedPhoto(photo)}
                   style={{ cursor: "pointer" }}
                 />
                 <button
                   className="myphotos-delete-btn"
-                  onClick={() => handleDelete(index)}
+                  onClick={() => handleDelete(photo.id)}
+                  disabled={deleting}
                 >
                   ✕
                 </button>
@@ -105,7 +75,19 @@ export default function MyPhotosBody() {
 
       {/* ViewPhotoOverlay */}
       {selectedPhoto && (
-        <ViewPhotoOverlay photoUrl={selectedPhoto} onClose={handleCloseOverlay} />
+        <ViewPhotoOverlay 
+          photoUrl={selectedPhoto.photoUrl} 
+          onClose={() => setSelectedPhoto(null)}
+          caption={selectedPhoto.caption}
+          createdAt={selectedPhoto.createdAt}
+        />
+      )}
+
+      {uploadOverlayOpen && (
+        <UploadPhotoOverlay
+          onClose={() => setUploadOverlayOpen(false)}
+          onUploadComplete={() => setUploadOverlayOpen(false)}
+        />
       )}
     </div>
   );

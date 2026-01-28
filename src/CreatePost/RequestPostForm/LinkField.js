@@ -7,7 +7,7 @@ const LinkField = ({ link, handleChange }) => {
       <input
         type="text"
         name="link"
-        placeholder="Enter link"
+        placeholder="e.g. www.mybusiness.com"
         value={link}
         onChange={handleChange}
       />

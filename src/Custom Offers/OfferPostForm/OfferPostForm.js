@@ -31,7 +31,7 @@ const OfferPostForm = ({ originalPost }) => {
     city: '',
     state: '',
     link: '',
-    tokens: '',
+    tokens: 0,
     images: [],
     price: ''
   });

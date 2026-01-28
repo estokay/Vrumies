@@ -39,7 +39,6 @@ import TruckPost from '../Pages/ViewPosts/Trucks/TruckPost';
 import LoadPost from '../Pages/ViewPosts/Loads/LoadPost';
 import BookmarksPage from '../Pages/Bookmarks/BookmarksPage';
 import TestPage from '../Test/TestPage';
-import Checkout from '../Pages/Checkout/Checkout';
 
 // Layout for pages with Navbar
 const PageWithNavbar = ({ children }) => (
@@ -91,7 +90,6 @@ const PageRouter = () => (
     <Route path="/seller" element={<PageWithNavbar><SellerPage /></PageWithNavbar>} />
     <Route path="/bookmarks" element={<PageWithNavbar><BookmarksPage /></PageWithNavbar>} />
     <Route path="/testpage" element={<PageWithNavbar><TestPage /></PageWithNavbar>} />
-    <Route path="/checkout" element={<PageWithNavbar><Checkout /></PageWithNavbar>} />
     <Route path="/adminpanel" element={<ProtectedRoute allowedEmail="mitchellalvizures@gmail.com"><PageWithNavbar><AdminPanel /></PageWithNavbar></ProtectedRoute>} />
   </Routes>
 );

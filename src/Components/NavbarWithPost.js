@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import CreatePostOverlay from '../CreatePost/CreatePostOverlay';
 import DropDownDirectory from './DropDownDirectory';
 import DropDownButtons from './DropDownButtons';
-import Notifications from './Notifications';
+import Notifications from './Notifications/Notifications';
 import DropDownSocials from './DropDownSocials';
 import DropDownLoadBoard from './DropDownLoadBoard'; // new import
 import { useNavigate } from 'react-router-dom';

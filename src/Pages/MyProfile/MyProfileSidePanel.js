@@ -4,6 +4,7 @@ import { FaStar, FaPen, FaCamera, FaExpand } from "react-icons/fa";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "../../Components/firebase";
 import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
+import ProfileRating from "../../Components/Reviews/ProfileRating";
 
 export default function MyProfileSidePanel() {
   const [userData, setUserData] = useState(null);
@@ -95,9 +96,7 @@ export default function MyProfileSidePanel() {
           <div className="mpsp-email">{userData.email}</div>
 
           <div className="mpsp-stars">
-            {[...Array(5)].map((_, i) => (
-              <FaStar key={i} className="mpsp-star" />
-            ))}
+            <ProfileRating userId={userId} />
           </div>
 
           <button className="mpsp-reviews-btn">Share Profile</button>

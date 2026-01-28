@@ -1,0 +1,112 @@
+.upload-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.upload-overlay-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.upload-overlay-content h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.upload-limit {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #555;
+}
+
+/* Scrollable preview section ONLY */
+.preview-list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 10px 0;
+  padding-right: 5px;
+}
+
+/* Each photo + caption row */
+.preview-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.preview-row img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.preview-row input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.upload-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.upload-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.upload-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.upload-buttons button:not(.cancel-btn) {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.remove-image-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-image-btn:hover {
+  background-color: #d32f2f;
+}

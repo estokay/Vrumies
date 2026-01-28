@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   FaStar,
   FaShareAlt,
+  FaStarHalfAlt,
   FaBookmark,
   FaFlag,
   FaArrowLeft,
@@ -26,6 +27,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
+import useGetTimezoneDate from "../../../Components/Hooks/useGetTimezoneDate";
+import useGetTimezoneTime from "../../../Components/Hooks/useGetTimezoneTime";
+import SellerRating from "../../../Components/Reviews/SellerRating";
+import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -40,6 +45,10 @@ function PostSection({ postId }) {
   const [followed, setFollowed] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const eventDate = useGetTimezoneDate(post?.eventDateTime, post?.timezone);
+  const eventTime = useGetTimezoneTime(post?.eventDateTime, post?.timezone);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayImage, setOverlayImage] = useState(null);
 
   // Fetch post and seller info
   useEffect(() => {
@@ -277,15 +286,7 @@ function PostSection({ postId }) {
             <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
             <div>
               <div className="seller-name">{sellerName}</div>
-              <div className="seller-reviews">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    color={i < (post.sellerReviews || 0) ? "#f6c61d" : "#ccc"}
-                  />
-                ))}
-                <span className="review-count">{post.sellerReviews || 0} Reviews</span>
-              </div>
+              <SellerRating userId={post.userId} />
             </div>
 
             {/* Follow + Message buttons */}
@@ -330,7 +331,7 @@ function PostSection({ postId }) {
           {activeTab === "details" && (
             <div className="post-details">
               <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
-              <p><strong>Location:</strong> {post.location ?? "N/A"}</p>
+              <p><strong>Post Location:</strong> {post.location ?? "N/A"}</p>
               <p><strong>Link:</strong>{" "}
                 {post.link ? (
                   <a href={formatLink(post.link)} target="_blank" rel="noopener noreferrer">
@@ -338,18 +339,15 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p><strong>Event Address:</strong> {post.eventAddress ?? "N/A"}</p>
               <p>
-  <strong>Event Date:</strong>{" "}
-  {post.eventDateTime
-    ? new Date(post.eventDateTime.seconds * 1000).toLocaleDateString()
-    : "N/A"}
-</p>
-<p>
-  <strong>Event Time:</strong>{" "}
-  {post.eventDateTime
-    ? new Date(post.eventDateTime.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    : "N/A"}
-</p>
+                <strong>Event Date:</strong>{" "}
+                {eventDate || "N/A"}
+              </p>
+              <p>
+                <strong>Event Time:</strong>{" "}
+                {eventTime || "N/A"}
+              </p>
             </div>
           )}
           {activeTab === "reviews" && (
@@ -384,17 +382,31 @@ function PostSection({ postId }) {
         </div>
 
         <div className="price-row">
-          <span className="price">Event Date: <span className="eventdate-highlighted">{post.eventDateTime ? new Date(post.eventDateTime.seconds * 1000).toLocaleString() : "N/A"}</span></span>
+          <span className="price">Event Date: <span className="eventdate-highlighted">{eventDate || "N/A"}</span></span>
           
         </div>
       </div>
 
       <div className="post-right">
         <div className="image-container">
-          <img src={images[currentImage]} alt="Product" className="main-image" />
-          <a href={images[currentImage]} target="_blank" rel="noopener noreferrer">
-            <FaExpand className="expand-icon" />
-          </a>
+          <img
+            src={images[currentImage]}
+            alt="Product"
+            className="main-image"
+            onClick={() => {
+              setOverlayImage(images[currentImage]);
+              setShowOverlay(true);
+            }}
+            style={{ cursor: "zoom-in" }}
+          />
+
+          <FaExpand
+            className="expand-icon"
+            onClick={() => {
+              setOverlayImage(images[currentImage]);
+              setShowOverlay(true);
+            }}
+          />
         </div>
         <div className="carousel">
           <FaArrowLeft className="arrow" onClick={prevImage} />
@@ -410,6 +422,17 @@ function PostSection({ postId }) {
           <FaArrowRight className="arrow" onClick={nextImage} />
         </div>
       </div>
+      {showOverlay && (
+        <ViewPhotoOverlay
+          photoUrl={overlayImage}
+          caption={post.title}
+          createdAt={post.createdAt}
+          onClose={() => {
+            setShowOverlay(false);
+            setOverlayImage(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -14,12 +14,58 @@ export default function CartBody() {
     if (!currentUser) return;
 
     const cartRef = collection(db, "Users", currentUser.uid, "cart");
-    const unsubscribe = onSnapshot(cartRef, (snapshot) => {
-      const items = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCartItems(items);
+
+    const unsubscribe = onSnapshot(cartRef, async (snapshot) => {
+    
+    const items = [];
+
+    for (const d of snapshot.docs) {
+      const data = d.data();
+
+      if (!data.postId) {
+        await deleteDoc(doc(db, "Users", currentUser.uid, "cart", d.id));
+        continue;
+      }
+
+      // Get the post
+      const postRef = doc(db, "Posts", data.postId);
+      const postSnap = await getDoc(postRef);
+
+      if (!postSnap.exists()) {
+        await deleteDoc(doc(db, "Users", currentUser.uid, "cart", d.id));
+        continue;
+      }
+
+      const postData = postSnap.data();
+      const postType = postData.type || "offer";
+      const sellerId = postData.userId; // get sellerId from post
+
+      // Get the seller user document
+      let sellerName = "Unknown Seller";
+      let sellerAvatar = `${process.env.PUBLIC_URL}/default-profile.png`;
+
+      if (sellerId) {
+        const userRef = doc(db, "Users", sellerId);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          sellerName = userData.username || sellerName;
+          sellerAvatar = userData.profilepic || sellerAvatar;
+        }
+      }
+
+      items.push({
+        id: d.id,
+        postType,
+        sellerName,
+        sellerAvatar,
+        ...data,
+      });
+    }
+
+    setCartItems(items);
+
+      
     });
 
     return () => unsubscribe();
@@ -38,6 +84,30 @@ export default function CartBody() {
     if (!price) return 0;
     return Number(price.toString().replace("$", "")) || 0;
   };
+
+  const getSellerLabel = (type) => {
+  switch (type) {
+    case "market":
+      return "Market";
+    case "directory":
+      return "Directory";
+    case "offer":
+    default:
+      return "Offer";
+  }
+};
+
+const getPostLink = (type, postId) => {
+  switch (type) {
+    case "market":
+      return `/marketpost/${postId}`;
+    case "directory":
+      return `/directorypost/${postId}`;
+    case "offer":
+    default:
+      return `/offerpost/${postId}`;
+  }
+};
 
   return (
     <div className="cart-body">
@@ -63,7 +133,7 @@ export default function CartBody() {
                 />
                 <div className="seller-info">
                   <span className="seller-name">{item.sellerName || "Unknown Seller"}</span>
-                  <span className="seller-market">Market</span>
+                  <span className="seller-market">{getSellerLabel(item.postType)}</span>
                   <div className="stars">
                     {Array(5)
                       .fill(0)
@@ -77,13 +147,13 @@ export default function CartBody() {
 
               {/* Product info */}
               <div className="cart-content">
-                <Link to={`/eventpost/${item.postId}`}>
+                <Link to={getPostLink(item.postType, item.postId)}>
                   <img src={item.image} alt={item.title} className="product-image" />
                 </Link>
 
                 <div className="product-info">
                   <Link
-                    to={`/eventpost/${item.postId}`}
+                    to={getPostLink(item.postType, item.postId)}
                     style={{ color: "white", textDecoration: "none" }}
                   >
                     {item.title}

@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import ViewPhotoOverlay from "../../Components/ViewPhotoOverlay"; // adjust path if needed
 import "./PhotosCategories.css";
+import { useParams } from "react-router-dom";
+import useGetProfileCover from "../../Components/Hooks/useGetProfileCover";
 
 const RANDOM_COVER_URL =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn1XCKLwfD23PmpBQSj0aQREfslkrQ53-jWQ&s";
 
 export default function ViewPhotosCategories() {
-  const [coverPhoto] = useState(RANDOM_COVER_URL);
+  const { userId } = useParams();
+  const userCoverPhoto = useGetProfileCover(userId);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const coverPhoto = userCoverPhoto || RANDOM_COVER_URL;
 
   const handleImageClick = () => {
     setIsOverlayOpen(true);

@@ -10,16 +10,16 @@ import EventLocationToggle from './EventLocationToggle';
 import EventLinkToggle from './EventLinkToggle';
 import EventImagesToggle from './EventImagesToggle';
 import EventTokensToggle from './EventTokensToggle';
-import EventDateToggle from './EventDateToggle';
-import EventPriceToggle from './EventPriceToggle';
+import EventInfoToggle from './EventInfoToggle';
+import EventAddressToggle from './EventAddressToggle';
 
 const EventPostForm = () => {
   const [activeField, setActiveField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState('');
   const [uploading, setUploading] = useState(false);
-
   const [locationInput, setLocationInput] = useState('');
+
   const [suggestions, setSuggestions] = useState([]);
   const autocompleteServiceRef = useRef(null);
 
@@ -33,9 +33,10 @@ const EventPostForm = () => {
     city: '',
     state: '',
     link: '',
-    tokens: '',
-    eventDateTime: '',
-    price: ''
+    tokens: 0,
+    eventAddress: '',
+    eventDateTime: null,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
   // Google Places
@@ -61,11 +62,12 @@ const EventPostForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'tokens' ? Number(value) || 0 : value
-    }));
+    setFormData(prev => {
+      if (name === 'eventDateTime' || name === 'timezone') {
+        return { ...prev, [name]: value };
+      }
+      return { ...prev, [name]: name === 'tokens' ? Number(value) || 0 : value };
+    });
   };
 
   // Location
@@ -166,9 +168,7 @@ const EventPostForm = () => {
     await addDoc(collection(db, 'Posts'), {
       ...formData,
       tokens: formData.tokens || 0,
-      eventDateTime: formData.eventDateTime
-        ? Timestamp.fromDate(new Date(formData.eventDateTime))
-        : null,
+      eventDateTime: formData.eventDateTime ?? null,
       createdAt: Timestamp.now(),
       type: 'event',
       userId: user.uid,
@@ -206,8 +206,8 @@ const EventPostForm = () => {
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('images')} />
         <img src={`${publicPath}/PostCreationIcons/Token-Icon.png`} onClick={() => toggleField('tokens')} />
-        <img src={`${publicPath}/PostCreationIcons/Calendar-Icon.png`} onClick={() => toggleField('eventDateTime')} />
-        <img src={`${publicPath}/PostCreationIcons/Price-Icon.png`} onClick={() => toggleField('price')} />
+        <img src={`${publicPath}/PostCreationIcons/Routes-Icon.png`} onClick={() => toggleField('eventAddress')} />
+        <img src={`${publicPath}/PostCreationIcons/Calendar-Icon.png`} onClick={() => toggleField('eventInfo')} />
       </div>
 
       {/* TOGGLE CONTENT */}
@@ -244,22 +244,20 @@ const EventPostForm = () => {
         />
       )}
 
-      {activeField === 'eventDateTime' && (
-        <EventDateToggle
-          value={formData.eventDateTime}
-          onChange={handleChange}
+      {activeField === 'eventAddress' && (
+        <EventAddressToggle
+          eventAddress={formData.eventAddress}
+          onAddressSelect={(address) => {
+            setFormData(prev => ({ ...prev, eventAddress: address })); // keep formData synced
+          }}
         />
       )}
 
-      {activeField === 'price' && (
-        <EventPriceToggle
-          value={formData.price}
-          onChange={(e) => {
-            let value = e.target.value.replace(/[^0-9.]/g, '');
-            const f = parseFloat(value);
-            value = !isNaN(f) ? `$${f.toFixed(2)}` : '$0.00';
-            setFormData(prev => ({ ...prev, price: value }));
-          }}
+      {activeField === 'eventInfo' && (
+        <EventInfoToggle
+          eventDateTime={formData.eventDateTime}
+          timezone={formData.timezone}
+          onChange={handleChange}
         />
       )}
 

@@ -4,6 +4,7 @@ import { FaStar, FaExpand } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { db } from "../../Components/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import ProfileRating from "../../Components/Reviews/ProfileRating";
 
 const ViewProfileSidePanel = () => {
   const { userId } = useParams(); // Grab the userId from the URL
@@ -77,9 +78,7 @@ const ViewProfileSidePanel = () => {
 
       {/* Stars */}
       <div className="vpsp-stars">
-        {[...Array(5)].map((_, i) => (
-          <FaStar key={i} className="vpsp-star" />
-        ))}
+        <ProfileRating userId={userId} />
       </div>
 
       {/* Buttons */}

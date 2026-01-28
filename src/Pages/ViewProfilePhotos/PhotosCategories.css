@@ -13,15 +13,17 @@
 }
 
 .viewphotoscategories-cover-image {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0;
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 16px;
+  margin: 12px;
+  border-radius: 15px;
   filter: brightness(0.85);
+
   cursor: pointer;
-  position: relative;
   z-index: 1; /* ensure image is above gradient layer for click */
 }
 

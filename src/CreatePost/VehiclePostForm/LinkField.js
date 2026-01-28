@@ -6,7 +6,7 @@ const LinkField = ({ value, onChange }) => (
       name="link"
       value={value}
       onChange={onChange}
-      placeholder="Enter link"
+      placeholder="e.g. www.mybusiness.com"
     />
   </div>
 );

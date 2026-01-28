@@ -1,0 +1,67 @@
+.myphotos-cover-container {
+  width: calc(100% - 80px);
+  height: 260px;
+  margin: 20px 40px;
+
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  overflow: hidden;
+
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.myphotos-cover-image {
+  position: absolute;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 12px;
+  border-radius: 15px;
+  filter: brightness(0.85);
+
+  cursor: pointer; /* indicate clickable */
+  z-index: 1; /* ensure image is above gradient overlay */
+}
+
+.myphotos-cover-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.15)
+  );
+  pointer-events: none; /* allow clicks to pass through to image */
+  border-radius: 16px;
+}
+
+.myphotos-cover-btn {
+  position: relative;
+  z-index: 2;
+
+  margin-bottom: 18px;
+  padding: 10px 18px;
+
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff33;
+  border: 2px solid #00ff33;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.2s ease-in-out;
+}
+
+.myphotos-cover-btn:hover {
+  background: #00ff33;
+  color: black;
+  transform: scale(1.05);
+}

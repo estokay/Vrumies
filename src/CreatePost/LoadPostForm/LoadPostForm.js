@@ -28,8 +28,8 @@ const LoadPostForm = () => {
     images: [],
     tokens: 0,
 
-    pickupLocations: [],
-    dropoffLocations: [],
+    pickupAddress: [],
+    dropoffAddress: [],
     availableDate: '',
 
     truckType: '',
@@ -140,14 +140,14 @@ const LoadPostForm = () => {
   const selectPickup = (place) => {
     setFormData(prev => ({
       ...prev,
-      pickupLocations: [place.description],
+      pickupAddress: [place.description],
     }));
     setPickupInput('');
     setPickupSuggestions([]);
   };
 
   const removePickup = () => {
-    setFormData(prev => ({ ...prev, pickupLocations: [] }));
+    setFormData(prev => ({ ...prev, pickupAddress: [] }));
   };
 
   const handleDropoffChange = (e) => {
@@ -174,14 +174,14 @@ const LoadPostForm = () => {
   const selectDropoff = (place) => {
     setFormData(prev => ({
       ...prev,
-      dropoffLocations: [place.description],
+      dropoffAddress: [place.description],
     }));
     setDropoffInput('');
     setDropoffSuggestions([]);
   };
   
   const removeDropoff = () => {
-    setFormData(prev => ({ ...prev, dropoffLocations: [] }));
+    setFormData(prev => ({ ...prev, dropoffAddress: [] }));
   };
 
   // ================= Image Upload =================
@@ -265,12 +265,12 @@ const LoadPostForm = () => {
 
     try {
 
-      const pickupCityState = formData.pickupLocations.length
-        ? await getCityStateFromAddress(formData.pickupLocations[0])
+      const pickupCityState = formData.pickupAddress.length
+        ? await getCityStateFromAddress(formData.pickupAddress[0])
         : '';
 
-      const dropoffCityState = formData.dropoffLocations.length
-        ? await getCityStateFromAddress(formData.dropoffLocations[0])
+      const dropoffCityState = formData.dropoffAddress.length
+        ? await getCityStateFromAddress(formData.dropoffAddress[0])
         : '';
 
       await addDoc(collection(db, 'Posts'), {

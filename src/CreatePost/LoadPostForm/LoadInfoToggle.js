@@ -17,13 +17,32 @@ const LoadInfoToggle = ({ formData, handleChange }) => {
       </select>
 
       <label className="form-label">Load Weight (Pounds)</label>
-      <input type="number" name="loadWeight" value={formData.loadWeight} onChange={handleChange} />
+      <input 
+        type="number" 
+        name="loadWeight" 
+        value={formData.loadWeight} 
+        onChange={handleChange}
+        placeholder="e.g. 42000"
+      />
 
       <label className="form-label">Load Length (ft)</label>
-      <input type="number" name="loadLength" value={formData.loadLength} onChange={handleChange} />
+      <input 
+        type="number" 
+        name="loadLength" 
+        value={formData.loadLength} 
+        onChange={handleChange}
+        placeholder="e.g. 53"
+      />
 
       <label className="form-label">Payout ($)</label>
-      <input type="number" name="payout" value={formData.payout} onChange={handleChange} step="0.01" />
+      <input 
+        type="number" 
+        name="payout" 
+        value={formData.payout} 
+        onChange={handleChange} 
+        step="0.01"
+        placeholder="e.g. 3100"
+      />
     </div>
   );
 };

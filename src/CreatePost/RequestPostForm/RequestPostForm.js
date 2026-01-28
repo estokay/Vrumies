@@ -23,7 +23,7 @@ const RequestPostForm = () => {
     images: [],
     location: '',
     link: '',
-    tokens: '',
+    tokens: 0,
     urgency: 'I Can Wait'
   });
 

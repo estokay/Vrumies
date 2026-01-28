@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import PaymentMethodsOverlay from "./PaymentMethodsOverlay";
+import PaymentMethodsPanel from "./PaymentMethodsPanel";
 import CreateSellerPostOverlay from "../../CreateSellerPost/CreateSellerPostOverlay";
 
 const SellerPageHeader = () => {
-  const [showPaymentOverlay, setShowPaymentOverlay] = useState(false);
   const [showSellerOverlay, setShowSellerOverlay] = useState(false);
 
   return (
@@ -40,23 +39,12 @@ const SellerPageHeader = () => {
         </button>
 
         {/* Right: Balance + Payout */}
-        <div style={styles.balanceContainer}>
-          <div style={styles.balanceLabel}>TOTAL BALANCE</div>
-          <div style={styles.balanceValue}>$56.95</div>
-          <button
-            style={styles.payoutButton}
-            onClick={() => setShowPaymentOverlay(true)}
-          >
-            Payout Methods
-          </button>
+        <div style={styles.paymentPanel}>
+          <PaymentMethodsPanel /> 
         </div>
       </div>
 
-      {/* Overlays */}
-      {showPaymentOverlay && (
-        <PaymentMethodsOverlay onClose={() => setShowPaymentOverlay(false)} />
-      )}
-
+      {/* Overlay */}
       {showSellerOverlay && (
         <CreateSellerPostOverlay onClose={() => setShowSellerOverlay(false)} isOpen={showSellerOverlay} />
       )}
@@ -112,9 +100,13 @@ const styles = {
     right: "40px",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
+    height: "260px", //i dont know if this works or not
   },
   createPostButton: {
+    position: "absolute",
+    bottom: "20px",
+    left: "0px",
     background: "linear-gradient(to right, #8B0000, #FF0000)",
     border: "none",
     padding: "19px 31px",
@@ -146,6 +138,13 @@ const styles = {
     fontWeight: "900",
     color: "#fff",
     alignSelf: "center",
+  },
+  paymentPanel: {
+    position: "absolute",    // absolute relative to bottomBar
+    left: "50%",             // horizontal center
+    top: "50%",              // vertical center
+    transform: "translate(-50%, -50%)",  // offset to truly center
+    zIndex: 5,              // optional, ensures it’s above other content
   },
   payoutButton: {
     background: "linear-gradient(to right, #800080, #FF00FF)",

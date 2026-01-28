@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
+import "react-day-picker/dist/style.css";
+import { DayPicker } from "react-day-picker";
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -11,6 +13,9 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [sortBy, setSortBy] = useState('Show All');
   const [availableEventDates, setAvailableEventDates] = useState([]); // yyyy-mm-dd strings
   const [selectedEventDates, setSelectedEventDates] = useState([]);
+  const eventDatesAsDateObjects = availableEventDates.map(
+    d => new Date(d + "T00:00:00")
+  );
 
   const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
@@ -108,16 +113,17 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       });
     }
 
-    // Event Date filter (calendar-based)
+    // Event Filtering
     if (selectedEventDates.length > 0) {
       filtered = filtered.filter(p => {
         if (!p.eventDateTime?.seconds) return false;
 
-        const eventDate = new Date(
-          p.eventDateTime.seconds * 1000
-        ).toISOString().split('T')[0];
+        const eventDate = new Date(p.eventDateTime.seconds * 1000);
 
-        return selectedEventDates.includes(eventDate);
+        return selectedEventDates.some(
+          selected =>
+            selected.toDateString() === eventDate.toDateString()
+        );
       });
     }
 
@@ -141,6 +147,7 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     selectedLocations,
     dateFilter,
     sortBy,
+    selectedEventDates,
     allPosts,
     onFilteredPosts,
   ]);
@@ -217,29 +224,39 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       <div className="filterpanel-section">
         <div
           className="filterpanel-header"
-          onClick={() => toggleSection('eventDate')}
+          onClick={() => toggleSection("eventDate")}
         >
-          Event Date <span>{sectionsOpen.eventDate ? '−' : '+'}</span>
+          Event Date <span>{sectionsOpen.eventDate ? "−" : "+"}</span>
         </div>
 
         {sectionsOpen.eventDate && (
-          <div className="filterpanel-options scrollable">
-            {availableEventDates.map(date => (
-              <label key={date} className="filterpanel-option">
-                <input
-                  type="checkbox"
-                  checked={selectedEventDates.includes(date)}
-                  onChange={() =>
-                    setSelectedEventDates(prev =>
-                      prev.includes(date)
-                        ? prev.filter(d => d !== date)
-                        : [...prev, date]
-                    )
-                  }
-                />
-                {new Date(date).toLocaleDateString()}
-              </label>
-            ))}
+          <div className="filterpanel-options">
+            <DayPicker
+              mode="multiple"
+              selected={selectedEventDates}
+              onSelect={setSelectedEventDates}
+              modifiers={{
+                hasEvent: eventDatesAsDateObjects
+              }}
+              modifiersClassNames={{
+                hasEvent: "rdp-day-has-event"
+              }}
+              disabled={(date) =>
+                !eventDatesAsDateObjects.some(
+                  (d) => d.toDateString() === date.toDateString()
+                )
+              }
+              className="event-date-calendar"
+            />
+
+            {selectedEventDates.length > 0 && (
+              <button
+                className="clear-dates-btn"
+                onClick={() => setSelectedEventDates([])}
+              >
+                Clear dates
+              </button>
+            )}
           </div>
         )}
       </div>

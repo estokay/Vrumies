@@ -1,9 +1,6 @@
 .viewphotooverlay-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
@@ -12,44 +9,64 @@
   animation: fadeIn 0.2s ease-in-out;
 }
 
+/* BLACK STATIC CONTAINER */
 .viewphotooverlay-inner {
-  position: relative;
-  display: inline-block; /* shrink to fit image */
+  width: 60vw;
+  height: 90vh;
   background: black;
-  padding: 0; /* no extra padding needed here */
-}
-
-.viewphotooverlay-image-wrapper {
   position: relative;
-  display: inline-block; /* shrink to fit image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* IMAGE VIEWPORT */
+.viewphotooverlay-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden; /* LOCKS container size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* IMAGE */
 .viewphotooverlay-image {
-  display: block;
-  min-width: 60vw;
-  max-width: 90vw; /* responsive width */
-  max-height: 90vh; /* responsive height */
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* TOUCHES SIDES OR TOP/BOTTOM */
   border-radius: 12px;
-  box-shadow: 0 0 20px #00ff33; /* neon border matches photo size */
-  object-fit: contain;
+  box-shadow: 0 0 20px #00ff33;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: center center;
+  user-select: none;
+  pointer-events: none;
 }
 
-.viewphotooverlay-close-btn {
+/* CONTROLS PINNED TO IMAGE */
+.viewphotooverlay-controls {
   position: absolute;
-  top: 10px;   /* inside image top edge */
-  right: 10px; /* inside image right edge */
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
   z-index: 10000;
+}
+
+/* BUTTON THEME (UNCHANGED) */
+.viewphotooverlay-controls button {
   background: rgba(84, 67, 67, 0.8);
   color: #00ff33;
   border: 2px solid #00ff33;
   border-radius: 10px;
   padding: 6px 10px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
 
-.viewphotooverlay-close-btn:hover {
+.viewphotooverlay-controls button:hover {
   background: #00ff33;
   color: black;
   transform: scale(1.1);
@@ -57,10 +74,42 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.viewphotooverlay-caption {
+  position: absolute;
+  bottom: 20px; /* distance from bottom of image */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5); /* black with 50% transparency */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  max-width: 90%;
+  text-align: center;
+  pointer-events: none; /* so clicks go through */
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viewphotooverlay-date {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,0 +1,99 @@
+.myphotos-profile-body {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  margin: 0px 40px 20px 40px;
+  height: 90vh; /* fixed height for scrolling */
+  box-sizing: border-box;
+}
+
+/* Header */
+.myphotos-gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Title */
+.myphotos-body-title {
+  font-weight: bold;
+  font-size: 24px;
+  color: #00ff66;
+}
+
+/* Upload button */
+.myphotos-upload-btn {
+  background: #00ff66;
+  color: #000;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.myphotos-upload-btn:hover {
+  opacity: 0.85;
+}
+
+/* Scrollable container */
+.myphotos-gallery-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* Grid: fixed 5x5 layout */
+.myphotos-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 180px;
+  gap: 10px;
+  justify-items: center;
+}
+
+/* Photo card */
+.myphotos-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #111;
+}
+
+.myphotos-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Delete button */
+.myphotos-delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.myphotos-delete-btn:hover {
+  background: red;
+}
+
+/* Empty message */
+.myphotos-no-posts-message {
+  color: #ffffff;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 40px;
+}

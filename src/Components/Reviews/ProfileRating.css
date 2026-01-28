@@ -1,0 +1,12 @@
+.seller-profile-sidepanel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+}
+
+.seller-stars {
+  display: flex;
+  gap: 4px;
+  order: -1;
+}

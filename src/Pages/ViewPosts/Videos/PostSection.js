@@ -23,6 +23,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
+import SellerRating from "../../../Components/Reviews/SellerRating";
 
 function PostSection({ postId: propPostId }) {
   const { id } = useParams(); // fallback for route param
@@ -270,15 +271,7 @@ function PostSection({ postId: propPostId }) {
             <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
             <div>
               <div className="seller-name">{sellerName}</div>
-              <div className="seller-reviews">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    color={i < (post.sellerReviews || 0) ? "#f6c61d" : "#ccc"}
-                  />
-                ))}
-                <span className="review-count">{post.sellerReviews || 0} Reviews</span>
-              </div>
+              <SellerRating userId={post.userId} />
             </div>
 
             <div className="post-action-buttons">
@@ -322,7 +315,7 @@ function PostSection({ postId: propPostId }) {
           {activeTab === "details" && (
             <div className="post-details">
               <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
-              <p><strong>Location:</strong> {post.location ?? "N/A"}</p>
+              <p><strong>Post Location:</strong> {post.location ?? "N/A"}</p>
               <p>
                 <strong>Link:</strong>{" "}
                 {post.link ? (

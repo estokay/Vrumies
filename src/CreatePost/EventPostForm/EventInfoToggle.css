@@ -1,0 +1,116 @@
+/* === Flatpickr Calendar === */
+.flatpickr-calendar {
+  background-color: #0d0d0d !important; /* black background */
+  border: 1px solid #00ff00 !important; /* neon green border */
+  color: #ffffff !important;            /* default text white */
+  border-radius: 8px !important;
+  font-family: inherit;                  /* match form fonts */
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+  color: #ffffff !important;      /* make the arrows white */
+  fill: #ffffff !important;       /* for SVG arrows */
+  border: none;                   /* remove any default border */
+  background: transparent;        /* transparent background */
+}
+
+.flatpickr-prev-month:hover,
+.flatpickr-next-month:hover,
+.flatpickr-current-month select:hover {
+  color: #00ff00; /* neon green on hover */
+  fill: #00ff00;
+}
+
+/* Month & year text */
+.flatpickr-current-month {
+  color: #ffffff !important;
+}
+
+/* Month & Year dropdowns inside Flatpickr */
+.flatpickr-current-month select {
+  background-color: #0d0d0d !important; /* black background */
+  color: #ffffff !important;           /* white text */
+  border: 1px solid #00ff00 !important; /* optional neon border */
+  border-radius: 6px;
+  padding: 2px 20px 2px 4px;           /* space for custom arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6l5-6 5 6z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px 6px;
+}
+
+.flatpickr-current-month select::-ms-expand {
+  display: none;  /* IE/Edge */
+}
+
+.flatpickr-current-month select::-webkit-inner-spin-button,
+.flatpickr-current-month select::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.flatpickr-current-month .arrowUp,
+.flatpickr-current-month .arrowDown {
+  fill: #ffffff !important;  /* make the arrow white */
+}
+
+/* Day numbers */
+.flatpickr-day {
+  color: #ffffff !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: #00ff00 !important;
+  color: #000000 !important;
+}
+
+.flatpickr-day:hover {
+  background: rgba(0, 255, 0, 0.2) !important;
+}
+
+.flatpickr-day.today {
+  border-color: #00ff00 !important;
+}
+
+/* Days of the week (Mon, Tue, etc.) */
+.flatpickr-weekdays {
+  background-color: #0d0d0d; /* match calendar bg */
+  border-bottom: 1px solid #00ff00; /* optional neon underline */
+}
+
+.flatpickr-weekday {
+  color: #ffffff !important; /* white text */
+  font-weight: bold;          /* optional for clarity */
+  font-family: inherit;       /* match your form font */
+}
+
+/* === Time Picker === */
+.flatpickr-time {
+  background-color: #0d0d0d !important;
+  border-top: 1px solid #00ff00 !important;
+  color: #00ff00;
+}
+
+/* Time input numbers */
+.flatpickr-time input {
+  background-color: #0d0d0d !important;
+  color: #00ff00 !important;
+  border: none !important;
+}
+
+/* Inline wrapper */
+.flatpickr.inline {
+  width: 100%;
+}
+
+/* Optional: style AM/PM selector */
+.flatpickr-am-pm {
+  color: #00ff00 !important;
+  background-color: #0d0d0d !important;
+}

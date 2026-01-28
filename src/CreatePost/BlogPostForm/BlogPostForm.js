@@ -25,7 +25,7 @@ const BlogPostForm = () => {
     title: '',
     description: '',
     link: '',
-    tokens: '',
+    tokens: 0,
     images: [],
     location: '',
   });

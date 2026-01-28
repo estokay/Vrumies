@@ -4,6 +4,7 @@ import { db } from '../../Components/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { FaComment } from 'react-icons/fa';
 import './BookmarksPostLayout.css';
+import useUserAverageRating from "../../Components/Reviews/useUserAverageRating";
 
 function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
   const [profilePic, setProfilePic] = useState(`${process.env.PUBLIC_URL}/default-profile.png`);
@@ -13,6 +14,7 @@ function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
   const [commentsCount, setCommentsCount] = useState(0);
   const [tokens, setTokens] = useState(0);
   const [postType, setPostType] = useState('event'); // default to event if unknown
+  const averageRating = useUserAverageRating(userId);
 
   const formattedDate = createdAt
     ? new Date(createdAt.seconds * 1000).toLocaleDateString()
@@ -90,7 +92,7 @@ function BookmarksPostLayout({ id, images, title, createdAt, userId }) {
             alt="Star" 
             className="star-icon"
           />
-          <span className="review-text">N/A</span>
+          <span className="review-text">{averageRating > 0 ? averageRating.toFixed(1) : "N/A"}</span>
         </div>
       </div>
 

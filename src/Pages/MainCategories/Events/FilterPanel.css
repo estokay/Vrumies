@@ -144,3 +144,63 @@
   height: 18px;
   accent-color: #00ff66;
 }
+
+.clear-dates-btn {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid #00ff66;
+  color: #00ff66;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clear-dates-btn:hover {
+  background-color: #00ff66;
+  color: #000;
+}
+
+/* Calendar container */
+.event-date-calendar {
+  background-color: #000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+/* Month header */
+.event-date-calendar .rdp-caption {
+  color: #00ff66;
+}
+
+/* Default day */
+.event-date-calendar .rdp-day {
+  color: #aaa;
+}
+
+/* Days with events */
+.event-date-calendar .rdp-day-has-event {
+  background-color: rgba(0, 255, 102, 0.15);
+  border-radius: 6px;
+  color: #00ff66;
+  font-weight: bold;
+}
+
+/* Selected days */
+.event-date-calendar .rdp-day_selected {
+  background-color: #00ff66 !important;
+  color: #000 !important;
+}
+
+/* Hover */
+.event-date-calendar .rdp-day:hover:not(.rdp-day_disabled) {
+  background-color: rgba(0, 255, 102, 0.3);
+}
+
+/* Disabled days */
+.event-date-calendar .rdp-day_disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}

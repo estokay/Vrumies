@@ -1,0 +1,81 @@
+.event-post-side-panel {
+  background-color: #093f1b;
+  border-radius: 10px;
+  padding: 15px;
+  color: #ffffff;
+  width: 350px;          /* fixed width like post grid column */
+  box-sizing: border-box;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  height: 1300px;
+
+  overflow-y: auto;
+  /* Optional: If you want the panel itself to be centered in its container */
+  /* margin: 0 auto; */
+}
+
+.panel-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #72ff6a;
+  margin-bottom: 10px;
+}
+
+.panel-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* spacing between cards */
+  align-items: center; /* centers cards horizontally */
+}
+
+/* Style individual cards inside panel-posts */
+.panel-posts > * {
+  width: 270px;            /* match grid column width */.right-side-panel {
+  background-color: #093f1b;
+  border-radius: 10px;
+  padding: 15px;
+  color: #ffffff;
+  width: 350px; /* consistent with layout spacing */
+  height: fit-content;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0; /* critical for side-by-side layout */
+  box-sizing: border-box;
+}
+
+.panel-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #72ff6a;
+  margin-bottom: 10px;
+}
+
+.panel-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.panel-posts > * {
+  width: 280px;
+  height: 280px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #0a0f0a;
+  box-shadow: 0 0 12px #00ff66;
+  padding: 12px;
+  color: white;
+  text-align: left;
+}
+
+  height: 280px;           /* fixed height for square cards */
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #0a0f0a; /* example background */
+  box-shadow: 0 0 12px #00ff66; /* similar to video post card */
+  padding: 12px;
+  color: white;
+  text-align: left; /* optional, in case text is getting centered */
+}

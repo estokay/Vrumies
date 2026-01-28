@@ -58,9 +58,9 @@
 
 .cspo-post-type-btn {
   padding: 10px 15px;
-  background: transparent;
-  border: 2px solid #f72b07;
-  color: #f72b07;
+  background: #242424;
+  border: 2px solid #303030;
+  color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
@@ -71,6 +71,8 @@
 .cspo-post-type-btn:hover {
   background-color: #f72b07;
   color: #ffffff;
+  transform: scale(1.05);
+  border: 2px solid #f72b07;
 }
 
 .cspo-subtitle {

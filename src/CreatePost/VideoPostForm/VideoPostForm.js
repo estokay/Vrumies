@@ -23,7 +23,7 @@ const VideoPostForm = () => {
     link: '',
     image: '',
     video: '',
-    tokens: '',
+    tokens: 0,
   });
 
   const [submitted, setSubmitted] = useState(false);

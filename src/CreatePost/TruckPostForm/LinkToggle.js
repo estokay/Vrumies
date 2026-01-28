@@ -9,7 +9,7 @@ const LinkToggle = ({ activeField, formData, handleChange }) => {
       <input
         type="text"
         name="link"
-        placeholder="Enter link"
+        placeholder="e.g. www.mybusiness.com"
         value={formData.link}
         onChange={handleChange}
       />

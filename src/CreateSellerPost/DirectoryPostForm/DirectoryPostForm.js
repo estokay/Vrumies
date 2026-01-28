@@ -22,7 +22,7 @@ const DirectoryPostForm = () => {
     city: '',
     state: '',
     link: '',
-    tokens: '',
+    tokens: 0,
     images: [],
     serviceLocation: '',
     businessAddress: '',

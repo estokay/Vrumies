@@ -12,6 +12,7 @@ import Trucks from "./Collections/Trucks";
 import Reports from "./Collections/Reports";
 import Orders from "./Collections/Orders";
 import Offers from "./Collections/Offers";
+import Notifications from "./Collections/Notifications";
 
 function ViewFirestoreData() {
   const tabs = [
@@ -28,6 +29,7 @@ function ViewFirestoreData() {
     "Reports",
     "Orders",
     "Offers",
+    "Notifications",
   ];
 
   const [activeTab, setActiveTab] = useState("Users");
@@ -60,6 +62,8 @@ function ViewFirestoreData() {
         return <Orders />;
       case "Offers":
         return <Offers />;
+      case "Notifications":
+        return <Notifications />;
       default:
         return null;
     }

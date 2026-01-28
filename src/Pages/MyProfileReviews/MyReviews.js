@@ -4,7 +4,6 @@ import './Reviews.css';
 import MyProfileSidePanel from '../MyProfile/MyProfileSidePanel';
 import MyReviewsCategories from "./MyReviewsCategories";
 import MyReviewsBody from "./MyReviewsBody";
-import CreateReview from "./CreateReview"; // <-- new component
 import { Link } from "react-router-dom";
 
 const MyReviews = () => {
@@ -35,10 +34,7 @@ const MyReviews = () => {
             />
           </div>
 
-          {/* Create Review */}
-          <div className="myreviews-profile-section">
-            <CreateReview />
-          </div>
+          
 
           {/* Reviews list */}
           <div className="myreviews-profile-section">

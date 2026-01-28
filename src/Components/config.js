@@ -4,3 +4,5 @@ export const CLOUDINARY_CONFIG = {
 };
 
 export const GOOGLE_API_KEY = 'AIzaSyAF-Y9M2YTMmMBu6RU7sDh4vRM9gFdC5MI';
+
+export const DISTANCE_MATRIX_API_KEY = 'AIzaSyAnfsiGM1qhmERiAzHBm0pN7UjrydylDag';

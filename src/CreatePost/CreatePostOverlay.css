@@ -45,7 +45,7 @@
 
 .post-type-buttons {
   display: flex;
-  gap: 10px;
+  gap: 11px;
   justify-content: center;
   margin-bottom: 20px;
   flex-wrap: wrap;
@@ -53,9 +53,10 @@
 
 .post-type-btn {
   padding: 10px 15px;
-  background: transparent;
-  border: 2px solid #00ff00;
-  color: #00ff00;
+  background: #242424;
+  /* border: 2px solid #00ff00; */
+  border: 2px solid #303030;
+  color: #f7f7f7;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
@@ -66,6 +67,9 @@
 .post-type-btn:hover {
   background-color: #00ff00;
   color: #000000;
+  /* box-shadow: 0 0 8px rgba(72, 255, 48, 0.8); */
+  transform: scale(1.05);
+  border: 2px solid #00ff00;
 }
 
 .form-container {

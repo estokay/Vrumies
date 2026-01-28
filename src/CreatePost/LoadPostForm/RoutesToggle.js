@@ -34,9 +34,9 @@ const RoutesToggle = ({
         </ul>
       )}
 
-      {formData.pickupLocations.length > 0 && (
+      {formData.pickupAddress.length > 0 && (
         <div className="chip">
-          {formData.pickupLocations[0]}
+          {formData.pickupAddress[0]}
           <button
             type="button"
             className="chip-remove"
@@ -65,9 +65,9 @@ const RoutesToggle = ({
         </ul>
       )}
 
-      {formData.dropoffLocations.length > 0 && (
+      {formData.dropoffAddress.length > 0 && (
         <div className="chip">
-          {formData.dropoffLocations[0]}
+          {formData.dropoffAddress[0]}
           <button
             type="button"
             className="chip-remove"

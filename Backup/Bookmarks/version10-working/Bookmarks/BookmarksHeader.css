@@ -1,0 +1,48 @@
+.events-header-container {
+  position: relative;
+  color: #fff;
+  padding: 20px 40px;
+  font-family: 'Arial', sans-serif;
+  background-image: url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1756456649/bookmarks-background_mzvup9.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 260px;
+}
+
+.left-side { max-width: 50%; }
+
+.title {
+  font-size: 48px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: 2px;
+  text-align: left;
+  text-shadow: 2px 2px 6px #000;
+}
+
+.green-highlight {
+  color: #00FF00;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  text-align: left;
+  text-shadow: 2px 2px 6px #000;
+}
+
+.right-side {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  opacity: 0.8;
+}
+
+.events-icon {
+  filter: drop-shadow(0 0 3px #39FF14);
+}

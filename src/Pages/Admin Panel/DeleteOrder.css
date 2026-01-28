@@ -1,0 +1,46 @@
+.delete-order-container {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 20px;
+  max-width: 420px;
+  border-radius: 8px;
+}
+
+.delete-order-container h2 {
+  margin-bottom: 15px;
+}
+
+.delete-order-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+}
+
+.delete-order-button {
+  width: 100%;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-order-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.delete-order-error {
+  margin-top: 15px;
+  color: orange;
+}
+
+.delete-order-success {
+  margin-top: 15px;
+  color: lightgreen;
+}

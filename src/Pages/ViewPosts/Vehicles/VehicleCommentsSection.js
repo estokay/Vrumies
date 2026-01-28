@@ -17,6 +17,7 @@ import {
 import { onAuthStateChanged } from 'firebase/auth';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import './VehicleCommentsSection.css';
+import SendNotificationComment from '../../../Components/Notifications/SendNotificationComment';
 
 function VehicleCommentsSection({ postId }) {
   const [comment, setComment] = useState('');
@@ -25,6 +26,7 @@ function VehicleCommentsSection({ postId }) {
   const [currentUserData, setCurrentUserData] = useState(null);
   const [post, setPost] = useState(null);
   const maxChars = 130;
+  const [newCommentNotification, setNewCommentNotification] = useState(null);
 
   // Track logged-in user
   useEffect(() => {
@@ -156,6 +158,15 @@ function VehicleCommentsSection({ postId }) {
       await addDoc(commentsCol, newComment);
       setComments(prev => [newComment, ...prev]);
       setComment('');
+
+      // Trigger notification
+      setNewCommentNotification({
+        sellerId: post?.userId, // the owner of the post
+        fromId: currentUserData.uid,
+        postId: postId,
+        comment: newComment.text,
+      });
+
     } catch (err) {
       console.error('Error adding comment:', err);
       alert('Failed to submit comment.');
@@ -236,6 +247,16 @@ function VehicleCommentsSection({ postId }) {
             </div>
           </div>
         ))
+      )}
+
+      {/* Send Notification */}
+      {newCommentNotification && (
+        <SendNotificationComment
+          sellerId={newCommentNotification.sellerId}
+          fromId={newCommentNotification.fromId}
+          postId={newCommentNotification.postId}
+          comment={newCommentNotification.comment}
+        />
       )}
     </div>
   );

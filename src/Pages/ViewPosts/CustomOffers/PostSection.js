@@ -26,6 +26,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
+import SellerRating from "../../../Components/Reviews/SellerRating";
+import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
+import useGetOriginalPostObject from "../../../Components/Hooks/useGetOriginalPostObject";
+import useGetPostLink from "../../../Components/Hooks/useGetPostLink";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -40,6 +44,21 @@ function PostSection({ postId }) {
   const [followed, setFollowed] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayImage, setOverlayImage] = useState(null);
+  const { originalPost, loading: originalLoading } = useGetOriginalPostObject(postId);
+  const originalPostLink = useGetPostLink({postId: post?.originalPost});
+  const isAddToCartDisabled = !currentUser || !post || !originalPost || currentUser.uid === post.userId || currentUser.uid !== originalPost.userId;
+  const disabledReason =
+  !currentUser
+    ? "Login to add to cart"
+    : !post || !originalPost
+    ? ""
+    : currentUser.uid === post.userId
+    ? "You can’t buy your own post"
+    : currentUser.uid !== originalPost.userId
+    ? "Only the original requester can purchase this"
+    : "";
 
   // Fetch post and seller info
   useEffect(() => {
@@ -168,6 +187,8 @@ function PostSection({ postId }) {
       await setDoc(itemRef, {
         postId,
         title: post.title || "Untitled",
+        description: post.description || "No Description Available.",
+        type: post.type,
         price: post.price || 0,
         sellerId: post.userId,
         sellerName: seller?.username || "Unknown Seller",
@@ -277,15 +298,7 @@ function PostSection({ postId }) {
             <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
             <div>
               <div className="seller-name">{sellerName}</div>
-              <div className="seller-reviews">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    color={i < (post.sellerReviews || 0) ? "#f6c61d" : "#ccc"}
-                  />
-                ))}
-                <span className="review-count">{post.sellerReviews || 0} Reviews</span>
-              </div>
+              <SellerRating userId={post.userId} />
             </div>
 
             {/* Follow + Message buttons */}
@@ -329,8 +342,22 @@ function PostSection({ postId }) {
           {activeTab === "description" && <p className="description">{postDescription}</p>}
           {activeTab === "details" && (
             <div className="post-details">
+              <p>
+                <strong>Offer In Response To:</strong>{" "}
+                {originalPost?.title ? (
+                  <span
+                    className="original-post-link"
+                    onClick={() => originalPostLink && navigate(originalPostLink)}
+                    style={{ cursor: "pointer", textDecoration: "underline" }}
+                  >
+                    {originalPost.title}
+                  </span>
+                ) : (
+                  "N/A"
+                )}
+              </p>
               <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
-              <p><strong>Location:</strong> {post.location ?? "N/A"}</p>
+              <p><strong>Post Location:</strong> {post.location ?? "N/A"}</p>
               <p><strong>Link:</strong>{" "}
                 {post.link ? (
                   <a href={formatLink(post.link)} target="_blank" rel="noopener noreferrer">
@@ -373,18 +400,46 @@ function PostSection({ postId }) {
 
         <div className="price-row">
           <span className="price">{post.price ?? "Price: N/A"}</span>
-          <button className="addtoCart" onClick={handleAddToCart}>
-            ADD TO CART
-          </button>
+
+          <div className="add-to-cart-wrapper">
+            <button
+              className="addtoCart"
+              onClick={handleAddToCart}
+              disabled={isAddToCartDisabled}
+              title={disabledReason}
+            >
+              ADD TO CART
+            </button>
+
+            {isAddToCartDisabled && (
+              <div className="cart-disabled-hint">
+                {disabledReason}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="post-right">
         <div className="image-container">
-          <img src={images[currentImage]} alt="Product" className="main-image" />
-          <a href={images[currentImage]} target="_blank" rel="noopener noreferrer">
-            <FaExpand className="expand-icon" />
-          </a>
+          <img
+            src={images[currentImage]}
+            alt="Product"
+            className="main-image"
+            onClick={() => {
+              setOverlayImage(images[currentImage]);
+              setShowOverlay(true);
+            }}
+            style={{ cursor: "zoom-in" }}
+          />
+
+          <FaExpand
+            className="expand-icon"
+            onClick={() => {
+              setOverlayImage(images[currentImage]);
+              setShowOverlay(true);
+            }}
+          />
         </div>
         <div className="carousel">
           <FaArrowLeft className="arrow" onClick={prevImage} />
@@ -400,6 +455,17 @@ function PostSection({ postId }) {
           <FaArrowRight className="arrow" onClick={nextImage} />
         </div>
       </div>
+      {showOverlay && (
+        <ViewPhotoOverlay
+          photoUrl={overlayImage}
+          caption={post.title}
+          createdAt={post.createdAt}
+          onClose={() => {
+            setShowOverlay(false);
+            setOverlayImage(null);
+          }}
+        />
+      )}
     </div>
   );
 }

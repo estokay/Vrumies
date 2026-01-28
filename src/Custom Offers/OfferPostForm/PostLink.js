@@ -7,7 +7,7 @@ const PostLink = ({ value, onChange }) => {
       <input
         type="text"
         name="link"
-        placeholder="Enter link"
+        placeholder="e.g. www.mybusiness.com"
         value={value}
         onChange={onChange}
       />

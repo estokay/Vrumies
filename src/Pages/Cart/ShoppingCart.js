@@ -3,7 +3,7 @@ import ShoppingCartHeader from './ShoppingCartHeader';
 import '../../App.css';
 import './ShoppingCart.css';
 import CartBody from './CartBody';
-import CartSidePanel from './CartSidePanel';
+import CheckoutForm from './CheckoutForm';
 
 const ShoppingCart = () => {
   return (
@@ -15,7 +15,7 @@ const ShoppingCart = () => {
           <CartBody />
         </div>
         <div className="cart-side-container">
-          <CartSidePanel />
+          <CheckoutForm />
         </div>
       </div>
     </div>

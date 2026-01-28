@@ -8,6 +8,7 @@ import AddressField from './AddressField';
 import LinkField from './LinkField';
 import ImageUploadField from './ImageUploadField';
 import TokenField from './TokenField';
+import VehicleInfoField from './VehicleInfoField';
 
 const VehiclePostForm = () => {
   const [activeField, setActiveField] = useState(null);
@@ -19,7 +20,12 @@ const VehiclePostForm = () => {
     state: '',
     link: '',
     images: [],
-    tokens: '',
+    tokens: 0,
+    sellerType: '',
+    titleStatus: '',
+    year: '',
+    make: '',
+    model: '',
   });
 
   const [message, setMessage] = useState('');
@@ -31,10 +37,21 @@ const VehiclePostForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'tokens' ? Number(value) || 0 : value,
-    }));
+    
+    if (name === 'year') {
+        // Remove non-digit characters
+        const numericValue = value.replace(/\D/g, '');
+
+        // Limit to 4 digits
+        if (numericValue.length <= 4) {
+          setFormData(prev => ({ ...prev, [name]: Number(numericValue) || '' }));
+        }
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          [name]: name === 'tokens' ? Number(value) || '' : value,
+        }));
+      }
   };
 
   const handleSubmit = async (e) => {
@@ -86,6 +103,7 @@ const VehiclePostForm = () => {
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} className={activeField === 'link' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} className={activeField === 'image' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Token-Icon.png`} onClick={() => toggleField('tokens')} className={activeField === 'tokens' ? 'active' : ''} />
+        <img src={`${publicPath}/PostCreationIcons/Vehicles-Icon.png`} onClick={() => toggleField('vehicleInfo')} className={activeField === 'vehicleInfo' ? 'active' : ''} />
       </div>
 
       {activeField === 'address' && (
@@ -102,6 +120,17 @@ const VehiclePostForm = () => {
 
       {activeField === 'tokens' && (
         <TokenField value={formData.tokens} onChange={handleChange} />
+      )}
+
+      {activeField === 'vehicleInfo' && (
+        <VehicleInfoField
+          sellerType={formData.sellerType}
+          titleStatus={formData.titleStatus}
+          year={formData.year}
+          make={formData.make}
+          model={formData.model}
+          onChange={handleChange} // same handler
+        />
       )}
 
       <button type="submit" className="submit-btn">Submit</button>
