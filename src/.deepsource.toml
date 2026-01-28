@@ -1,0 +1,29 @@
+version = 1
+
+test_patterns = [
+  "**/__tests__/**",
+  "**/*.test.js",
+  "**/*.spec.js"
+]
+
+exclude_patterns = [
+  "node_modules/**",
+  "build/**",
+  "dist/**",
+  "coverage/**",
+  ".firebase/**",
+  "functions/lib/**",
+  "Backup/**"
+]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+[[analyzers]]
+name = "react"
+enabled = true
+
+[[analyzers]]
+name = "secrets"
+enabled = true
