@@ -25,7 +25,7 @@
     "dayjs-plugin-utc": "^0.1.2",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "firebase": "^12.0.0",
+    "firebase": "^12.7.0",
     "flatpickr": "^4.6.13",
     "lightgallery": "^2.9.0",
     "lucide-react": "^0.534.0",
