@@ -31,7 +31,7 @@
     "lucide-react": "^0.534.0",
     "luxon": "^3.7.2",
     "moment-timezone": "^0.6.0",
-    "react": "^19.1.0",
+    "react": "^19.2.3",
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.1.0",
     "react-firebase-hooks": "^5.1.1",
