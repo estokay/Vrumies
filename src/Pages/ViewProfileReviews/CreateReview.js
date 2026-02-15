@@ -7,6 +7,7 @@ import useGetProfilePic from "../../Components/Hooks/useGetProfilePic";
 import CreateUserReview from "../../Components/Reviews/CreateUserReview";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SendNotificationReview from "../../Components/Notifications/SendNotificationReview";
 
 export default function CreateReview() {
   const [text, setText] = useState("");
@@ -16,10 +17,20 @@ export default function CreateReview() {
   const { userId: sellerId } = useParams();
   const user = auth.currentUser;
   const currentUserId = user?.uid;
+  const [notificationData, setNotificationData] = useState(null);
 
   const handleReviewSuccess = () => {
+    if (!submittedReview) return;
+
+    setNotificationData({
+      sellerId,
+      fromId: currentUserId,
+      stars: submittedReview.rating,
+      reviewComment: submittedReview.comment,
+    });
+
     toast.success("Review submitted successfully! ⭐");
-    setSubmittedReview(null); // optional: clear submittedReview to stop re-render
+    setSubmittedReview(null);
   };
 
   const handleSubmit = () => {
@@ -45,10 +56,12 @@ export default function CreateReview() {
 
   };
 
-  // Real user data
+  const username = useGetUsername(currentUserId);
+  const avatar = useGetProfilePic(currentUserId);
+
   const realUser = {
-    name: useGetUsername(currentUserId),
-    avatar: useGetProfilePic(currentUserId),
+    name: username,
+    avatar: avatar,
   };
 
   const currentDate = new Date().toLocaleDateString(undefined, {
@@ -110,6 +123,15 @@ export default function CreateReview() {
           rating={submittedReview.rating}
           comment={submittedReview.comment}
           onSuccess={handleReviewSuccess} // pass callback
+        />
+      )}
+
+      {notificationData && (
+        <SendNotificationReview
+          sellerId={notificationData.sellerId}
+          fromId={notificationData.fromId}
+          stars={notificationData.stars}
+          reviewComment={notificationData.reviewComment}
         />
       )}
 

@@ -4,8 +4,8 @@ import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 import PostSection from './PostSection';
-import EventCommentsSection from './EventCommentsSection';
-import RightSidePanel from './RightSidePanel';
+import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
+import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import PageHeader from '../../../Components/PageHeader';
 import '../../../App.css';
 import './EventPost.css'; // renamed for clarity
@@ -48,11 +48,11 @@ const EventPost = () => {
 
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
-          <EventCommentsSection postId={id} />
+          <MainCommentsSection postId={id} />
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <RightSidePanel />
+          <PromotedPanel category="event" />
         </div>
       </div>
     </div>

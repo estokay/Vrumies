@@ -1,12 +1,18 @@
 import React from "react";
 import "./ReviewsBody.css";
-import useUserReviews from "../../Components/Hooks/useGetUserReviews";
+import useGetUserReviews from "../../Components/Hooks/useGetUserReviews";
 import { useParams } from "react-router-dom";
+import { auth } from "../../Components/firebase";
+import useDeleteMyReview from "../../Components/Hooks/useDeleteMyReview";
+import useGetUsername from "../../Components/Hooks/useGetUsername";
 
 export default function ViewReviewsBody() {
+  const currentUserId = auth.currentUser?.uid;
   const { userId } = useParams();
 
-  const { reviews, loading } = useUserReviews(userId);
+  const { reviews, loading } = useGetUserReviews(userId);
+  const { deleteReview, loading: deleting } = useDeleteMyReview();
+  const myUsername = useGetUsername(currentUserId);
 
   return (
     <div className="myreviews-profile-body">
@@ -36,6 +42,17 @@ export default function ViewReviewsBody() {
           </div>
 
           <p className="myreviews-review-text">{review.text}</p>
+
+          {review.userName === myUsername && (
+            <button
+              className="myreviews-delete-btn"
+              onClick={() => deleteReview(userId, review.id)}
+              disabled={deleting}
+            >
+              {deleting ? "Deleting..." : "Delete"}
+            </button>
+          )}
+
           <div className="myreviews-review-line" />
         </div>
       ))}

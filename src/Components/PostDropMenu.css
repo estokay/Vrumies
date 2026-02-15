@@ -1,0 +1,51 @@
+.post-options-menu {
+  position: relative;
+}
+
+.post-options-btn {
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 6px;
+  color: white;
+  border-radius: 50%;
+}
+
+.post-options-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* dropdown */
+.post-options-dropdown {
+  position: absolute;
+  right: 0;
+  top: 33px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 6px;
+  z-index: 9999;
+  min-width: 130px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
+
+.delete-option {
+  padding: 14px 20px;
+  color: red;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete-option:hover {
+  background: #300;
+}
+
+.block-option {
+  padding: 14px 20px;
+  color: orange;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.block-option:hover {
+  background: #332000;
+}

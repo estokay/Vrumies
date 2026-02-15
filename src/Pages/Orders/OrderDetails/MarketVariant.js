@@ -3,6 +3,7 @@ import { FaCheck } from "react-icons/fa";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase"; // adjust path if needed
 import "./MarketVariant.css";
+import checkPrice from "../../../Components/Functions/checkPrice";
 
 export default function MarketVariant({ orderId }) {
   const [order, setOrder] = useState(null);
@@ -46,8 +47,18 @@ export default function MarketVariant({ orderId }) {
   const type = order.type || "N/A";
   const id = order.id || "N/A";
 
-  const delivery = order.deliveryInfo
-    ? `${order.deliveryInfo.deliveryStreetAddress || ""}, ${order.deliveryInfo.deliveryCity || ""} ${order.deliveryInfo.deliveryState || ""} ${order.deliveryInfo.deliveryZipCode || ""}`
+  const delivery = order.deliveryInfo &&
+                 (order.deliveryInfo.deliveryStreetAddress ||
+                  order.deliveryInfo.deliveryCity ||
+                  order.deliveryInfo.deliveryState ||
+                  order.deliveryInfo.deliveryZipCode)
+    ? `${order.deliveryInfo.deliveryStreetAddress || ""}${
+        order.deliveryInfo.deliveryStreetAddress ? ", " : ""
+      }${order.deliveryInfo.deliveryCity || ""}${
+        order.deliveryInfo.deliveryCity ? " " : ""
+      }${order.deliveryInfo.deliveryState || ""}${
+        order.deliveryInfo.deliveryState ? " " : ""
+      }${order.deliveryInfo.deliveryZipCode || ""}`
     : "N/A";
 
   const carrier = order.marketSpecific?.Carrier || "N/A";
@@ -57,14 +68,13 @@ export default function MarketVariant({ orderId }) {
   const postId = order.postData?.postId || "N/A";
   const title = order.postData?.title || "N/A";
   const description = order.postData?.description || "N/A";
-  const priceStr = order.postData?.price?.replace(/[^0-9.]/g, "") || "0";
-  const price = parseFloat(priceStr) || 0;
-
+  const rawPrice = order?.price;
+  const price = checkPrice(rawPrice);
   const transactionFee = (price * 0.15).toFixed(2);
   const total = (price + parseFloat(transactionFee)).toFixed(2);
 
-  const paymentMethod = order.paymentInfo?.paymentmethod || "N/A";
-  const lastFour = order.paymentInfo?.lastfour || "N/A";
+  const paymentMethod = order.paymentInfo?.paymentMethod || "N/A";
+  const lastFour = order.paymentInfo?.lastFour || "N/A";
 
   // Status logic
   let statusSteps = [

@@ -5,8 +5,8 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
-import RequestCommentsSection from './RequestCommentsSection';
-import RightSidePanel from './RightSidePanel';
+import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
+import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './RequestPost.css'; // renamed for clarity
 import ViewOffers from '../../../Custom Offers/ViewOffers';
@@ -46,11 +46,11 @@ const RequestPost = () => {
       <ViewOffers />
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
-          <RequestCommentsSection postId={id} />
+          <MainCommentsSection postId={id} />
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <RightSidePanel />
+          <PromotedPanel category="request" />
         </div>
       </div>
     </div>

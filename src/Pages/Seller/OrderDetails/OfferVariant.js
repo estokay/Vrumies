@@ -4,6 +4,7 @@ import { FaFilePdf, FaCheck } from "react-icons/fa";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
+import checkPrice from "../../../Components/Functions/checkPrice";
 
 export default function OfferVariant({ orderId }) {
   const [order, setOrder] = useState(null);
@@ -65,12 +66,12 @@ export default function OfferVariant({ orderId }) {
   const image = order.postData?.images?.[0] || "";
   const title = order.postData?.title || "N/A";
   const description = order.postData?.description || "N/A";
-  const priceStr = order.postData?.price?.replace("$", "") || "0";
-  const price = parseFloat(priceStr) || 0;
+  const rawPrice = order?.price;
+  const price = checkPrice(rawPrice);
   const transactionFee = (price * 0.15).toFixed(2);
   const total = (price + parseFloat(transactionFee)).toFixed(2);
-  const paymentMethod = order.paymentInfo?.paymentmethod || "N/A";
-  const lastFour = order.paymentInfo?.lastfour || "N/A";
+  const paymentMethod = order.paymentInfo?.paymentMethod || "N/A";
+  const lastFour = order.paymentInfo?.lastFour || "N/A";
   const postId = order.postData?.postId || "";
 
   // Status logic

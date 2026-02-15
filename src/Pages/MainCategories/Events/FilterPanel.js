@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
-import "react-day-picker/dist/style.css";
-import { DayPicker } from "react-day-picker";
+import CalendarDateRangeOverlay from "../../../Components/CalendarDateRangeOverlay";
+import { format } from "date-fns";
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -11,11 +11,9 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [dateFilter, setDateFilter] = useState('Show All');
   const [sortBy, setSortBy] = useState('Show All');
-  const [availableEventDates, setAvailableEventDates] = useState([]); // yyyy-mm-dd strings
-  const [selectedEventDates, setSelectedEventDates] = useState([]);
-  const eventDatesAsDateObjects = availableEventDates.map(
-    d => new Date(d + "T00:00:00")
-  );
+  const [dateRange, setDateRange] = useState({ from: undefined, to: undefined });
+
+  const [showDateOverlay, setShowDateOverlay] = useState(false);
 
   const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
@@ -45,20 +43,9 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
 
       setAvailableLocations(locations);
 
-      // 🔹 Unique event dates (yyyy-mm-dd)
-      const dates = Array.from(
-        new Set(
-          posts
-            .filter(p => p.eventDateTime?.seconds)
-            .map(p =>
-              new Date(p.eventDateTime.seconds * 1000)
-                .toISOString()
-                .split('T')[0]
-            )
-        )
-      );
+      
 
-      setAvailableEventDates(dates);
+      
     
 
       
@@ -113,17 +100,23 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       });
     }
 
-    // Event Filtering
-    if (selectedEventDates.length > 0) {
+    
+    // Event Date Range Filter
+    if (dateRange.from && dateRange.to) {
+      const normalize = (d) =>
+        new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+      const start = normalize(dateRange.from);
+      const end = normalize(dateRange.to);
+
       filtered = filtered.filter(p => {
         if (!p.eventDateTime?.seconds) return false;
 
-        const eventDate = new Date(p.eventDateTime.seconds * 1000);
-
-        return selectedEventDates.some(
-          selected =>
-            selected.toDateString() === eventDate.toDateString()
+        const eventDate = normalize(
+          new Date(p.eventDateTime.seconds * 1000)
         );
+
+        return eventDate >= start && eventDate <= end;
       });
     }
 
@@ -147,7 +140,7 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     selectedLocations,
     dateFilter,
     sortBy,
-    selectedEventDates,
+    dateRange,
     allPosts,
     onFilteredPosts,
   ]);
@@ -220,41 +213,42 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         )}
       </div>
 
-      {/* EVENT DATE */}
+      {/* EVENT DATE RANGE */}
       <div className="filterpanel-section">
         <div
           className="filterpanel-header"
           onClick={() => toggleSection("eventDate")}
         >
-          Event Date <span>{sectionsOpen.eventDate ? "−" : "+"}</span>
+          Event Date Range <span>{sectionsOpen.eventDate ? "−" : "+"}</span>
         </div>
 
         {sectionsOpen.eventDate && (
           <div className="filterpanel-options">
-            <DayPicker
-              mode="multiple"
-              selected={selectedEventDates}
-              onSelect={setSelectedEventDates}
-              modifiers={{
-                hasEvent: eventDatesAsDateObjects
-              }}
-              modifiersClassNames={{
-                hasEvent: "rdp-day-has-event"
-              }}
-              disabled={(date) =>
-                !eventDatesAsDateObjects.some(
-                  (d) => d.toDateString() === date.toDateString()
-                )
-              }
-              className="event-date-calendar"
+
+            {/* Start Date */}
+            <input
+              className="filterpanel-input"
+              readOnly
+              placeholder="Start Date"
+              value={dateRange.from ? format(dateRange.from, "yyyy-MM-dd") : ""}
+              onClick={() => setShowDateOverlay(true)}
             />
 
-            {selectedEventDates.length > 0 && (
+            {/* End Date */}
+            <input
+              className="filterpanel-input"
+              readOnly
+              placeholder="End Date"
+              value={dateRange.to ? format(dateRange.to, "yyyy-MM-dd") : ""}
+              onClick={() => setShowDateOverlay(true)}
+            />
+
+            {(dateRange.from || dateRange.to) && (
               <button
-                className="clear-dates-btn"
-                onClick={() => setSelectedEventDates([])}
+                className="clear-date-range-btn"
+                onClick={() => setDateRange({ from: null, to: null })}
               >
-                Clear dates
+                Clear Range
               </button>
             )}
           </div>
@@ -281,7 +275,14 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
           </div>
         )}
       </div>
-
+      {/* Overlay Calendar */}
+      {showDateOverlay && (
+        <CalendarDateRangeOverlay
+          range={dateRange}
+          setRange={setDateRange}
+          onClose={() => setShowDateOverlay(false)}
+        />
+      )}
     </div>
   );
 };

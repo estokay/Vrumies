@@ -24,6 +24,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
+import PostSectionReviews from '../../../Components/PostSectionReviews';
+import PostDropMenu from "../../../Components/PostDropMenu";
+import DeletePostOverlay from "../../../Components/DeletePostOverlay";
 
 function PostSection({ postId: propPostId }) {
   const { id } = useParams(); // fallback for route param
@@ -41,6 +44,7 @@ function PostSection({ postId: propPostId }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const [showPostDropMenu, setShowDropMenu] = useState(false);
 
   // Fetch post and seller info
   useEffect(() => {
@@ -143,6 +147,10 @@ function PostSection({ postId: propPostId }) {
   const handleFollow = () => {
     setFollowed(!followed);
     showNotification(followed ? "Unfollowed" : "Followed", 2000);
+  };
+
+  const handleBlockUser = () => {
+    console.log("TODO: Block this user");
   };
 
   const handleAddToCart = async () => {
@@ -252,6 +260,9 @@ function PostSection({ postId: propPostId }) {
   const formatLink = (url) =>
     url ? (url.startsWith("http") ? url : `https://${url}`) : null;
 
+  const isSeller = currentUser?.uid === post.userId;
+  const canBlock = currentUser?.uid !== post.userId;
+
   const videoUrl = post.type === "video" ? post.video : null;
   const displayImage = post.image || `${process.env.PUBLIC_URL}/default-thumbnail.png`;
 
@@ -264,6 +275,7 @@ function PostSection({ postId: propPostId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / VIDEOS</div>
             <div className="date">DATE POSTED: {postDate}</div>
+            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
@@ -327,9 +339,7 @@ function PostSection({ postId: propPostId }) {
             </div>
           )}
           {activeTab === "reviews" && (
-            <div className="seller-reviews-section">
-              <p>Seller reviews will go here...</p>
-            </div>
+            <PostSectionReviews userId={post.userId} />
           )}
         </div>
 
@@ -402,6 +412,14 @@ function PostSection({ postId: propPostId }) {
           </div>
         </div>
       </div>
+      {showPostDropMenu && (
+        <DeletePostOverlay
+          postId={postId}
+          isOpen={showPostDropMenu}
+          onClose={() => setShowDropMenu(false)}
+          onConfirm={() => console.log("TODO: delete from Firestore")}
+        />
+      )}
     </div>
   );
 }

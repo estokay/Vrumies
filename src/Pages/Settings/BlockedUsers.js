@@ -1,56 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BlockedUsers.css";
+import BlockedUserCard from "./BlockedUserCard";
+import useGetBlockedList from "../../Components/Hooks/useGetBlockedList";
+import { useAuth } from "../../AuthContext";
 
 export default function BlockedUsers() {
-  const blockedUsers = [
-    {
-      name: "Jessica Collyard",
-      avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-      note: ""
-    },
-    {
-      name: "Rayna Culhane",
-      avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-      note: ""
-    },
-    {
-      name: "Lattisha Williams",
-      avatar: "https://randomuser.me/api/portraits/women/12.jpg",
-      note: "They kept spamming me with random messages that had nothing to do with what I was interested in."
-    }
-  ];
+  const { currentUser } = useAuth();
+  const userId = currentUser?.uid;
+
+  // Use your hook to get the blocked users
+  const { blockedList: fetchedBlockedList, loading, error } = useGetBlockedList(userId);
+
+  // Local state to update UI immediately
+  const [blockedList, setBlockedList] = useState([]);
+
+  // Sync local state with fetched data
+  useEffect(() => {
+    if (fetchedBlockedList) setBlockedList(fetchedBlockedList);
+  }, [fetchedBlockedList]);
+
+  // Handler to remove a user from the local list after unblocking
+  const handleUnblocked = (unblockedUserId) => {
+    setBlockedList((prev) => prev.filter((u) => u.id !== unblockedUserId));
+  };
 
   return (
     <div className="blocked-users-container">
       <h2 className="blocked-title">Blocked Users</h2>
 
-      <div className="block-input-row">
-        <input
-          type="text"
-          placeholder="Insert Username to Block..."
-          className="block-input"
-        />
-        <button className="block-btn">BLOCK USER</button>
-      </div>
+      {/* Conditional messages */}
+      {!currentUser && <p style={{ color: "white" }}>Please log in to see blocked users.</p>}
+      {currentUser && loading && <p style={{ color: "white" }}>Loading blocked users...</p>}
+      {currentUser && error && <p style={{ color: "white" }}>Error loading blocked users: {error.message}</p>}
+      {currentUser && !loading && !error && blockedList.length === 0 && (
+        <p style={{ color: "white" }}>You have not blocked any users.</p>
+      )}
 
-      {blockedUsers.map((user, idx) => (
-        <div className="blocked-card" key={idx}>
-          <img src={user.avatar} alt={user.name} className="blocked-avatar" />
-          <div className="blocked-info">
-            <h3>{user.name}</h3>
-            <p className="why-block">Why did I block this user?</p>
-            <textarea
-              placeholder="Insert notes here..."
-              defaultValue={user.note}
-              className="blocked-textarea"
-            />
-          </div>
-          <div className="unblock-section">
-            <p>Unblock User?</p>
-            <button className="unblock-btn">YES, UNBLOCK</button>
-          </div>
-        </div>
-      ))}
+      {/* Render blocked users */}
+      {currentUser && !loading && !error && blockedList.length > 0 &&
+        blockedList.map((user) => (
+          <BlockedUserCard
+            key={user.id}
+            user={user}
+            onUnblocked={handleUnblocked} // Pass callback to child
+          />
+        ))
+      }
     </div>
   );
 }

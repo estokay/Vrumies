@@ -6,8 +6,8 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
-import VideoCommentsSection from './VideoCommentsSection';
-import RightSidePanel from './RightSidePanel';
+import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
+import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './VideoPost.css'; // renamed for clarity
 
@@ -46,11 +46,11 @@ const VideoPost = () => {
 
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
-          <VideoCommentsSection postId={id} />
+          <MainCommentsSection postId={id} />
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <RightSidePanel />
+          <PromotedPanel category="video" />
         </div>
       </div>
     </div>

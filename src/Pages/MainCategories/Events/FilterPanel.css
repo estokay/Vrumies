@@ -145,19 +145,26 @@
   accent-color: #00ff66;
 }
 
-.clear-dates-btn {
+.clear-date-range-btn {
   margin-top: 8px;
   padding: 6px 10px;
-  background: transparent;
-  border: 1px solid #00ff66;
-  color: #00ff66;
+
+  /* RESET DEFAULT BUTTON STYLE */
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-color: transparent !important;
+  color: #00ff66 !important;
+  border: 1px solid #00ff66 !important;
+
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
 }
 
-.clear-dates-btn:hover {
-  background-color: #00ff66;
-  color: #000;
+.clear-date-range-btn:hover {
+  background-color: #00ff66 !important;
+  color: #000 !important;
 }
 
 /* Calendar container */
@@ -203,4 +210,8 @@
 .event-date-calendar .rdp-day_disabled {
   opacity: 0.25;
   cursor: not-allowed;
+}
+
+.filterpanel-input {
+  cursor: pointer;
 }

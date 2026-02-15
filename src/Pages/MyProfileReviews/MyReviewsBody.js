@@ -1,13 +1,13 @@
 import React from "react";
 import "./ReviewsBody.css";
-import useUserReviews from "../../Components/Hooks/useGetUserReviews";
+import useGetUserReviews from "../../Components/Hooks/useGetUserReviews";
 import { auth } from "../../Components/firebase";
 
 export default function MyReviewsBody() {
   const user = auth.currentUser;
   const userId = user?.uid;
 
-  const { reviews, loading } = useUserReviews(userId);
+  const { reviews, loading } = useGetUserReviews(userId);
 
   return (
     <div className="myreviews-profile-body">

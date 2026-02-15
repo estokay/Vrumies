@@ -81,3 +81,13 @@
   border-radius: 20px;
   cursor: pointer;
 }
+
+.blocked-reason {
+  font-size: 14px;
+  color: #ddd;
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.1);
+  white-space: pre-wrap; /* keeps line breaks */
+}

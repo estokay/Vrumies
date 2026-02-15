@@ -1,0 +1,206 @@
+.filterpanel {
+  background-color: #092000;
+  border-radius: 10px;
+  width: 17vw !important;
+  box-sizing: border-box;
+  height: 1300px !important;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollable content */
+.filterpanel-scroll {
+  overflow-y: auto;
+}
+
+/* Section spacing */
+.filterpanel-section {
+  margin-bottom: 20px;
+}
+
+/* Section header */
+.filterpanel-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: #72ff6a;
+  cursor: pointer;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Section label for search */
+.filterpanel-label {
+  font-weight: bold;
+  color: #00ff66;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Input container for keyword adder */
+.filterpanel-keyword-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Text input */
+.filterpanel-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #00ff66;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+/* Add (+) button */
+.filterpanel-add-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterpanel-add-button:hover:not(:disabled) {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.filterpanel-add-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Keyword chips list */
+.filterpanel-keywords-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* Individual keyword chip */
+.filterpanel-keyword-chip {
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 12px;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Remove (×) button inside chip */
+.filterpanel-remove-chip {
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.filterpanel-remove-chip:hover {
+  color: red;
+}
+
+/* Options container */
+.filterpanel-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Option label */
+.filterpanel-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Inputs inside options */
+.filterpanel-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: #00ff66;
+}
+
+.clear-dates-btn {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid #00ff66;
+  color: #00ff66;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clear-dates-btn:hover {
+  background-color: #00ff66;
+  color: #000;
+}
+
+/* Calendar container */
+.event-date-calendar {
+  background-color: #000;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+/* Month header */
+.event-date-calendar .rdp-caption {
+  color: #00ff66;
+}
+
+/* Default day */
+.event-date-calendar .rdp-day {
+  color: #aaa;
+}
+
+/* Days with events */
+.event-date-calendar .rdp-day-has-event {
+  background-color: rgba(0, 255, 102, 0.15);
+  border-radius: 6px;
+  color: #00ff66;
+  font-weight: bold;
+}
+
+/* Selected days */
+.event-date-calendar .rdp-day_selected {
+  background-color: #00ff66 !important;
+  color: #000 !important;
+}
+
+/* Hover */
+.event-date-calendar .rdp-day:hover:not(.rdp-day_disabled) {
+  background-color: rgba(0, 255, 102, 0.3);
+}
+
+/* Disabled days */
+.event-date-calendar .rdp-day_disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}

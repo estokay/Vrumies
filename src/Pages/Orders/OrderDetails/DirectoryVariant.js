@@ -3,6 +3,7 @@ import "./DirectoryVariant.css";
 import { FaCheck } from "react-icons/fa";
 import { db } from "../../../Components/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import checkPrice from "../../../Components/Functions/checkPrice";
 
 export default function DirectoryVariant({ orderId }) {
   const [order, setOrder] = useState(null);
@@ -48,16 +49,26 @@ export default function DirectoryVariant({ orderId }) {
   const type = order.type || "N/A";
   const orderID = order.id || "N/A";
 
-  const delivery = order.deliveryInfo
-    ? `${order.deliveryInfo.deliveryStreetAddress || ""}, ${order.deliveryInfo.deliveryCity || ""} ${order.deliveryInfo.deliveryState || ""} ${order.deliveryInfo.deliveryZipCode || ""}`.trim()
+  const delivery = order.deliveryInfo &&
+                 (order.deliveryInfo.deliveryStreetAddress ||
+                  order.deliveryInfo.deliveryCity ||
+                  order.deliveryInfo.deliveryState ||
+                  order.deliveryInfo.deliveryZipCode)
+    ? `${order.deliveryInfo.deliveryStreetAddress || ""}${
+        order.deliveryInfo.deliveryStreetAddress ? ", " : ""
+      }${order.deliveryInfo.deliveryCity || ""}${
+        order.deliveryInfo.deliveryCity ? " " : ""
+      }${order.deliveryInfo.deliveryState || ""}${
+        order.deliveryInfo.deliveryState ? " " : ""
+      }${order.deliveryInfo.deliveryZipCode || ""}`
     : "N/A";
 
   const image = order.postData?.images?.[0] || "";
   const postId = order.postData?.postId || "N/A";
   const title = order.postData?.title || "N/A";
   const description = order.postData?.description || "N/A";
-  const priceStr = order.postData?.price?.replace(/[^0-9.]/g, "") || "0";
-  const price = parseFloat(priceStr) || 0;
+  const rawPrice = order?.price;
+  const price = checkPrice(rawPrice);
   const transactionFee = (price * 0.15).toFixed(2);
   const total = (price + parseFloat(transactionFee)).toFixed(2);
 

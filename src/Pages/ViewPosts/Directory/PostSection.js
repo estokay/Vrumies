@@ -28,6 +28,9 @@ import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
 import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
+import PostSectionReviews from '../../../Components/PostSectionReviews';
+import PostDropMenu from "../../../Components/PostDropMenu";
+import DeletePostOverlay from "../../../Components/DeletePostOverlay";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -44,6 +47,16 @@ function PostSection({ postId }) {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
+  const [showPostDropMenu, setShowDropMenu] = useState(false);
+  const isAddToCartDisabled = !currentUser || !post || currentUser.uid === post.userId;
+    const disabledReason =
+    !currentUser
+      ? "Login to add to cart"
+      : !post
+      ? ""
+      : currentUser.uid === post.userId
+      ? "You can’t buy your own post"
+      : "";
 
   // Fetch post and seller info
   useEffect(() => {
@@ -153,6 +166,10 @@ function PostSection({ postId }) {
   const handleFollow = () => {
     setFollowed(!followed);
     showNotification(followed ? "Unfollowed" : "Followed", 2000);
+  };
+
+  const handleBlockUser = () => {
+    console.log("TODO: Block this user");
   };
 
   const handleAddToCart = async () => {
@@ -267,6 +284,9 @@ function PostSection({ postId }) {
   const formatLink = (url) =>
     url ? (url.startsWith("http") ? url : `https://${url}`) : null;
 
+  const isSeller = currentUser?.uid === post.userId;
+  const canBlock = currentUser?.uid !== post.userId;
+
   return (
     <div className="post-section">
       {notification && <div className="copy-notification">{notification}</div>}
@@ -276,6 +296,7 @@ function PostSection({ postId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / DIRECTORY</div>
             <div className="date">DATE POSTED: {postDate}</div>
+            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
@@ -343,9 +364,7 @@ function PostSection({ postId }) {
             </div>
           )}
           {activeTab === "reviews" && (
-            <div className="seller-reviews-section">
-              <p>Seller reviews will go here...</p>
-            </div>
+            <PostSectionReviews userId={post.userId} />
           )}
         </div>
 
@@ -375,9 +394,17 @@ function PostSection({ postId }) {
 
         <div className="price-row">
           <span className="price">{post.price ?? "Price: N/A"}</span>
-          <button className="addtoCart" onClick={handleAddToCart}>
-            ADD TO CART
-          </button>
+
+          <div className="add-to-cart-wrapper">
+            <button
+              className="addtoCart"
+              onClick={handleAddToCart}
+              disabled={isAddToCartDisabled}
+              title={disabledReason}
+            >
+              ADD TO CART
+            </button>
+          </div>
         </div>
       </div>
 
@@ -425,6 +452,14 @@ function PostSection({ postId }) {
             setShowOverlay(false);
             setOverlayImage(null);
           }}
+        />
+      )}
+      {showPostDropMenu && (
+        <DeletePostOverlay
+          postId={postId}
+          isOpen={showPostDropMenu}
+          onClose={() => setShowDropMenu(false)}
+          onConfirm={() => console.log("TODO: delete from Firestore")}
         />
       )}
     </div>

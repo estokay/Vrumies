@@ -6,10 +6,10 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
-import BlogCommentsSection from './BlogCommentsSection';
-import RightSidePanel from './RightSidePanel';
+import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
 import '../../../App.css';
 import './BlogPost.css'; // renamed for clarity
+import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -46,11 +46,11 @@ const BlogPost = () => {
 
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
-          <BlogCommentsSection postId={id} />
+          <MainCommentsSection postId={id} />
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <RightSidePanel />
+          <PromotedPanel category="blog" />
         </div>
       </div>
     </div>

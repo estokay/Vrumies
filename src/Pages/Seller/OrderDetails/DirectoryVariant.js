@@ -4,6 +4,7 @@ import { db } from "../../../Components/firebase";
 import { FaCheck } from "react-icons/fa";
 import "./DirectoryVariant.css";
 import { useNavigate } from "react-router-dom";
+import checkPrice from "../../../Components/Functions/checkPrice";
 
 export default function DirectoryVariant({ orderId }) {
   const [order, setOrder] = useState(null);
@@ -39,12 +40,8 @@ export default function DirectoryVariant({ orderId }) {
             }
           }
 
-          // Parse price properly
-          let price = 0;
-          if (data.postData?.price) {
-            const priceStr = data.postData.price.toString().replace("$", "");
-            price = parseFloat(priceStr) || 0;
-          }
+          const rawPrice = order?.price;
+          const price = checkPrice(rawPrice);
 
           setOrder({
             date,
@@ -58,8 +55,8 @@ export default function DirectoryVariant({ orderId }) {
             description: data.postData?.description || "N/A",
             price,
             postId: data.postData?.postId || "N/A",
-            paymentMethod: data.paymentInfo?.paymentmethod || data.paymentInfo?.paymentMethod || "N/A",
-            lastFour: data.paymentInfo?.lastfour || data.paymentInfo?.lastFour || "N/A",
+            paymentMethod: data.paymentInfo?.paymentMethod || "N/A",
+            lastFour: data.paymentInfo?.lastFour || "N/A",
             buyerMarketCompleted: data.buyerMarketCompleted || false,
             buyerDispute: data.buyerDispute || false,
             sellerDispute: data.sellerDispute || false,

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './TruckHeader.css';
+import { FaTruck } from "react-icons/fa";
 
 const MarketHeader = () => {
   const [location, setLocation] = useState('');
@@ -8,7 +9,7 @@ const MarketHeader = () => {
   const [search, setSearch] = useState('');
 
   return (
-    <div className="market-header-container">
+    <div className="truck-header-container">
       <div className="left-side">
         <h1 className="title">
           <span className="green-highlight">TRUCK POSTS</span>
@@ -17,12 +18,11 @@ const MarketHeader = () => {
       </div>
 
       <div className="right-side">
-        <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
-          alt="Events Icon"
-          width="70"
-          height="70"
-          className="events-icon"
+        <FaTruck
+          size={70}
+          color="#39FF14"
+          className="trucks-icon"
+          style={{ filter: "drop-shadow(0 0 6px #39FF14)" }}
         />
       </div>
 

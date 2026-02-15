@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './VideoHeader.css';
+import { FaVideo } from "react-icons/fa";
 
 const VideoHeader = () => {
   const [location, setLocation] = useState('');
@@ -18,16 +19,13 @@ const VideoHeader = () => {
         <p style={styles.subtitle}>PROMOTE AND SHARE YOUR AUTOMOTIVE VIDEOS</p>
       </div>
       <div style={styles.rightSide}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="#39FF14"
-          width="70px"
-          height="70px"
-          style={{ filter: 'drop-shadow(0 0 3px #39FF14)' }}
-        >
-          <path d="M20 5h-3.586l-1.707-1.707A.996.996 0 0014 3H10c-.265 0-.52.105-.707.293L7.586 5H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V7a2 2 0 00-2-2zM12 17a5 5 0 110-10 5 5 0 010 10zM12 9a3 3 0 100 6 3 3 0 000-6z"/>
-        </svg>
+        <FaVideo
+          size={70}
+          color="#39FF14"
+          style={{
+            filter: "drop-shadow(0 0 6px #39FF14)",
+          }}
+        />
       </div>
     </div>
   );

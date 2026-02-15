@@ -1,18 +1,16 @@
 import { useEffect, useRef } from "react";
 import { db } from "../../Components/firebase"; // adjust path
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import useGetPostLink from "../Hooks/useGetPostLink"; // assumes GetPostLink returns string
 import useGetUsername from "../Hooks/useGetUsername";
 
-function SendNotificationReview({ sellerId, fromId, stars, reviewComment, postId }) {
-  const postLink = useGetPostLink({ postId });
-  const postFrom = useGetUsername({ fromId });
+function SendNotificationReview({ sellerId, fromId, stars, reviewComment }) {
+  const reviewerName = useGetUsername(fromId);
 
   const sentRef = useRef(false);
   
   useEffect(() => {
     if (sentRef.current) return;
-    if (!sellerId || !postLink || !postFrom) return;
+    if (!sellerId || !reviewerName || !stars) return;
 
     sentRef.current = true;
 
@@ -23,9 +21,9 @@ function SendNotificationReview({ sellerId, fromId, stars, reviewComment, postId
           {
             type: "review",
             title: `${stars} stars`, // convert number to string
-            from: postFrom,
+            from: reviewerName,
             message: reviewComment || "New review",
-            link: postLink,
+            link: "/myreviews",
             read: false,
             createdAt: serverTimestamp(),
           }
@@ -38,7 +36,7 @@ function SendNotificationReview({ sellerId, fromId, stars, reviewComment, postId
     };
 
     sendNotification();
-  }, [sellerId, postFrom, stars, reviewComment, sellerId, postLink]);
+  }, [sellerId, reviewerName, stars, reviewComment]);
 
   return null; // does not render anything
 }

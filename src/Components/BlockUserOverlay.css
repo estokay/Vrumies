@@ -1,0 +1,117 @@
+.block-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.block-overlay-box {
+  position: relative;
+  background: #111;
+  color: white;
+  padding: 22px 26px;
+  border-radius: 14px;
+  width: 340px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  border: 1px solid #2a2a2a;
+}
+
+.block-overlay-box h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.block-overlay-box p {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.block-overlay-box small {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Reason input */
+.block-overlay-input {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: white;
+  font-size: 13px;
+  resize: none;
+  min-height: 60px;
+}
+
+.block-overlay-input:focus {
+  outline: none;
+  border-color: red;
+}
+
+/* Buttons */
+.block-overlay-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.block-cancel-btn {
+  flex: 1;
+  padding: 9px;
+  border-radius: 8px;
+  border: none;
+  background: #2c2c2c;
+  color: white;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.block-cancel-btn:hover {
+  background: #444;
+  transform: scale(1.04);
+}
+
+.block-confirm-btn {
+  flex: 1;
+  padding: 9px;
+  border-radius: 8px;
+  border: none;
+  background: #b30000;
+  color: white;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.block-confirm-btn:hover {
+  background: #ff1a1a;
+  transform: scale(1.04);
+}
+
+/* Close button */
+.block-overlay-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #777;
+}
+
+.block-overlay-close:hover {
+  color: red;
+  transform: scale(1.1);
+}

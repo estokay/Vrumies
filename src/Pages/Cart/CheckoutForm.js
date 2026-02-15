@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../Components/firebase";
 import "./CheckoutForm.css";
+import sendNotificationOrder from "../../Components/Notifications/sendNotificationOrder";
 
 const stripePromise = loadStripe("pk_test_51JN8mDDR30hjV6c2f6WkKbqaLIJ91qsbyfK9Ho1Ge3hCwL2b3aZnWim7Ew9RhfprRoiInPWDRsXC8gqcdW6v4ST700vBUAakpE"); // Replace with your Stripe key
 
@@ -89,6 +90,11 @@ function CheckoutFormInner() {
 
     const cardElement = elements.getElement(CardElement);
 
+    if (!cardElement) {
+      setMessage("Please enter your card information.");
+      return;
+    }
+
     const billing = {
       name: formData.billingFullName,
       email: formData.email,
@@ -107,12 +113,13 @@ function CheckoutFormInner() {
       billing_details: billing,
     });
 
-    const lastFour = paymentMethod.card.last4;
-
     if (error) {
       setMessage(`Error: ${error.message}`);
       return;
     }
+
+    const lastFour = paymentMethod.card?.last4 || "N/A";
+
     let postData;
     // Payment successful — create orders in Firestore
     try {
@@ -209,6 +216,12 @@ function CheckoutFormInner() {
 
         
         await setDoc(orderRef, orderData);
+
+        await sendNotificationOrder({
+          sellerId: postData.userId,
+          fromId: currentUser.uid,
+          postId: item.postId
+        });
 
         // Remove item from cart
         await deleteDoc(doc(db, "Users", currentUser.uid, "cart", item.id));

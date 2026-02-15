@@ -12,6 +12,10 @@ import PostImages from './PostImages';
 import PostTokens from './PostTokens';
 import PostPrice from './PostPrice';
 
+import useSendNotificationOffer from '../../Components/Notifications/useSendNotificationOffer';
+import useGetSellerId from '../../Components/Hooks/useGetSellerId';
+
+
 const OfferPostForm = ({ originalPost }) => {
   const [activeField, setActiveField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -24,6 +28,10 @@ const OfferPostForm = ({ originalPost }) => {
   const autocompleteServiceRef = useRef(null);
   const MAX_IMAGES = 7;
 
+  const [notificationData, setNotificationData] = useState(null);
+
+  const { sellerId, loading } = useGetSellerId(originalPost);
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -35,6 +43,8 @@ const OfferPostForm = ({ originalPost }) => {
     images: [],
     price: ''
   });
+
+  useSendNotificationOffer(notificationData || {});
 
   useEffect(() => {
     if (!window.google) {
@@ -148,28 +158,42 @@ const OfferPostForm = ({ originalPost }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const user = getAuth().currentUser;
+  e.preventDefault();
+  const user = getAuth().currentUser;
 
-    if (!user) {
-      setMessage('❌ You must be signed in.');
-      return;
+  if (!user) {
+    setMessage('❌ You must be signed in.');
+    return;
+  }
+
+  try {
+      const docRef = await addDoc(collection(db, 'Posts'), {
+        ...formData,
+        createdAt: Timestamp.now(),
+        type: 'offer',
+        userId: user.uid,
+        originalPost: originalPost || null,
+        likesCounter: 0,
+        dislikesCounter: 0,
+        likes: [],
+        dislikes: []
+      });
+
+      if (originalPost && sellerId) {
+        setNotificationData({
+          sellerId,
+          fromId: user.uid,
+          postId: originalPost,
+          offerPostId: docRef.id   // now docRef is defined
+        });
+      }
+
+      setSubmitted(true);
+      setMessage('✅ Offer post added!');
+    } catch (err) {
+      console.error('Error adding document:', err);
+      setMessage('❌ Failed to add post. Please try again.');
     }
-
-    await addDoc(collection(db, 'Posts'), {
-      ...formData,
-      createdAt: Timestamp.now(),
-      type: 'offer',
-      userId: user.uid,
-      originalPost: originalPost || null,
-      likesCounter: 0,
-      dislikesCounter: 0,
-      likes: [],
-      dislikes: []
-    });
-
-    setSubmitted(true);
-    setMessage('✅ Offer post added!');
   };
 
   const publicPath = process.env.PUBLIC_URL;

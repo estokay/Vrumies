@@ -1,0 +1,85 @@
+.postreviews-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 5px;
+  max-height: 350px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Messages */
+.postreviews-message {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Review Card */
+.postreviews-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+/* Top row */
+.postreviews-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Avatar */
+.postreviews-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* User info */
+.postreviews-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.postreviews-username {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #00ff66;
+}
+
+.postreviews-date {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+/* Rating */
+.postreviews-rating {
+  margin-left: auto;
+  font-size: 1rem;
+}
+
+.postreviews-star-filled {
+  color: #00ff66;
+}
+
+.postreviews-star-empty {
+  color: #777;
+}
+
+/* Review text */
+.postreviews-text {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* Divider */
+.postreviews-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 100%;
+}

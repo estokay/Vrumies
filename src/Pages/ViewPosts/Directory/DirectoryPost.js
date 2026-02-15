@@ -5,8 +5,8 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
-import DirectoryCommentsSection from './DirectoryCommentsSection';
-import RightSidePanel from './RightSidePanel';
+import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
+import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './DirectoryPost.css'; // renamed for clarity
 
@@ -45,11 +45,11 @@ const DirectoryPost = () => {
 
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
-          <DirectoryCommentsSection postId={id} />
+          <MainCommentsSection postId={id} />
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <RightSidePanel />
+          <PromotedPanel category="directory" />
         </div>
       </div>
     </div>
