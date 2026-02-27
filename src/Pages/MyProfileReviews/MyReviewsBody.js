@@ -1,6 +1,6 @@
 import React from "react";
 import "./ReviewsBody.css";
-import useGetUserReviews from "../../Components/Hooks/useGetUserReviews";
+import useGetUserReviews from "../../Hooks/useGetUserReviews";
 import { auth } from "../../Components/firebase";
 
 export default function MyReviewsBody() {

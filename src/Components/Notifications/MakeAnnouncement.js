@@ -7,9 +7,12 @@ function MakeAnnouncement() {
   const [message, setMessage] = useState("");
   const [userId, setUserId] = useState("");
 
+  // 🔹 NEW: mode toggle
+  const [mode, setMode] = useState("all"); 
+  // "all" | "user"
+
   const [sendKey, setSendKey] = useState(0);
-  const [status, setStatus] = useState("idle"); 
-  // idle | sending | success | error
+  const [status, setStatus] = useState("idle");
 
   const handleSend = () => {
     if (!title.trim() || !message.trim()) {
@@ -17,14 +20,20 @@ function MakeAnnouncement() {
       return;
     }
 
+    if (mode === "user" && !userId.trim()) {
+      alert("User ID is required when sending to an individual.");
+      return;
+    }
+
     setStatus("sending");
-    setSendKey((k) => k + 1); // force remount
+    setSendKey((k) => k + 1);
   };
 
   const handleReset = () => {
     setTitle("");
     setMessage("");
     setUserId("");
+    setMode("all");
     setStatus("idle");
   };
 
@@ -32,12 +41,31 @@ function MakeAnnouncement() {
     <div className="make-announcement">
       <h2 className="announcement-heading">📢 Make Announcement</h2>
 
+      {/* 🔹 TOGGLE */}
+      <div className="announcement-toggle">
+        <button
+          className={`toggle-btn ${mode === "all" ? "active" : ""}`}
+          onClick={() => setMode("all")}
+        >
+          🌍 Send to All
+        </button>
+
+        <button
+          className={`toggle-btn ${mode === "user" ? "active" : ""}`}
+          onClick={() => setMode("user")}
+        >
+          🔘 Send to User
+        </button>
+      </div>
+
+      {/* 🔹 USER ID (only enabled in user mode) */}
       <input
         type="text"
-        placeholder="User ID (optional — leave blank for all users)"
+        placeholder="User ID"
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
         className="announcement-input"
+        disabled={mode === "all"}
       />
 
       <input
@@ -69,7 +97,6 @@ function MakeAnnouncement() {
         </button>
       </div>
 
-      {/* STATUS FEEDBACK */}
       {status === "success" && (
         <p className="announcement-success">
           ✅ Announcement sent successfully
@@ -82,11 +109,10 @@ function MakeAnnouncement() {
         </p>
       )}
 
-      {/* Fire-and-forget sender */}
       {status === "sending" && (
         <SendNotificationAnnouncement
           key={sendKey}
-          userId={userId.trim() || undefined}
+          userId={mode === "user" ? userId.trim() : undefined}
           title={title}
           message={message}
           onSuccess={() => setStatus("success")}

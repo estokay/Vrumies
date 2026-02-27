@@ -1,6 +1,6 @@
 import React from "react";
 import "./PaymentMethodsPanel.css";
-import useGetStripeBalances from "../../Components/Hooks/useGetStripeBalances";
+import useGetStripeBalances from "../../Hooks/useGetStripeBalances";
 import { auth } from "../../Components/firebase";
 
 export default function PaymentMethodsPanel() {

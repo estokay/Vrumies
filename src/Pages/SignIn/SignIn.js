@@ -2,7 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignIn.css';
 import { signInWithGoogle, db } from '../../Components/firebase'; // adjust path if needed
-import { getDoc, doc, setDoc } from 'firebase/firestore';
+import { 
+  getDoc,
+  doc, 
+  setDoc  
+} from 'firebase/firestore';
+import generateUniqueReferralCode from "../../AsyncFunctions/generateUniqueReferralCode";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -25,6 +30,8 @@ const SignIn = () => {
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {
+        const referralCode = await generateUniqueReferralCode();
+
         await setDoc(userRef, {
           userid: user.uid,
           username: user.displayName || 'Anonymous',
@@ -35,10 +42,28 @@ const SignIn = () => {
           photos: [],
           banned: false,
           following: [],
-          followers: []
+          followers: [],
+          referralCode
         });
         console.log('Firestore user document created successfully');
+      
+      } else {
+        // 🧠 Existing user — check if referralCode missing
+        const existingData = userSnap.data();
+
+        if (!existingData.referralCode) {
+          const referralCode = await generateUniqueReferralCode();
+
+          await setDoc(
+            userRef,
+            { referralCode },
+            { merge: true } // ✅ prevents overwriting entire document
+          );
+
+          console.log('Referral code added to existing user');
+        }
       }
+    
     } catch (firestoreError) {
       console.error('Error creating Firestore user document:', firestoreError);
       // No alert here — we don’t want to break login if Firestore fails

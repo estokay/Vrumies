@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
+import CalendarDateRangeOverlay from "../../../Components/Overlays/CalendarDateRangeOverlay";
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -26,9 +27,13 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
 
   const [maxPerMileRate, setMaxPerMileRate] = useState('');
 
+  const [availableRange, setAvailableRange] = useState();
+  const [showCalendar, setShowCalendar] = useState(false);
+
   const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
     date: true,
+    availableDate: true,
     sort: true,
     truckType: true,
     originCities: true,
@@ -151,6 +156,21 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       });
     }
 
+    // Available Date filter
+    if (availableRange?.from) {
+      filtered = filtered.filter((post) => {
+        if (!post.availableDate || typeof post.availableDate.toDate !== 'function') return false;
+
+        const available = post.availableDate.toDate();
+
+        if (!availableRange.to) {
+          return available.toDateString() === availableRange.from.toDateString();
+        }
+
+        return available >= availableRange.from && available <= availableRange.to;
+      });
+    }
+
     // Truck Type filter (Show All = none selected)
     if (selectedTruckTypes.length > 0) {
       filtered = filtered.filter(p =>
@@ -204,6 +224,7 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     searchQuery,
     selectedLocations,
     dateFilter,
+    availableRange,
     sortBy,
     selectedTruckTypes,
     selectedOriginCities,
@@ -279,6 +300,47 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
                 {opt}
               </label>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* AVAILABLE DATE */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('availableDate')}
+        >
+          Available Date <span>{sectionsOpen.availableDate ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.availableDate && (
+          <div className="filterpanel-options">
+            <div className="filterpanel-date-controls">
+              <button
+                className="filterpanel-date-btn"
+                onClick={() => setShowCalendar(true)}
+              >
+                📅 Select Date Range
+              </button>
+
+              {availableRange?.from && (
+                <div className="filterpanel-date-selected">
+                  <span>
+                    {availableRange.from.toLocaleDateString()}
+                    {availableRange.to
+                      ? ` - ${availableRange.to.toLocaleDateString()}`
+                      : ''}
+                  </span>
+
+                  <button
+                    className="filterpanel-clear-btn"
+                    onClick={() => setAvailableRange(undefined)}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -497,7 +559,13 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
           </div>
         )}
       </div>
-
+        {showCalendar && (
+          <CalendarDateRangeOverlay
+            range={availableRange}
+            setRange={setAvailableRange}
+            onClose={() => setShowCalendar(false)}
+          />
+        )}
     </div>
   );
 };

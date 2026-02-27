@@ -1,7 +1,5 @@
-import NavbarWithPost from '../../Components/NavbarWithPost';
 import SellerPageHeader from './SellerPageHeader';
 import '../../App.css';
-import SellerSidePanel from './SellerSidePanel';
 import SellerBody from './SellerBody';
 
 const SellerPage = () => {

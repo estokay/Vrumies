@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DeletePostOverlay from "../Components/DeletePostOverlay";
+import DeletePostOverlay from "../Components/Overlays/DeletePostOverlay";
 
 export default function ExampleDeletePost() {
   const [showDelete, setShowDelete] = useState(false);

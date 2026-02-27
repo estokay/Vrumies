@@ -1,57 +1,96 @@
 .settings-panel {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background: black;
-  width: 400px;
+  padding: 40px 30px;
+  background: linear-gradient(145deg, #0a0a0a, #111);
+  width: 380px;
   min-height: 100vh;
+  border-right: 1px solid #1f1f1f;
 }
 
+/* TITLE */
 .settings-title {
-  font-size: 32px;
-  font-weight: bold;
-  color: limegreen;
-  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #39FF14;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
   position: relative;
 }
 
 .settings-title span {
-  border-bottom: 2px solid limegreen;
-  padding-bottom: 5px;
+  position: relative;
 }
 
+.settings-title span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background: #39FF14;
+  border-radius: 4px;
+}
+
+/* BUTTON */
 .settings-btn {
-  width: 90%;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 8px;
-  border: 2px solid gray;
-  background: transparent;
-  color: gray;
-  font-size: 16px;
+  position: relative;
+  width: 100%;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px solid #222;
+  background: #111;
+  color: #aaa;
+  font-size: 15px;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.25s ease;
 }
 
-.settings-btn .settings-icon {
-  font-size: 28px;
-  color: limegreen;
+/* ICON */
+.settings-icon {
+  font-size: 20px;
+  transition: 0.25s ease;
 }
 
+/* HOVER EFFECT */
+.settings-btn:hover {
+  background: #151515;
+  color: #fff;
+  transform: translateX(4px);
+  border-color: #39FF14;
+}
+
+.settings-btn:hover .settings-icon {
+  color: #39FF14;
+}
+
+/* ACTIVE STATE */
 .settings-btn.active {
-  border-color: white;
-  color: white;
+  background: #141414;
+  color: #fff;
+  border-color: #39FF14;
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
 }
 
+/* Left glow indicator bar */
+.settings-btn.active::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  height: 60%;
+  width: 4px;
+  background: #39FF14;
+  border-radius: 4px;
+}
+
+/* Active icon glow */
 .settings-btn.active .settings-icon {
-  color: limegreen;
-}
-
-.settings-btn:not(.active):hover {
-  border-color: limegreen;
-  color: limegreen;
+  color: #39FF14;
+  filter: drop-shadow(0 0 4px #39FF14);
 }

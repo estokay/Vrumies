@@ -1,6 +1,6 @@
 import React from "react";
 import "./PostSectionReviews.css";
-import useUserReviews from "./Hooks/useGetUserReviews";
+import useUserReviews from "../Hooks/useGetUserReviews";
 
 export default function PostSectionReviews({ userId }) {
   const { reviews, loading } = useUserReviews(userId);

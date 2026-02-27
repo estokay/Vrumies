@@ -68,54 +68,6 @@
   border-radius: 12px;
 }
 
-.mv-custom-timeline-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.mv-custom-timeline-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mv-custom-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid gray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: gray;
-}
-
-.mv-custom-circle.active {
-  background: white;
-  color: green;
-  border-color: green;
-}
-
-.mv-custom-timeline-label {
-  font-size: 12px;
-  text-align: center;
-  margin-top: 5px;
-  color: gray;
-}
-
-.mv-custom-timeline-label.active-label {
-  color: green;
-  font-weight: bold;
-}
-
-.mv-custom-arrow {
-  font-size: 20px;
-  color: black;
-}
-
 .mv-custom-status-buttons {
   margin-top: 15px;
   display: flex;
@@ -148,4 +100,22 @@
 .mv-custom-tracking-display div {
   display: flex;
   flex-direction: column;
+}
+
+.mv-custom-btn-completed {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.mv-custom-btn-disputed {
+  background: #b71c1c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
 }

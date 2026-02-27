@@ -13,7 +13,7 @@ import PostTokens from './PostTokens';
 import PostPrice from './PostPrice';
 
 import useSendNotificationOffer from '../../Components/Notifications/useSendNotificationOffer';
-import useGetSellerId from '../../Components/Hooks/useGetSellerId';
+import useGetSellerId from '../../Hooks/useGetSellerId';
 
 
 const OfferPostForm = ({ originalPost }) => {
@@ -31,6 +31,11 @@ const OfferPostForm = ({ originalPost }) => {
   const [notificationData, setNotificationData] = useState(null);
 
   const { sellerId, loading } = useGetSellerId(originalPost);
+
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const isOwnPost = sellerId && currentUser?.uid === sellerId;
+  const isDisabled = loading || isOwnPost;
 
   const [formData, setFormData] = useState({
     title: '',
@@ -166,6 +171,16 @@ const OfferPostForm = ({ originalPost }) => {
     return;
   }
 
+  if (loading) {
+    setMessage('Please wait...');
+    return;
+  }
+
+  if (sellerId && user.uid === sellerId) {
+    setMessage('❌ You cannot add a custom offer to your own post.');
+    return;
+  }
+
   try {
       const docRef = await addDoc(collection(db, 'Posts'), {
         ...formData,
@@ -259,8 +274,23 @@ const OfferPostForm = ({ originalPost }) => {
         />
       )}
 
-      <button type="submit" className="mpf-submit-btn">Submit</button>
+      <button
+        type="submit"
+        className="mpf-submit-btn"
+        disabled={isDisabled}
+      >
+        {loading
+          ? "Loading..."
+          : isOwnPost
+          ? "Cannot Create An Offer On Your Own Post"
+          : "Submit"}
+      </button>
       {message && <p>{message}</p>}
+      {isOwnPost && (
+        <p className="mpf-error-text">
+          ❌ You cannot add a custom offer to your own post.
+        </p>
+      )}
     </form>
   );
 };

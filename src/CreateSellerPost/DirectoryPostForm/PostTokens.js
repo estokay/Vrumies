@@ -1,5 +1,5 @@
 import React from 'react';
-import useUserTokens from "../../Components/Hooks/useUserTokens";
+import useUserTokens from "../../Hooks/useUserTokens";
 import { auth } from "../../Components/firebase";
 import HelpPopover from '../../Components/HelpPopover';
 

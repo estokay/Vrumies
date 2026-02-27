@@ -280,6 +280,9 @@ const LoadPostForm = () => {
         createdAt: Timestamp.now(),
         pickupCity: pickupCityState,
         dropoffCity: dropoffCityState,
+        availableDate: formData.availableDate
+        ? Timestamp.fromDate(new Date(formData.availableDate))
+        : null,
         likesCounter: 0,
         dislikesCounter: 0,
         likes: [],

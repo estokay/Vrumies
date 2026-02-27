@@ -1,10 +1,10 @@
 import React from "react";
 import "./ReviewsBody.css";
-import useGetUserReviews from "../../Components/Hooks/useGetUserReviews";
+import useGetUserReviews from "../../Hooks/useGetUserReviews";
 import { useParams } from "react-router-dom";
 import { auth } from "../../Components/firebase";
-import useDeleteMyReview from "../../Components/Hooks/useDeleteMyReview";
-import useGetUsername from "../../Components/Hooks/useGetUsername";
+import useDeleteMyReview from "../../Hooks/useDeleteMyReview";
+import useGetUsername from "../../Hooks/useGetUsername";
 
 export default function ViewReviewsBody() {
   const currentUserId = auth.currentUser?.uid;

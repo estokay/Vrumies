@@ -27,12 +27,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
-import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
-import useERPMwithTolls from "../../../Components/Hooks/useERPMwithTolls";
-import useERPMwithoutTolls from "../../../Components/Hooks/useERPMwithoutTolls";
+import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
+import useERPMwithTolls from "../../../CloudFunctions/useERPMwithTolls";
+import useERPMwithoutTolls from "../../../CloudFunctions/useERPMwithoutTolls";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/DeletePostOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);

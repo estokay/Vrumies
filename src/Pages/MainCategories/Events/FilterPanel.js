@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
-import CalendarDateRangeOverlay from "../../../Components/CalendarDateRangeOverlay";
+import CalendarDateRangeOverlay from "../../../Components/Overlays/CalendarDateRangeOverlay";
 import { format } from "date-fns";
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
@@ -224,33 +224,36 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
 
         {sectionsOpen.eventDate && (
           <div className="filterpanel-options">
+            <div className="filterpanel-date-controls">
 
-            {/* Start Date */}
-            <input
-              className="filterpanel-input"
-              readOnly
-              placeholder="Start Date"
-              value={dateRange.from ? format(dateRange.from, "yyyy-MM-dd") : ""}
-              onClick={() => setShowDateOverlay(true)}
-            />
-
-            {/* End Date */}
-            <input
-              className="filterpanel-input"
-              readOnly
-              placeholder="End Date"
-              value={dateRange.to ? format(dateRange.to, "yyyy-MM-dd") : ""}
-              onClick={() => setShowDateOverlay(true)}
-            />
-
-            {(dateRange.from || dateRange.to) && (
               <button
-                className="clear-date-range-btn"
-                onClick={() => setDateRange({ from: null, to: null })}
+                className="filterpanel-date-btn"
+                onClick={() => setShowDateOverlay(true)}
               >
-                Clear Range
+                📅 Select Date Range
               </button>
-            )}
+
+              {dateRange?.from && (
+                <div className="filterpanel-date-selected">
+                  <span>
+                    {format(dateRange.from, "MM/dd/yyyy")}
+                    {dateRange.to
+                      ? ` - ${format(dateRange.to, "MM/dd/yyyy")}`
+                      : ""}
+                  </span>
+
+                  <button
+                    className="filterpanel-clear-btn"
+                    onClick={() =>
+                      setDateRange({ from: undefined, to: undefined })
+                    }
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+
+            </div>
           </div>
         )}
       </div>

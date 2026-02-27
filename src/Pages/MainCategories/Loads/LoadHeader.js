@@ -22,7 +22,7 @@ const LoadHeader = () => {
           size={70}
           color="#39FF14"
           className="loads-icon"
-          style={{ filter: "drop-shadow(0 0 6px #39FF14)" }}
+          style={{ filter: "drop-shadow(0 0 6px #000000ff)" }}
         />
       </div>
 

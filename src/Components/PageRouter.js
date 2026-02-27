@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import NavbarWithPost from './NavbarWithPost';
+import NavbarWithPost from './Navbar/NavbarWithPost';
 import ProtectedRoute from "./ProtectedRoute";
 
 // import your pages

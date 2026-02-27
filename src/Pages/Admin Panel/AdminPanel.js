@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarWithPost from '../../Components/NavbarWithPost';
+import NavbarWithPost from '../../Components/Navbar/NavbarWithPost';
 import AdminPanelHeader from './AdminPanelHeader';
 import '../../App.css';
 import DeleteCollections from './DeleteCollections';
@@ -7,6 +7,7 @@ import ViewFirestoreData from './ViewFirestoreData';
 import DeletePost from './DeletePost';
 import DeleteOrder from './DeleteOrder';
 import MakeAnnouncement from '../../Components/Notifications/MakeAnnouncement';
+import Payouts from './Payouts';
 
 const AdminPanel = () => {
   return (
@@ -18,6 +19,7 @@ const AdminPanel = () => {
       <DeleteCollections />
       <DeletePost />
       <DeleteOrder />
+      <Payouts />
     </div>
   );
 };

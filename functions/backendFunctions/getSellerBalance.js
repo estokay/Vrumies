@@ -23,13 +23,13 @@ export const getSellerBalance = functions.onRequest(
         });
 
         const balance = await stripe.balance.retrieve({
-          stripeAccount: stripeAccountId as string,
+          stripeAccount: stripeAccountId,
         });
 
         res.json(balance);
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message || "Internal error" });
       }
     });
   }

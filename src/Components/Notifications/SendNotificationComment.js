@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import { db } from "../../Components/firebase"; // adjust path
+import { db } from "../firebase"; // adjust path
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-import useGetPostTitle from "../Hooks/useGetPostTitle";
-import useGetPostLink from "../Hooks/useGetPostLink";
-import useGetUsername from "../Hooks/useGetUsername";
+import useGetPostTitle from "../../Hooks/useGetPostTitle";
+import useGetPostLink from "../../Hooks/useGetPostLink";
+import useGetUsername from "../../Hooks/useGetUsername";
 
 function SendNotificationComment({ sellerId, fromId, postId, comment }) {
   const postTitle = useGetPostTitle({ postId });

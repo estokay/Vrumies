@@ -1,11 +1,16 @@
 import { useEffect, useRef } from "react";
-import { db } from "../../Components/firebase"; // adjust path
-import { collection, doc, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc
+} from "firebase/firestore";
 
 function SendNotificationAnnouncement({
   userId,
-  title = "Announcement Title",
-  message = "Announcement Message",
+  title,
+  message,
   onSuccess,
   onError,
 }) {
@@ -17,33 +22,35 @@ function SendNotificationAnnouncement({
 
     const sendAnnouncement = async () => {
       try {
-        let users = [];
 
+        // 🔹 OPTION 1 — Send to ONE user
         if (userId) {
-          users.push(doc(db, "Users", userId));
-        } else {
-          const usersSnap = await getDocs(collection(db, "Users"));
-          usersSnap.forEach((userDoc) => {
-            users.push(doc(db, "Users", userDoc.id));
-          });
-        }
+          const userRef = doc(db, "Users", userId);
 
-        for (const userRef of users) {
           await addDoc(collection(userRef, "notifications"), {
             type: "announcement",
             title,
             from: "Vrumies",
             message,
-            link: "",
             read: false,
+            createdAt: serverTimestamp(),
+          });
+
+        } 
+        // 🔹 OPTION 2 — Send to EVERYONE (global)
+        else {
+          await addDoc(collection(db, "Announcements"), {
+            type: "announcement",
+            title,
+            from: "Vrumies",
+            message,
             createdAt: serverTimestamp(),
           });
         }
 
-        console.log("Announcement notification sent!");
         onSuccess?.();
+
       } catch (err) {
-        console.error("Error sending announcement:", err);
         onError?.(err);
       }
     };

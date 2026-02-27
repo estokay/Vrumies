@@ -1,4 +1,4 @@
-const VehicleInfoField = ({ sellerType, titleStatus, year, make, model, onChange }) => (
+const VehicleInfoField = ({ sellerType, titleStatus, year, make, model, odometer, transmission, fuel, cylinders, drive, trim, onChange }) => (
   <div>
     <div className="field-group">
         <label className="form-label">Seller Type</label>
@@ -66,6 +66,88 @@ const VehicleInfoField = ({ sellerType, titleStatus, year, make, model, onChange
         placeholder="Enter vehicle model"
         />
     </div>
+
+    <div className="field-group">
+      <label className="form-label">Trim</label>
+      <input
+        type="text"
+        name="trim"
+        value={trim}
+        onChange={onChange}
+        placeholder="Enter vehicle trim (e.g. Sport, LX, SE)"
+      />
+    </div>
+
+    <div className="field-group">
+      <label className="form-label">Transmission</label>
+      <select
+        name="transmission"
+        value={transmission}
+        onChange={onChange}
+      >
+        <option value="">Select transmission</option>
+        <option value="Automatic">Automatic</option>
+        <option value="Manual">Manual</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div className="field-group">
+      <label className="form-label">Drive</label>
+      <select
+        name="drive"
+        value={drive}
+        onChange={onChange}
+      >
+        <option value="">Select drive type</option>
+        <option value="FWD">FWD</option>
+        <option value="RWD">RWD</option>
+        <option value="4WD">4WD</option>
+      </select>
+    </div>
+
+    <div className="field-group">
+      <label className="form-label">Cylinders</label>
+      <input
+        type="number"
+        name="cylinders"
+        value={cylinders}
+        onChange={onChange}
+        placeholder="Enter number of cylinders"
+        min="1"
+      />
+    </div>
+
+    <div className="field-group">
+      <label className="form-label">Fuel</label>
+      <select
+        name="fuel"
+        value={fuel}
+        onChange={onChange}
+      >
+        <option value="">Select fuel type</option>
+        <option value="Gas">Gas</option>
+        <option value="Diesel">Diesel</option>
+        <option value="Hybrid">Hybrid</option>
+        <option value="Electric">Electric</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div className="field-group">
+      <label className="form-label">Odometer</label>
+      <input
+        type="number"
+        name="odometer"
+        value={odometer}
+        onChange={onChange}
+        placeholder="Enter mileage"
+        min="0"
+      />
+    </div>
+
+    
+
   </div>
 );
 

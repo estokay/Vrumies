@@ -27,10 +27,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
-import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
+import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/DeletePostOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import ItemInCartOverlay from "../../../Components/Overlays/ItemInCartOverlay";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -48,6 +49,7 @@ function PostSection({ postId }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
   const [showPostDropMenu, setShowDropMenu] = useState(false);
+  const [showCartOverlay, setShowCartOverlay] = useState(false);
   const isAddToCartDisabled = !currentUser || !post || currentUser.uid === post.userId;
     const disabledReason =
     !currentUser
@@ -200,7 +202,7 @@ function PostSection({ postId }) {
         addedAt: new Date(),
       });
 
-      alert("Item added to cart!");
+      setShowCartOverlay(true);
     } catch (err) {
       console.error(err);
     }
@@ -458,6 +460,12 @@ function PostSection({ postId }) {
           isOpen={showPostDropMenu}
           onClose={() => setShowDropMenu(false)}
           onConfirm={() => console.log("TODO: delete from Firestore")}
+        />
+      )}
+      {showCartOverlay && (
+        <ItemInCartOverlay
+          productName={post.title}
+          onClose={() => setShowCartOverlay(false)}
         />
       )}
     </div>

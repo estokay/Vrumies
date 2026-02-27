@@ -1,16 +1,60 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./OfferVariant.css";
-import { FaFilePdf, FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 import checkPrice from "../../../Components/Functions/checkPrice";
+import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
+import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 
 export default function OfferVariant({ orderId }) {
   const [order, setOrder] = useState(null);
   const [buyerName, setBuyerName] = useState("N/A");
+  const { setOrderStatus, loading } = useSetOrderStatus();
   
   const navigate = useNavigate();
+
+  const handleMarkCompleted = async () => {
+    console.log("Sending payload:", {
+      orderId,
+      sellerPressedCompleted: true,
+    });
+
+    const result = await setOrderStatus({
+      orderId,
+      sellerPressedCompleted: true,
+    });
+
+    console.log("Function result:", result);
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        sellerInfo: {
+          ...prev.sellerInfo,
+          sellerMarkedCompleted: true,
+        },
+      }));
+    }
+  };
+
+  const handleDispute = async () => {
+    const result = await setOrderStatus({
+      orderId,
+      sellerPressedDispute: true,
+    });
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        sellerInfo: {
+          ...prev.sellerInfo,
+          sellerDispute: true,
+        },
+      }));
+    }
+  };
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -74,20 +118,6 @@ export default function OfferVariant({ orderId }) {
   const lastFour = order.paymentInfo?.lastFour || "N/A";
   const postId = order.postData?.postId || "";
 
-  // Status logic
-  const buyerCompleted = order.buyerInfo?.buyerMarkedCompleted || false;
-  const buyerDispute = order.buyerInfo?.buyerDispute || false;
-  const sellerDispute = order.sellerInfo?.sellerDispute || false;
-
-  let statusSteps = [
-    { label: "Order Started", active: true },
-    { label: "Marked Completed by Buyer", active: buyerCompleted },
-    { label: "Completed", active: buyerCompleted },
-  ];
-  if (buyerDispute || sellerDispute) {
-    statusSteps.push({ label: "Dispute", active: true });
-  }
-
   return (
     <div className="seller-event-details-panel">
       <h2 className="seller-panel-title">ORDER DETAILS</h2>
@@ -150,25 +180,46 @@ export default function OfferVariant({ orderId }) {
       {/* Status */}
       <section className="seller-section">
         <h3>Status</h3>
-        <div className="seller-timeline-wrapper">
-          {statusSteps.map((step, idx) => (
-            <React.Fragment key={idx}>
-              <div className="seller-timeline-step">
-                <div className={`seller-circle ${step.active ? "active" : ""}`}>
-                  {step.active && <FaCheck />}
-                </div>
-                <p className={`seller-timeline-label ${step.active ? "seller-active-label" : ""}`}>
-                  {step.label}
-                </p>
-              </div>
-              {idx < statusSteps.length - 1 && <div className="seller-arrow">→</div>}
-            </React.Fragment>
-          ))}
-        </div>
+        <OrderStatusTimeline
+          postId={orderId}
+          orderSide="seller"
+        />
 
         <div className="seller-status-buttons">
-          <button className="seller-btn-complete">Mark as Completed</button>
-          <button className="seller-btn-dispute">Dispute</button>
+          {!order.sellerInfo?.sellerMarkedCompleted &&
+          !order.sellerInfo?.sellerDispute &&
+          !order.buyerInfo?.buyerDispute && (
+            <button
+              className="seller-btn-complete"
+              onClick={handleMarkCompleted}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Mark as Completed"}
+            </button>
+          )}
+
+          {order.sellerInfo?.sellerMarkedCompleted && (
+            <button className="seller-btn-completed" disabled>
+              ✓ Marked Completed
+            </button>
+          )}
+
+          {!order.sellerInfo?.sellerDispute &&
+          !order.sellerInfo?.sellerMarkedCompleted && (
+            <button
+              className="seller-btn-dispute"
+              onClick={handleDispute}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Dispute"}
+            </button>
+          )}
+
+          {order.sellerInfo?.sellerDispute && (
+            <button className="seller-btn-disputed" disabled>
+              ⚠ Disputed Order
+            </button>
+          )}
         </div>
       </section>
     </div>

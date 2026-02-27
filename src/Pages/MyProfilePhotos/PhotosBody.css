@@ -86,6 +86,14 @@
   cursor: pointer;
 }
 
+.myphotos-delete-btn svg {
+  color: #7e7e7e; /* trash icon turns red on hover */
+}
+
+.myphotos-delete-btn:hover svg {
+  color: #ffffff; /* trash icon turns red on hover */
+}
+
 .myphotos-delete-btn:hover {
   background: red;
 }

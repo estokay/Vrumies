@@ -27,12 +27,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
-import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
+import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/DeletePostOverlay";
-import { useBlockUser } from "../../../Components/Hooks/useBlockUser";
-import BlockUserOverlay from "../../../Components/BlockUserOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import { useBlockUser } from "../../../Hooks/useBlockUser";
+import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);

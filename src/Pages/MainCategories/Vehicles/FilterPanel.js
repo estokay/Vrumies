@@ -26,6 +26,27 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
+  // ODOMETER
+  const [minOdometer, setMinOdometer] = useState('');
+  const [maxOdometer, setMaxOdometer] = useState('');
+
+  // TRANSMISSION
+  const [selectedTransmissions, setSelectedTransmissions] = useState([]);
+
+  // FUEL
+  const [selectedFuel, setSelectedFuel] = useState([]);
+
+  // CYLINDERS
+  const [minCylinders, setMinCylinders] = useState('');
+  const [maxCylinders, setMaxCylinders] = useState('');
+
+  // DRIVE
+  const [selectedDrive, setSelectedDrive] = useState([]);
+
+  // TRIM
+  const [availableTrims, setAvailableTrims] = useState([]);
+  const [selectedTrims, setSelectedTrims] = useState([]);
+
   const parsePrice = (price) => {
   if (typeof price !== 'string') return null;
 
@@ -42,6 +63,12 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     make: true,
     model: true,
     price: true,
+    odometer: true,
+    transmission: true,
+    fuel: true,
+    cylinders: true,
+    drive: true,
+    trim: true,
   });
 
   // 🔹 Fetch directory posts + extract locations
@@ -65,7 +92,16 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
 
       setAvailableLocations(locations);
 
-      
+      // 🔹 Get unique trims from Firestore posts
+      const trims = Array.from(
+        new Set(
+          posts
+            .map(p => p.trim)
+            .filter(t => typeof t === 'string' && t.trim() !== '')
+        )
+      );
+
+      setAvailableTrims(trims);
 
       // 🔹 Get unique makes from Firestore posts
       const makes = Array.from(
@@ -148,6 +184,13 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       );
     }
 
+    // Trim Filter
+    if (selectedTrims.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedTrims.includes(p.trim)
+      );
+    }
+
     // Price filter
     if (minPrice !== '') {
       filtered = filtered.filter(p => {
@@ -162,6 +205,55 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         return priceNum !== null && priceNum <= Number(maxPrice);
       });
     }
+
+    //Fuel Filter
+    if (selectedFuel.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedFuel.includes(p.fuel)
+      );
+    }
+
+    // Transmission Filter
+    if (selectedTransmissions.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedTransmissions.includes(p.transmission)
+      );
+    }
+
+    // Odometer Filter
+    if (minOdometer !== '') {
+      filtered = filtered.filter(
+        p => typeof p.odometer === 'number' && p.odometer >= Number(minOdometer)
+      );
+    }
+
+    if (maxOdometer !== '') {
+      filtered = filtered.filter(
+        p => typeof p.odometer === 'number' && p.odometer <= Number(maxOdometer)
+      );
+    }
+
+    // Cylinder Filter
+    if (minCylinders !== '') {
+      filtered = filtered.filter(
+        p => typeof p.cylinders === 'number' && p.cylinders >= Number(minCylinders)
+      );
+    }
+
+    if (maxCylinders !== '') {
+      filtered = filtered.filter(
+        p => typeof p.cylinders === 'number' && p.cylinders <= Number(maxCylinders)
+      );
+    }
+
+    // Drive Filter
+    if (selectedDrive.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedDrive.includes(p.drive)
+      );
+    }
+
+
 
     // Date filter
     if (dateFilter !== 'Show All') {
@@ -218,6 +310,14 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     allPosts,
     onFilteredPosts,
     sellerType,
+    minOdometer,
+    maxOdometer,
+    selectedTransmissions,
+    selectedFuel,
+    minCylinders,
+    maxCylinders,
+    selectedDrive,
+    selectedTrims,
   ]);
 
   const toggleSection = (key) => {
@@ -312,8 +412,8 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
             <label className="filterpanel-option">
               <input
                 type="radio"
-                checked={sellerType === 'owner'}
-                onChange={() => setSellerType('owner')}
+                checked={sellerType === 'Owner'}
+                onChange={() => setSellerType('Owner')}
               />
               Owner
             </label>
@@ -321,8 +421,8 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
             <label className="filterpanel-option">
               <input
                 type="radio"
-                checked={sellerType === 'dealer'}
-                onChange={() => setSellerType('dealer')}
+                checked={sellerType === 'Dealer'}
+                onChange={() => setSellerType('Dealer')}
               />
               Dealer
             </label>
@@ -453,6 +553,48 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         )}
       </div>
 
+      {/* TRIM */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('trim')}
+        >
+          Trim <span>{sectionsOpen.trim ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.trim && (
+          <div className="filterpanel-options">
+
+            <label className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedTrims.length === 0}
+                onChange={() => setSelectedTrims([])}
+              />
+              Show All
+            </label>
+
+            {availableTrims.map(trim => (
+              <label key={trim} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedTrims.includes(trim)}
+                  onChange={() =>
+                    setSelectedTrims(prev =>
+                      prev.includes(trim)
+                        ? prev.filter(t => t !== trim)
+                        : [...prev, trim]
+                    )
+                  }
+                />
+                {trim}
+              </label>
+            ))}
+
+          </div>
+        )}
+      </div>
+
       {/* PRICE */}
       <div className="filterpanel-section">
         <div className="filterpanel-header" onClick={() => toggleSection('price')}>
@@ -483,6 +625,205 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
             />
           </div>
         </div>
+        )}
+      </div>
+
+      {/* TRANSMISSION */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('transmission')}
+        >
+          Transmission <span>{sectionsOpen.transmission ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.transmission && (
+          <div className="filterpanel-options">
+
+            {/* SHOW ALL */}
+            <label className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedTransmissions.length === 0}
+                onChange={() => setSelectedTransmissions([])}
+              />
+              Show All
+            </label>
+
+            {['Automatic', 'Manual', 'Other'].map(opt => (
+              <label key={opt} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedTransmissions.includes(opt)}
+                  onChange={() =>
+                    setSelectedTransmissions(prev =>
+                      prev.includes(opt)
+                        ? prev.filter(t => t !== opt)
+                        : [...prev, opt]
+                    )
+                  }
+                />
+                {opt}
+              </label>
+            ))}
+
+          </div>
+        )}
+      </div>
+
+      {/* ODOMETER */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('odometer')}
+        >
+          Odometer <span>{sectionsOpen.odometer ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.odometer && (
+          <div className="filterpanel-options">
+            <div className="filterpanel-price-inline">
+              <span className="filterpanel-price-label">Min</span>
+              <input
+                type="number"
+                className="filterpanel-input"
+                placeholder="Any"
+                value={minOdometer}
+                onChange={(e) => setMinOdometer(e.target.value)}
+              />
+
+              <span className="filterpanel-price-separator">–</span>
+
+              <span className="filterpanel-price-label">Max</span>
+              <input
+                type="number"
+                className="filterpanel-input"
+                placeholder="Any"
+                value={maxOdometer}
+                onChange={(e) => setMaxOdometer(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* FUEL */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('fuel')}
+        >
+          Fuel <span>{sectionsOpen.fuel ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.fuel && (
+          <div className="filterpanel-options">
+
+            <label className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedFuel.length === 0}
+                onChange={() => setSelectedFuel([])}
+              />
+              Show All
+            </label>
+
+            {['Gas', 'Diesel', 'Hybrid', 'Electric', 'Other'].map(opt => (
+              <label key={opt} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedFuel.includes(opt)}
+                  onChange={() =>
+                    setSelectedFuel(prev =>
+                      prev.includes(opt)
+                        ? prev.filter(f => f !== opt)
+                        : [...prev, opt]
+                    )
+                  }
+                />
+                {opt}
+              </label>
+            ))}
+
+          </div>
+        )}
+      </div>
+
+      {/* CYLINDERS */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('cylinders')}
+        >
+          Cylinders <span>{sectionsOpen.cylinders ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.cylinders && (
+          <div className="filterpanel-options">
+            <div className="filterpanel-price-inline">
+              <span className="filterpanel-price-label">Min</span>
+              <input
+                type="number"
+                className="filterpanel-input"
+                placeholder="Any"
+                value={minCylinders}
+                onChange={(e) => setMinCylinders(e.target.value)}
+              />
+
+              <span className="filterpanel-price-separator">–</span>
+
+              <span className="filterpanel-price-label">Max</span>
+              <input
+                type="number"
+                className="filterpanel-input"
+                placeholder="Any"
+                value={maxCylinders}
+                onChange={(e) => setMaxCylinders(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* DRIVE */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('drive')}
+        >
+          Drive <span>{sectionsOpen.drive ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.drive && (
+          <div className="filterpanel-options">
+
+            <label className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedDrive.length === 0}
+                onChange={() => setSelectedDrive([])}
+              />
+              Show All
+            </label>
+
+            {['FWD', 'RWD', '4WD'].map(opt => (
+              <label key={opt} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedDrive.includes(opt)}
+                  onChange={() =>
+                    setSelectedDrive(prev =>
+                      prev.includes(opt)
+                        ? prev.filter(d => d !== opt)
+                        : [...prev, opt]
+                    )
+                  }
+                />
+                {opt}
+              </label>
+            ))}
+
+          </div>
         )}
       </div>
 

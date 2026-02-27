@@ -1,0 +1,102 @@
+/* Backdrop overlay */
+.pio-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  padding: 20px;
+  animation: pio-fadeIn 0.25s ease-in-out;
+}
+
+/* Main container */
+.pio-overlay-container {
+  background-color: #000;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  width: 550px;
+  max-width: 95%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.6);
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  animation: pio-scaleIn 0.25s ease-in-out;
+}
+
+/* Overlay title */
+.pio-overlay-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #00ff00;
+}
+
+/* Overlay description */
+.pio-overlay-description {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* Step section */
+.pio-step {
+  margin-bottom: 2rem;
+}
+
+.pio-step h3 {
+  margin-bottom: 1rem;
+  color: #00ff00;
+  font-size: 1.1rem;
+}
+
+/* Images */
+.pio-image {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #00ff00;
+  box-shadow: 0 0 12px rgba(0, 255, 0, 0.4);
+}
+
+/* Close button */
+.pio-close-button {
+  padding: 0.75rem 1.75rem;
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 1rem;
+}
+
+.pio-close-button:hover {
+  background-color: #00cc00;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes pio-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pio-scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

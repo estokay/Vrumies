@@ -1,4 +1,4 @@
-import NavbarWithPost from '../../Components/NavbarWithPost';
+import NavbarWithPost from '../../Components/Navbar/NavbarWithPost';
 import ShoppingCartHeader from './ShoppingCartHeader';
 import '../../App.css';
 import './ShoppingCart.css';

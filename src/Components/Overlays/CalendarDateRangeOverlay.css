@@ -1,0 +1,189 @@
+/* ================= BACKDROP ================= */
+.calendar-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.65);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: backdropFade 0.25s ease;
+}
+
+/* ================= MAIN GLASS CONTAINER ================= */
+.calendar-overlay {
+  width: 760px;
+  max-width: 95%;
+  border-radius: 28px;
+  padding: 28px;
+  position: relative;
+
+  /* Glass effect */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+
+  animation: fadeInScale 0.25s ease;
+  color: white;
+}
+
+/* ================= HEADER ================= */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.calendar-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ffffff, #bdbdbd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= CLOSE BUTTON ================= */
+.calendar-x-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.calendar-x-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ================= BODY ================= */
+.calendar-body {
+  margin-bottom: 24px;
+}
+
+/* ================= FOOTER ================= */
+.calendar-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Modern glowing button */
+.calendar-apply-btn {
+  padding: 12px 28px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+  transition: all 0.2s ease;
+}
+
+.calendar-apply-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(99, 102, 241, 0.6);
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes backdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ================= DAYPICKER MODERN THEME ================= */
+.rdp {
+  --rdp-accent-color: #8b5cf6;
+  --rdp-background-color: transparent;
+  --rdp-outline: 2px solid #8b5cf6;
+  margin: 0 auto;
+}
+
+/* Month container spacing */
+.rdp-months {
+  gap: 40px;
+}
+
+/* Month title */
+.rdp-caption_label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* Weekday labels */
+.rdp-head_cell {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Day cells */
+.rdp-day {
+  border-radius: 12px;
+  transition: all 0.15s ease;
+  color: white;
+}
+
+.rdp-day:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.05);
+}
+
+/* Selected days */
+.rdp-day_selected,
+.rdp-day_range_start,
+.rdp-day_range_end {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.5);
+}
+
+/* Range middle */
+.rdp-day_range_middle {
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: white;
+}
+
+/* Today */
+.rdp-day_today {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}

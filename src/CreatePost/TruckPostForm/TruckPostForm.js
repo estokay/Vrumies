@@ -212,7 +212,7 @@ const TruckPostForm = () => {
         ...formData,
         originCities,
         destinationCities,
-        availableDate,
+        availableDate: availableDate ? Timestamp.fromDate(new Date(availableDate)) : null,
         tokens: formData.tokens || 0,
         createdAt: Timestamp.now(),
         type: 'trucks',

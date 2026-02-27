@@ -1,4 +1,4 @@
-import { db } from "../../Components/firebase";
+import { db } from "../firebase";
 import { collection, addDoc, doc, getDoc, serverTimestamp } from "firebase/firestore";
 
 const sendNotificationOrder = async ({ sellerId, fromId, postId }) => {

@@ -26,6 +26,12 @@ const VehiclePostForm = () => {
     year: '',
     make: '',
     model: '',
+    odometer: '',
+    transmission: '',
+    fuel: '',
+    cylinders: '',
+    drive: '',
+    trim: '',
   });
 
   const [message, setMessage] = useState('');
@@ -37,21 +43,25 @@ const VehiclePostForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    if (name === 'year') {
-        // Remove non-digit characters
-        const numericValue = value.replace(/\D/g, '');
 
-        // Limit to 4 digits
-        if (numericValue.length <= 4) {
-          setFormData(prev => ({ ...prev, [name]: Number(numericValue) || '' }));
-        }
-      } else {
-        setFormData(prev => ({
-          ...prev,
-          [name]: name === 'tokens' ? Number(value) || '' : value,
-        }));
-      }
+    // Fields that must always be numeric
+    if (['year', 'odometer', 'cylinders'].includes(name)) {
+      const numericValue = value.replace(/\D/g, ''); // remove non-digits
+
+      // Limit year to 4 digits
+      if (name === 'year' && numericValue.length > 4) return;
+
+      setFormData(prev => ({
+        ...prev,
+        [name]: numericValue ? Number(numericValue) : ''
+      }));
+
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: name === 'tokens' ? Number(value) || '' : value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -129,6 +139,12 @@ const VehiclePostForm = () => {
           year={formData.year}
           make={formData.make}
           model={formData.model}
+          odometer={formData.odometer}
+          transmission={formData.transmission}
+          fuel={formData.fuel}
+          cylinders={formData.cylinders}
+          drive={formData.drive}
+          trim={formData.trim}
           onChange={handleChange} // same handler
         />
       )}

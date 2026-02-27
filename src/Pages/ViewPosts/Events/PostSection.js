@@ -27,13 +27,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import "./PostSection.css";
-import useGetTimezoneDate from "../../../Components/Hooks/useGetTimezoneDate";
-import useGetTimezoneTime from "../../../Components/Hooks/useGetTimezoneTime";
+import useGetTimezoneDate from "../../../Hooks/useGetTimezoneDate";
+import useGetTimezoneTime from "../../../Hooks/useGetTimezoneTime";
 import SellerRating from "../../../Components/Reviews/SellerRating";
-import ViewPhotoOverlay from "../../../Components/ViewPhotoOverlay";
+import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/DeletePostOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);

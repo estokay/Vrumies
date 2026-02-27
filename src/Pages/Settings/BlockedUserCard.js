@@ -1,8 +1,8 @@
 import React from "react";
-import useGetUsername from "../../Components/Hooks/useGetUsername";
-import useGetProfilePic from "../../Components/Hooks/useGetProfilePic";
+import useGetUsername from "../../Hooks/useGetUsername";
+import useGetProfilePic from "../../Hooks/useGetProfilePic";
 import { useAuth } from "../../AuthContext";
-import useUnblockUser from "../../Components/Hooks/useUnblockUser";
+import useUnblockUser from "../../Hooks/useUnblockUser";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

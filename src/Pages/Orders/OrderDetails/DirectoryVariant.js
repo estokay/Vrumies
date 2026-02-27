@@ -1,13 +1,57 @@
 import React, { useEffect, useState } from "react";
 import "./DirectoryVariant.css";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import { db } from "../../../Components/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import checkPrice from "../../../Components/Functions/checkPrice";
+import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
+import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 
 export default function DirectoryVariant({ orderId }) {
   const [order, setOrder] = useState(null);
   const [sellerName, setSellerName] = useState("N/A");
+  const { setOrderStatus, loading } = useSetOrderStatus();
+
+  const handleMarkCompleted = async () => {
+    console.log("Sending payload:", {
+      orderId,
+      buyerPressedCompleted: true,
+    });
+
+    const result = await setOrderStatus({
+      orderId,
+      buyerPressedCompleted: true,
+    });
+
+    console.log("Function result:", result);
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        buyerInfo: {
+          ...prev.buyerInfo,
+          buyerMarkedCompleted: true,
+        },
+      }));
+    }
+  };
+
+  const handleDispute = async () => {
+    const result = await setOrderStatus({
+      orderId,
+      buyerPressedDispute: true,
+    });
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        buyerInfo: {
+          ...prev.buyerInfo,
+          buyerDispute: true,
+        },
+      }));
+    }
+  };
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -75,20 +119,6 @@ export default function DirectoryVariant({ orderId }) {
   const paymentMethod = order.paymentInfo?.paymentmethod || "N/A";
   const lastFour = order.paymentInfo?.lastfour || "N/A";
 
-  // Status logic
-  let statusSteps = [
-    { label: "Order Started", active: true },
-    { label: "Marked Completed by Seller", active: order.sellerInfo?.sellerMarkedCompleted || false },
-    { label: "Completed", active: order.sellerInfo?.sellerMarkedCompleted || false },
-  ];
-
-  if (order.buyerInfo?.buyerDispute || order.sellerInfo?.sellerDispute) {
-    statusSteps = [
-      { label: "Order Started", active: true },
-      { label: "Dispute", active: true },
-    ];
-  }
-
   return (
     <div className="od-order-details-panel">
       <h2 className="od-panel-title">ORDER INFORMATION</h2>
@@ -151,27 +181,46 @@ export default function DirectoryVariant({ orderId }) {
       {/* Status */}
       <section className="od-section">
         <h3>Status</h3>
-        <div className="od-timeline-wrapper">
-          {statusSteps.map((step, idx) => (
-            <React.Fragment key={idx}>
-              <div className="od-timeline-step">
-                <div className={`od-circle ${step.active ? "active" : ""}`}>
-                  {step.active && <FaCheck />}
-                </div>
-                <p className={`od-timeline-label ${step.active ? "active-label" : ""}`}>
-                  {step.label}
-                </p>
-              </div>
-              {idx < statusSteps.length - 1 && <div className="od-arrow">→</div>}
-            </React.Fragment>
-          ))}
-        </div>
-
+        <OrderStatusTimeline
+          postId={orderId}
+          orderSide="buyer"
+        />
+        
         <div className="od-status-buttons">
-          {!order.sellerInfo?.sellerMarkedCompleted && !order.buyerInfo?.buyerDispute && !order.sellerInfo?.sellerDispute && (
-            <button className="od-btn-complete">Mark as Completed</button>
+          {!order.buyerInfo?.buyerMarkedCompleted &&
+          !order.buyerInfo?.buyerDispute &&
+          !order.sellerInfo?.sellerDispute && (
+            <button
+              className="od-btn-complete"
+              onClick={handleMarkCompleted}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Mark as Completed"}
+            </button>
           )}
-          <button className="od-btn-dispute">Dispute</button>
+
+          {order.buyerInfo?.buyerMarkedCompleted && (
+            <button className="od-btn-completed" disabled>
+              ✓ Marked Completed
+            </button>
+          )}
+
+          {!order.buyerInfo?.buyerDispute &&
+          !order.buyerInfo?.buyerMarkedCompleted && (
+            <button
+              className="od-btn-dispute"
+              onClick={handleDispute}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Dispute"}
+            </button>
+          )}
+
+          {order.buyerInfo?.buyerDispute && (
+            <button className="od-btn-disputed" disabled>
+              ⚠ Disputed Order
+            </button>
+          )}
         </div>
       </section>
     </div>

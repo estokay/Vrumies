@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./BlockedUsers.css";
 import BlockedUserCard from "./BlockedUserCard";
-import useGetBlockedList from "../../Components/Hooks/useGetBlockedList";
+import useGetBlockedList from "../../Hooks/useGetBlockedList";
 import { useAuth } from "../../AuthContext";
 
 export default function BlockedUsers() {

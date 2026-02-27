@@ -11,6 +11,7 @@ import Loads from "./Collections/Loads";
 import Trucks from "./Collections/Trucks";
 import Reports from "./Collections/Reports";
 import Orders from "./Collections/Orders";
+import Payouts from "./Collections/Payouts";
 import Offers from "./Collections/Offers";
 import Notifications from "./Collections/Notifications";
 
@@ -27,9 +28,10 @@ function ViewFirestoreData() {
     "Loads",
     "Trucks",
     "Reports",
-    "Orders",
     "Offers",
     "Notifications",
+    "Orders",
+    "Payouts",
   ];
 
   const [activeTab, setActiveTab] = useState("Users");

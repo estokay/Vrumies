@@ -80,3 +80,33 @@
   color: #ef4444;
   font-weight: 600;
 }
+
+/* Toggle container */
+.announcement-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Toggle buttons */
+.toggle-btn {
+  flex: 1;
+  background: #374151;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: #4b5563;
+}
+
+.toggle-btn.active {
+  background: #22c55e;
+  color: #052e16;
+  border-color: #22c55e;
+}

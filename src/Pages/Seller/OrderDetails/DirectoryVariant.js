@@ -1,15 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import "./DirectoryVariant.css";
 import { useNavigate } from "react-router-dom";
 import checkPrice from "../../../Components/Functions/checkPrice";
+import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
+import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 
 export default function DirectoryVariant({ orderId }) {
   const [order, setOrder] = useState(null);
   const [buyerUsername, setBuyerUsername] = useState("N/A");
   const navigate = useNavigate(); // Added navigate
+  const { setOrderStatus, loading } = useSetOrderStatus();
+
+  const handleMarkCompleted = async () => {
+    console.log("Sending payload:", {
+      orderId,
+      sellerPressedCompleted: true,
+    });
+
+    const result = await setOrderStatus({
+      orderId,
+      sellerPressedCompleted: true,
+    });
+
+    console.log("Function result:", result);
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        sellerInfo: {
+          ...prev.sellerInfo,
+          sellerMarkedCompleted: true,
+        },
+      }));
+    }
+  };
+
+  const handleDispute = async () => {
+    const result = await setOrderStatus({
+      orderId,
+      sellerPressedDispute: true,
+    });
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        sellerInfo: {
+          ...prev.sellerInfo,
+          sellerDispute: true,
+        },
+      }));
+    }
+  };
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -57,9 +101,14 @@ export default function DirectoryVariant({ orderId }) {
             postId: data.postData?.postId || "N/A",
             paymentMethod: data.paymentInfo?.paymentMethod || "N/A",
             lastFour: data.paymentInfo?.lastFour || "N/A",
-            buyerMarketCompleted: data.buyerMarketCompleted || false,
-            buyerDispute: data.buyerDispute || false,
-            sellerDispute: data.sellerDispute || false,
+            buyerInfo: {
+              buyerMarkedCompleted: data.buyerInfo?.buyerMarkedCompleted || false,
+              buyerDispute: data.buyerInfo?.buyerDispute || false,
+            },
+            sellerInfo: {
+              sellerMarkedCompleted: data.sellerInfo?.sellerMarkedCompleted || false,
+              sellerDispute: data.sellerInfo?.sellerDispute || false,
+            },
           });
         } else {
           setOrder(null);
@@ -77,16 +126,6 @@ export default function DirectoryVariant({ orderId }) {
 
   const transactionFee = (order.price * 0.15).toFixed(2);
   const total = (order.price + parseFloat(transactionFee)).toFixed(2);
-
-  let statusSteps = [
-    { label: "Order Started", active: true },
-    { label: "Marked Completed by Buyer", active: order.buyerMarketCompleted },
-    { label: "Completed", active: order.buyerMarketCompleted },
-  ];
-
-  if (order.buyerDispute || order.sellerDispute) {
-    statusSteps.push({ label: "Dispute", active: true });
-  }
 
   return (
     <div className="seller-order-details-panel">
@@ -153,25 +192,46 @@ export default function DirectoryVariant({ orderId }) {
       {/* Status */}
       <section className="seller-section">
         <h3>Status</h3>
-        <div className="seller-timeline-wrapper">
-          {statusSteps.map((step, idx) => (
-            <React.Fragment key={idx}>
-              <div className="seller-timeline-step">
-                <div className={`seller-circle ${step.active ? "active" : ""}`}>
-                  {step.active && <FaCheck />}
-                </div>
-                <p className={`seller-timeline-label ${step.active ? "seller-active-label" : ""}`}>
-                  {step.label}
-                </p>
-              </div>
-              {idx < statusSteps.length - 1 && <div className="seller-arrow">→</div>}
-            </React.Fragment>
-          ))}
-        </div>
+        <OrderStatusTimeline
+          postId={orderId}
+          orderSide="seller"
+        />
 
         <div className="seller-status-buttons">
-          <button className="seller-btn-complete">Mark as Completed</button>
-          <button className="seller-btn-dispute">Dispute</button>
+          {!order.sellerInfo?.sellerMarkedCompleted &&
+          !order.sellerInfo?.sellerDispute &&
+          !order.buyerInfo?.buyerDispute && (
+            <button
+              className="seller-btn-complete"
+              onClick={handleMarkCompleted}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Mark as Completed"}
+            </button>
+          )}
+
+          {order.sellerInfo?.sellerMarkedCompleted && (
+            <button className="seller-btn-completed" disabled>
+              ✓ Marked Completed
+            </button>
+          )}
+
+          {!order.sellerInfo?.sellerDispute &&
+          !order.sellerInfo?.sellerMarkedCompleted && (
+            <button
+              className="seller-btn-dispute"
+              onClick={handleDispute}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Dispute"}
+            </button>
+          )}
+
+          {order.sellerInfo?.sellerDispute && (
+            <button className="seller-btn-disputed" disabled>
+              ⚠ Disputed Order
+            </button>
+          )}
         </div>
       </section>
     </div>

@@ -8,6 +8,7 @@ import {
   signOut 
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+import { getFunctions } from "firebase/functions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtCkrmxQ0pu78XMkkKuHIIM9AsNMOx8vQ",
@@ -34,6 +35,7 @@ try {
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
+const functions = getFunctions(app);
 
 // ✅ Google provider
 const provider = new GoogleAuthProvider();
@@ -56,4 +58,4 @@ export const logOut = async () => {
   await signOut(auth);
 };
 
-export { app, db, auth, storage };
+export { app, db, auth, storage, functions };

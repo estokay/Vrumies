@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { db } from "../../Components/firebase";
+import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import useGetPostTitle from "../Hooks/useGetPostTitle";
-import useGetPostLink from "../Hooks/useGetPostLink";
-import useGetUsername from "../Hooks/useGetUsername";
+import useGetPostTitle from "../../Hooks/useGetPostTitle";
+import useGetPostLink from "../../Hooks/useGetPostLink";
+import useGetUsername from "../../Hooks/useGetUsername";
 
 export default function useSendNotificationOffer({
   sellerId,

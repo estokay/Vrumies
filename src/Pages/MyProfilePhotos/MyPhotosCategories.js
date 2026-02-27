@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import ViewPhotoOverlay from "../../Components/ViewPhotoOverlay";
+import ViewPhotoOverlay from "../../Components/Overlays/ViewPhotoOverlay";
 import "./PhotosCategories.css";
 
-import useGetProfileCover from "../../Components/Hooks/useGetProfileCover";
-import useUploadToCloudinary from "../../Components/Hooks/useUploadToCloudinary";
-import useChangeCoverPhoto from "../../Components/Hooks/useChangeCoverPhoto";
+import useGetProfileCover from "../../Hooks/useGetProfileCover";
+import useUploadToCloudinary from "../../Hooks/useUploadToCloudinary";
+import useChangeCoverPhoto from "../../Hooks/useChangeCoverPhoto";
 
 import { auth } from "../../Components/firebase";
 

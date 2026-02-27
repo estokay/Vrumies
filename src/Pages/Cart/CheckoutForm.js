@@ -14,6 +14,8 @@ import {
 import { db } from "../../Components/firebase";
 import "./CheckoutForm.css";
 import sendNotificationOrder from "../../Components/Notifications/sendNotificationOrder";
+import useCreatePaymentIntent from "../../CloudFunctions/useCreatePaymentIntent";
+import PurchaseCompleteOverlay from "../../Components/Overlays/PurchaseCompleteOverlay";
 
 const stripePromise = loadStripe("pk_test_51JN8mDDR30hjV6c2f6WkKbqaLIJ91qsbyfK9Ho1Ge3hCwL2b3aZnWim7Ew9RhfprRoiInPWDRsXC8gqcdW6v4ST700vBUAakpE"); // Replace with your Stripe key
 
@@ -21,6 +23,10 @@ function CheckoutFormInner() {
   const stripe = useStripe();
   const elements = useElements();
   const { currentUser } = useAuth();
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(false);
+
+  const { createPaymentIntent, loading: paymentLoading, error: paymentError } = useCreatePaymentIntent();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -88,68 +94,80 @@ function CheckoutFormInner() {
       return;
     }
 
-    const cardElement = elements.getElement(CardElement);
-
-    if (!cardElement) {
-      setMessage("Please enter your card information.");
+    if (!currentUser) {
+      setMessage("You must be logged in.");
       return;
     }
 
-    const billing = {
-      name: formData.billingFullName,
-      email: formData.email,
-      address: {
-        line1: formData.billingAddress,
-        city: formData.billingCity,
-        state: formData.billingState,
-        postal_code: formData.billingZip,
-      },
-    };
-
-    // Create Stripe payment method
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: billing,
-    });
-
-    if (error) {
-      setMessage(`Error: ${error.message}`);
+    if (cartItems.length === 0) {
+      setMessage("Your cart is empty.");
       return;
     }
 
-    const lastFour = paymentMethod.card?.last4 || "N/A";
-
-    let postData;
-    // Payment successful — create orders in Firestore
     try {
-      for (let item of cartItems) {
-        console.log("🛒 Cart item:", item);
+      setMessage("Processing payment...");
 
-        if (!item.postId) {
-          console.error("❌ Missing postId, skipping item:", item);
-          continue; // prevents crash
+      const clientSecret = await createPaymentIntent(Math.round(total * 100), "usd");
+      if (!clientSecret) throw new Error(paymentError || "Failed to create PaymentIntent");
+
+      // 2️⃣ Confirm payment
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: formData.billingFullName,
+              email: formData.email,
+              address: {
+                line1: formData.billingAddress,
+                city: formData.billingCity,
+                state: formData.billingState,
+                postal_code: formData.billingZip,
+              },
+            },
+          },
         }
+      );
 
-        // Always fetch from the "Posts" collection
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      if (!paymentIntent || !paymentIntent.id) {
+        throw new Error("Payment failed: No PaymentIntent returned.");
+      }
+
+      // Fetch last4 from server
+      const pmResponse = await fetch("https://getpaymentmethod-k3qu3645ya-uc.a.run.app", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentIntentId: paymentIntent.id }),
+      });
+
+      const pmData = await pmResponse.json();
+      const lastFour = pmData.last4 || "N/A";
+
+      if (paymentIntent.status !== "succeeded") {
+        setMessage("Payment was not successful.");
+        return;
+      }
+      
+
+      // 3️⃣ Create Orders in Firestore
+      for (let item of cartItems) {
+        if (!item.postId) continue;
+
         const postRef = doc(db, "Posts", item.postId);
         const postSnap = await getDoc(postRef);
 
-        console.log("Post exists?", postSnap.exists());
-        console.log("Post data:", postSnap.data());
+        if (!postSnap.exists()) continue;
 
-        if (!postSnap.exists()) {
-          console.error("❌ Post does not exist:", item.postId);
-          continue;
-        }
-        
-        postData = postSnap.data();
+        const postData = postSnap.data();
 
-        
-
-        // Create order document
         const orderRef = doc(collection(db, "Orders"));
-        
+
         let orderData = {
           type: item.type || "",
           deliveryInfo: {
@@ -178,63 +196,61 @@ function CheckoutFormInner() {
           },
           paymentInfo: {
             paymentSuccessful: true,
+            stripePaymentIntentId: paymentIntent.id,
             paymentMethod: "Card",
             lastFour: lastFour,
+            payoutTransfer: false,
           },
           price: parsePrice(postData.price),
           orderCreated: serverTimestamp(),
           orderStatus: "pending",
         };
 
-          if (item.type === "market") {
-            orderData.marketSpecific = {
-              condition: postData.condition || "",
-              shippingTime: postData.shippingTime || "",
-              carrier: "",
-              trackingNumber: "",
-            };
-          } else if (item.type === "directory") {
-            orderData.directorySpecific = {
-              serviceLocation: postData.serviceLocation || "",
-              businessAddress: postData.businessAddress || "",
-            };            
-          } else if (item.type === "offer") {
-            const originalPostRef = doc(db, "Posts", postData.originalPost);
-            const originalPostSnap = await getDoc(originalPostRef);
+        if (item.type === "market") {
+          orderData.marketSpecific = {
+            condition: postData.condition || "",
+            shippingTime: postData.shippingTime || "",
+            carrier: "",
+            trackingNumber: "",
+          };
+        }
 
-            orderData.offerSpecific = {
-              originalPostId: postData.originalPost || "",
-              originalPostObject: originalPostSnap.exists()
+        if (item.type === "directory") {
+          orderData.directorySpecific = {
+            serviceLocation: postData.serviceLocation || "",
+            businessAddress: postData.businessAddress || "",
+          };
+        }
+
+        if (item.type === "offer") {
+          const originalPostRef = doc(db, "Posts", postData.originalPost);
+          const originalPostSnap = await getDoc(originalPostRef);
+
+          orderData.offerSpecific = {
+            originalPostId: postData.originalPost || "",
+            originalPostObject: originalPostSnap.exists()
               ? { id: originalPostSnap.id, ...originalPostSnap.data() }
               : null,
-            };            
-          }
+          };
+        }
 
-          
-        
-
-
-        
         await setDoc(orderRef, orderData);
 
         await sendNotificationOrder({
           sellerId: postData.userId,
           fromId: currentUser.uid,
-          postId: item.postId
+          postId: item.postId,
         });
 
-        // Remove item from cart
         await deleteDoc(doc(db, "Users", currentUser.uid, "cart", item.id));
       }
 
-      setMessage("Payment successful! Orders created.");
+      setMessage("");
+      setPaymentComplete(true);
+      setShowOverlay(true);
     } catch (err) {
-      console.error("Error creating orders:", err);
-      setMessage(err.message || "Error creating orders. Check consolettt. \nPost Type: ${postData.type}\nPost Title: ${postData.title}");
-      let postInfo = "";
-      
-      postInfo = `\nPost Type: ${postData.type || "unknown"}\nPost Title: ${postData.title || "Untitled"}`;
-      setMessage(err.message || postInfo);
+      console.error("Payment error:", err);
+      setMessage(err.message || "Payment failed.");
     }
   };
 
@@ -326,14 +342,18 @@ function CheckoutFormInner() {
         </div>
       </div>
 
-      <button type="submit" className="cb-submit-btn" disabled={!stripe}>
-        Pay Now
+      <button type="submit" className="cb-submit-btn" disabled={!stripe || paymentLoading || paymentComplete}>
+        {paymentLoading ? "Processing..." : "Pay Now"}
       </button>
 
       {message && (
         <p style={{ marginTop: "15px", color: message.startsWith("Error") ? "#ff6b6b" : "#00AA00" }}>
           {message}
         </p>
+      )}
+
+      {showOverlay && (
+        <PurchaseCompleteOverlay onClose={() => setShowOverlay(false)} />
       )}
     </form>
   );

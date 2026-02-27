@@ -1,0 +1,81 @@
+.ost-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* Main timeline */
+.ost-main {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ost-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ost-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: gray;
+}
+
+.ost-circle.active {
+  background: white;
+  color: green;
+  border-color: green;
+}
+
+.ost-label {
+  font-size: 12px;
+  margin-top: 5px;
+  color: gray;
+  text-align: center;
+}
+
+.ost-label.active-label {
+  color: green;
+  font-weight: bold;
+}
+
+.ost-arrow {
+  font-size: 20px;
+  color: black;
+}
+
+/* Dispute separated */
+.ost-dispute-section {
+  margin-left: 60px; /* pushes it separate */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ost-circle.dispute {
+  border: 3px solid gray;
+}
+
+.ost-circle.active-dispute {
+  background: #be3535;
+  border-color: #b71c1c;
+  color: white;
+}
+
+.ost-label.dispute-label {
+  color: gray;
+}
+
+.ost-label.active-dispute-label {
+  color: white;
+  font-weight: bold;
+}

@@ -1,13 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase"; // adjust path if needed
 import "./MarketVariant.css";
 import checkPrice from "../../../Components/Functions/checkPrice";
+import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
+import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 
 export default function MarketVariant({ orderId }) {
   const [order, setOrder] = useState(null);
   const [sellerName, setSellerName] = useState("N/A");
+  const { setOrderStatus, loading } = useSetOrderStatus();
+
+    const handleMarkCompleted = async () => {
+    console.log("Sending payload:", {
+      orderId,
+      buyerPressedCompleted: true,
+    });
+
+    const result = await setOrderStatus({
+      orderId,
+      buyerPressedCompleted: true,
+    });
+
+    console.log("Function result:", result);
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        buyerInfo: {
+          ...prev.buyerInfo,
+          buyerMarkedCompleted: true,
+        },
+      }));
+    }
+  };
+
+  const handleDispute = async () => {
+    const result = await setOrderStatus({
+      orderId,
+      buyerPressedDispute: true,
+    });
+
+    if (result?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        buyerInfo: {
+          ...prev.buyerInfo,
+          buyerDispute: true,
+        },
+      }));
+    }
+  };
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -75,20 +119,6 @@ export default function MarketVariant({ orderId }) {
 
   const paymentMethod = order.paymentInfo?.paymentMethod || "N/A";
   const lastFour = order.paymentInfo?.lastFour || "N/A";
-
-  // Status logic
-  let statusSteps = [
-    { label: "Order Started", active: true },
-    { label: "Marked Completed by Seller", active: order.sellerInfo?.sellerMarkedCompleted || false },
-    { label: "Completed", active: false },
-  ];
-
-  if (order.buyerInfo?.buyerDispute || order.sellerInfo?.sellerDispute) {
-    statusSteps = [
-      { label: "Order Started", active: true },
-      { label: "Dispute", active: true },
-    ];
-  }
 
   return (
     <div className="mv-custom-panel">
@@ -164,25 +194,46 @@ export default function MarketVariant({ orderId }) {
       {/* Status */}
       <section className="mv-custom-section">
         <h3>Status</h3>
-        <div className="mv-custom-timeline-wrapper">
-          {statusSteps.map((step, idx) => (
-            <React.Fragment key={idx}>
-              <div className="mv-custom-timeline-step">
-                <div className={`mv-custom-circle ${step.active ? "active" : ""}`}>
-                  {step.active && <FaCheck />}
-                </div>
-                <p className={`mv-custom-timeline-label ${step.active ? "active-label" : ""}`}>
-                  {step.label}
-                </p>
-              </div>
-              {idx < statusSteps.length - 1 && <div className="mv-custom-arrow">→</div>}
-            </React.Fragment>
-          ))}
-        </div>
+        <OrderStatusTimeline
+          postId={orderId}
+          orderSide="buyer"
+        />
 
         <div className="mv-custom-status-buttons">
-          <button className="mv-custom-btn-complete">Mark as Completed</button>
-          <button className="mv-custom-btn-dispute">Dispute</button>
+          {!order.buyerInfo?.buyerMarkedCompleted &&
+          !order.buyerInfo?.buyerDispute &&
+          !order.sellerInfo?.sellerDispute && (
+            <button
+              className="mv-custom-btn-complete"
+              onClick={handleMarkCompleted}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Mark as Completed"}
+            </button>
+          )}
+
+          {order.buyerInfo?.buyerMarkedCompleted && (
+            <button className="mv-custom-btn-completed" disabled>
+              ✓ Marked Completed
+            </button>
+          )}
+
+          {!order.buyerInfo?.buyerDispute &&
+          !order.buyerInfo?.buyerMarkedCompleted && (
+            <button
+              className="mv-custom-btn-dispute"
+              onClick={handleDispute}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Dispute"}
+            </button>
+          )}
+
+          {order.buyerInfo?.buyerDispute && (
+            <button className="mv-custom-btn-disputed" disabled>
+              ⚠ Disputed Order
+            </button>
+          )}
         </div>
       </section>
     </div>

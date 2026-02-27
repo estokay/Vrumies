@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import PaymentMethodsPanel from "./PaymentMethodsPanel";
+//import PaymentMethodsPanel from "./PaymentMethodsPanel";
+import PayoutMethod from "./PayoutMethod";
 import CreateSellerPostOverlay from "../../CreateSellerPost/CreateSellerPostOverlay";
 
 const SellerPageHeader = () => {
@@ -40,7 +41,8 @@ const SellerPageHeader = () => {
 
         {/* Right: Balance + Payout */}
         <div style={styles.paymentPanel}>
-          <PaymentMethodsPanel /> 
+          {/* <PaymentMethodsPanel /> */} 
+          <PayoutMethod />
         </div>
       </div>
 

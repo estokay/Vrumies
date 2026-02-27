@@ -13,7 +13,7 @@ export default function SettingsSidePanel({ onSelect }) {
   return (
     <div className="settings-panel">
       <h2 className="settings-title">
-        <span>Settings</span>
+        <span>Manage</span>
       </h2>
 
       {/* Referral Code Button */}

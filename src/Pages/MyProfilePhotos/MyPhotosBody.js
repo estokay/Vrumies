@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import ViewPhotoOverlay from "../../Components/ViewPhotoOverlay";
+import ViewPhotoOverlay from "../../Components/Overlays/ViewPhotoOverlay";
 import "./PhotosBody.css";
 import { auth } from "../../Components/firebase";
-import UploadPhotoOverlay from "../../Components/UploadPhotoOverlay";
-import useGetPhotos from "../../Components/Hooks/useGetPhotos";
-import useDeletePhoto from "../../Components/Hooks/useDeletePhoto";
+import UploadPhotoOverlay from "../../Components/Overlays/UploadPhotoOverlay";
+import useGetPhotos from "../../Hooks/useGetPhotos";
+import useDeletePhoto from "../../Hooks/useDeletePhoto";
+import { FaTrash } from "react-icons/fa";
 
 export default function MyPhotosBody() {
   const user = auth.currentUser;
@@ -65,7 +66,7 @@ export default function MyPhotosBody() {
                   onClick={() => handleDelete(photo.id)}
                   disabled={deleting}
                 >
-                  ✕
+                  <FaTrash size={16} />
                 </button>
               </div>
             ))}

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import { db } from "../../Components/firebase"; // adjust path
+import { db } from "../firebase"; // adjust path
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import useGetUsername from "../Hooks/useGetUsername";
+import useGetUsername from "../../Hooks/useGetUsername";
 
 function SendNotificationReview({ sellerId, fromId, stars, reviewComment }) {
   const reviewerName = useGetUsername(fromId);

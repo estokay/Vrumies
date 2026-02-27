@@ -68,55 +68,6 @@
   border-radius: 12px;
 }
 
-/* Status Section from EventVariant */
-.od-timeline-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.od-timeline-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.od-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid gray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: gray;
-}
-
-.od-circle.active {
-  background: white;
-  color: green;
-  border-color: green;
-}
-
-.od-timeline-label {
-  font-size: 12px;
-  text-align: center;
-  margin-top: 5px;
-  color: gray;
-}
-
-.od-timeline-label.active-label {
-  color: green;
-  font-weight: bold;
-}
-
-.od-arrow {
-  font-size: 20px;
-  color: black;
-}
-
 .od-status-buttons {
   margin-top: 15px;
   display: flex;
@@ -137,4 +88,22 @@
   border: none;
   padding: 6px 12px;
   border-radius: 8px;
+}
+
+.od-btn-completed {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.od-btn-disputed {
+  background: #b71c1c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
 }

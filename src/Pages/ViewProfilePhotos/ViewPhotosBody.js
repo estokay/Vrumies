@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import ViewPhotoOverlay from "../../Components/ViewPhotoOverlay";
+import ViewPhotoOverlay from "../../Components/Overlays/ViewPhotoOverlay";
 import "./PhotosBody.css";
-import useGetPhotos from "../../Components/Hooks/useGetPhotos";
+import useGetPhotos from "../../Hooks/useGetPhotos";
 import { useParams } from "react-router-dom";
 
 export default function ViewPhotosBody() {

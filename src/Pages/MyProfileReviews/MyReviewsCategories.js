@@ -3,7 +3,7 @@ import "./ReviewsCategories.css";
 import { auth } from "../../Components/firebase";
 import useUserAverageRating from "../../Components/Reviews/useUserAverageRating";
 import useUserTotalRatings from "../../Components/Reviews/useUserTotalRatings";
-import useGetUserDisputes from "../../Components/Hooks/useGetUserDisputes";
+import useGetUserDisputes from "../../Hooks/useGetUserDisputes";
 
 export default function MyReviewsCategories() {
   const user = auth.currentUser;

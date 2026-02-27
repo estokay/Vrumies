@@ -26,7 +26,7 @@ import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/DeletePostOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 
 function PostSection({ postId: propPostId }) {
   const { id } = useParams(); // fallback for route param

@@ -11,7 +11,7 @@ const TestPage = () => {
     <TestPageHeader />
     <DummyOrderSeeder />
     <PaymentMethodsPanel />
-    <ExampleDeletePost/>
+    <ExampleDeletePost />
     </div>
   );
 };
