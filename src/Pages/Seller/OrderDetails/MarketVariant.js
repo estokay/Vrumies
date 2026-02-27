@@ -4,7 +4,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../Components/firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 import "./MarketVariant.css";
-import checkPrice from "../../../Components/Functions/checkPrice";
+import checkPrice from "../../../Functions/checkPrice";
 import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
 import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 

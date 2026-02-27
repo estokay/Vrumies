@@ -4,7 +4,7 @@ import { db } from "../../../Components/firebase";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import "./DirectoryVariant.css";
 import { useNavigate } from "react-router-dom";
-import checkPrice from "../../../Components/Functions/checkPrice";
+import checkPrice from "../../../Functions/checkPrice";
 import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
 import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 

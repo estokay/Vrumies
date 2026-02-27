@@ -3,7 +3,7 @@ import "./DirectoryVariant.css";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { db } from "../../../Components/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import checkPrice from "../../../Components/Functions/checkPrice";
+import checkPrice from "../../../Functions/checkPrice";
 import useSetOrderStatus from "../../../CloudFunctions/useSetOrderStatus";
 import OrderStatusTimeline from "../../../Components/Orders/OrderStatusTimeline";
 
