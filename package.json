@@ -28,7 +28,7 @@
     "firebase": "^12.0.0",
     "flatpickr": "^4.6.13",
     "lightgallery": "^2.9.0",
-    "lucide-react": "^0.534.0",
+    "lucide-react": "^0.562.0",
     "luxon": "^3.7.2",
     "moment-timezone": "^0.6.0",
     "react": "^19.1.0",
