@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HomeHeader.css";
 import { FaSearch, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
 const HomeHeader = () => {
-  return (
-    <div className="hh-home-header">
+  const [loaded, setLoaded] = useState(false);
 
+  return (
+    <div 
+      className="hh-home-header"
+      style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL}/HeaderImages/HomeBackground.jpg)`
+        }}
+    >
       <video
-        className="hh-header-video"
+        className={`hh-header-video ${loaded ? "loaded" : ""}`}
         autoPlay
         muted
         loop
         playsInline
+        onLoadedData={() => setLoaded(true)}
       >
         <source src="https://res.cloudinary.com/dmjvngk3o/video/upload/v1773078049/automotive-bg_hbuofy.mp4" type="video/mp4" />
       </video>

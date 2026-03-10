@@ -17,7 +17,7 @@ const SignIn = () => {
     try {
       // 1️⃣ Just sign in with Google (old working code)
       user = await signInWithGoogle();
-      navigate('/videos'); // redirect immediately after login
+      navigate('/home'); // redirect immediately after login
     } catch (error) {
       console.error('Google sign-in failed:', error);
       alert('Google sign-in failed. Please try again.');

@@ -5,6 +5,10 @@
   overflow: visible;
   display: flex;
   align-items: center;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hh-header-video {
@@ -15,6 +19,13 @@
   top: 0;
   left: 0;
   z-index: 1;
+
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.hh-header-video.loaded {
+  opacity: 1;
 }
 
 .hh-header-overlay {
