@@ -105,131 +105,6 @@ function CheckoutFormInner() {
       return;
     }
 
-    // ✅ HANDLE FREE ORDERS (total = $0)
-    if (total <= 0) {
-      try {
-        setMessage("Processing free order...");
-
-        // Create Orders in Firestore
-        for (let item of cartItems) {
-          if (!item.postId) continue;
-
-          const postRef = doc(db, "Posts", item.postId);
-          const postSnap = await getDoc(postRef);
-
-          if (!postSnap.exists()) continue;
-
-          const postData = postSnap.data();
-
-          const orderRef = doc(collection(db, "Orders"));
-
-          let orderData = {
-            type: item.type || "",
-            deliveryInfo: {
-              fullName: formData.fullName || "",
-              email: formData.email || "",
-              address: formData.address || "",
-              city: formData.city || "",
-              state: formData.state || "",
-              zip: formData.zip || "",
-            },
-            sellerInfo: {
-              sellerId: postData.userId || "",
-              sellerMarkedCompleted: false,
-              sellerDispute: false,
-            },
-            buyerInfo: {
-              buyerId: currentUser.uid,
-              buyerMarkedCompleted: false,
-              buyerDispute: false,
-            },
-            postData: {
-              postId: item.postId,
-              title: postData.title || "Untitled",
-              description: postData.description || "",
-              images: postData.images || [],
-            },
-
-            // 👇 FREE ORDER PAYMENT INFO
-            paymentInfo: {
-              paymentSuccessful: true,
-              stripePaymentIntentId: null,
-              paymentMethod: "Free",
-              lastFour: null,
-              payoutTransfer: false,
-            },
-
-            price: item.type === "trucks" ? item.price : parsePrice(postData.price),
-            affiliateLinkId: item.affiliateLinkId || null,
-            affiliatePayoutTransfer: false,
-            orderCreated: serverTimestamp(),
-            orderStatus: "pending",
-          };
-
-          if (item.type === "market") {
-            orderData.marketSpecific = {
-              condition: postData.condition || "",
-              shippingTime: postData.shippingTime || "",
-              carrier: "",
-              trackingNumber: "",
-            };
-          }
-
-          if (item.type === "directory") {
-            orderData.directorySpecific = {
-              serviceLocation: postData.serviceLocation || "",
-              businessAddress: postData.businessAddress || "",
-            };
-          }
-
-          if (item.type === "trucks") {
-            orderData.trucksSpecific = {
-              pickupAddress: item.freightBookingInfo?.pickupAddress || "",
-              dropoffAddress: item.freightBookingInfo?.dropoffAddress || "",
-              loadWeight: item.freightBookingInfo?.loadWeight || 0,
-              loadLength: item.freightBookingInfo?.loadLength || 0,
-              additionalInfo: item.freightBookingInfo?.additionalInfo || "",
-              rpm: item.freightBookingInfo?.rpm || 0,
-              distance: item.freightBookingInfo?.distance || 0,
-              images: item.freightBookingInfo?.images || [],
-            };
-          }
-
-          if (item.type === "offer") {
-            const originalPostRef = doc(db, "Posts", postData.originalPost);
-            const originalPostSnap = await getDoc(originalPostRef);
-
-            orderData.offerSpecific = {
-              originalPostId: postData.originalPost || "",
-              originalPostObject: originalPostSnap.exists()
-                ? { id: originalPostSnap.id, ...originalPostSnap.data() }
-                : null,
-            };
-          }
-
-          await setDoc(orderRef, orderData);
-
-          await sendNotificationOrder({
-            sellerId: postData.userId,
-            fromId: currentUser.uid,
-            postId: item.postId,
-          });
-
-          await deleteDoc(doc(db, "Users", currentUser.uid, "cart", item.id));
-        }
-
-        setMessage("");
-        setPaymentComplete(true);
-        setShowOverlay(true);
-        return;
-
-      } catch (err) {
-        console.error("Free order error:", err);
-        setMessage("Failed to process free order.");
-        return;
-      }
-    }
-
     try {
       setMessage("Processing payment...");
 
@@ -461,11 +336,9 @@ function CheckoutFormInner() {
       {/* Payment Info */}
       <div className="cb-section">
         <h4 className="cb-section-title">Payment Information</h4>
-        {total > 0 && (
-          <div className="cb-card-light">
-            <CardElement options={{ style: cardStyleLight }} />
-          </div>
-        )}
+        <div className="cb-card-light">
+          <CardElement options={{ style: cardStyleLight }} />
+        </div>
       </div>
 
       {/* Order Summary */}
