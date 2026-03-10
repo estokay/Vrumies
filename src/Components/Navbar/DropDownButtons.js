@@ -3,6 +3,7 @@ import "./DropDownButtons.css";
 import { FaUserTie, FaBookmark, FaStore, FaCog, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from "firebase/auth";
 
 const DropDownButtons = () => {
     const navigate = useNavigate();
