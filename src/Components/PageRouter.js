@@ -51,47 +51,48 @@ const PageWithNavbar = ({ children }) => (
 
 const PageRouter = () => (
   <Routes>
-    <Route path="/" element={<Navigate to="/signin" replace />} />
+    <Route path="/" element={<Navigate to="/home" replace />} />
 
     {/* Pages without Navbar */}
     <Route path="/signin" element={<SignIn />} />
 
     {/* Pages with Navbar */}
     <Route path="/home" element={<PageWithNavbar><HomePage /></PageWithNavbar>} />
-    <Route path="/videos" element={<PageWithNavbar><VideosPage /></PageWithNavbar>} />
-    <Route path="/blogs" element={<PageWithNavbar><BlogPage /></PageWithNavbar>} />
-    <Route path="/vehicles" element={<PageWithNavbar><VehiclePage /></PageWithNavbar>} />
-    <Route path="/request" element={<PageWithNavbar><RequestPage /></PageWithNavbar>} />
-    <Route path="/market" element={<PageWithNavbar><MarketPage /></PageWithNavbar>} />
-    <Route path="/marketpost/:id" element={<PageWithNavbar><MarketPost /></PageWithNavbar>} />
-    <Route path="/events" element={<PageWithNavbar><EventsPage /></PageWithNavbar>} />
-    <Route path="/eventpost/:id" element={<PageWithNavbar><EventPost /></PageWithNavbar>} />
-    <Route path="/directorypost/:id" element={<PageWithNavbar><DirectoryPost /></PageWithNavbar>} />
-    <Route path="/offerpost/:id" element={<PageWithNavbar><OfferPost /></PageWithNavbar>} />
-    <Route path="/trucks" element={<PageWithNavbar><TruckPage /></PageWithNavbar>} />
-    <Route path="/truckpost/:id" element={<PageWithNavbar><TruckPost /></PageWithNavbar>} />
-    <Route path="/loads" element={<PageWithNavbar><LoadPage /></PageWithNavbar>} />
-    <Route path="/loadpost/:id" element={<PageWithNavbar><LoadPost /></PageWithNavbar>} />
-    <Route path="/blogpost/:id" element={<PageWithNavbar><BlogPost /></PageWithNavbar>} />
-    <Route path="/requestpost/:id" element={<PageWithNavbar><RequestPost /></PageWithNavbar>} />
-    <Route path="/vehiclepost/:id" element={<PageWithNavbar><VehiclePost /></PageWithNavbar>} />
-    <Route path="/directory" element={<PageWithNavbar><DirectoryPage /></PageWithNavbar>} />
-    <Route path="/videopost/:id" element={<PageWithNavbar><VideoPost /></PageWithNavbar>} />
+    <Route path="/videos" element={<ProtectedRoute><PageWithNavbar><VideosPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/blogs" element={<ProtectedRoute><PageWithNavbar><BlogPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/vehicles" element={<ProtectedRoute><PageWithNavbar><VehiclePage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/request" element={<ProtectedRoute><PageWithNavbar><RequestPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/market" element={<ProtectedRoute><PageWithNavbar><MarketPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/marketpost/:id" element={<ProtectedRoute><PageWithNavbar><MarketPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/events" element={<ProtectedRoute><PageWithNavbar><EventsPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/eventpost/:id" element={<ProtectedRoute><PageWithNavbar><EventPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/directorypost/:id" element={<ProtectedRoute><PageWithNavbar><DirectoryPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/offerpost/:id" element={<ProtectedRoute><PageWithNavbar><OfferPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/trucks" element={<ProtectedRoute><PageWithNavbar><TruckPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/truckpost/:id" element={<ProtectedRoute><PageWithNavbar><TruckPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/loads" element={<ProtectedRoute><PageWithNavbar><LoadPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/loadpost/:id" element={<ProtectedRoute><PageWithNavbar><LoadPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/blogpost/:id" element={<ProtectedRoute><PageWithNavbar><BlogPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/requestpost/:id" element={<ProtectedRoute><PageWithNavbar><RequestPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/vehiclepost/:id" element={<ProtectedRoute><PageWithNavbar><VehiclePost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/directory" element={<ProtectedRoute><PageWithNavbar><DirectoryPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/videopost/:id" element={<ProtectedRoute><PageWithNavbar><VideoPost /></PageWithNavbar></ProtectedRoute>} />
 
-    <Route path="/orders" element={<PageWithNavbar><OrdersPage /></PageWithNavbar>} />
-    <Route path="/inbox" element={<PageWithNavbar><InboxPage /></PageWithNavbar>} />
-    <Route path="/tokens" element={<PageWithNavbar><TokenPage /></PageWithNavbar>} />
-    <Route path="/cart" element={<PageWithNavbar><ShoppingCart /></PageWithNavbar>} />
-    <Route path="/settings" element={<PageWithNavbar><SettingsPage /></PageWithNavbar>} />
-    <Route path="/myprofile" element={<PageWithNavbar><MyProfile /></PageWithNavbar>} />
-    <Route path="/myphotos" element={<PageWithNavbar><MyPhotos /></PageWithNavbar>} />
-    <Route path="/myreviews" element={<PageWithNavbar><MyReviews /></PageWithNavbar>} />
-    <Route path="/viewprofile/:userId" element={<PageWithNavbar><ViewProfile /></PageWithNavbar>} />
-    <Route path="/viewphotos/:userId" element={<PageWithNavbar><ViewPhotos /></PageWithNavbar>} />
-    <Route path="/viewreviews/:userId" element={<PageWithNavbar><ViewReviews /></PageWithNavbar>} />
-    <Route path="/seller" element={<PageWithNavbar><SellerPage /></PageWithNavbar>} />
-    <Route path="/bookmarks" element={<PageWithNavbar><BookmarksPage /></PageWithNavbar>} />
-    <Route path="/testpage" element={<PageWithNavbar><TestPage /></PageWithNavbar>} />
+    <Route path="/orders" element={<ProtectedRoute><PageWithNavbar><OrdersPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/inbox" element={<ProtectedRoute><PageWithNavbar><InboxPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/tokens" element={<ProtectedRoute><PageWithNavbar><TokenPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/cart" element={<ProtectedRoute><PageWithNavbar><ShoppingCart /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/settings" element={<ProtectedRoute><PageWithNavbar><SettingsPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/myprofile" element={<ProtectedRoute><PageWithNavbar><MyProfile /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/myphotos" element={<ProtectedRoute><PageWithNavbar><MyPhotos /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/myreviews" element={<ProtectedRoute><PageWithNavbar><MyReviews /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/viewprofile/:userId" element={<ProtectedRoute><PageWithNavbar><ViewProfile /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/viewphotos/:userId" element={<ProtectedRoute><PageWithNavbar><ViewPhotos /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/viewreviews/:userId" element={<ProtectedRoute><PageWithNavbar><ViewReviews /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/seller" element={<ProtectedRoute><PageWithNavbar><SellerPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/bookmarks" element={<ProtectedRoute><PageWithNavbar><BookmarksPage /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/testpage" element={<ProtectedRoute><PageWithNavbar><TestPage /></PageWithNavbar></ProtectedRoute>} />
+
     <Route path="/adminpanel" element={<ProtectedRoute allowedEmail="mitchellalvizures@gmail.com"><PageWithNavbar><AdminPanel /></PageWithNavbar></ProtectedRoute>} />
   </Routes>
 );
