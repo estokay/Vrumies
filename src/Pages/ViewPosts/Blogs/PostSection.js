@@ -30,9 +30,10 @@ import SellerRating from "../../../Components/Reviews/SellerRating";
 import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
-import { useBlockUser } from "../../../Hooks/useBlockUser";
+
 import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import { Link } from "react-router-dom";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -49,9 +50,9 @@ function PostSection({ postId }) {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
-  const [showPostDropMenu, setShowDropMenu] = useState(false);
-  const { blockUser, loading: blocking, error: blockError } = useBlockUser();
-  const [showBlockOverlay, setShowBlockOverlay] = useState(false);
+
+  const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
+  const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
 
   // Fetch post and seller info
   useEffect(() => {
@@ -164,7 +165,13 @@ function PostSection({ postId }) {
   };
 
   const handleBlockUser = () => {
-    setShowBlockOverlay(true);
+    console.log("TODO: Block this user");
+    setShowBlockUserOverlay(true);
+  };
+
+  const handleDeletePost = () => {
+    console.log("TODO: Delete Post");
+    setShowDeletePostOverlay(true);
   };
 
   const handleAddToCart = async () => {
@@ -289,14 +296,23 @@ function PostSection({ postId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / BLOGS</div>
             <div className="date">DATE POSTED: {postDate}</div>
-            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
+            <PostDropMenu 
+              canDelete={isSeller} 
+              onDelete={handleDeletePost} 
+              canBlock={canBlock} 
+              onBlock={handleBlockUser} 
+            />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
-            <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            <Link to={`/viewprofile/${post.userId}`}>
+              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            </Link>
             <div>
-              <div className="seller-name">{sellerName}</div>
+              <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
+                {sellerName}
+              </Link>
               <SellerRating userId={post.userId} />
             </div>
 
@@ -433,20 +449,19 @@ function PostSection({ postId }) {
           }}
         />
       )}
-      {showPostDropMenu && (
-        <DeletePostOverlay
-          postId={postId}
-          isOpen={showPostDropMenu}
-          onClose={() => setShowDropMenu(false)}
-          onConfirm={() => console.log("TODO: delete from Firestore")}
-        />
-      )}
-      {showBlockOverlay && (
+      {showBlockUserOverlay && (
         <BlockUserOverlay
           userId={post.userId}
           from="post"
-          isOpen={showBlockOverlay}
-          onClose={() => setShowBlockOverlay(false)}
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={postId}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
         />
       )}
     </div>

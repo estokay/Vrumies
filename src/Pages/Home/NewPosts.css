@@ -1,0 +1,79 @@
+.newposts-panel {
+  width: 100%;
+  height: 450px;
+  background: #050505;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* HEADER */
+.newposts-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.newposts-header h3 {
+  color: #00ff88; /* Blue accent for new posts */
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.newposts-subtitle {
+  font-size: 0.8rem;
+  color: #6f8aab;
+  margin-top: 2px;
+}
+
+/* SCROLL AREA */
+.newposts-scroll {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 28px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 36px 5px 10px 5px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.newposts-scroll > *:first-child {
+  margin-left: 8px;
+}
+
+/* POST WRAPPER */
+.newposts-post-wrapper {
+  width: 270px;
+  height: 270px;
+  flex-shrink: 0;
+}
+
+/* SCROLLBAR */
+.newposts-scroll {
+  scrollbar-width: thin;          /* Firefox */
+  scrollbar-color: #00ff66 transparent;  /* Firefox */
+}
+
+.newposts-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.newposts-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.newposts-scroll::-webkit-scrollbar-thumb {
+  background: #00ff66;
+  border-radius: 3px;
+}
+
+/* LOADING */
+.newposts-loading,
+.newposts-empty {
+  color: #8aa8bb;
+  font-size: 0.9rem;
+}

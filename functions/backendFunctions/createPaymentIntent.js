@@ -1,5 +1,4 @@
 import * as functions from "firebase-functions/v2/https";
-import { defineSecret } from "firebase-functions/params";
 import { initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import cors from "cors";
@@ -8,10 +7,9 @@ import Stripe from "stripe";
 initializeApp();
 
 const corsHandler = cors({ origin: true });
-const STRIPE_SECRET_KEY = defineSecret("STRIPE_SECRET_KEY");
 
 export const createPaymentIntent = functions.onRequest(
-  { secrets: [STRIPE_SECRET_KEY] },
+  { secrets: [] },
   async (req, res) => {
     // Handle CORS preflight
     if (req.method === "OPTIONS") {
@@ -47,7 +45,7 @@ export const createPaymentIntent = functions.onRequest(
         // Add uid to metadata for verification later
         const stripeMetadata = { ...metadata, uid };
 
-        const stripe = new Stripe(await STRIPE_SECRET_KEY.value(), {
+        const stripe = new Stripe(await getStripeSecretKey(), {
           apiVersion: "2023-10-16",
         });
 

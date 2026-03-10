@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './CreateSellerPostOverlay.css';
 
 import MarketPostForm from './MarketPostForm/MarketPostForm';
-
+import TruckPostForm from './TruckPostForm/TruckPostForm';
 import DirectoryPostForm from './DirectoryPostForm/DirectoryPostForm';
 
 const POST_TYPES = {
   Market: MarketPostForm,
   Directory: DirectoryPostForm,
+  Truck: TruckPostForm,
 };
 
 function CreateSellerPostOverlay({ isOpen, onClose }) {

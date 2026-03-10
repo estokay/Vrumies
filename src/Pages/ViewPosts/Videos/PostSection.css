@@ -89,6 +89,17 @@
   animation: fadeInOut 2s forwards;
 }
 
+.video-duration {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px 16px;
+  font-size: 25px;
+  border-radius: 4px;
+}
+
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
   10% { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -110,4 +121,14 @@
 
 .action-btn.report.active .action-icon {
   color: #ff4f4f;
+}
+
+.seller-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.seller-link:hover {
+  text-decoration: underline;
 }

@@ -1,0 +1,202 @@
+.truck-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Inputs */
+.truck-post-form input,
+.truck-post-form textarea,
+.truck-post-form select {
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.truck-post-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+/* Labels */
+.form-label {
+  font-weight: bold;
+  color: #f72b07;
+}
+
+/* Submit button */
+.truck-submit-btn {
+  background-color: #f72b07;
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.truck-submit-btn:hover {
+  background-color: #f8150d;
+}
+
+/* Toggle icon buttons */
+.truck-toggle-buttons-row {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.truck-toggle-buttons-row img {
+  width: 48px;
+  height: 48px;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.truck-toggle-buttons-row img:hover {
+  background-color: #f72b07;
+  transform: scale(1.05);
+}
+
+.truck-toggle-buttons-row img.active {
+  background-color: #f72b07;
+  transform: scale(1.1);
+}
+
+/* Hidden fields */
+.truck-hidden-input {
+  display: none;
+}
+
+/* Upload container */
+.truck-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.truck-preview-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.truck-preview-media {
+  border: 2px solid #f72b07;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Uploading text */
+.truck-uploading-text {
+  color: #999;
+  font-style: italic;
+}
+
+/* Success message */
+.truck-post-success-message {
+  background-color: #0d0d0d;
+  color: #f72b07;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Autocomplete suggestions */
+.truck-autocomplete-suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.truck-autocomplete-suggestions li {
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #ffffff;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.truck-autocomplete-suggestions li:hover {
+  background-color: #f72b07;
+  color: #000;
+}
+
+/* Load Details section */
+.truck-load-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Price input styling with $ sign */
+.truck-price-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.truck-price-wrapper input {
+  width: 100%;
+  background-color: #0d0d0d;
+  border: 1px solid #f72b07;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Routes section */
+.truck-routes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Chips for routes */
+.truck-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.truck-chip {
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  color: #f72b07;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+
+.truck-chip-close {
+  margin-left: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}

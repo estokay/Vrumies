@@ -5,6 +5,7 @@ import "./CartBody.css";
 import { db } from "../../Components/firebase";
 import { collection, onSnapshot, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../AuthContext";
+import SellerRating from "../../Components/Reviews/SellerRating";
 
 export default function CartBody() {
   const { currentUser } = useAuth();
@@ -57,6 +58,7 @@ export default function CartBody() {
       items.push({
         id: d.id,
         postType,
+        sellerId,
         sellerName,
         sellerAvatar,
         ...data,
@@ -134,14 +136,7 @@ const getPostLink = (type, postId) => {
                 <div className="seller-info">
                   <span className="seller-name">{item.sellerName || "Unknown Seller"}</span>
                   <span className="seller-market">{getSellerLabel(item.postType)}</span>
-                  <div className="stars">
-                    {Array(5)
-                      .fill(0)
-                      .map((_, i) => (
-                        <FaStar key={i} color="#f6c61d" />
-                      ))}
-                    <span className="review-count">{item.reviews || 0} Reviews</span>
-                  </div>
+                  <SellerRating userId={item.sellerId} />
                 </div>
               </div>
 

@@ -1,0 +1,154 @@
+/* Backdrop overlay */
+.cal-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Main container */
+.cal-overlay-container {
+  background-color: #000; /* Dark theme */
+  color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 900px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Overlay title */
+.cal-overlay-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #00FF00;
+}
+
+/* Overlay description */
+.cal-overlay-description {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+/* Bottom Close button */
+.cal-generate-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #00FF00;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Bottom Close button */
+.cal-close-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #00FF00;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cal-close-button:hover {
+  background-color: #00cc00;
+}
+
+/* Affiliate link container */
+.cal-affiliate-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222; /* dark grey */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  word-break: break-all;
+}
+
+.cal-affiliate-link {
+  color: #00ff00;
+  font-size: 0.9rem;
+  flex: 1;
+  margin-right: 1rem;
+}
+
+/* Copy button */
+.cal-copy-button {
+  padding: 0.4rem 0.8rem;
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cal-copy-button:hover {
+  background-color: #00cc00;
+}
+
+.cal-regenerate-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: transparent;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cal-regenerate-button:hover {
+  background-color: #00ff00;
+  color: #000;
+}
+
+.cal-confirm-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #111;
+  border: 1px solid #00ff00;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.cal-confirm-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cal-cancel-button {
+  padding: 0.5rem 1rem;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cal-confirm-button {
+  padding: 0.5rem 1rem;
+  background-color: #00ff00;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

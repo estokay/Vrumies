@@ -1,0 +1,118 @@
+/* MAIN PANEL */
+
+.top-rated-sellers-panel {
+
+  width: 100%;
+  height: 450px;
+  /* background:
+  linear-gradient(180deg,#050505,#1d1d1d); */
+  background: #050505;
+
+  /*border: 1px solid #00ff66;*/
+
+  /*box-shadow:
+  0 0 15px rgba(0,255,100,0.25),
+  inset 0 0 20px rgba(0,255,100,0.08);*/
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+
+/* HEADER */
+
+.top-rated-header {
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 12px;
+}
+
+.top-rated-header h3 {
+
+  color: #00ff88;
+
+  font-size: 1.25rem;
+
+  margin: 0;
+}
+
+.top-rated-subtitle {
+
+  font-size: 0.8rem;
+
+  color: #6f8a73;
+
+  margin-top: 2px;
+}
+
+
+/* SCROLL AREA */
+
+.top-rated-sellers-scroll {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: flex-start;
+
+  gap: 28px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+  
+  
+  padding: 36px 5px 10px 5px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.top-rated-sellers-scroll > *:first-child {
+  margin-left: 8px; /* or same as gap / padding */
+}
+
+/* SCROLLBAR */
+
+.top-rated-sellers-scroll::-webkit-scrollbar {
+
+  height: 6px;
+}
+
+.top-rated-sellers-scroll::-webkit-scrollbar-track {
+
+  background: transparent;
+}
+
+.top-rated-sellers-scroll::-webkit-scrollbar-thumb {
+
+  background: #00ff66;
+
+  border-radius: 3px;
+}
+
+
+/* LOADING / EMPTY */
+
+.top-rated-loading,
+.top-rated-empty {
+
+  color: #8aa38f;
+
+  font-size: 0.9rem;
+}
+
+
+/* CARD CONTAINER */
+
+.top-rated-sellers-scroll > * {
+
+  flex-shrink: 0;
+}

@@ -145,3 +145,23 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.post-type-label {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: rgba(0,0,0,0.85);
+  color: #00ff00;
+
+  padding: 4px 12px;
+  border-radius: 6px;
+
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+
+  text-transform: uppercase;
+  pointer-events: none;
+}

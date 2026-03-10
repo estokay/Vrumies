@@ -32,7 +32,11 @@ import useERPMwithTolls from "../../../CloudFunctions/useERPMwithTolls";
 import useERPMwithoutTolls from "../../../CloudFunctions/useERPMwithoutTolls";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
+import useTimestampObjectToDate from "../../../Hooks/useTimestampObjectToDate";
+
+import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import { Link } from "react-router-dom";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -49,7 +53,9 @@ function PostSection({ postId }) {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
-  const [showPostDropMenu, setShowDropMenu] = useState(false);
+
+  const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
+  const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
 
   // Fetch post and seller info
   useEffect(() => {
@@ -163,8 +169,13 @@ function PostSection({ postId }) {
 
   const handleBlockUser = () => {
     console.log("TODO: Block this user");
+    setShowBlockUserOverlay(true);
   };
 
+  const handleDeletePost = () => {
+    console.log("TODO: Delete Post");
+    setShowDeletePostOverlay(true);
+  };
 
   const handleAddToCart = async () => {
     if (!currentUser) {
@@ -264,7 +275,7 @@ function PostSection({ postId }) {
     post?.dropoffAddress || "",
     post?.payout || 0
   );
-
+  const formattedAvailableDate = useTimestampObjectToDate(post?.availableDate);
   if (loading) return <p style={{ color: "white", textAlign: "center" }}>Loading post...</p>;
   if (!post) return <p style={{ color: "white", textAlign: "center" }}>Post not found.</p>;
 
@@ -299,14 +310,23 @@ function PostSection({ postId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / LOADS</div>
             <div className="date">DATE POSTED: {postDate}</div>
-            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
+            <PostDropMenu 
+              canDelete={isSeller} 
+              onDelete={handleDeletePost} 
+              canBlock={canBlock} 
+              onBlock={handleBlockUser} 
+            />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
-            <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            <Link to={`/viewprofile/${post.userId}`}>
+              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            </Link>
             <div>
-              <div className="seller-name">{sellerName}</div>
+              <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
+                {sellerName}
+              </Link>
               <SellerRating userId={post.userId} />
             </div>
 
@@ -360,7 +380,10 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
-              <p><strong>Available Date:</strong> {post.availableDate ?? "N/A"}</p>
+              <p>
+                <strong>Available Date:</strong>{" "}
+                {formattedAvailableDate || "N/A"}
+              </p>
               <p><strong>Truck Type:</strong> {post.truckType ?? "N/A"}</p>
               <p><strong>Pickup Address:</strong> {post.pickupAddress ?? "N/A"}</p>
               <p><strong>Drop-Off Address:</strong> {post.dropoffAddress ?? "N/A"}</p>
@@ -452,12 +475,19 @@ function PostSection({ postId }) {
           }}
         />
       )}
-      {showPostDropMenu && (
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
         <DeletePostOverlay
           postId={postId}
-          isOpen={showPostDropMenu}
-          onClose={() => setShowDropMenu(false)}
-          onConfirm={() => console.log("TODO: delete from Firestore")}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
         />
       )}
     </div>

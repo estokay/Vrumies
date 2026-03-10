@@ -4,6 +4,7 @@ import NavbarWithPost from './Navbar/NavbarWithPost';
 import ProtectedRoute from "./ProtectedRoute";
 
 // import your pages
+import HomePage from '../Pages/Home/HomePage';
 import VideosPage from '../Pages/MainCategories/Videos/VideosPage';
 import RequestPage from '../Pages/MainCategories/Requests/RequestPage';
 import MarketPage from '../Pages/MainCategories/Market/MarketPage';
@@ -56,6 +57,7 @@ const PageRouter = () => (
     <Route path="/signin" element={<SignIn />} />
 
     {/* Pages with Navbar */}
+    <Route path="/home" element={<PageWithNavbar><HomePage /></PageWithNavbar>} />
     <Route path="/videos" element={<PageWithNavbar><VideosPage /></PageWithNavbar>} />
     <Route path="/blogs" element={<PageWithNavbar><BlogPage /></PageWithNavbar>} />
     <Route path="/vehicles" element={<PageWithNavbar><VehiclePage /></PageWithNavbar>} />

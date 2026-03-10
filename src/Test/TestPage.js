@@ -4,6 +4,7 @@ import TestPageHeader from "./TestPageHeader";
 import DummyOrderSeeder from "./DummyOrderSeeder";
 import PaymentMethodsPanel from "../Pages/Seller/PaymentMethodsPanel";
 import ExampleDeletePost from "./ExampleDeletePost";
+import ProfileCardLayout from "../Components/Profile/ProfileCardLayout";
 
 const TestPage = () => {
   return (
@@ -12,6 +13,7 @@ const TestPage = () => {
     <DummyOrderSeeder />
     <PaymentMethodsPanel />
     <ExampleDeletePost />
+    <ProfileCardLayout />
     </div>
   );
 };

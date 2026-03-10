@@ -14,10 +14,20 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
   const [commentsCount, setCommentsCount] = useState(0);
   const [tokens, setTokens] = useState(0);
   const averageRating = useUserAverageRating(userId);
+  const [videoDuration, setVideoDuration] = useState(null);
 
   const formattedDate = createdAt
     ? new Date(createdAt.seconds * 1000).toLocaleDateString()
     : 'Date not available';
+
+  const formatDuration = (seconds) => {
+    if (!seconds) return "";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -47,6 +57,16 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
           setLikes(data.likesCounter || 0);
           setDislikes(data.dislikesCounter || 0);
           setTokens(data.tokens || 0);
+
+          if (data.video) {
+            const video = document.createElement("video");
+            video.src = data.video;
+            video.preload = "metadata";
+
+            video.onloadedmetadata = () => {
+              setVideoDuration(video.duration);
+            };
+          }
         }
         const commentsSnap = await getDocs(collection(db, "Posts", id, "comments"));
         setCommentsCount(commentsSnap.size);
@@ -78,6 +98,11 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
       </div>
 
       <div className="thumbnail-container">
+        {videoDuration && (
+          <div className="video-thumbnail-duration">
+            {formatDuration(videoDuration)}
+          </div>
+        )}
         <img
           src={image ? image : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Event Thumbnail'}
@@ -121,6 +146,9 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"VIDEO"}
+      </span>
     </Link>
   );
 }

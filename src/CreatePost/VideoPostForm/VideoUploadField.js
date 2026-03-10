@@ -15,7 +15,7 @@ const VideoUploadField = ({ formData, setFormData }) => {
       data
     );
 
-    setFormData((prev) => ({ ...prev, video: res.data.secure_url }));
+    setFormData((prev) => ({ ...prev, video: res.data.secure_url, videoDuration: Math.round(res.data.duration) }));
   };
 
   return (

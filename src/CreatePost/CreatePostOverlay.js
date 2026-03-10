@@ -7,7 +7,6 @@ import RequestPostForm from './RequestPostForm/RequestPostForm';
 import VehiclePostForm from './VehiclePostForm/VehiclePostForm';
 import EventPostForm from './EventPostForm/EventPostForm';
 import LoadPostForm from './LoadPostForm/LoadPostForm';
-import TruckPostForm from './TruckPostForm/TruckPostForm';
 
 const POST_TYPES = {
   Video: VideoPostForm,
@@ -16,7 +15,6 @@ const POST_TYPES = {
   Vehicle: VehiclePostForm,
   Event: EventPostForm,
   Load: LoadPostForm,
-  Truck: TruckPostForm,
 };
 
 export default function CreatePostOverlay({ isOpen, onClose }) {

@@ -126,7 +126,13 @@ function NavbarWithPost() {
     <>
       <nav className="navbar" style={{ position: 'relative', zIndex: 10 }}>
         <div className="navbar-left">
-          <img src={`${process.env.PUBLIC_URL}/logo-black.png`} alt="Logo" className="logo" />
+          <Link to="/home">
+            <img
+              src={`${process.env.PUBLIC_URL}/logo-black.png`}
+              alt="Vrumies Logo"
+              className="logo"
+            />
+          </Link>
           <ul className="nav-links">
             <li
               className="nav-social-link"

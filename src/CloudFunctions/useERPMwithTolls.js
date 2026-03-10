@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const CLOUD_FUNCTION_URL =
-  "https://us-central1-vrumies-github.cloudfunctions.net/getDistance";
+  "https://getdistance-k3qu3645ya-uc.a.run.app";
 
 export default function useERPMwithTolls(
   pickupAddress,

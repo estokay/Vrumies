@@ -1,0 +1,115 @@
+.promoted-panel {
+
+  width: 100%;
+  height: 450px;
+
+  background: #050505;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+
+/* HEADER */
+
+.promoted-header {
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 12px;
+}
+
+.promoted-header h3 {
+
+  color: #00ff88;
+
+  font-size: 1.25rem;
+
+  margin: 0;
+}
+
+.promoted-subtitle {
+
+  font-size: 0.8rem;
+
+  color: #8a7a5c;
+
+  margin-top: 2px;
+}
+
+
+/* SCROLL AREA */
+
+.promoted-scroll {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: flex-start;
+
+  gap: 28px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  padding: 36px 5px 10px 5px;
+
+  flex: 1;
+
+  box-sizing: border-box;
+}
+
+.promoted-scroll > *:first-child {
+  margin-left: 8px;
+}
+
+
+/* POST WRAPPER */
+
+.promoted-post-wrapper {
+
+  width: 270px;
+  height: 270px;
+
+  flex-shrink: 0;
+}
+
+
+/* SCROLLBAR */
+
+.promoted-scroll::-webkit-scrollbar {
+
+  height: 6px;
+}
+
+.promoted-scroll::-webkit-scrollbar-track {
+
+  background: transparent;
+}
+
+.promoted-scroll::-webkit-scrollbar-thumb {
+
+  background: #00ff66;
+
+  border-radius: 3px;
+}
+
+
+/* LOADING */
+
+.promoted-loading,
+.promoted-empty {
+
+  color: #b59a65;
+
+  font-size: 0.9rem;
+}

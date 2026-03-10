@@ -14,6 +14,7 @@ import Orders from "./Collections/Orders";
 import Payouts from "./Collections/Payouts";
 import Offers from "./Collections/Offers";
 import Notifications from "./Collections/Notifications";
+import AffiliateLinks from "./Collections/AffiliateLinks";
 
 function ViewFirestoreData() {
   const tabs = [
@@ -30,6 +31,7 @@ function ViewFirestoreData() {
     "Reports",
     "Offers",
     "Notifications",
+    "AffiliateLinks",
     "Orders",
     "Payouts",
   ];
@@ -60,6 +62,8 @@ function ViewFirestoreData() {
         return <Trucks />;
       case "Reports":
         return <Reports />;
+      case "AffiliateLinks":
+        return <AffiliateLinks />;
       case "Orders":
         return <Orders />;
       case "Offers":

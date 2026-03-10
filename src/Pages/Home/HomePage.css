@@ -1,0 +1,19 @@
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #2f2f2f;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Section spacing */
+.home-page > * {
+  width: 100%;
+}
+
+/* Header spacing */
+.home-page > :first-child {
+  margin-bottom: 0px;
+}

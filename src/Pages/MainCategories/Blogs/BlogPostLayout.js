@@ -121,6 +121,9 @@ function BlogPostLayout({ id, images, title, createdAt, userId }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"BLOG"}
+      </span>
     </Link>
   );
 }

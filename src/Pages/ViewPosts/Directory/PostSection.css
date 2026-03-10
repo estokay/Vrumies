@@ -24,7 +24,6 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
-  opacity: 0.8;
 }
 
 .post-title {
@@ -340,4 +339,14 @@
 
 .action-btn.report.active .action-icon {
   color: #ff4f4f;
+}
+
+.seller-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.seller-link:hover {
+  text-decoration: underline;
 }

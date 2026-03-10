@@ -1,0 +1,41 @@
+.ap-navigation-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.ap-navigation-bar {
+  display: flex;
+  gap: 10px;
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.ap-navigation-bar button {
+  background: transparent;
+  color: white;
+  border: 1px solid #555;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ap-navigation-bar button:hover {
+  background-color: #333;
+  border-color: #888;
+}
+
+.ap-navigation-bar button.ap-active {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.ap-navigation-content {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #011f00;
+  border-radius: 8px;
+}

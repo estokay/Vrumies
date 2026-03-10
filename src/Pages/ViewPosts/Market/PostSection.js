@@ -30,8 +30,13 @@ import SellerRating from "../../../Components/Reviews/SellerRating";
 import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 import ItemInCartOverlay from "../../../Components/Overlays/ItemInCartOverlay";
+import { useCheckForAffiliateLink } from "../../../Hooks/useCheckForAffiliateLink";
+import CreateAffiliateLinkOverlay from "../../../Components/Overlays/CreateAffiliateLinkOverlay";
+import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import useIsItemInCart from "../../../Hooks/useIsItemInCart";
+import { Link } from "react-router-dom";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -48,16 +53,27 @@ function PostSection({ postId }) {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
-  const [showPostDropMenu, setShowDropMenu] = useState(false);
+
+  const { affiliateDocId: affiliateLinkId } = useCheckForAffiliateLink(post?.userId);
+  
   const [showCartOverlay, setShowCartOverlay] = useState(false);
-  const isAddToCartDisabled = !currentUser || !post || currentUser.uid === post.userId;
-    const disabledReason =
+
+  const [showAffiliateLinkOverlay, setShowAffiliateLinkOverlay] = useState(false);
+  const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
+  const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
+
+  const { isInCart, loading: isInCartLoading } = useIsItemInCart(postId);
+
+  const isAddToCartDisabled = !currentUser || !post || currentUser.uid === post.userId || isInCart;
+  const disabledReason =
     !currentUser
       ? "Login to add to cart"
       : !post
       ? ""
       : currentUser.uid === post.userId
       ? "You can’t buy your own post"
+      : isInCart
+      ? "Item already in cart"
       : "";
 
   // Fetch post and seller info
@@ -170,8 +186,19 @@ function PostSection({ postId }) {
     showNotification(followed ? "Unfollowed" : "Followed", 2000);
   };
 
+  const handleAffiliate = () => {
+    console.log("TODO: Create Affiliate");
+    setShowAffiliateLinkOverlay(true);
+  };
+
   const handleBlockUser = () => {
     console.log("TODO: Block this user");
+    setShowBlockUserOverlay(true);
+  };
+
+  const handleDeletePost = () => {
+    console.log("TODO: Delete Post");
+    setShowDeletePostOverlay(true);
   };
 
   const handleAddToCart = async () => {
@@ -199,6 +226,7 @@ function PostSection({ postId }) {
         sellerAvatar: seller?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`,
         image: post.images?.[0] || `${process.env.PUBLIC_URL}/default-thumbnail.png`,
         reviews: post.sellerReviews || 0,
+        affiliateLinkId: affiliateLinkId || null,
         addedAt: new Date(),
       });
 
@@ -288,6 +316,7 @@ function PostSection({ postId }) {
 
   const isSeller = currentUser?.uid === post.userId;
   const canBlock = currentUser?.uid !== post.userId;
+  const canAffiliate = currentUser?.uid !== post.userId;
 
   return (
     <div className="post-section">
@@ -296,16 +325,27 @@ function PostSection({ postId }) {
       <div className="post-left">
         <div className="post-content">
           <div className="post-header">
-            <div className="breadcrumbs">VRUMIES / EVENTS</div>
+            <div className="breadcrumbs">VRUMIES / MARKET</div>
             <div className="date">Date Posted: {postDate}</div>
-            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
+            <PostDropMenu 
+              canDelete={isSeller} 
+              onDelete={handleDeletePost} 
+              canBlock={canBlock} 
+              onBlock={handleBlockUser} 
+              canAffiliate={canAffiliate} 
+              onAffiliate={handleAffiliate} 
+            />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
-            <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            <Link to={`/viewprofile/${post.userId}`}>
+              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            </Link>
             <div>
-              <div className="seller-name">{sellerName}</div>
+              <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
+                {sellerName}
+              </Link>
               <SellerRating userId={post.userId} />
             </div>
 
@@ -399,10 +439,10 @@ function PostSection({ postId }) {
             <button
               className="addtoCart"
               onClick={handleAddToCart}
-              disabled={isAddToCartDisabled}
+              disabled={isAddToCartDisabled || loading}
               title={disabledReason}
             >
-              ADD TO CART
+              {isInCart ? "✓ In Cart" : "ADD TO CART"}
             </button>
           </div>
         </div>
@@ -454,18 +494,32 @@ function PostSection({ postId }) {
           }}
         />
       )}
-      {showPostDropMenu && (
-        <DeletePostOverlay
-          postId={postId}
-          isOpen={showPostDropMenu}
-          onClose={() => setShowDropMenu(false)}
-          onConfirm={() => console.log("TODO: delete from Firestore")}
-        />
-      )}
       {showCartOverlay && (
         <ItemInCartOverlay
           productName={post.title}
           onClose={() => setShowCartOverlay(false)}
+        />
+      )}
+      {showAffiliateLinkOverlay && (
+        <CreateAffiliateLinkOverlay
+          postId={postId}
+          isOpen={showAffiliateLinkOverlay}
+          onClose={() => setShowAffiliateLinkOverlay(false)}
+        />
+      )}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={postId}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
         />
       )}
     </div>

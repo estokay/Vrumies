@@ -5,8 +5,10 @@ import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { FaComment } from 'react-icons/fa';
 import './EventsPostLayout.css';
 import useUserAverageRating from "../../../Components/Reviews/useUserAverageRating";
+import useGetTimezoneDate from "../../../Hooks/useGetTimezoneDate";
+import useGetTimezoneTime from "../../../Hooks/useGetTimezoneTime";
 
-function EventsPostLayout({ id, images, title, createdAt, userId }) {
+function EventsPostLayout({ id, images, title, createdAt, userId, eventDateTime, timezone }) {
   const [profilePic, setProfilePic] = useState(`${process.env.PUBLIC_URL}/default-profile.png`);
   const [username, setUsername] = useState("Unknown");
   const [likes, setLikes] = useState(0);
@@ -14,6 +16,9 @@ function EventsPostLayout({ id, images, title, createdAt, userId }) {
   const [commentsCount, setCommentsCount] = useState(0);
   const [tokens, setTokens] = useState(0);
   const averageRating = useUserAverageRating(userId);
+
+  const eventDate = useGetTimezoneDate(eventDateTime, timezone);
+  const eventTime = useGetTimezoneTime(eventDateTime, timezone);
 
   const formattedDate = createdAt
     ? new Date(createdAt.seconds * 1000).toLocaleDateString()
@@ -78,6 +83,8 @@ function EventsPostLayout({ id, images, title, createdAt, userId }) {
       </div>
 
       <div className="thumbnail-container">
+        {eventDate && <span className="event-date-overlay">{eventDate}</span>}
+        {eventTime && <span className="event-time-overlay">{eventTime}</span>}
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Event Thumbnail'}
@@ -121,6 +128,9 @@ function EventsPostLayout({ id, images, title, createdAt, userId }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"EVENT"}
+      </span>
     </Link>
   );
 }

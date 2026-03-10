@@ -16,8 +16,9 @@ import "./CheckoutForm.css";
 import sendNotificationOrder from "../../Components/Notifications/sendNotificationOrder";
 import useCreatePaymentIntent from "../../CloudFunctions/useCreatePaymentIntent";
 import PurchaseCompleteOverlay from "../../Components/Overlays/PurchaseCompleteOverlay";
+import { STRIPE_API_KEY } from '../../Components/config';
 
-const stripePromise = loadStripe("pk_test_51JN8mDDR30hjV6c2f6WkKbqaLIJ91qsbyfK9Ho1Ge3hCwL2b3aZnWim7Ew9RhfprRoiInPWDRsXC8gqcdW6v4ST700vBUAakpE"); // Replace with your Stripe key
+const stripePromise = loadStripe(STRIPE_API_KEY); // Replace with your Stripe key
 
 function CheckoutFormInner() {
   const stripe = useStripe();
@@ -201,7 +202,9 @@ function CheckoutFormInner() {
             lastFour: lastFour,
             payoutTransfer: false,
           },
-          price: parsePrice(postData.price),
+          price: item.type === "trucks" ? item.price : parsePrice(postData.price),
+          affiliateLinkId: item.affiliateLinkId || null,
+          affiliatePayoutTransfer: false,
           orderCreated: serverTimestamp(),
           orderStatus: "pending",
         };
@@ -219,6 +222,19 @@ function CheckoutFormInner() {
           orderData.directorySpecific = {
             serviceLocation: postData.serviceLocation || "",
             businessAddress: postData.businessAddress || "",
+          };
+        }
+
+        if (item.type === "trucks") {
+          orderData.trucksSpecific = {
+            pickupAddress: item.freightBookingInfo?.pickupAddress || "",
+            dropoffAddress: item.freightBookingInfo?.dropoffAddress || "",
+            loadWeight: item.freightBookingInfo?.loadWeight || 0,
+            loadLength: item.freightBookingInfo?.loadLength || 0,
+            additionalInfo: item.freightBookingInfo?.additionalInfo || "",
+            rpm: item.freightBookingInfo?.rpm || 0,
+            distance: item.freightBookingInfo?.distance || 0,
+            images: item.freightBookingInfo?.images || [],
           };
         }
 

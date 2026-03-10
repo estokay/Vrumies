@@ -3,14 +3,22 @@ import "./ViewProfileSidePanel.css";
 import { FaStar, FaExpand } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { db } from "../../Components/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { addDoc, doc, getDoc, collection, query, where, getDocs, setDoc, serverTimestamp } from "firebase/firestore";
 import ProfileRating from "../../Components/Reviews/ProfileRating";
+import { useFollow } from "../../Hooks/useFollow";
+import { useNavigate } from "react-router-dom";
 
 const ViewProfileSidePanel = () => {
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const currentUserId = currentUser ? currentUser.uid : null;
   const { userId } = useParams(); // Grab the userId from the URL
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isFollowing, setIsFollowing] = useState(false);
+  const { isFollowing, toggleFollow, loading: followLoading } = useFollow(currentUserId, userId);
+  const self = currentUserId == userId;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -37,8 +45,6 @@ const ViewProfileSidePanel = () => {
     fetchUser();
   }, [userId]);
 
-  const toggleFollow = () => setIsFollowing(!isFollowing);
-
   if (loading)
     return (
       <div className="vpsp-profile-card">
@@ -52,6 +58,73 @@ const ViewProfileSidePanel = () => {
         <p style={{ color: "white", textAlign: "center" }}>User not found</p>
       </div>
     );
+
+  const handleMessageUser = async () => {
+    if (!currentUserId || !userId) return;
+
+    try {
+      const userRef = doc(db, "Users", userId);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        console.warn("User not found");
+        return;
+      }
+
+      const chatsRef = collection(db, "chats");
+
+      const q = query(
+        chatsRef,
+        where("participants", "array-contains", currentUserId)
+      );
+
+      const snapshot = await getDocs(q);
+
+      let chatId = null;
+
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+
+        if (data.participants.includes(userId)) {
+          chatId = docSnap.id;
+        }
+      });
+
+      if (!chatId) {
+        const newChatRef = await addDoc(chatsRef, {
+          userA: currentUserId,
+          userB: userId,
+          participants: [currentUserId, userId],
+          lastMessage: "",
+          lastTimestamp: serverTimestamp(),
+        });
+
+        chatId = newChatRef.id;
+
+        await addDoc(collection(db, "chats", chatId, "messages"), {
+          senderId: currentUserId,
+          text: "👋 Hello!",
+          timestamp: serverTimestamp(),
+          photos: [],
+          seenBy: [currentUserId],
+        });
+
+        await setDoc(
+          doc(db, "chats", chatId),
+          {
+            lastMessage: "👋 Hello!",
+            lastTimestamp: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      }
+
+      navigate(`/inbox?chat=${chatId}`);
+
+    } catch (err) {
+      console.error("Error creating message:", err);
+    }
+  };
 
   return (
     <div className="vpsp-profile-card">
@@ -88,10 +161,17 @@ const ViewProfileSidePanel = () => {
             isFollowing ? "following" : ""
           }`}
           onClick={toggleFollow}
+          disabled={followLoading || self}
         >
           {isFollowing ? "Following" : "Follow"}
         </button>
-        <button className="vpsp-action-btn">Message Me</button>
+        <button
+          className="vpsp-action-btn"
+          onClick={handleMessageUser}
+          disabled={self}
+        >
+          Message Me
+        </button>
         <button className="vpsp-action-btn">Share Profile</button>
       </div>
 

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaEllipsisH } from "react-icons/fa";
 import "./PostDropMenu.css";
 
-export default function PostDropMenu({ onDelete, canDelete = false, canBlock = true, onBlock }) {
+export default function PostDropMenu({ onDelete, canDelete = false, canBlock = true, onBlock, canAffiliate = false, onAffiliate }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef();
 
@@ -25,16 +25,22 @@ export default function PostDropMenu({ onDelete, canDelete = false, canBlock = t
       />
 
       {open && (
-        <div className="post-options-dropdown">
+        <div className="post-drop-menu-dropdown">
+
+          {canAffiliate && (
+            <div className="pdm-affiliate-option" onClick={onAffiliate}>
+              Affiliate Link
+            </div>
+          )}
 
           {canDelete && (
-            <div className="delete-option" onClick={onDelete}>
+            <div className="pdm-delete-option" onClick={onDelete}>
               Delete Post
             </div>
           )}
 
           {canBlock && (
-            <div className="block-option" onClick={onBlock}>
+            <div className="pdm-block-option" onClick={onBlock}>
               Block User
             </div>
           )}

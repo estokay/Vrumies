@@ -1,0 +1,118 @@
+.popular-panel {
+
+  width: 100%;
+  height: 450px;
+
+  background: #050505;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+
+/* HEADER */
+
+.popular-header {
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 12px;
+}
+
+.popular-header h3 {
+
+  color: #00ff88;
+
+  font-size: 1.25rem;
+
+  margin: 0;
+}
+
+.popular-subtitle {
+
+  font-size: 0.8rem;
+
+  color: #6f8a73;
+
+  margin-top: 2px;
+}
+
+
+/* SCROLL AREA */
+
+.popular-scroll {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: flex-start;
+
+  gap: 28px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  padding: 36px 5px 10px 5px;
+
+  flex: 1;
+
+  box-sizing: border-box;
+}
+
+.popular-scroll > *:first-child {
+  margin-left: 8px;
+}
+
+
+/* POST WRAPPER */
+
+.popular-post-wrapper {
+
+  width: 270px;
+  height: 270px;
+
+  flex-shrink: 0;
+}
+
+
+/* SCROLLBAR */
+
+.popular-scroll {
+  scrollbar-width: thin;          /* Firefox */
+  scrollbar-color: #00ff66 transparent;  /* Firefox */
+}
+
+.popular-scroll::-webkit-scrollbar {
+
+  height: 6px;
+}
+
+.popular-scroll::-webkit-scrollbar-track {
+
+  background: transparent;
+}
+
+.popular-scroll::-webkit-scrollbar-thumb {
+  background: #00ff66;
+  border-radius: 3px;
+}
+
+
+/* LOADING */
+
+.popular-loading,
+.popular-empty {
+
+  color: #8aa38f;
+
+  font-size: 0.9rem;
+}

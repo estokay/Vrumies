@@ -2,13 +2,12 @@ import * as functions from "firebase-functions/v2/https";
 import { defineSecret } from "firebase-functions/params";
 import Stripe from "stripe";
 import cors from "cors";
+import { getStripeSecretKey } from "../config/stripeConfig.js";
 
-// Initialize secret and CORS handler
-const STRIPE_SECRET_KEY = defineSecret("STRIPE_SECRET_KEY");
 const corsHandler = cors({ origin: true });
 
 export const getPaymentMethod = functions.onRequest(
-  { secrets: [STRIPE_SECRET_KEY] },
+  { secrets: [] },
   (req, res) => {
     // Handle CORS
     corsHandler(req, res, async () => {
@@ -24,7 +23,7 @@ export const getPaymentMethod = functions.onRequest(
         }
 
         // Initialize Stripe
-        const stripe = new Stripe(await STRIPE_SECRET_KEY.value(), {
+        const stripe = new Stripe(await getStripeSecretKey(), {
           apiVersion: "2023-10-16",
         });
 

@@ -2,17 +2,16 @@ import { useState, useCallback } from "react";
 import { getAuth } from "firebase/auth";
 
 /**
- * Custom hook to call the Firebase HTTPS function to complete a token purchase.
+ * Custom hook to create a token purchase PaymentIntent.
+ * Returns clientSecret and paymentIntentId for two-step payment flow.
  */
 export default function useCreateTokenPurchase() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [clientSecret, setClientSecret] = useState(null);
 
   const createTokenPurchase = useCallback(async (quantity) => {
     setLoading(true);
     setError(null);
-    setClientSecret(null);
 
     try {
       if (!quantity || typeof quantity !== "number" || quantity <= 0) {
@@ -24,8 +23,9 @@ export default function useCreateTokenPurchase() {
 
       const idToken = await user.getIdToken();
 
+      // Make request to your Cloud Function
       const response = await fetch(
-        "https://us-central1-vrumies-github.cloudfunctions.net/createTokenPurchase",
+        "https://createtokenpurchase-k3qu3645ya-uc.a.run.app",
         {
           method: "POST",
           headers: {
@@ -39,18 +39,20 @@ export default function useCreateTokenPurchase() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data?.error || "Failed to complete token purchase.");
+        throw new Error(data?.error || "Failed to create PaymentIntent.");
       }
 
-      setClientSecret(data.clientSecret);
-      return data.clientSecret;
+      // Return full data object: { clientSecret, paymentIntentId }
+      return data;
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
+      console.error("useCreateTokenPurchase error:", message);
       return null;
     } finally {
       setLoading(false);
     }
   }, []);
 
-  return { createTokenPurchase, loading, error, clientSecret };
+  return { createTokenPurchase, loading, error };
 }

@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
 import './BookmarksPostGrid.css';
-import BookmarksPostLayout from './BookmarksPostLayout';
+import PostRenderer from '../../Components/PostLayouts/PostRenderer';
 
 function BookmarksPostGrid({ posts = [] }) {
   const displayedPosts = posts.slice(0, 16);
@@ -10,18 +9,7 @@ function BookmarksPostGrid({ posts = [] }) {
       {displayedPosts.length > 0 ? (
         displayedPosts.map((post, index) => (
           <div key={post.id || index}>
-            <Link
-              to={`/bookmarkpost/${post.id}`}
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-                display: 'block',
-                height: '100%',
-                width: '100%',
-              }}
-            >
-              <BookmarksPostLayout {...post} />
-            </Link>
+              <PostRenderer post={post} />
           </div>
         ))
       ) : (

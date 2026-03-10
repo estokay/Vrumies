@@ -3,6 +3,7 @@ import './TokenBody.css';
 import useCreateTokenPurchase from "../../CloudFunctions/useCreateTokenPurchase";
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import TokenPurchaseConfirmationOverlay from "../../Components/Overlays/TokenPurchaseConfirmationOverlay";
+import useCreditTokens from '../../CloudFunctions/useCreditTokens';
 
 const TokenBody = () => {
   const [quantity, setQuantity] = useState(0); // Start at 0
@@ -11,7 +12,8 @@ const TokenBody = () => {
 
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => setQuantity(quantity > 0 ? quantity - 1 : 0);
-  const { createTokenPurchase, loading } = useCreateTokenPurchase();
+  const { createTokenPurchase, loading, error } = useCreateTokenPurchase();
+  const { creditTokens, loading: creditLoading, error: creditError } = useCreditTokens();
 
   const total = (quantity * 0.25).toFixed(2);
   const stripe = useStripe();
@@ -20,6 +22,8 @@ const TokenBody = () => {
 
   const [purchaseSuccess, setPurchaseSuccess] = useState(false);
   const [purchasedAmount, setPurchasedAmount] = useState(0);
+
+  const payLoading = loading || creditLoading;
 
   const cardStyle = {
     style: {
@@ -40,18 +44,17 @@ const TokenBody = () => {
   };
 
   const handlePay = async () => {
-    if (!firstName || !lastName) {
-      alert("Please enter your full name");
-      return;
-    }
-
     if (!stripe || !elements) return;
     if (quantity <= 0) return;
 
     try {
-      const clientSecret = await createTokenPurchase(quantity);
-      if (!clientSecret) throw new Error("Failed to get client secret");
+      // Step 1: Create PaymentIntent
+      const data = await createTokenPurchase(quantity);
+      if (!data) throw new Error("Failed to create PaymentIntent");
 
+      const { clientSecret, paymentIntentId } = data;
+
+      // Step 2: Confirm Card Payment
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -59,18 +62,20 @@ const TokenBody = () => {
         },
       });
 
-      if (error) {
-        alert(error.message);
-        return;
+      if (error) throw new Error(error.message);
+
+      // Step 3: Credit tokens safely on server
+      const creditResult = await creditTokens(paymentIntent.id);
+      if (!creditResult || !creditResult.success) {
+        throw new Error("Payment succeeded but failed to credit tokens.");
       }
 
-      
       setPurchasedAmount(quantity);
       setPurchaseSuccess(true);
       setQuantity(0);
     } catch (err) {
       console.error(err);
-      alert("❌ Payment failed");
+      alert(err instanceof Error ? err.message : "Payment failed");
     }
   };
 
@@ -137,8 +142,8 @@ const TokenBody = () => {
       <div className="bank-icon">🏦</div>
       <div className="action-buttons">
         
-        <button className="pay-button" onClick={handlePay} disabled={loading}>
-          {loading ? "Processing..." : purchaseSuccess ? "Purchase Again" : "Pay"}
+        <button className="pay-button" onClick={handlePay} disabled={payLoading}>
+          {payLoading ? "Processing..." : purchaseSuccess ? "Purchase Again" : "Pay"}
         </button>
       </div>
       {purchaseSuccess && (

@@ -23,6 +23,7 @@ const VideoPostForm = () => {
     link: '',
     image: '',
     video: '',
+    videoDuration: 0,
     tokens: 0,
   });
 

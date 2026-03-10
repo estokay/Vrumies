@@ -26,7 +26,10 @@ import "./PostSection.css";
 import SellerRating from "../../../Components/Reviews/SellerRating";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
+
+import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import { Link } from "react-router-dom";
 
 function PostSection({ postId: propPostId }) {
   const { id } = useParams(); // fallback for route param
@@ -44,7 +47,10 @@ function PostSection({ postId: propPostId }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [showPostDropMenu, setShowDropMenu] = useState(false);
+
+  const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
+  const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
+  const [videoDuration, setVideoDuration] = useState(null);
 
   // Fetch post and seller info
   useEffect(() => {
@@ -151,6 +157,24 @@ function PostSection({ postId: propPostId }) {
 
   const handleBlockUser = () => {
     console.log("TODO: Block this user");
+    setShowBlockUserOverlay(true);
+  };
+
+  const handleDeletePost = () => {
+    console.log("TODO: Delete Post");
+    setShowDeletePostOverlay(true);
+  };
+
+  const handleLoadedMetadata = (e) => {
+    const duration = e.target.duration; // seconds
+    setVideoDuration(duration);
+  };
+
+  const formatDuration = (seconds) => {
+    if (!seconds) return "";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const handleAddToCart = async () => {
@@ -275,14 +299,23 @@ function PostSection({ postId: propPostId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / VIDEOS</div>
             <div className="date">DATE POSTED: {postDate}</div>
-            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
+            <PostDropMenu 
+              canDelete={isSeller} 
+              onDelete={handleDeletePost} 
+              canBlock={canBlock} 
+              onBlock={handleBlockUser} 
+            />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
-            <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            <Link to={`/viewprofile/${post.userId}`}>
+              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            </Link>
             <div>
-              <div className="seller-name">{sellerName}</div>
+              <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
+                {sellerName}
+              </Link>
               <SellerRating userId={post.userId} />
             </div>
 
@@ -328,6 +361,7 @@ function PostSection({ postId: propPostId }) {
             <div className="post-details">
               <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
               <p><strong>Post Location:</strong> {post.location ?? "N/A"}</p>
+              <p><strong>Video Duration:</strong> {formatDuration(videoDuration) ?? "N/A"}</p>
               <p>
                 <strong>Link:</strong>{" "}
                 {post.link ? (
@@ -387,6 +421,11 @@ function PostSection({ postId: propPostId }) {
                   alt="Post"
                   className="video-banner-image"
                 />
+                {videoDuration && !isPlaying && (
+                  <div className="video-duration">
+                    {formatDuration(videoDuration)}
+                  </div>
+                )}
                 {videoUrl && (
                   <div className="video-banner-play">
                     <svg
@@ -412,12 +451,27 @@ function PostSection({ postId: propPostId }) {
           </div>
         </div>
       </div>
-      {showPostDropMenu && (
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
         <DeletePostOverlay
           postId={postId}
-          isOpen={showPostDropMenu}
-          onClose={() => setShowDropMenu(false)}
-          onConfirm={() => console.log("TODO: delete from Firestore")}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
+        />
+      )}
+      {videoUrl && (
+        <video
+          src={videoUrl}
+          preload="metadata"
+          style={{ display: "none" }}
+          onLoadedMetadata={handleLoadedMetadata}
         />
       )}
     </div>

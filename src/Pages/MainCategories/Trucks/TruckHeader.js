@@ -12,7 +12,7 @@ const MarketHeader = () => {
     <div className="truck-header-container">
       <div className="left-side">
         <h1 className="title">
-          <span className="green-highlight">TRUCK POSTS</span>
+          <span className="green-highlight">FREIGHT TRUCK POSTS</span>
         </h1>
         <p className="subtitle">MAKE A TRUCK POST TO PROMOTE YOUR FREIGHT TRUCK TRANSPORT SERVICE</p>
       </div>

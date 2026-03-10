@@ -3,6 +3,7 @@ import OrdersSidePanel from "./OrdersSidePanel";
 import DirectoryVariant from "./OrderDetails/DirectoryVariant";
 import OfferVariant from "./OrderDetails/OfferVariant";
 import MarketVariant from "./OrderDetails/MarketVariant";
+import TruckVariant from "./OrderDetails/TruckVariant";
 import "./OrdersBody.css";
 
 export default function OrdersBody() {
@@ -20,6 +21,8 @@ export default function OrdersBody() {
         return <OfferVariant orderId={id} />;
       case "directory":
         return <DirectoryVariant orderId={id} />;
+      case "trucks":
+        return <TruckVariant orderId={id} />;
       default:
         return <div>Unknown order type</div>;
     }

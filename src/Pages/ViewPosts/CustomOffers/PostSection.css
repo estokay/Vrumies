@@ -24,7 +24,6 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
-  opacity: 0.8;
 }
 
 .post-title {
@@ -348,4 +347,14 @@
 
 .original-post-link:hover {
   opacity: 0.8;
+}
+
+.seller-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.seller-link:hover {
+  text-decoration: underline;
 }

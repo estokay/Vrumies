@@ -25,7 +25,7 @@ export async function updateOrderStatus(orderId) {
 
   const orderData = orderSnap.data();
 
-  const orderStatus = orderData.orderStatus;
+  const orderStatus = orderData.orderStatus ?? "pending";
   const buyerInfo = orderData.buyerInfo || {};
   const sellerInfo = orderData.sellerInfo || {};
   const paymentInfo = orderData.paymentInfo || {};
@@ -33,7 +33,9 @@ export async function updateOrderStatus(orderId) {
   // Ensure paymentInfo.payoutTransfer exists
   if (paymentInfo.payoutTransfer === undefined) {
     paymentInfo.payoutTransfer = false;
-    await orderRef.update({ paymentInfo });
+    await orderRef.update({
+      "paymentInfo.payoutTransfer": false
+    });
   }
 
   const buyerCompleted = buyerInfo.buyerMarkedCompleted || false;
@@ -41,7 +43,7 @@ export async function updateOrderStatus(orderId) {
   const buyerDispute = buyerInfo.buyerDispute || false;
   const sellerDispute = sellerInfo.sellerDispute || false;
 
-  let newStatus = orderStatus || "pending";
+  let newStatus = orderStatus;
 
   if (orderStatus === "disputed") {
     // do nothing

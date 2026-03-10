@@ -30,7 +30,17 @@ import SellerRating from "../../../Components/Reviews/SellerRating";
 import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
+import useTimestampObjectToDate from "../../../Hooks/useTimestampObjectToDate";
+
+import ItemInCartOverlay from "../../../Components/Overlays/ItemInCartOverlay";
+import { useCheckForAffiliateLink } from "../../../Hooks/useCheckForAffiliateLink";
+import CreateAffiliateLinkOverlay from "../../../Components/Overlays/CreateAffiliateLinkOverlay";
+import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import FreightBookingOverlay from "../../../Components/Overlays/FreightBookingOverlay";
+import useCheckIfBooked from "../../../Hooks/useCheckIfBooked";
+import useIsItemInCart from "../../../Hooks/useIsItemInCart";
+import { Link } from "react-router-dom";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -47,7 +57,34 @@ function PostSection({ postId }) {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
-  const [showPostDropMenu, setShowDropMenu] = useState(false);
+
+  const { affiliateDocId: affiliateLinkId } = useCheckForAffiliateLink(post?.userId);
+    
+  const [showCartOverlay, setShowCartOverlay] = useState(false);
+
+  const [showAffiliateLinkOverlay, setShowAffiliateLinkOverlay] = useState(false);
+  const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
+  const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
+  const [showBookFreightOverlay, setShowBookFreightOverlay] = useState(false);
+  const { alreadyBooked, loading: bookingCheckLoading } = useCheckIfBooked(postId);
+
+  const { isInCart, loading: isInCartLoading } = useIsItemInCart(postId);
+
+  const isAddToCartDisabled = !currentUser || !post || bookingCheckLoading || currentUser.uid === post.userId || alreadyBooked || isInCart;
+  const disabledReason =
+    !currentUser
+      ? "Login to book freight"
+      : !post
+      ? ""
+      : currentUser.uid === post.userId
+      ? "You can’t buy your own post"
+      : bookingCheckLoading
+      ? "Still checking if already booked"
+      : alreadyBooked
+      ? "Truck has already been booked for the day by someone else"
+      : isInCart
+      ? "Item already in cart"
+      : "";
 
   // Fetch post and seller info
   useEffect(() => {
@@ -159,11 +196,31 @@ function PostSection({ postId }) {
     showNotification(followed ? "Unfollowed" : "Followed", 2000);
   };
 
-  const handleBlockUser = () => {
-    console.log("TODO: Block this user");
+  const handleAffiliate = () => {
+    console.log("TODO: Create Affiliate");
+    setShowAffiliateLinkOverlay(true);
   };
 
-  const handleAddToCart = async () => {
+  const handleBlockUser = () => {
+    console.log("TODO: Block this user");
+    setShowBlockUserOverlay(true);
+  };
+
+  const handleDeletePost = () => {
+    console.log("TODO: Delete Post");
+    setShowDeletePostOverlay(true);
+  };
+
+  const handleBookFreight = () => {
+    console.log("TODO: Show Book Freight Overlay");
+    setShowBookFreightOverlay(true);
+  };
+
+  const handleFreightAddToCart = (freightBookingInfo) => {
+    handleAddToCart(freightBookingInfo);
+  };
+
+  const handleAddToCart = async (freightBookingInfo = null) => {
     if (!currentUser) {
       alert("Login required");
       return;
@@ -180,16 +237,20 @@ function PostSection({ postId }) {
       await setDoc(itemRef, {
         postId,
         title: post.title || "Untitled",
-        price: post.price || 0,
+        description: post.description || "No Description Available.",
+        type: post.type,
+        price: freightBookingInfo?.price ?? 0,
         sellerId: post.userId,
         sellerName: seller?.username || "Unknown Seller",
         sellerAvatar: seller?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`,
         image: post.images?.[0] || `${process.env.PUBLIC_URL}/default-thumbnail.png`,
         reviews: post.sellerReviews || 0,
+        affiliateLinkId: affiliateLinkId || null,
+        freightBookingInfo: freightBookingInfo || null,
         addedAt: new Date(),
       });
 
-      alert("Item added to cart!");
+      setShowCartOverlay(true);
     } catch (err) {
       console.error(err);
     }
@@ -250,6 +311,7 @@ function PostSection({ postId }) {
     }
   };
 
+  const formattedAvailableDate = useTimestampObjectToDate(post?.availableDate);
   if (loading) return <p style={{ color: "white", textAlign: "center" }}>Loading post...</p>;
   if (!post) return <p style={{ color: "white", textAlign: "center" }}>Post not found.</p>;
 
@@ -275,6 +337,7 @@ function PostSection({ postId }) {
 
   const isSeller = currentUser?.uid === post.userId;
   const canBlock = currentUser?.uid !== post.userId;
+  const canAffiliate = currentUser?.uid !== post.userId;
 
   return (
     <div className="post-section">
@@ -285,14 +348,25 @@ function PostSection({ postId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / TRUCKS</div>
             <div className="date">DATE POSTED: {postDate}</div>
-            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
+            <PostDropMenu 
+              canDelete={isSeller} 
+              onDelete={handleDeletePost} 
+              canBlock={canBlock} 
+              onBlock={handleBlockUser} 
+              canAffiliate={canAffiliate} 
+              onAffiliate={handleAffiliate} 
+            />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
-            <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            <Link to={`/viewprofile/${post.userId}`}>
+              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            </Link>
             <div>
-              <div className="seller-name">{sellerName}</div>
+              <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
+                {sellerName}
+              </Link>
               <SellerRating userId={post.userId} />
             </div>
 
@@ -347,26 +421,23 @@ function PostSection({ postId }) {
                 ) : "N/A"}
               </p>
               <p>
-      <strong>Available Date:</strong>{" "}
-      {post.routes?.availableDate
-        ? new Date(post.routes.availableDate).toLocaleDateString()
-        : "N/A"}
-    </p>
+                <strong>Available Date:</strong>{" "}
+                {formattedAvailableDate || "N/A"}
+              </p>
               <p><strong>Truck Type:</strong> {post.truckType ?? "N/A"}</p>
-              <p><strong>Origin Cities:</strong>{" "}
-      {post.routes?.originCities?.length
-        ? post.routes.originCities
-            .map(c => `${c.city}, ${c.state}`)
-            .join(" • ")
-        : "N/A"}</p>
-                  <p>
-      <strong>Destination Cities:</strong>{" "}
-      {post.routes?.destinationCities?.length
-        ? post.routes.destinationCities
-            .map(c => `${c.city}, ${c.state}`)
-            .join(" • ")
-        : "N/A"}
-    </p>
+              <p>
+                <strong>Origin Cities:</strong>{" "}
+                {post.originCities?.length
+                  ? post.originCities.join(" • ")
+                  : "N/A"}
+              </p>
+
+              <p>
+                <strong>Destination Cities:</strong>{" "}
+                {post.destinationCities?.length
+                  ? post.destinationCities.join(" • ")
+                  : "N/A"}
+              </p>
               <p><strong>Load Weight Max:</strong> {post.loadWeightMax ?? "N/A"}</p>
               <p><strong>Load Length Max:</strong> {post.loadLengthMax ?? "N/A"}</p>
               <p><strong>Min Per Mile Rate:</strong> ${post.minPerMile ?? "N/A"}</p>
@@ -402,8 +473,23 @@ function PostSection({ postId }) {
         </div>
 
         <div className="price-row">
-          <span className="price">Min Per Mile Rate: <span className="rate-amount">${post.minPerMile ?? "N/A"}</span></span>
-          
+          <span className="price">
+            RPM: {" "}
+            <span className="rate-amount">
+              ${post.minPerMile ?? "N/A"}
+            </span>
+          </span>
+
+          <div className="add-to-cart-wrapper">
+            <button
+              className="addtoCart"
+              onClick={handleBookFreight}
+              disabled={isAddToCartDisabled}
+              title={disabledReason}
+            >
+              {alreadyBooked ? "ALREADY BOOKED" : isInCart ? "✓ In Cart" : "BOOK FREIGHT"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -453,12 +539,42 @@ function PostSection({ postId }) {
           }}
         />
       )}
-      {showPostDropMenu && (
+      {showCartOverlay && (
+        <ItemInCartOverlay
+          productName={post.title}
+          onClose={() => setShowCartOverlay(false)}
+        />
+      )}
+      {showAffiliateLinkOverlay && (
+        <CreateAffiliateLinkOverlay
+          postId={postId}
+          isOpen={showAffiliateLinkOverlay}
+          onClose={() => setShowAffiliateLinkOverlay(false)}
+        />
+      )}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
         <DeletePostOverlay
           postId={postId}
-          isOpen={showPostDropMenu}
-          onClose={() => setShowDropMenu(false)}
-          onConfirm={() => console.log("TODO: delete from Firestore")}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
+        />
+      )}
+      {showBookFreightOverlay && (
+        <FreightBookingOverlay
+          isOpen={showBookFreightOverlay}
+          onClose={() => setShowBookFreightOverlay(false)}
+          onAddFreightToCart={handleFreightAddToCart}
+          rpm={post.minPerMile}
+          loadWeightMax={post.loadWeightMax}
+          loadLengthMax={post.loadLengthMax}
         />
       )}
     </div>

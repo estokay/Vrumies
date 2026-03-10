@@ -1,22 +1,16 @@
 import * as functions from "firebase-functions/v2/https";
-import { defineSecret } from "firebase-functions/params";
 import { initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { getFirestore, Timestamp } from "firebase-admin/firestore";
 import Stripe from "stripe";
 import cors from "cors";
+import { getStripeSecretKey } from "../config/stripeConfig.js";
 
 initializeApp();
-const db = getFirestore();
 
-// Your Stripe secret key
-const STRIPE_SECRET_KEY = defineSecret("STRIPE_SECRET_KEY");
-
-// Enable CORS
 const corsHandler = cors({ origin: true });
 
 export const createTokenPurchase = functions.onRequest(
-  { secrets: [STRIPE_SECRET_KEY] },
+  { secrets: [] },
   async (req, res) => {
     corsHandler(req, res, async () => {
       try {
@@ -31,7 +25,7 @@ export const createTokenPurchase = functions.onRequest(
           return res.status(405).json({ error: "Method Not Allowed" });
         }
 
-        // Authenticate Firebase user
+        // Verify Firebase user
         const authHeader = req.headers.authorization;
         if (!authHeader?.startsWith("Bearer ")) {
           return res.status(401).json({ error: "Unauthorized" });
@@ -40,7 +34,6 @@ export const createTokenPurchase = functions.onRequest(
         const decodedToken = await getAuth().verifyIdToken(idToken);
         const uid = decodedToken.uid;
 
-        // Get quantity from request
         const { quantity } = req.body;
         if (!quantity || typeof quantity !== "number" || quantity <= 0) {
           return res.status(400).json({ error: "Invalid quantity." });
@@ -49,8 +42,7 @@ export const createTokenPurchase = functions.onRequest(
         const pricePerToken = 25; // cents per token
         const amount = quantity * pricePerToken;
 
-        // Initialize Stripe
-        const stripe = new Stripe(await STRIPE_SECRET_KEY.value(), {
+        const stripe = new Stripe(await getStripeSecretKey(), {
           apiVersion: "2023-10-16",
         });
 
@@ -62,24 +54,11 @@ export const createTokenPurchase = functions.onRequest(
           metadata: { uid, quantity: quantity.toString() },
         });
 
-        // Immediately credit tokens in Firestore
-        const userRef = db.collection("Users").doc(uid);
-        await db.runTransaction(async (transaction) => {
-          const userSnap = await transaction.get(userRef);
-          const currentTokens = userSnap.data()?.tokens || 0;
-          transaction.update(userRef, { tokens: currentTokens + quantity });
-
-          // Log purchase history
-          transaction.set(userRef.collection("TokenPurchaseHistory").doc(), {
-            vbt: quantity,
-            price: amount / 100,
-            stripePaymentIntentId: paymentIntent.id,
-            createdAt: Timestamp.now(),
-          });
-        });
-
         res.set("Access-Control-Allow-Origin", "*");
-        return res.status(200).json({ clientSecret: paymentIntent.client_secret });
+        return res.status(200).json({
+          clientSecret: paymentIntent.client_secret,
+          paymentIntentId: paymentIntent.id,
+        });
       } catch (err) {
         console.error(err);
         const message = err instanceof Error ? err.message : "Internal server error";

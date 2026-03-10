@@ -121,6 +121,9 @@ function VehiclePostLayout({ id, images, title, createdAt, userId }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"VEHICLE"}
+      </span>
     </Link>
   );
 }

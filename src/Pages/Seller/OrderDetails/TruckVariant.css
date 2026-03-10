@@ -1,0 +1,164 @@
+.st-panel {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  border-radius: 25px;
+  padding: 20px;
+  width: 700px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.st-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: rgb(2, 194, 2);
+  text-align: left;
+}
+
+.st-section {
+  margin-bottom: 20px;
+}
+
+.st-section h3 {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.st-info {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 10px;
+  margin-left: 0;
+}
+
+.st-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.st-item img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.st-btn-view {
+  background: linear-gradient(to right, purple, magenta);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-top: 5px;
+}
+
+.st-payment {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.st-btn-message {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 12px;
+}
+
+.st-status-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.st-btn-complete {
+  background: green;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.st-btn-dispute {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* Tracking Fields */
+.st-tracking-fields {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  align-items: flex-end;
+}
+
+.st-tracking-fields div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.st-tracking-fields input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+  font-size: 14px;
+  height: 36px;
+}
+
+/* Buttons for both inputs */
+.st-tracking-btn-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  flex-wrap: nowrap;
+}
+
+.st-btn-save,
+.st-btn-clear {
+  padding: 0 14px;
+  height: 36px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+}
+
+.st-btn-save {
+  background: green;
+  order: 1;
+}
+
+.st-btn-clear {
+  background: red;
+  order: 2;
+}
+
+.st-btn-completed {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.st-btn-disputed {
+  background: #b71c1c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
+}

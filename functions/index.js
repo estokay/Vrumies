@@ -5,5 +5,7 @@ export * from "./backendFunctions/getSellerBalance.js";
 export * from "./backendFunctions/getPaymentMethod.js";
 export * from "./backendFunctions/spendUserTokens.js";
 export * from "./backendFunctions/createTokenPurchase.js";
+export * from "./backendFunctions/creditTokens.js";
 export * from "./backendFunctions/setOrderStatus.js";
 export * from "./backendFunctions/updateOrderStatus.js";
+export * from "./backendFunctions/getFreightBookingPrice.js";

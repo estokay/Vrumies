@@ -1,6 +1,6 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import { updateOrderStatus } from "./updateOrderStatus.js";
 
 initializeApp();
@@ -40,12 +40,14 @@ export const setOrderStatus = onCall(async (request) => {
   const orderData = orderSnap.data();
   const updates = {};
 
+  const buyerId = orderData?.buyerInfo?.buyerId;
+  const sellerId = orderData?.sellerInfo?.sellerId;
+
   // ================= BUYER LOGIC =================
   if (
     buyerPressedCompleted !== undefined ||
     buyerPressedDispute !== undefined
   ) {
-    const buyerId = orderData?.buyerInfo?.buyerId;
 
     if (uid !== buyerId) {
       throw new HttpsError("permission-denied", "Not authorized as buyer");
@@ -56,10 +58,6 @@ export const setOrderStatus = onCall(async (request) => {
         buyerPressedCompleted;
     }
 
-    if (buyerPressedDispute !== undefined) {
-      updates["buyerInfo.buyerDispute"] =
-        buyerPressedDispute;
-    }
   }
 
   // ================= SELLER LOGIC =================
@@ -67,7 +65,6 @@ export const setOrderStatus = onCall(async (request) => {
     sellerPressedCompleted !== undefined ||
     sellerPressedDispute !== undefined
   ) {
-    const sellerId = orderData?.sellerInfo?.sellerId;
 
     if (uid !== sellerId) {
       throw new HttpsError("permission-denied", "Not authorized as seller");
@@ -78,11 +75,26 @@ export const setOrderStatus = onCall(async (request) => {
         sellerPressedCompleted;
     }
 
-    if (sellerPressedDispute !== undefined) {
-      updates["sellerInfo.sellerDispute"] =
-        sellerPressedDispute;
-    }
   }
+
+  // ================= BUYER & SELLER DISPUTE LOGIC =================
+  if (buyerPressedDispute !== undefined || sellerPressedDispute !== undefined) {
+  // Update order fields as before
+  if (buyerPressedDispute !== undefined) {
+    updates["buyerInfo.buyerDispute"] = buyerPressedDispute;
+  }
+  if (sellerPressedDispute !== undefined) {
+    updates["sellerInfo.sellerDispute"] = sellerPressedDispute;
+  }
+
+  // Increment disputes for BOTH buyer and seller
+  const buyerRef = db.collection("Users").doc(buyerId);
+  const sellerRef = db.collection("Users").doc(sellerId);
+
+  await buyerRef.set({ disputes: FieldValue.increment(1) }, { merge: true });
+  await sellerRef.set({ disputes: FieldValue.increment(1) }, { merge: true });
+}
+
 
   if (Object.keys(updates).length === 0) {
     throw new HttpsError(

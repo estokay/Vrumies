@@ -122,6 +122,9 @@ function OfferPostLayout({ id, images, title, createdAt, userId, price }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"OFFER"}
+      </span>
     </Link>
   );
 }

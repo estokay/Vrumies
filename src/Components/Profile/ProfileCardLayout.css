@@ -1,0 +1,135 @@
+.profile-card-layout {
+  width: 270px;
+  height: 270px;
+  flex-shrink: 0;
+  background: #0a0f0a;
+  border-radius: 16px;
+  border: 2px solid #00FF00;
+  box-shadow: 0 0 12px #00FF00;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+
+.profile-card-layout:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px #00ff66;
+}
+
+/* Body section with username and about */
+.profile-card-body {
+  flex: 1;
+  margin-top: 36px; /* space for avatar overlap */
+  padding: 12px;
+  text-align: center;
+}
+
+.profile-card-username {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  color: #00FF00;
+  letter-spacing: 0.5px;
+}
+
+.profile-card-about {
+  font-size: 11px;
+  color: #ccc;
+  margin: 0;
+  overflow: hidden;
+  height: 36px;
+  line-height: 12px;
+}
+
+/* Footer with tokens and followers */
+.profile-card-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(0,255,102,0.3);
+  background: rgba(0,0,0,0.4);
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.footer-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.token-icon-small {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-icon.star-icon {
+  color: #ffff00; /* yellow for star */
+  width: 18px;
+  height: 18px;
+}
+
+/* Top section with avatar */
+.bprofile-card-top {
+  background: linear-gradient(135deg, #00FF00, #00ffa0);
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.bprofile-card-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid #0a0f0a;
+  object-fit: cover;
+  position: absolute;
+  bottom: -36px; /* half of avatar height */
+}
+
+/* Green top header */
+.profile-card-top {
+  background: linear-gradient(135deg, #00ff66, #00ffa0);
+  height: 100px;
+  position: relative;
+  overflow: hidden; /* ensures bg image doesn't overflow */
+}
+
+/* Small background image behind avatar */
+.profile-card-bg-image {
+  border-radius: 15px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: cover;
+}
+
+/* Avatar */
+.profile-card-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid #0a0f0a;
+  object-fit: cover;
+  position: absolute;
+  top: 70px; /* adjust so it overlaps the top section */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;    /* above background image */
+}
+

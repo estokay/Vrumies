@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaCode, FaUserTie } from "react-icons/fa";
+import { FaCode, FaUserTie, FaLifeRing } from "react-icons/fa";
 import "./SettingsSidePanel.css";
 
 export default function SettingsSidePanel({ onSelect }) {
@@ -32,6 +32,15 @@ export default function SettingsSidePanel({ onSelect }) {
       >
         <FaUserTie className="settings-icon" />
         <span>Blocked Users</span>
+      </button>
+
+      {/* Help Button */}
+      <button
+        className={`settings-btn ${selected === "help" ? "active" : ""}`}
+        onClick={() => handleSelect("help")}
+      >
+        <FaLifeRing className="settings-icon" />
+        <span>Help</span>
       </button>
     </div>
   );

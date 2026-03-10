@@ -6,7 +6,7 @@ import { FaComment } from 'react-icons/fa';
 import './LoadPostLayout.css';
 import useUserAverageRating from "../../../Components/Reviews/useUserAverageRating";
 
-function LoadPostLayout({ id, images, title, createdAt, userId }) {
+function LoadPostLayout({ id, images, title, createdAt, userId, payout }) {
   const [profilePic, setProfilePic] = useState(`${process.env.PUBLIC_URL}/default-profile.png`);
   const [username, setUsername] = useState("Unknown");
   const [likes, setLikes] = useState(0);
@@ -78,6 +78,7 @@ function LoadPostLayout({ id, images, title, createdAt, userId }) {
       </div>
 
       <div className="thumbnail-container">
+        {payout && <span className="load-price-overlay">${payout.toFixed(2)}</span>}
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Event Thumbnail'}
@@ -121,6 +122,9 @@ function LoadPostLayout({ id, images, title, createdAt, userId }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"LOAD"}
+      </span>
     </Link>
   );
 }

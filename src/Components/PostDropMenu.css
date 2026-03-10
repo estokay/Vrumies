@@ -14,38 +14,74 @@
   background: rgba(255,255,255,0.15);
 }
 
-/* dropdown */
-.post-options-dropdown {
+/* ===== Modern Card Dropdown ===== */
+.post-drop-menu-dropdown {
   position: absolute;
   right: 0;
   top: 33px;
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 6px;
-  z-index: 9999;
-  min-width: 130px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  min-width: 240px;
+
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 14px;
+
+  padding: 8px 0;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  flex-direction: column;
 }
 
-.delete-option {
+/* ===== Shared Button Style ===== */
+.pdm-affiliate-option,
+.pdm-delete-option,
+.pdm-block-option {
   padding: 14px 20px;
-  color: red;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
+
+  transition: background 0.2s ease, padding-left 0.15s ease;
 }
 
-.delete-option:hover {
-  background: #300;
+/* Subtle divider effect */
+.pdm-affiliate-option:not(:last-child),
+.pdm-delete-option:not(:last-child) {
+  border-bottom: 1px solid #1f1f1f;
 }
 
-.block-option {
-  padding: 14px 20px;
-  color: orange;
-  font-size: 1rem;
-  cursor: pointer;
+/* ===== Hover Effect ===== */
+.pdm-affiliate-option:hover,
+.pdm-delete-option:hover,
+.pdm-block-option:hover {
+  background: #1f1f1f;
+  padding-left: 24px; /* subtle slide */
 }
 
-.block-option:hover {
-  background: #332000;
+/* ===== Accent Colors ===== */
+.pdm-affiliate-option {
+  color: #22c55e; /* modern green */
+}
+
+.pdm-delete-option {
+  color: #ef4444; /* modern red */
+}
+
+.pdm-block-option {
+  color: #f59e0b; /* modern amber */
+}
+
+.post-drop-menu-dropdown {
+  animation: fadeInMenu 0.15s ease-out;
+}
+
+@keyframes fadeInMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

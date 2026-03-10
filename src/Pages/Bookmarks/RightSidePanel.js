@@ -1,4 +1,4 @@
-import BookmarksPostLayout from './BookmarksPostLayout';
+import PostRenderer from '../../Components/PostLayouts/PostRenderer';
 import '../../Components/Css/RightSidePanel.css';
 
 function RightSidePanel({ posts = [] }) {
@@ -10,7 +10,7 @@ function RightSidePanel({ posts = [] }) {
       <div className="events-main-panel-posts">
         {sortedPosts.length > 0 ? (
           sortedPosts.map((post, index) => (
-            <BookmarksPostLayout key={post.id || index} {...post} compact />
+            <PostRenderer key={post.id || index} post={{ ...post, compact: true }} />
           ))
         ) : (
           <p style={{ color: '#ffffff', textAlign: 'center' }}>

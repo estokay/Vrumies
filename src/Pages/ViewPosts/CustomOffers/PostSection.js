@@ -32,8 +32,11 @@ import useGetOriginalPostObject from "../../../Hooks/useGetOriginalPostObject";
 import useGetPostLink from "../../../Hooks/useGetPostLink";
 import PostSectionReviews from '../../../Components/PostSectionReviews';
 import PostDropMenu from "../../../Components/PostDropMenu";
-import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 import ItemInCartOverlay from "../../../Components/Overlays/ItemInCartOverlay";
+import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
+import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
+import useIsItemInCart from "../../../Hooks/useIsItemInCart";
+import { Link } from "react-router-dom";
 
 function PostSection({ postId }) {
   const [post, setPost] = useState(null);
@@ -50,11 +53,16 @@ function PostSection({ postId }) {
   const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
-  const [showPostDropMenu, setShowDropMenu] = useState(false);
   const { originalPost, loading: originalLoading } = useGetOriginalPostObject(postId);
   const originalPostLink = useGetPostLink({postId: post?.originalPost});
   const [showCartOverlay, setShowCartOverlay] = useState(false);
-  const isAddToCartDisabled = !currentUser || !post || !originalPost || currentUser.uid === post.userId || currentUser.uid !== originalPost.userId;
+  
+  const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
+  const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
+
+  const { isInCart, loading: isInCartLoading } = useIsItemInCart(postId);
+
+  const isAddToCartDisabled = !currentUser || !post || !originalPost || currentUser.uid === post.userId || currentUser.uid !== originalPost.userId || isInCart;
   const disabledReason =
   !currentUser
     ? "Login to add to cart"
@@ -64,6 +72,8 @@ function PostSection({ postId }) {
     ? "You can’t buy your own post"
     : currentUser.uid !== originalPost.userId
     ? "Only the original requester can purchase this"
+    : isInCart
+    ? "Item already in cart"
     : "";
 
   // Fetch post and seller info
@@ -178,6 +188,12 @@ function PostSection({ postId }) {
 
   const handleBlockUser = () => {
     console.log("TODO: Block this user");
+    setShowBlockUserOverlay(true);
+  };
+
+  const handleDeletePost = () => {
+    console.log("TODO: Delete Post");
+    setShowDeletePostOverlay(true);
   };
 
   const handleAddToCart = async () => {
@@ -205,6 +221,7 @@ function PostSection({ postId }) {
         sellerAvatar: seller?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`,
         image: post.images?.[0] || `${process.env.PUBLIC_URL}/default-thumbnail.png`,
         reviews: post.sellerReviews || 0,
+        affiliateLinkId: null,
         addedAt: new Date(),
       });
 
@@ -304,14 +321,23 @@ function PostSection({ postId }) {
           <div className="post-header">
             <div className="breadcrumbs">VRUMIES / CUSTOM OFFERS</div>
             <div className="date">DATE POSTED: {postDate}</div>
-            <PostDropMenu onDelete={() => setShowDropMenu(true)} canDelete={isSeller} canBlock={canBlock} onBlock={handleBlockUser} />
+            <PostDropMenu 
+              canDelete={isSeller} 
+              onDelete={handleDeletePost} 
+              canBlock={canBlock} 
+              onBlock={handleBlockUser} 
+            />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
-            <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            <Link to={`/viewprofile/${post.userId}`}>
+              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+            </Link>
             <div>
-              <div className="seller-name">{sellerName}</div>
+              <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
+                {sellerName}
+              </Link>
               <SellerRating userId={post.userId} />
             </div>
 
@@ -417,10 +443,10 @@ function PostSection({ postId }) {
             <button
               className="addtoCart"
               onClick={handleAddToCart}
-              disabled={isAddToCartDisabled}
+              disabled={isAddToCartDisabled || loading}
               title={disabledReason}
             >
-              ADD TO CART
+              {isInCart ? "✓ In Cart" : "ADD TO CART"}
             </button>
           </div>
         </div>
@@ -472,18 +498,25 @@ function PostSection({ postId }) {
           }}
         />
       )}
-      {showPostDropMenu && (
-        <DeletePostOverlay
-          postId={postId}
-          isOpen={showPostDropMenu}
-          onClose={() => setShowDropMenu(false)}
-          onConfirm={() => console.log("TODO: delete from Firestore")}
-        />
-      )}
       {showCartOverlay && (
         <ItemInCartOverlay
           productName={post.title}
           onClose={() => setShowCartOverlay(false)}
+        />
+      )}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={postId}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
         />
       )}
     </div>

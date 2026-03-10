@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../Components/firebase";
 import { useAuth } from "../../AuthContext";
 import MarketOrderCard from "./Cards/MarketOrderCard";
 import OfferOrderCard from "./Cards/OfferOrderCard";
 import DirectoryOrderCard from "./Cards/DirectoryOrderCard";
+import TruckOrderCard from "./Cards/TruckOrderCard";
 import "./OrdersSidePanel.css";
 
 export default function OrdersSidePanel({ selectedOrder, onCardClick }) {
@@ -15,16 +16,16 @@ export default function OrdersSidePanel({ selectedOrder, onCardClick }) {
   useEffect(() => {
     if (!currentUser) return;
 
-    const fetchOrders = async () => {
-      try {
-        const ordersRef = collection(db, "Orders");
-        const q = query(
-          ordersRef,
-          where("buyerInfo.buyerId", "==", currentUser.uid),
-          where("paymentInfo.paymentSuccessful", "==", true)
-        );
+    const ordersRef = collection(db, "Orders");
+    const q = query(
+      ordersRef,
+      where("buyerInfo.buyerId", "==", currentUser.uid),
+      where("paymentInfo.paymentSuccessful", "==", true)
+    );
 
-        const querySnapshot = await getDocs(q);
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
         const ordersArray = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -32,18 +33,20 @@ export default function OrdersSidePanel({ selectedOrder, onCardClick }) {
 
         // Sort by most recent
         ordersArray.sort(
-          (a, b) => b.orderCreated.seconds - a.orderCreated.seconds
+          (a, b) => b.orderCreated?.seconds - a.orderCreated?.seconds
         );
 
         setFilteredOrders(ordersArray);
-      } catch (err) {
-        console.error("Error fetching user orders:", err);
-      } finally {
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error listening to user orders:", error);
         setLoading(false);
       }
-    };
+    );
 
-    fetchOrders();
+    // Cleanup listener on unmount or user change
+    return () => unsubscribe();
   }, [currentUser]);
 
   const renderCard = (order) => {
@@ -58,6 +61,9 @@ export default function OrdersSidePanel({ selectedOrder, onCardClick }) {
         break;
       case "directory":
         CardComponent = DirectoryOrderCard;
+        break;
+      case "trucks":
+        CardComponent = TruckOrderCard;
         break;
       default:
         return null;

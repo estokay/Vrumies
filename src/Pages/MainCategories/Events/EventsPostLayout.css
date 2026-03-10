@@ -145,3 +145,49 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.event-date-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(6, 60, 5, 0.85);
+  color: #ffffff;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.event-time-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(221, 88, 0, 0.85);
+  color: #ffffff;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.post-type-label {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: rgba(0,0,0,0.85);
+  color: #00ff00;
+
+  padding: 4px 12px;
+  border-radius: 6px;
+
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+
+  text-transform: uppercase;
+  pointer-events: none;
+}

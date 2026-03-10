@@ -6,7 +6,7 @@ import { FaComment } from 'react-icons/fa';
 import '../../../Components/Css/MarketPostLayout.css'; // changed to use MarketPostLayout CSS
 import useUserAverageRating from "../../../Components/Reviews/useUserAverageRating";
 
-function DirectoryPostLayout({ id, images, title, createdAt, userId }) {
+function DirectoryPostLayout({ id, images, title, createdAt, userId, price }) {
   const [profilePic, setProfilePic] = useState(`${process.env.PUBLIC_URL}/default-profile.png`);
   const [username, setUsername] = useState("Unknown");
   const [likes, setLikes] = useState(0);
@@ -78,6 +78,7 @@ function DirectoryPostLayout({ id, images, title, createdAt, userId }) {
       </div>
 
       <div className="thumbnail-container">
+        {price && <span className="price-overlay">{price}</span>}
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Post Thumbnail'}
@@ -121,6 +122,9 @@ function DirectoryPostLayout({ id, images, title, createdAt, userId }) {
           </span>
         </div>
       </div>
+      <span className="post-type-label">
+        {"DIRECTORY"}
+      </span>
     </Link>
   );
 }

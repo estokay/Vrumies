@@ -20,7 +20,7 @@ const ImageUploadField = ({ formData, setFormData }) => {
 
   return (
     <div>
-      <label className="form-label">Upload Image</label>
+      <label className="form-label">Upload Video Thumbnail Image</label>
       <input type="file" accept="image/*" onChange={uploadImage} />
       {formData.image && (
         <img src={formData.image} className="preview-media" alt="preview" />
