@@ -17,13 +17,10 @@
   -webkit-backdrop-filter: blur(5px);
 
   background:
-    url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1754732911/Background_e8diwk.png"),
-    linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-    #0a0a0a;
+  linear-gradient(rgba(255,255,255,0.03),rgba(255,255,255,0.01)),
+  url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1754732911/Background_e8diwk.png");
 
   background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
 
   border: 1px solid #1ef81e;
 
@@ -37,11 +34,7 @@
 
   pointer-events:auto;
 
-  animation: signinSlideIn .35s ease;
-
-  overflow:hidden;
-  position: relative;
-  z-index: 2;
+  animation:signinSlideIn .35s ease;
 }
 
 /* Logo */
@@ -104,49 +97,5 @@
   to{
     opacity:1;
     transform:translateX(0) translateY(0);
-  }
-}
-
-.signin-overlay-card-wrapper{
-  display: inline-block;
-  position: relative;
-  pointer-events: auto;
-  will-change: box-shadow;
-  border-radius: 18px;
-}
-
-.signin-overlay-pulse::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 18px; /* match card */
-  box-shadow: 0 0 0px #1ef81e;
-  animation: neonPulse 0.35s ease;
-  pointer-events: none; /* so it doesn't block clicks */
-  z-index: 1; /* behind card content */
-}
-
-.signin-overlay-pulse {
-  animation: neonPulse 0.35s ease;
-  animation-fill-mode: both;
-}
-
-@keyframes neonPulse{
-  0%{
-    box-shadow:0 0 0px #1ef81e;
-  }
-
-  50%{
-    box-shadow:
-      0 0 8px #1ef81e,
-      0 0 16px #1ef81e,
-      0 0 24px #1ef81e;
-  }
-
-  100%{
-    box-shadow:0 0 0px #1ef81e;
   }
 }

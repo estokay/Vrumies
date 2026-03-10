@@ -3,7 +3,6 @@ import SignInOverlay from "./SignInOverlay";
 
 const AuthOverlay = ({ isSignedIn }) => {
   const [open, setOpen] = useState(false);
-  const [pulse, setPulse] = useState(false);
 
   useEffect(() => {
     if (isSignedIn) return;
@@ -17,9 +16,6 @@ const AuthOverlay = ({ isSignedIn }) => {
       e.preventDefault();
       e.stopPropagation();
       setOpen(true);
-
-      setPulse(false);
-      requestAnimationFrame(() => setPulse(true));
     };
 
     document.addEventListener("click", handleInteraction, true);
@@ -33,7 +29,7 @@ const AuthOverlay = ({ isSignedIn }) => {
 
   if (isSignedIn) return null;
 
-  return <SignInOverlay isOpen={open} pulse={pulse} />;
+  return <SignInOverlay isOpen={open} />;
 };
 
 export default AuthOverlay;

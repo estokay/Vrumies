@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import "./SignInOverlay.css";
 
-const SignInOverlay = ({ isOpen }) => {
+const SignInOverlay = ({ isOpen, pulse }) => {
   const navigate = useNavigate();
 
   if (!isOpen) return null;
@@ -11,26 +11,30 @@ const SignInOverlay = ({ isOpen }) => {
   return ReactDOM.createPortal(
     <div className="signin-overlay-container">
 
-      <div className="signin-overlay-card">
+      <div className={`signin-overlay-card-wrapper ${pulse ? "signin-overlay-pulse" : ""}`}>
 
-        <img
-          src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1754732908/VrumiesLogo_jxdvsw.png"
-          className="signin-overlay-logo"
-          alt="Vrumies Logo"
-        />
+        <div className="signin-overlay-card">
 
-        <h2>Please Sign In</h2>
+          <img
+            src="https://res.cloudinary.com/dmjvngk3o/image/upload/v1754732908/VrumiesLogo_jxdvsw.png"
+            className="signin-overlay-logo"
+            alt="Vrumies Logo"
+          />
 
-        <p>
-          You need to be signed in to access this content.
-        </p>
+          <h2>Please Sign In</h2>
 
-        <button
-          className="signin-overlay-button"
-          onClick={() => navigate("/signin")}
-        >
-          Sign In
-        </button>
+          <p>
+            You need to be signed in to access this content.
+          </p>
+
+          <button
+            className="signin-overlay-button"
+            onClick={() => navigate("/signin")}
+          >
+            Sign In
+          </button>
+
+        </div>
 
       </div>
 
