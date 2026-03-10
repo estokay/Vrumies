@@ -28,7 +28,14 @@ const DropDownButtons = () => {
         <span>Settings</span>
       </button>
 
-      <button className="dropdown-btn" onClick={() => navigate('/signin')}>
+      <button 
+        className="dropdown-btn" 
+        onClick={async () => {
+          const auth = getAuth();
+          await signOut(auth);
+          navigate('/signin');
+        }}
+      >
         <FaSignOutAlt className="icon green" />
         <span>Sign Out</span>
       </button>
