@@ -7,6 +7,7 @@ import DeletePost from './DeletePost';
 import DeleteOrder from './DeleteOrder';
 import Payouts from './Payouts';
 import AffiliatePayouts from './AffiliatePayouts';
+import DeleteCategories from './DeleteCategories';
 
 const NavigationBar = () => {
   const [activeTab, setActiveTab] = useState('viewData');
@@ -20,6 +21,7 @@ const NavigationBar = () => {
       case 'deleteSection':
         return (
           <>
+            <DeleteCategories />
             <DeleteCollections />
             <DeletePost />
             <DeleteOrder />
