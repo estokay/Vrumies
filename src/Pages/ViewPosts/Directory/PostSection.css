@@ -350,3 +350,22 @@
 .seller-link:hover {
   text-decoration: underline;
 }
+
+.make-main-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #8a28b4;
+  color: white;
+  border: none;
+  padding: 12px 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.make-main-btn:hover {
+  background: #933db8;
+  transform: scale(1.05);
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -9,10 +9,12 @@ import PostSection from './PostSection';
 import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
 import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
-import './VideoPost.css'; // renamed for clarity
+import './VideoPost.css';
+import GetPostRoute from "../../../Functions/GetPostRoute";
 
 const VideoPost = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,8 +23,21 @@ const VideoPost = () => {
       try {
         const postRef = doc(db, 'Posts', id);
         const postSnap = await getDoc(postRef);
-        if (!postSnap.exists() || postSnap.data().type !== 'video') {
-          console.warn('Post not found or not an event');
+        if (!postSnap.exists()) {
+          console.warn('Post not found.');
+          navigate("/home");
+          return;
+        }
+        const post = postSnap.data();
+        if (post.type !== 'video') {
+          console.warn('Post not a video post');
+          const postRoute = GetPostRoute(post.type);
+          if (postRoute) {
+            navigate(postRoute + id);
+          } else {
+            navigate("/home");
+          }
+          return;
         }
       } catch (err) {
         console.error('Error fetching post:', err);
@@ -31,7 +46,7 @@ const VideoPost = () => {
       }
     };
     checkPostExists();
-  }, [id]);
+  }, [id, navigate]);
 
   if (loading)
     return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;

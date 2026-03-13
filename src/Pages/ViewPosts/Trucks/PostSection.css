@@ -315,9 +315,15 @@
   color: #ff4f4f;
 }
 
-.rate-amount {
+.price-unit-label {
+  position: absolute;
+  /*bottom: -6px;
+  left: -60px;*/
+  bottom: 12px;
+  left: -45px;
+  font-size: 1rem;
   color: #00ff00;
-  font-weight: bold;
+  letter-spacing: 0.8px;
 }
 
 .seller-link {
@@ -328,4 +334,23 @@
 
 .seller-link:hover {
   text-decoration: underline;
+}
+
+.make-main-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #8a28b4;
+  color: white;
+  border: none;
+  padding: 12px 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.make-main-btn:hover {
+  background: #933db8;
+  transform: scale(1.05);
 }

@@ -129,16 +129,18 @@
 
 .payoutmethods-fee-banner {
   position: absolute; /* absolute positioning */
-  bottom: 0; /* or bottom: 0; for bottom banner */
-  left: 25%;
-  width: 50%;
+  bottom: 5px; /* or bottom: 0; for bottom banner */
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  max-width: 280px;
   text-align: center;
   background-color: rgba(255, 69, 0, 0.9); /* semi-transparent warning color */
   color: white;
   font-size: 12px;
   font-weight: bold;
-  padding: 6px 0;
-  border-radius: 12px 12px 0 0; /* rounded top corners for top banner */
+  padding: 6px 12px;
+  border-radius: 8px; /* rounded top corners for top banner */
   z-index: 999; /* make sure it sits above other content */
   pointer-events: none; /* so it doesn’t block clicks */
 }

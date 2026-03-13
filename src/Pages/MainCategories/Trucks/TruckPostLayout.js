@@ -78,15 +78,15 @@ function TruckPostLayout({ id, images, title, createdAt, userId, minPerMile }) {
       </div>
 
       <div className="thumbnail-container">
-        {minPerMile && <span className="price-overlay">RPM: ${minPerMile.toFixed(2)}</span>}
+        {minPerMile != null && <span className="price-overlay">RPM: ${minPerMile.toFixed(2)}</span>}
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
-          alt={title || 'Event Thumbnail'}
+          alt={title || 'Truck Thumbnail'}
           className="thumbnail"
         />
       </div>
 
-      <h4 className="events-post-title">{(title || 'Untitled Event').toUpperCase()}</h4>
+      <h4 className="events-post-title">{(title || 'Untitled Truck Post').toUpperCase()}</h4>
 
       <div className="card-footer">
         <div className="footer-left">

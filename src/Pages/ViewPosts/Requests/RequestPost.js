@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -10,9 +10,11 @@ import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './RequestPost.css'; // renamed for clarity
 import ViewOffers from '../../../Custom Offers/ViewOffers';
+import GetPostRoute from "../../../Functions/GetPostRoute";
 
 const RequestPost = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,8 +23,21 @@ const RequestPost = () => {
       try {
         const postRef = doc(db, 'Posts', id);
         const postSnap = await getDoc(postRef);
-        if (!postSnap.exists() || postSnap.data().type !== 'request') {
-          console.warn('Post not found or not an event');
+        if (!postSnap.exists()) {
+          console.warn('Post not found.');
+          navigate("/home");
+          return;
+        }
+        const post = postSnap.data();
+        if (post.type !== 'request') {
+          console.warn('Post not a request post.');
+          const postRoute = GetPostRoute(post.type);
+          if (postRoute) {
+            navigate(postRoute + id);
+          } else {
+            navigate("/home");
+          }
+          return;
         }
       } catch (err) {
         console.error('Error fetching post:', err);
@@ -31,7 +46,7 @@ const RequestPost = () => {
       }
     };
     checkPostExists();
-  }, [id]);
+  }, [id, navigate]);
 
   if (loading)
     return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;

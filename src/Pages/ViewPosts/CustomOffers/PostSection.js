@@ -181,6 +181,26 @@ function PostSection({ postId }) {
     }
   };
 
+  const handleMakeMainImage = async () => {
+    if (!post || !currentUser || currentUser.uid !== post.userId) return;
+
+    const newImages = [...post.images];
+    const selectedImage = newImages.splice(currentImage, 1)[0]; // remove selected
+    newImages.unshift(selectedImage); // add it to front
+
+    setPost((prev) => ({ ...prev, images: newImages })); // update state
+    setCurrentImage(0); // make it the main image
+
+    try {
+      const postRef = doc(db, "Posts", postId);
+      await updateDoc(postRef, { images: newImages }); // save to Firestore
+      showNotification("Main image updated!");
+    } catch (err) {
+      console.error("Error updating main image:", err);
+      showNotification("Failed to update main image.");
+    }
+  };
+
   const handleFollow = () => {
     setFollowed(!followed);
     showNotification(followed ? "Unfollowed" : "Followed", 2000);
@@ -325,14 +345,17 @@ function PostSection({ postId }) {
               canDelete={isSeller} 
               onDelete={handleDeletePost} 
               canBlock={canBlock} 
-              onBlock={handleBlockUser} 
+              onBlock={handleBlockUser}
+              canReport={true}
+              onReport={handleReport}
+              reported={reported} 
             />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
             <Link to={`/viewprofile/${post.userId}`}>
-              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+              <img key={sellerAvatar} src={sellerAvatar} alt="Seller" className="seller-avatar" />
             </Link>
             <div>
               <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">
@@ -486,6 +509,12 @@ function PostSection({ postId }) {
           ))}
           <FaArrowRight className="arrow" onClick={nextImage} />
         </div>
+
+        {currentUser?.uid === post.userId && images.length > 1 && (
+          <button className="make-main-btn" onClick={handleMakeMainImage}>
+            Make Main Image
+          </button>
+        )}
       </div>
       {showOverlay && (
         <ViewPhotoOverlay

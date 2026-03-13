@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import PageHeader from '../../../Components/PageHeader';
@@ -8,9 +8,11 @@ import MainCommentsSection from '../../../Components/Comments/MainCommentsSectio
 import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './OfferPost.css'; // renamed for clarity
+import GetPostRoute from "../../../Functions/GetPostRoute";
 
 const OfferPost = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,8 +21,21 @@ const OfferPost = () => {
       try {
         const postRef = doc(db, 'Posts', id);
         const postSnap = await getDoc(postRef);
-        if (!postSnap.exists() || postSnap.data().type !== 'offer') {
-          console.warn('Post not found or not an offer post');
+        if (!postSnap.exists()) {
+          console.warn('Post not found.');
+          navigate("/home");
+          return;
+        }
+        const post = postSnap.data();
+        if (post.type !== 'offer') {
+          console.warn('Post not an offer post.');
+          const postRoute = GetPostRoute(post.type);
+          if (postRoute) {
+            navigate(postRoute + id);
+          } else {
+            navigate("/home");
+          }
+          return;
         }
       } catch (err) {
         console.error('Error fetching post:', err);
@@ -29,7 +44,7 @@ const OfferPost = () => {
       }
     };
     checkPostExists();
-  }, [id]);
+  }, [id, navigate]);
 
   if (loading)
     return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;

@@ -303,14 +303,17 @@ function PostSection({ postId: propPostId }) {
               canDelete={isSeller} 
               onDelete={handleDeletePost} 
               canBlock={canBlock} 
-              onBlock={handleBlockUser} 
+              onBlock={handleBlockUser}
+              canReport={true}
+              onReport={handleReport}
+              reported={reported} 
             />
           </div>
           <h2 className="post-title">{postTitle.toUpperCase()}</h2>
 
           <div className="seller-row">
             <Link to={`/viewprofile/${post.userId}`}>
-              <img src={sellerAvatar} alt="Seller" className="seller-avatar" />
+              <img key={sellerAvatar} src={sellerAvatar} alt="Seller" className="seller-avatar" />
             </Link>
             <div>
               <Link to={`/viewprofile/${post.userId}`} className="seller-name seller-link">

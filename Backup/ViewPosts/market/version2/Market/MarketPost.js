@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-
+import PageHeader from '../../../Components/PageHeader';
 import PostSection from './PostSection';
 import MainCommentsSection from '../../../Components/Comments/MainCommentsSection';
 import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
-import PageHeader from '../../../Components/PageHeader';
 import '../../../App.css';
-import './TruckPost.css';
-import GetPostRoute from "../../../Functions/GetPostRoute";
+import './MarketPost.css'; // renamed for clarity
 
-const TruckPost = () => {
+const MarketPost = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,21 +19,8 @@ const TruckPost = () => {
       try {
         const postRef = doc(db, 'Posts', id);
         const postSnap = await getDoc(postRef);
-        if (!postSnap.exists()) {
-          console.warn('Post not found.');
-          navigate("/home");
-          return;
-        }
-        const post = postSnap.data();
-        if (post.type !== 'trucks') {
-          console.warn('Post not a truck post');
-          const postRoute = GetPostRoute(post.type);
-          if (postRoute) {
-            navigate(postRoute + id);
-          } else {
-            navigate("/home");
-          }
-          return;
+        if (!postSnap.exists() || postSnap.data().type !== 'market') {
+          console.warn('Post not found or not an market post');
         }
       } catch (err) {
         console.error('Error fetching post:', err);
@@ -45,20 +29,17 @@ const TruckPost = () => {
       }
     };
     checkPostExists();
-  }, [id, navigate]);
+  }, [id]);
 
   if (loading)
     return <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>;
 
   return (
     <div className="vpe-content-page">
-     
       <PageHeader 
-        title="Truck Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770816086/67fdf9af062252f0b85b1813_6377b53b0b2bd628e3eeb4b5_8_ucpg9a.jpg" 
+        title="Market Post" 
+        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
       />
-    
-
       <PostSection postId={id} />
 
       <div className="vpe-bottom-section-container">
@@ -67,11 +48,11 @@ const TruckPost = () => {
         </div>
 
         <div className="vpe-bottom-section-side-panel">
-          <PromotedPanel category="trucks" />
+          <PromotedPanel category="market" />
         </div>
       </div>
     </div>
   );
 };
 
-export default TruckPost;
+export default MarketPost;

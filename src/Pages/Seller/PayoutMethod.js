@@ -17,7 +17,7 @@ export default function PayoutMethod() {
   const [showPayoutInfo, setShowPayoutInfo] = useState(false);
 
   if (loading) {
-    return <div style={{ color: "#aaa" }}>Loading Stripe balances...</div>;
+    return <div style={{ color: "#aaa" }}>Loading payout balances...</div>;
   }
 
   return (

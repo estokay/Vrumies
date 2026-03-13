@@ -165,3 +165,16 @@
   text-transform: uppercase;
   pointer-events: none;
 }
+
+.price-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(6, 60, 5, 0.85);
+  color: #ffffff;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 20px;
+  z-index: 2;
+}

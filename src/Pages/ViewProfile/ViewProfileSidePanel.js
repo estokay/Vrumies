@@ -23,17 +23,18 @@ const ViewProfileSidePanel = () => {
   useEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
-      try {
-        // Query Users collection where "userid" field matches the URL
-        const q = query(collection(db, "Users"), where("userid", "==", userId));
-        const snap = await getDocs(q);
 
-        if (!snap.empty) {
-          setUser(snap.docs[0].data());
+      try {
+        const userRef = doc(db, "Users", userId);
+        const snap = await getDoc(userRef);
+
+        if (snap.exists()) {
+          setUser(snap.data());
         } else {
           console.warn("User not found");
           setUser(null);
         }
+
       } catch (err) {
         console.error("Error fetching user:", err);
         setUser(null);
@@ -131,7 +132,7 @@ const ViewProfileSidePanel = () => {
       {/* Profile image */}
       <div className="vpsp-profile-image-wrapper">
         <img
-          src={user.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`}
+          src={user?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`}
           alt={user.username}
           className="vpsp-profile-image"
           onError={(e) => {
