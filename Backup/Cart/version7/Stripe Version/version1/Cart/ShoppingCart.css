@@ -1,0 +1,19 @@
+.shopping-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.cart-body-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-side-container {
+  width: 520px;
+  flex-shrink: 0;
+  margin-right: 30px;
+}

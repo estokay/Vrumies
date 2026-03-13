@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { CardElement, useStripe, useElements, Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from "../../AuthContext";
 import {
   collection,
@@ -12,21 +14,20 @@ import {
 import { db } from "../../Components/firebase";
 import "./CheckoutForm.css";
 import sendNotificationOrder from "../../Components/Notifications/sendNotificationOrder";
+import useCreatePaymentIntent from "../../CloudFunctions/useCreatePaymentIntent";
 import PurchaseCompleteOverlay from "../../Components/Overlays/PurchaseCompleteOverlay";
-import useCreateSquarePayment from "../../CloudFunctions/useCreateSquarePayment";
+import { STRIPE_API_KEY } from '../../Components/config';
+
+const stripePromise = loadStripe(STRIPE_API_KEY); // Replace with your Stripe key
 
 function CheckoutFormInner() {
+  const stripe = useStripe();
+  const elements = useElements();
   const { currentUser } = useAuth();
   const [showOverlay, setShowOverlay] = useState(false);
   const [paymentComplete, setPaymentComplete] = useState(false);
 
-  const {
-    processPayment,
-    loading: paymentLoading,
-    SQUARE_APPLICATION_ID,
-    SQUARE_LOCATION_ID
-  } = useCreateSquarePayment();
-  const [card, setCard] = useState(null);
+  const { createPaymentIntent, loading: paymentLoading, error: paymentError } = useCreatePaymentIntent();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -78,42 +79,21 @@ function CheckoutFormInner() {
     formData.useBillingAsShipping,
   ]);
 
-  const parsePrice = (price) => Number(price.toString().replace("$", "")) || 0;
-  const subtotal = cartItems.reduce((sum, item) => sum + parsePrice(item.price), 0);
-  const taxes = subtotal * 0.15;
-  const total = subtotal + taxes;
-
-  useEffect(() => {
-    if (!SQUARE_APPLICATION_ID || !SQUARE_LOCATION_ID || total <= 0) return;
-
-    const cardContainer = document.querySelector("#card-container");
-    if (!cardContainer) return; // wait until element exists
-
-    async function initSquare() {
-      if (!window.Square) {
-        console.error("Square SDK not loaded");
-        return;
-      }
-
-      const payments = window.Square.payments(
-        SQUARE_APPLICATION_ID,
-        SQUARE_LOCATION_ID
-      );
-
-      const cardInstance = await payments.card();
-      await cardInstance.attach("#card-container");
-      setCard(cardInstance);
-    }
-
-    initSquare();
-  }, [SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID, total]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const parsePrice = (price) => Number(price.toString().replace("$", "")) || 0;
+  const subtotal = cartItems.reduce((sum, item) => sum + parsePrice(item.price), 0);
+  const taxes = subtotal * 0.15;
+  const total = subtotal + taxes;
+
   const submitPayment = async () => {
+    if (!stripe || !elements) {
+      setMessage("Stripe is not loaded yet.");
+      return;
+    }
 
     if (!currentUser) {
       setMessage("You must be logged in.");
@@ -173,7 +153,7 @@ function CheckoutFormInner() {
             // 👇 FREE ORDER PAYMENT INFO
             paymentInfo: {
               paymentSuccessful: true,
-              squarePaymentId: null,
+              stripePaymentIntentId: null,
               paymentMethod: "Free",
               lastFour: null,
               payoutTransfer: false,
@@ -253,29 +233,52 @@ function CheckoutFormInner() {
     try {
       setMessage("Processing payment...");
 
-      if (!card) {
-        setMessage("Card form not ready");
+      const clientSecret = await createPaymentIntent(Math.round(total * 100), "usd");
+      if (!clientSecret) throw new Error(paymentError || "Failed to create PaymentIntent");
+
+      // 2️⃣ Confirm payment
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: formData.billingFullName,
+              email: formData.email,
+              address: {
+                line1: formData.billingAddress,
+                city: formData.billingCity,
+                state: formData.billingState,
+                postal_code: formData.billingZip,
+              },
+            },
+          },
+        }
+      );
+
+      if (error) {
+        setMessage(error.message);
         return;
       }
 
-      const result = await card.tokenize();
-
-      if (result.status !== "OK") {
-        setMessage("Card tokenization failed");
-        return;
+      if (!paymentIntent || !paymentIntent.id) {
+        throw new Error("Payment failed: No PaymentIntent returned.");
       }
 
-      const payment = await processPayment({
-        amount: Math.round(total * 100),
-        nonce: result.token
+      // Fetch last4 from server
+      const pmResponse = await fetch("https://getpaymentmethod-k3qu3645ya-uc.a.run.app", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentIntentId: paymentIntent.id }),
       });
 
-      if (!payment) {
-        setMessage("Payment failed");
+      const pmData = await pmResponse.json();
+      const lastFour = pmData.last4 || "N/A";
+
+      if (paymentIntent.status !== "succeeded") {
+        setMessage("Payment was not successful.");
         return;
       }
-
-      const lastFour = payment.cardDetails?.card?.last4 || "N/A";
       
 
       // 3️⃣ Create Orders in Firestore
@@ -319,7 +322,7 @@ function CheckoutFormInner() {
           },
           paymentInfo: {
             paymentSuccessful: true,
-            squarePaymentId: payment.id,
+            stripePaymentIntentId: paymentIntent.id,
             paymentMethod: "Card",
             lastFour: lastFour,
             payoutTransfer: false,
@@ -460,7 +463,7 @@ function CheckoutFormInner() {
         <h4 className="cb-section-title">Payment Information</h4>
         {total > 0 && (
           <div className="cb-card-light">
-            <div id="card-container"></div>
+            <CardElement options={{ style: cardStyleLight }} />
           </div>
         )}
       </div>
@@ -482,7 +485,7 @@ function CheckoutFormInner() {
         </div>
       </div>
 
-      <button type="submit" className="cb-submit-btn" disabled={(total > 0 && !card) || paymentLoading || paymentComplete}>
+      <button type="submit" className="cb-submit-btn" disabled={!stripe || paymentLoading || paymentComplete}>
         {paymentLoading ? "Processing..." : "Pay Now"}
       </button>
 
@@ -500,5 +503,30 @@ function CheckoutFormInner() {
 }
 
 export default function CheckoutForm() {
-  return <CheckoutFormInner />;
+  return (
+    <Elements stripe={stripePromise}>
+      <CheckoutFormInner />
+    </Elements>
+  );
 }
+
+const cardStyleLight = {
+  style: {
+    base: {
+      color: "#000000",
+      iconColor: "#000000",
+      backgroundColor: "#ffffff",
+      fontFamily: "Arial, sans-serif",
+      fontSize: "16px",
+      lineHeight: "24px",
+      "::placeholder": { color: "#555" },
+      caretColor: "#000000",
+      "::selection": { color: "#fff", backgroundColor: "#000" },
+      ":-webkit-autofill": { color: "#000000" },
+    },
+    invalid: {
+      color: "#ff0000",
+      iconColor: "#ff0000",
+    },
+  },
+};

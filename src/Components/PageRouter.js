@@ -93,7 +93,7 @@ const PageRouter = () => (
     <Route path="/bookmarks" element={<ProtectedRoute><PageWithNavbar><BookmarksPage /></PageWithNavbar></ProtectedRoute>} />
     <Route path="/testpage" element={<ProtectedRoute><PageWithNavbar><TestPage /></PageWithNavbar></ProtectedRoute>} />
 
-    <Route path="/adminpanel" element={<ProtectedRoute allowedEmail="mitchellalvizures@gmail.com"><PageWithNavbar><AdminPanel /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/adminpanel" element={<ProtectedRoute allowedEmail="mitchellalvizures@gmail.com" redirectTo="/signin"><PageWithNavbar><AdminPanel /></PageWithNavbar></ProtectedRoute>} />
   </Routes>
 );
 

@@ -8,7 +8,8 @@ import Notifications from '../Notifications/Notifications';
 import DropDownSocials from './DropDownSocials';
 import DropDownLoadBoard from './DropDownLoadBoard'; // new import
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import useGetProfilePic from "../../Hooks/useGetProfilePic";
 
 function NavbarWithPost() {
   const navigate = useNavigate();
@@ -18,22 +19,18 @@ function NavbarWithPost() {
   const [showSocialDropdown, setShowSocialDropdown] = useState(false);
   const [showDirectoryDropdown, setShowDirectoryDropdown] = useState(false);
   const [showLoadboardDropdown, setShowLoadboardDropdown] = useState(false); // new
-  const [userPhoto, setUserPhoto] = useState(null);
 
   const dropdownRef = useRef(null);
   const notificationsRef = useRef(null);
   const socialRef = useRef(null);
   const directoryRef = useRef(null);
   const loadboardRef = useRef(null); // new
+  
 
-  // Fetch Google profile photo
-  useEffect(() => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user?.photoURL) {
-      setUserPhoto(user.photoURL);
-    }
-  }, []);
+  const auth = getAuth();
+  const userId = auth.currentUser?.uid;
+
+  const profilePic = useGetProfilePic(userId);
 
   const handlePostClick = () => setShowOverlay(true);
   const handleCloseOverlay = () => setShowOverlay(false);
@@ -225,7 +222,14 @@ function NavbarWithPost() {
           </button>
           <button className="profile-btn" onClick={toggleDropdown}>
             <img src={`${process.env.PUBLIC_URL}/profile.png`} alt="Profile" />
-            {userPhoto && <img src={userPhoto} alt="User" className="profile-photo" />}
+            <img 
+              src={profilePic || `${process.env.PUBLIC_URL}/default-profile.png`} 
+              alt="User" 
+              className="profile-photo" 
+              onError={(e) => {
+                e.target.src = `${process.env.PUBLIC_URL}/default-profile.png`;
+              }} 
+            />
           </button>
         </div>
 

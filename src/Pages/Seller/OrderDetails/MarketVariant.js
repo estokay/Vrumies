@@ -110,9 +110,23 @@ export default function MarketVariant({ orderId }) {
     }
   };
 
-  const handleClear = () => {
-    setCarrier("");
-    setTrackingNumber("");
+  const handleClear = async () => {
+    if (!orderId) return;
+
+    try {
+      const orderRef = doc(db, "Orders", orderId);
+
+      await updateDoc(orderRef, {
+        "marketSpecific.Carrier": "",
+        "marketSpecific.trackingNumber": "",
+      });
+
+      setCarrier("");
+      setTrackingNumber("");
+
+    } catch (err) {
+      console.error("Error clearing tracking info:", err);
+    }
   };
 
   if (!order) {

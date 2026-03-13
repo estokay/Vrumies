@@ -6,15 +6,15 @@ import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
 
-const ProtectedRoute = ({ allowedEmail, children }) => {
+const ProtectedRoute = ({ allowedEmail, redirectTo = "/", children }) => {
   const [user, loading] = useAuthState(auth);
 
   if (loading) return <div>Loading...</div>; // optional loading state
 
-  if (!user) return <Navigate to="/signin" replace />; // not signed in
+  if (!user) return <Navigate to={redirectTo} replace />; // not signed in
 
   if (allowedEmail && user.email !== allowedEmail)
-    return <Navigate to="/" replace />; // not authorized
+    return <Navigate to={redirectTo} replace />; // not authorized
 
   return children; // authorized
 };

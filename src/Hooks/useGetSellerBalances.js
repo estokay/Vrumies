@@ -54,10 +54,12 @@ export default function useGetSellerBalances() {
               order.sellerInfo?.sellerDispute === false;
 
             if (common) {
+              const netPrice = price * 0.95;
+
               if (order.paymentInfo?.payoutTransfer === false) {
-                availableSum += price;
+                availableSum += netPrice;
               } else if (order.paymentInfo?.payoutTransfer === true) {
-                sentSum += price;
+                sentSum += netPrice;
               }
             }
           });

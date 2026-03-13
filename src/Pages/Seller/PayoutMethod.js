@@ -26,6 +26,9 @@ export default function PayoutMethod() {
 
       {/* MAIN CONTENT */}
       <div className="payoutmethods-content">
+        <div className="payoutmethods-fee-banner">
+          ⚠️ A 5% seller fee is applied to every order
+        </div>
         {/* LEFT COLUMN */}
         <div className="payoutmethods-left">
           <img

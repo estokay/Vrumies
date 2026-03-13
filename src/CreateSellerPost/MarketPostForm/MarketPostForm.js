@@ -18,7 +18,7 @@ const MarketPostForm = () => {
   const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '', description: '', location: '', city: '', state: '',
-    link: '', tokens: '', images: [], condition: '', shippingTime: '', price: '',
+    link: '', tokens: 0, images: [], condition: '', shippingTime: '', price: '',
   });
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);

@@ -131,9 +131,12 @@ const ViewProfileSidePanel = () => {
       {/* Profile image */}
       <div className="vpsp-profile-image-wrapper">
         <img
-          src={user.profilepic || "https://via.placeholder.com/150"}
+          src={user.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`}
           alt={user.username}
           className="vpsp-profile-image"
+          onError={(e) => {
+            e.target.src = `${process.env.PUBLIC_URL}/default-profile.png`;
+          }}
         />
         <FaExpand
           className="vpsp-maximize-icon"

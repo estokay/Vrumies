@@ -9,3 +9,4 @@ export * from "./backendFunctions/creditTokens.js";
 export * from "./backendFunctions/setOrderStatus.js";
 export * from "./backendFunctions/updateOrderStatus.js";
 export * from "./backendFunctions/getFreightBookingPrice.js";
+export * from "./backendFunctions/createSquarePayment.js";

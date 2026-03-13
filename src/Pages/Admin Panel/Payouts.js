@@ -106,13 +106,13 @@ function Payouts() {
 
                 {order.price != null && (
                   <div>
-                    <strong>Amount:</strong> ${order.price ?? 0}
+                    <strong>Amount (after 5% fee):</strong> ${((order.price ?? 0) * 0.95).toFixed(2)}
                   </div>
                 )}
 
                 {order.postData?.price != null && (
                   <div>
-                    <strong>Amount:</strong> {order.postData.price ?? 0}
+                    <strong>Amount (after 5% fee):</strong> ${(Number((order.postData.price ?? "0").replace(/\$/g, "")) * 0.95).toFixed(2)}
                   </div>
                 )}
               </li>

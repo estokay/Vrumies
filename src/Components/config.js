@@ -17,3 +17,20 @@ export const STRIPE_PUBLIC_KEYS = {
 };
 
 export const STRIPE_API_KEY = STRIPE_PUBLIC_KEYS[ENV.stripeMode];
+
+export const MODE = {
+  squareMode: "sandbox"
+};
+
+export const SQUARE_APP_IDS = {
+  sandbox: 'sandbox-sq0idb-tTYhzOc2LyiJfGtfly1t1g',
+  production: 'sq0idp-97HKWnSfFj162v6fqGDH0w'
+};
+
+export const SQUARE_LOC_IDS = {
+  sandbox: 'LQYFMFQE0QAPP',
+  production: 'YP9F6PNK9YX2A'
+};
+
+export const SQUARE_APPLICATION_ID = SQUARE_APP_IDS[MODE.squareMode];
+export const SQUARE_LOCATION_ID = SQUARE_LOC_IDS[MODE.squareMode];
