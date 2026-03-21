@@ -7,6 +7,8 @@ import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 import ProfileRating from "../../Components/Reviews/ProfileRating";
 import axios from "axios";
 import { CLOUDINARY_CONFIG } from "../../Components/config";
+import uploadGoogleProfilePic from "../../AsyncFunctions/uploadGoogleProfilePic";
+import useGetProfilePic from "../../Hooks/useGetProfilePic";
 
 export default function MyProfileSidePanel() {
   const [userData, setUserData] = useState(null);
@@ -18,6 +20,7 @@ export default function MyProfileSidePanel() {
   const [usernameText, setUsernameText] = useState("");
   const [uploadingPic, setUploadingPic] = useState(false);
   const [notification, setNotification] = useState("");
+  const profilePic = useGetProfilePic(userId);
 
   useEffect(() => {
     const auth = getAuth();
@@ -126,6 +129,37 @@ export default function MyProfileSidePanel() {
     setUploadingPic(false);
   };
 
+  const handleResetProfilePic = async () => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!userId || !currentUser?.photoURL) return;
+
+    setUploadingPic(true);
+
+    try {
+      // 🔥 Get latest Google photo
+      const googlePhoto = currentUser.photoURL;
+
+      // 🔥 Upload to Cloudinary
+      const newUrl = await uploadGoogleProfilePic(googlePhoto);
+
+      const userRef = doc(db, "Users", userId);
+
+      await updateDoc(userRef, { profilepic: newUrl }).catch(async () => {
+        await setDoc(userRef, { profilepic: newUrl }, { merge: true });
+      });
+
+      setUserData((prev) => ({ ...prev, profilepic: newUrl }));
+
+      showNotification("Reset to Google profile picture!", 2000);
+    } catch (err) {
+      console.error("Error resetting profile picture:", err);
+    }
+
+    setUploadingPic(false);
+  };
+
   const handleShareProfile = () => {
     const profileUrl = `${window.location.origin}/viewprofile/${userId}`;
 
@@ -158,8 +192,9 @@ export default function MyProfileSidePanel() {
         <>
           <div className="mpsp-image-wrapper">
 
-            <img 
-              src={userData.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`} 
+            <img
+              key={profilePic} 
+              src={profilePic || `${process.env.PUBLIC_URL}/default-profile.png`} 
               alt="Profile" 
               className="mpsp-image"
               onError={(e) => {
@@ -180,6 +215,13 @@ export default function MyProfileSidePanel() {
               className="mpsp-camera-icon"
               onClick={() => document.getElementById("profilePicUpload").click()}
             />
+
+            <button
+              className="mpsp-reset-btn"
+              onClick={handleResetProfilePic}
+            >
+              Reset Pic
+            </button>
 
             <FaExpand
               className="mpsp-maximize-icon"

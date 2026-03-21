@@ -1,0 +1,177 @@
+.mobile-navbar-wrapper{
+  position:fixed;
+  bottom:18px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  z-index:2000;
+}
+
+/* NAVBAR */
+
+.mobile-navbar{
+
+  width:92%;
+  max-width:520px;
+  height:64px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+
+  border-radius:28px;
+
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+
+  background:rgba(20,20,25,0.65);
+
+  overflow: visible;
+
+  position:relative;
+
+
+}
+
+/* gap so icons don't collide with button */
+
+.nav-gap{
+  width:80px;
+}
+
+/* nav buttons */
+
+.mobile-nav-btn{
+  background:transparent;
+  border:none;
+  color:white;
+  cursor:pointer;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:2px;
+
+  font-size:22px;
+}
+
+/* labels under buttons */
+
+.mobile-nav-label{
+  font-size:11px;
+  opacity:0.7;
+  line-height:1;
+}
+
+/* profile */
+
+.mobile-nav-profile-pic{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid white;
+}
+
+/* CREATE BUTTON */
+
+.create-post-btn{
+
+  position:absolute;
+
+  bottom:32px;
+
+  width:70px;
+  height:70px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:28px;
+  color:rgb(255, 255, 255);
+
+  background:linear-gradient(
+    135deg,
+    #085808,
+    #00ff00,
+    #69c017
+  );
+
+  border:none;
+
+  cursor:pointer;
+}
+
+/* PROFILE DROPDOWN */
+
+.profile-dropdown{
+  position:absolute;
+  bottom:60px;
+  right:0;
+
+  background:#111;
+  border:2px solid #fff;
+
+  border-radius:12px;
+
+  padding:8px;
+
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+
+  min-width:150px;
+  z-index: 2100;
+}
+
+.dropdown-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:10px;
+
+  font-size:16px;
+
+  color:#fff;
+
+  background:#000;
+
+  border:2px solid #fff;
+
+  border-radius:8px;
+
+  cursor:pointer;
+}
+
+.dropdown-btn:hover{
+  background:#222;
+}
+
+.dropdown-icon{
+  color:#00ff85;
+}
+
+.create-post-wrapper{
+  position:absolute;
+  bottom:8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* label under button */
+
+.create-post-label{
+  margin-top: -18px;
+  font-size:13px;
+  font-weight: 500;
+  opacity:0.7;
+  line-height:1;
+  color:white;
+}

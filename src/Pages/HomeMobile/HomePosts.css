@@ -1,0 +1,10 @@
+.home-posts {
+  width: 100%;
+}
+
+/* Desktop: posts take larger space */
+@media (min-width: 900px) {
+  .home-posts {
+    flex: 2;
+  }
+}

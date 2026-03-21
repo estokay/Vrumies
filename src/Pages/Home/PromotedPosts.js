@@ -33,19 +33,21 @@ function PromotedPosts() {
         const results = [];
 
         snapshot.forEach((docSnap) => {
-
           const data = docSnap.data();
+          const tokens = data.tokens;
 
-          if (allowedTypes.includes(data.type)) {
-
+          if (
+            allowedTypes.includes(data.type) &&
+            typeof tokens === "number" &&   // ✅ must already be a number
+            Number.isFinite(tokens) &&      // ✅ not NaN, not Infinity
+            tokens > 0                      // ✅ greater than 0
+          ) {
             results.push({
               id: docSnap.id,
-              tokens: data.tokens || 0,
+              tokens,
               ...data
             });
-
           }
-
         });
 
         /* SORT BY TOKENS USED (DESCENDING) */

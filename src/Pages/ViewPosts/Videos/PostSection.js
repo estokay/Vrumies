@@ -19,6 +19,7 @@ import {
   arrayUnion,
   arrayRemove,
   serverTimestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
@@ -163,6 +164,19 @@ function PostSection({ postId: propPostId }) {
   const handleDeletePost = () => {
     console.log("TODO: Delete Post");
     setShowDeletePostOverlay(true);
+  };
+
+  const handleConfirmDelete = async (id) => {
+    try {
+      // Delete the post from Firestore
+      await deleteDoc(doc(db, "Posts", id));
+      showNotification("Post deleted successfully!");
+      setShowDeletePostOverlay(false);
+      navigate("/"); // or redirect wherever
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      showNotification("Failed to delete post");
+    }
   };
 
   const handleLoadedMetadata = (e) => {
@@ -467,6 +481,7 @@ function PostSection({ postId: propPostId }) {
           postId={postId}
           isOpen={showDeletePostOverlay}
           onClose={() => setShowDeletePostOverlay(false)}
+          onConfirm={handleConfirmDelete}
         />
       )}
       {videoUrl && (

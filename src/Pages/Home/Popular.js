@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../Components/firebase";
 import {
   collection,
-  getDocs
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  where
 } from "firebase/firestore";
 import "./Popular.css";
 import PostRenderer from "../../Components/PostLayouts/PostRenderer";
@@ -29,41 +33,31 @@ function Popular() {
     const fetchPopularPosts = async () => {
 
       try {
+        const q = query(
+          collection(db, "Posts"),
+          where("likesCounter", ">", 0),
+          orderBy("likesCounter", "desc"),
+          limit(50)
+        );
 
-        const postsRef = collection(db, "Posts");
-        const snapshot = await getDocs(postsRef);
+        const snapshot = await getDocs(q);
 
-        const results = [];
+        const results = snapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() }))
+          .filter(({ type, likesCounter }) =>
+            allowedTypes.includes(type) &&
+            typeof likesCounter === "number" &&
+            Number.isFinite(likesCounter)
+          )
+          .slice(0, 20);
 
-        snapshot.forEach((docSnap) => {
-
-          const data = docSnap.data();
-
-          if (allowedTypes.includes(data.type)) {
-
-            results.push({
-              id: docSnap.id,
-              likesCounter: data.likesCounter || 0,
-              ...data
-            });
-
-          }
-
-        });
-
-        /* SORT BY LIKES */
-        results.sort((a, b) => b.likesCounter - a.likesCounter);
-
-        /* LIMIT TO 20 */
-        const topPosts = results.slice(0, 20);
-
-        setPosts(topPosts);
+        setPosts(results);
 
       } catch (error) {
         console.error("Error loading popular posts:", error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
 
     };
 

@@ -190,6 +190,30 @@
   animation: fadeInOut 2s forwards;
 }
 
+.mpsp-reset-btn {
+  position: absolute;
+  bottom: -10px;   /* slightly outside the image */
+  left: 120px;     /* adjust to align with circle edge */
+  transform: translateX(-50%);
+  background: #444;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.mpsp-image-wrapper:hover .mpsp-reset-btn {
+  opacity: 1;
+}
+
+.mpsp-reset-btn:hover {
+  background: #222;
+}
+
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
   10% { opacity: 1; transform: translateX(-50%) translateY(0); }

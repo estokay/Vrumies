@@ -1,0 +1,114 @@
+/* Mobile top navbar */
+.mobile-navbar-top {
+  overflow: visible; /* important so dropdown isn’t clipped */
+  box-sizing: border-box;
+}
+
+/* Mobile bottom navbar */
+.mobile-navbar-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 0;
+  z-index: 1000;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.5);
+}
+
+/* Buttons */
+.mobile-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.1s;
+}
+
+.mobile-btn:hover {
+  transform: scale(1.1);
+}
+
+.mobile-icon {
+  color: #fff;
+  font-size: 26px;
+}
+
+.profile-photo-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+/* Dropdown / Sidebar */
+.mobile-dropdown {
+  position: absolute;
+  top: 50px;           /* show below the button */
+  right: 0;            /* align to the right edge of button container */
+  left: auto;          /* override left */
+  transform: none;     /* no translation needed */
+  background-color: #111;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 90vw;         /* responsive */
+  max-width: 220px;    /* optional max width */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  overflow-x: hidden;
+  z-index: 2000;       /* above everything */
+}
+
+.mobile-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #000;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mobile-dropdown-btn:hover {
+  background-color: #222;
+}
+
+.dropdown-icon {
+  color: #0f0; /* neon green */
+}
+
+/* Sidebar for Explore */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background-color: #111;
+  padding: 10px;
+  box-shadow: 3px 0 10px rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1001;
+}
+
+.sidebar-category-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}

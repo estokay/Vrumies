@@ -1,0 +1,169 @@
+/* Root Container - Full Screen Mobile */
+.m-seller-overlay-root {
+  position: fixed;
+  inset: 0;
+  z-index: 4000; /* Higher than desktop overlays */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.m-seller-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+/* Mobile Panel */
+.m-seller-panel-container {
+  position: relative;
+  width: 85%;
+  max-width: 450px;
+  max-height: 85vh;
+  background-color: #0d0d0d;
+  background-image: url('https://res.cloudinary.com/dmjvngk3o/image/upload/v1755582346/CreateSellPostBackground_qgrcbx.png');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #f72b07; /* Seller Red */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -10px 30px rgba(247, 43, 7, 0.3);
+  overflow: hidden;
+  animation: sellerSlideUp 0.3s ease-out;
+}
+
+@keyframes sellerSlideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.m-seller-exit-trigger {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #f72b07;
+  font-size: 1.5rem;
+  color: #f72b07;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Header & Navigation */
+.m-seller-header-section {
+  padding: 0 1rem;
+}
+
+.m-seller-brand-title {
+  color: #f72b07;
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-align: center;
+  margin: 1.5rem 0 1rem 0;
+  text-shadow: 0 0 8px rgba(247, 43, 7, 0.6);
+  letter-spacing: 1px;
+}
+
+/* Horizontal Scroll for Types */
+.m-seller-type-scroller {
+  margin-left: 35px;
+  margin-right: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  overflow-x: visible;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+
+  -webkit-overflow-scrolling: touch; /* smooth momentum scrolling (iOS) */
+  scroll-behavior: smooth;
+  touch-action: pan-x; /* allow horizontal dragging */
+  cursor: grab;
+}
+
+.m-seller-type-scroller::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+.m-seller-category-tab {
+  flex: 0 0 auto;
+  padding: 8px 20px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #eee;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.m-seller-tab-active {
+  background: #f72b07;
+  color: #fff;
+  border-color: #f72b07;
+  box-shadow: 0 0 12px rgba(247, 43, 7, 0.5);
+}
+
+.m-seller-status-indicator {
+  text-align: center;
+  padding: 8px;
+  font-size: 0.85rem;
+  color: #ffffff;
+  background: rgba(0, 123, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+.m-seller-highlight-text {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Form Area Styling */
+.m-seller-content-viewport {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.m-seller-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Override existing form styles for mobile consistency */
+.m-seller-form-wrapper input[type="text"],
+.m-seller-form-wrapper textarea {
+  background: rgba(13, 13, 13, 0.9) !important;
+  border: 1px solid #f72b07 !important;
+  color: #ffffff !important;
+  padding: 14px !important;
+  border-radius: 10px !important;
+  font-size: 1rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.m-seller-form-wrapper .cspo-post-btn {
+  background-color: #f72b07 !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 16px !important;
+  font-weight: bold !important;
+  border-radius: 12px !important;
+  font-size: 1.1rem !important;
+  width: 100% !important;
+  box-shadow: 0 4px 15px rgba(247, 43, 7, 0.3) !important;
+  margin-top: 10px;
+}

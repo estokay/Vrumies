@@ -1,0 +1,56 @@
+.home-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px;
+  width: 100%;
+}
+
+/* Card wrapper for each post */
+.feed-card {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+/* Loading / Empty States */
+.feed-loading,
+.feed-empty {
+  color: #aaa;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Responsive adjustments */
+@media (min-width: 600px) {
+  .home-feed {
+    gap: 16px;
+  }
+
+  .feed-card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 900px) {
+  .home-feed {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .feed-card {
+    width: calc(50% - 10px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .feed-card {
+    width: calc(33.33% - 14px);
+  }
+}

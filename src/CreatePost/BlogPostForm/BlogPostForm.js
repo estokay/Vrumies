@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import BlogPostLocation from './BlogPostLocation';
 import BlogPostLink from './BlogPostLink';
@@ -12,6 +13,7 @@ import BlogPostImages from './BlogPostImages';
 import BlogPostTokens from './BlogPostTokens';
 
 const BlogPostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState('');
@@ -170,13 +172,13 @@ const BlogPostForm = () => {
   return (
     <form className="post-form" onSubmit={handleSubmit}>
       <label className="form-label">Title</label>
-      <input name="title" value={formData.title} onChange={handleChange} required />
+      <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 
       <label className="form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
-
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" required />
+      
       {/* TOGGLE BAR (STAYS HERE) */}
-      <div className="toggle-buttons-row">
+      <div className={isMobile ? "toggle-buttons-row-mobile" : "toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} onClick={() => toggleField('location')} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} />

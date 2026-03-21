@@ -56,15 +56,28 @@
   display: flex;
   gap: 10px;
   margin: 10px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 4px;
+}
+
+.toggle-buttons-row {
   justify-content: center;
 }
 
-.toggle-buttons-row img.active {
+.toggle-buttons-row-mobile {
+  justify-content: flex-start;
+}
+
+.toggle-buttons-row img.active,
+.toggle-buttons-row-mobile img.active {
   background-color: #00ff00;
   transform: scale(1.1);
 }
 
-.toggle-buttons-row img {
+.toggle-buttons-row img,
+.toggle-buttons-row-mobile img {
   width: 48px;
   height: 48px;
   background-color: #1a1a1a;
@@ -74,7 +87,8 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.toggle-buttons-row img:hover {
+.toggle-buttons-row img:hover,
+.toggle-buttons-row-mobile img:hover {
   background-color: #00ff00;
   transform: scale(1.05);
 }

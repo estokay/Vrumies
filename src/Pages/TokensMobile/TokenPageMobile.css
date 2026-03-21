@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.mp-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #1a202c;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mp-header {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 1rem;
+  color: #00FF00;
+  background-color: #000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.mp-main {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+/* SIDE PANEL */
+.mp-side-panel {
+  background-color: #000;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+  color: #fff;
+}
+.mp-logo img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 0.5rem; }
+.mp-side-title { font-size: 1.4rem; color: #00FF00; margin-bottom: 0.3rem; }
+.mp-side-text { font-size: 1rem; margin-bottom: 0.3rem; }
+.mp-token-count { font-size: 2rem; color: #00FF00; font-weight: bold; margin-bottom: 0.3rem; }
+.mp-side-subtext { font-size: 0.8rem; color: #888; }
+
+/* BODY */
+.mp-body {
+  background-color: #111;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #fff;
+}
+.mp-order-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.mp-quantity-selector { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.mp-qty-btn { background-color: #00FF00; border: none; border-radius: 50%; width: 32px; height: 32px; color: #000; font-weight: bold; cursor: pointer; }
+.mp-qty-display { color: #00FF00; font-weight: bold; font-size: 1rem; }
+.mp-qty-label { margin-left: 0.5rem; color: #fff; }
+.mp-total-section { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+
+.mp-card-section { margin-bottom: 1rem; }
+.mp-card-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.mp-card-names { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+.mp-card-names input { flex: 1; background: transparent; border: none; border-bottom: 1px solid #555; color: #fff; padding: 0.5rem; }
+.mp-card-exp-cvc { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.mp-pay-btn { width: 100%; padding: 0.75rem; background-color: #00FF00; color: #000; border: none; border-radius: 0.5rem; font-weight: bold; cursor: pointer; }
+
+/* HISTORY */
+.mp-history {
+  background-color: #000;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #fff;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.mp-history h2 { text-align: center; margin-bottom: 0.5rem; font-size: 1.2rem; }
+.mp-history-item { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; }
+.mp-history-tokens { color: #00FF00; font-weight: bold; }

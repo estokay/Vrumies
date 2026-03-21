@@ -47,19 +47,33 @@
 }
 
 /* Toggle icon buttons */
-.event-toggle-buttons-row {
+.event-toggle-buttons-row,
+.event-toggle-buttons-row-mobile {
   display: flex;
   gap: 10px;
   margin: 10px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 4px;
+}
+
+.event-toggle-buttons-row {
   justify-content: center;
 }
 
-.event-toggle-buttons-row img.active {
+.event-toggle-buttons-row-mobile {
+  justify-content: flex-start;
+}
+
+.event-toggle-buttons-row img.active, 
+.event-toggle-buttons-row-mobile img.active {
   background-color: #00ff00;
   transform: scale(1.1);
 }
 
-.event-toggle-buttons-row img {
+.event-toggle-buttons-row img, 
+.event-toggle-buttons-row-mobile img {
   width: 48px;
   height: 48px;
   background-color: #1a1a1a;
@@ -69,7 +83,8 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.event-toggle-buttons-row img:hover {
+.event-toggle-buttons-row img:hover, 
+.event-toggle-buttons-row-mobile img:hover {
   background-color: #00ff00; /* GREEN */
   transform: scale(1.05);
 }

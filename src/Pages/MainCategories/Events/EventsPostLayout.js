@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { FaComment } from 'react-icons/fa';
@@ -16,6 +16,11 @@ function EventsPostLayout({ id, images, title, createdAt, userId, eventDateTime,
   const [commentsCount, setCommentsCount] = useState(0);
   const [tokens, setTokens] = useState(0);
   const averageRating = useUserAverageRating(userId);
+  const location = useLocation();
+  const isMobileRoute = location.pathname.includes("mobile");
+  const postLink = isMobileRoute
+  ? `/eventpostmobile/${id}`
+  : `/eventpost/${id}`;
 
   const eventDate = useGetTimezoneDate(eventDateTime, timezone);
   const eventTime = useGetTimezoneTime(eventDateTime, timezone);
@@ -63,7 +68,7 @@ function EventsPostLayout({ id, images, title, createdAt, userId, eventDateTime,
   }, [id]);
 
   return (
-    <Link to={`/eventpost/${id}`} className="events-post-layout">
+    <Link to={postLink} className="events-post-layout">
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt="Creator" className="profile-pic" />

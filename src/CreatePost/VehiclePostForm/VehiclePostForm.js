@@ -3,6 +3,7 @@ import './VehiclePostForm.css';
 import { db } from '../../Components/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import AddressField from './AddressField';
 import LinkField from './LinkField';
@@ -11,6 +12,7 @@ import TokenField from './TokenField';
 import VehicleInfoField from './VehicleInfoField';
 
 const VehiclePostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -102,13 +104,13 @@ const VehiclePostForm = () => {
     <form className="post-form" onSubmit={handleSubmit}>
 
       <label className="form-label">Title</label>
-      <input name="title" value={formData.title} onChange={handleChange} required />
+      <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 
       <label className="form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" required />
 
       {/* TOGGLE BUTTONS */}
-      <div className="toggle-buttons-row">
+      <div className={isMobile ? "toggle-buttons-row-mobile" : "toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} onClick={() => toggleField('address')} className={activeField === 'address' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} className={activeField === 'link' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} className={activeField === 'image' ? 'active' : ''} />

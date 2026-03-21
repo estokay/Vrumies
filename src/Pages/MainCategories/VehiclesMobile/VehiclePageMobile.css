@@ -1,0 +1,130 @@
+.v-market-container {
+  background-color: #121212;
+  min-height: 100vh;
+  padding-bottom: 40px;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.v-market-header {
+  position: relative;
+  height: 200px; /* Increased height for mobile visibility */
+  /* Ensure the URL is correctly formatted and the gradient doesn't fully opaque the image */
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+              url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  border-bottom: 2px solid #00ff66; /* Neon green accent */
+  box-sizing: border-box;
+}
+
+.v-title-text { font-size: 24px; margin: 0; font-weight: 900; }
+.v-highlight { color: #00ff66; }
+.v-subtitle-text { font-size: 10px; opacity: 0.8; letter-spacing: 1px; }
+.v-header-logo {
+  position: absolute;
+  top: 10px;   /* distance from top */
+  right: 10px; /* distance from right */
+  width: 50px;
+  height: 50px;
+  z-index: 2;  /* above other content */
+}
+
+/* Search & Filter Bar */
+.v-search-bar-row {
+  display: flex;
+  padding: 15px;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  background: #121212;
+  z-index: 10;
+}
+
+.v-search-input-field {
+  flex: 1;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.v-filter-toggle-btn {
+  background: #00ff66;
+  border: none;
+  width: 45px;
+  border-radius: 8px;
+  color: black;
+  font-size: 18px;
+}
+
+/* Section Labels */
+.v-section-label {
+  font-size: 12px;
+  color: #00ff66;
+  padding: 10px 15px;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+/* Promoted Horizontal Scroll */
+.v-promoted-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 0 15px 15px;
+  scrollbar-width: none;
+}
+
+.v-card-promoted {
+  flex: 0 0 160px;
+  height: 220px !important;
+}
+
+/* Main Feed List */
+.v-main-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 15px;
+}
+
+.v-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  border: 1px solid #333;
+}
+
+.v-card-thumb-wrap {
+  position: relative;
+  height: 180px;
+}
+
+.v-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v-card-price-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 255, 102, 0.9);
+  color: black;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.v-card-details { padding: 12px; }
+.v-card-title { margin: 0 0 8px; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -1,0 +1,142 @@
+.vrm-mobile-settings-wrapper {
+  background: #000;
+  min-height: 100vh;
+  color: white;
+  font-family: sans-serif;
+  padding-bottom: 50px;
+}
+
+/* NAVIGATION TABS */
+.vrm-mobile-tabs-nav {
+  display: flex;
+  background: #0a0a0a;
+  border-bottom: 1px solid #1f1f1f;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.vrm-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 0;
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 12px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.vrm-nav-item svg {
+  font-size: 18px;
+}
+
+.vrm-nav-item.vrm-active {
+  color: #39FF14;
+  border-bottom: 2px solid #39FF14;
+}
+
+/* CONTENT AREA */
+.vrm-mobile-content-container {
+  padding: 20px;
+}
+
+.vrm-mob-section-title {
+  font-size: 20px;
+  color: #39FF14;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* REFERRAL MOBILE STYLE */
+.vrm-mob-referral-view {
+  text-align: center;
+}
+
+.vrm-mob-code-display {
+  background: #07161c;
+  color: #39FF14;
+  font-size: 24px;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px dashed #39FF14;
+}
+
+.vrm-mob-action-btn {
+  background: #39FF14;
+  color: black;
+  width: 100%;
+  padding: 15px;
+  border-radius: 30px;
+  font-weight: 800;
+  border: none;
+}
+
+/* BLOCKED CARDS MOBILE STYLE */
+.vrm-mob-user-card {
+  background: #07161c;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.vrm-mob-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vrm-mob-card-info {
+  flex: 1;
+}
+
+.vrm-mob-username {
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.vrm-mob-reason-label {
+  font-size: 10px;
+  color: #39FF14;
+  text-transform: uppercase;
+}
+
+.vrm-mob-reason-text {
+  font-size: 12px;
+  color: #ccc;
+  margin: 0;
+}
+
+.vrm-mob-unblock-btn {
+  background: transparent;
+  border: 1px solid #39FF14;
+  color: #39FF14;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* HELP MOBILE STYLE */
+.vrm-mob-contact-box {
+  background: #111;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  color: #39FF14;
+  border: 1px solid #222;
+}
+
+.vrm-mob-viewmode-view {
+  margin-top: 20px;
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { FaComment } from 'react-icons/fa';
@@ -14,6 +14,11 @@ function MarketPostLayout({ id, images, title, createdAt, userId, price }) {
   const [commentsCount, setCommentsCount] = useState(0);
   const [tokens, setTokens] = useState(0);
   const averageRating = useUserAverageRating(userId);
+  const location = useLocation();
+  const isMobileRoute = location.pathname.includes("mobile");
+  const postLink = isMobileRoute
+  ? `/marketpostmobile/${id}`
+  : `/marketpost/${id}`;
 
   const formattedDate = createdAt
     ? new Date(createdAt.seconds * 1000).toLocaleDateString()
@@ -58,7 +63,7 @@ function MarketPostLayout({ id, images, title, createdAt, userId, price }) {
   }, [id]);
 
   return (
-    <Link to={`/marketpost/${id}`} className="events-post-layout">
+    <Link to={postLink} className="events-post-layout">
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt="Creator" className="profile-pic" />
@@ -78,7 +83,7 @@ function MarketPostLayout({ id, images, title, createdAt, userId, price }) {
       </div>
 
       <div className="thumbnail-container">
-        {price && <span className="price-overlay">{price}</span>}
+        {price && <span className="price-overlay">{typeof price === "number" ? `$${price.toFixed(2)}` : price}</span>}
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Event Thumbnail'}

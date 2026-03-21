@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import AddressToggle from './AddressToggle';
 import LinkToggle from './LinkToggle';
@@ -14,6 +15,7 @@ import LoadToggle from './LoadToggle';
 import RoutesToggle from './RoutesToggle';
 
 const TruckPostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -239,12 +241,12 @@ const TruckPostForm = () => {
   ) : (
     <form className="truck-post-form" onSubmit={handleSubmit}>
       <label className="form-label">Title</label>
-      <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+      <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 
       <label className="form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" required />
 
-      <div className="truck-toggle-buttons-row">
+      <div className={isMobile ? "truck-toggle-buttons-row-mobile" : "truck-toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} alt="Address" onClick={() => toggleField('address')} className={activeField === 'address' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} alt="Link" onClick={() => toggleField('link')} className={activeField === 'link' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} alt="Image" onClick={() => toggleField('image')} className={activeField === 'image' ? 'active' : ''} />

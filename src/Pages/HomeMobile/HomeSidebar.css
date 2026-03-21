@@ -1,0 +1,13 @@
+.home-sidebar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Desktop: sidebar narrower than posts */
+@media (min-width: 900px) {
+  .home-sidebar {
+    flex: 1;
+  }
+}

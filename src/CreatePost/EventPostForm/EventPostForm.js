@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import EventLocationToggle from './EventLocationToggle';
 import EventLinkToggle from './EventLinkToggle';
@@ -14,6 +15,7 @@ import EventInfoToggle from './EventInfoToggle';
 import EventAddressToggle from './EventAddressToggle';
 
 const EventPostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState('');
@@ -195,13 +197,13 @@ const EventPostForm = () => {
   return (
     <form className="event-post-form" onSubmit={handleSubmit}>
       <label className="event-form-label">Title</label>
-      <input name="title" value={formData.title} onChange={handleChange} required />
+      <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 
       <label className="event-form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" required />
 
       {/* TOGGLE BAR (NOT COMPONENTIZED) */}
-      <div className="event-toggle-buttons-row">
+      <div className={isMobile ? "event-toggle-buttons-row-mobile" : "event-toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} onClick={() => toggleField('location')} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('images')} />

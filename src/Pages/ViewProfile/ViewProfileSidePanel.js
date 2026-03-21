@@ -8,6 +8,7 @@ import { addDoc, doc, getDoc, collection, query, where, getDocs, setDoc, serverT
 import ProfileRating from "../../Components/Reviews/ProfileRating";
 import { useFollow } from "../../Hooks/useFollow";
 import { useNavigate } from "react-router-dom";
+import useGetProfilePic from "../../Hooks/useGetProfilePic";
 
 const ViewProfileSidePanel = () => {
   const auth = getAuth();
@@ -19,6 +20,7 @@ const ViewProfileSidePanel = () => {
   const { isFollowing, toggleFollow, loading: followLoading } = useFollow(currentUserId, userId);
   const self = currentUserId == userId;
   const navigate = useNavigate();
+  const profilePic = useGetProfilePic(userId);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -132,7 +134,7 @@ const ViewProfileSidePanel = () => {
       {/* Profile image */}
       <div className="vpsp-profile-image-wrapper">
         <img
-          src={user?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`}
+          src={profilePic || `${process.env.PUBLIC_URL}/default-profile.png`}
           alt={user.username}
           className="vpsp-profile-image"
           onError={(e) => {
@@ -141,7 +143,7 @@ const ViewProfileSidePanel = () => {
         />
         <FaExpand
           className="vpsp-maximize-icon"
-          onClick={() => window.open(user.profilepic, "_blank")}
+          onClick={() => profilePic && window.open(profilePic, "_blank")}
         />
       </div>
 

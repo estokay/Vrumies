@@ -8,7 +8,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  max-height: 90vh; /* Max height for content */
+  max-height: 80vh; /* Max height for content */
 }
 
 .notifications-header {

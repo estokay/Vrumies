@@ -1,0 +1,124 @@
+/* OVERLAY (background dim) */
+.pm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.8);
+
+  display: flex;
+  align-items: flex-end;
+
+  z-index: 3000;
+}
+
+/* SLIDE UP SHEET */
+.pm-sheet {
+  width: 100%;
+  background: #1a1a1a;
+
+  border-radius: 20px 20px 0 0;
+
+  padding: 20px;
+
+  animation: slideUp 0.3s ease-out;
+
+  transition: transform 0.2s ease;
+  will-change: transform;
+
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+
+
+}
+
+/* HEADER */
+.pm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.pm-header h3 {
+  margin: 0;
+  color: white;
+}
+
+/* BODY */
+.pm-body {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.pm-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+
+  font-size: 16px;
+
+  color: white;
+  background: #222;
+
+  border: 1px solid #333;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.pm-btn:hover {
+  background: #333;
+}
+
+.pm-icon {
+  color: #00ff85;
+  font-size: 18px;
+}
+
+.pm-handle {
+  width: 40px;
+  height: 5px;
+  background: #555;
+  border-radius: 10px;
+  margin: 0 auto 10px auto;
+}
+
+.pm-close-btn {
+  margin-top: -25px;
+  width: 32px;
+  height: 32px;
+
+  background: white;
+  color: black;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.pm-close-btn:active {
+  transform: scale(0.9);
+}
+
+/* ANIMATION */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

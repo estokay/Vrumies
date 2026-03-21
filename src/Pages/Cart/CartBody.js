@@ -105,6 +105,8 @@ const getPostLink = (type, postId) => {
       return `/marketpost/${postId}`;
     case "directory":
       return `/directorypost/${postId}`;
+    case "trucks":
+      return `/truckpost/${postId}`;
     case "offer":
     default:
       return `/offerpost/${postId}`;

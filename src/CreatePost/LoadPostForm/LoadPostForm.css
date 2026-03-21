@@ -47,19 +47,38 @@
 }
 
 /* Toggle icon buttons */
-.toggle-buttons-row {
+.load-toggle-buttons-row,
+.load-toggle-buttons-row-mobile {
   display: flex;
   gap: 10px;
   margin: 10px 0;
+  overflow-x: auto;      /* enable horizontal scrolling */
+  overflow-y: hidden;    /* hide vertical overflow */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  padding: 4px 4px;
+}
+
+.load-toggle-buttons-row {
   justify-content: center;
 }
 
-.toggle-buttons-row img.active {
+.load-toggle-buttons-row-mobile {
+  justify-content: flex-start;
+}
+
+.load-toggle-buttons-row:active,
+.load-toggle-buttons-row-mobile:active {
+  cursor: grabbing;
+}
+
+.load-toggle-buttons-row img.active,
+.load-toggle-buttons-row-mobile img.active {
   background-color: #00ff00;
   transform: scale(1.1);
 }
 
-.toggle-buttons-row img {
+.load-toggle-buttons-row img,
+.load-toggle-buttons-row-mobile img {
   width: 48px;
   height: 48px;
   background-color: #1a1a1a;
@@ -67,9 +86,11 @@
   padding: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
 }
 
-.toggle-buttons-row img:hover {
+.load-toggle-buttons-row img:hover,
+.load-toggle-buttons-row-mobile img:hover {
   background-color: #00ff00;
   transform: scale(1.05);
 }

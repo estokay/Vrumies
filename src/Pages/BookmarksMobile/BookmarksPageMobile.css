@@ -1,0 +1,87 @@
+.bookmarksmobile-bookmarks-container {
+  background-color: #121212;
+  min-height: 100vh;
+  padding-bottom: 40px;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Header - Matching MarketPageMobile */
+.bookmarksmobile-bookmarks-header {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+              url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1756456649/bookmarks-background_mzvup9.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  border-bottom: 2px solid #00ff66;
+  box-sizing: border-box;
+}
+
+.bookmarksmobile-title-text { font-size: 24px; margin: 0; font-weight: 900; }
+.bookmarksmobile-highlight { color: #00ff66; }
+.bookmarksmobile-subtitle-text { font-size: 10px; opacity: 0.8; letter-spacing: 1px; }
+
+.bookmarksmobile-header-logo {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  filter: drop-shadow(0 0 5px #00ff66);
+}
+
+/* Section Labels */
+.bookmarksmobile-section-label {
+  font-size: 12px;
+  color: #00ff66;
+  padding: 15px 15px 10px;
+  margin: 0;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+/* Promoted Horizontal Scroll */
+.bookmarksmobile-promoted-scroll {
+  display: flex;
+  overflow: visible;
+  gap: 15px;
+  padding: 10px 15px 25px;
+  scrollbar-width: none; /* Hide scrollbar for clean look */
+}
+
+.bookmarksmobile-promoted-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.bookmarksmobile-promoted-card-wrapper {
+  flex: 0 0 270px;
+  height: 270px;
+  width: 270px;
+  overflow: visible;
+}
+
+/* Main Feed - Single Column */
+.bookmarksmobile-main-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 15px;
+}
+
+.bookmarksmobile-feed-item {
+  width: 270px;
+  min-height: 270px;
+  margin-bottom: 10px;
+}
+
+.bookmarksmobile-empty-msg {
+  text-align: center;
+  color: #888;
+  padding: 40px 0;
+  font-size: 14px;
+}

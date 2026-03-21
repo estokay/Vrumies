@@ -1,0 +1,166 @@
+.mobile-cart-page {
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  background: #121212;
+  min-height: 100vh;
+}
+
+.mobile-cart-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.mobile-cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mobile-cart-empty {
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.mobile-cart-item {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  align-items: center;
+}
+
+.mobile-cart-remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: #ff4d4d;
+  font-size: 0.9rem;
+}
+
+.mobile-cart-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.mobile-cart-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-cart-item-title {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+
+.mobile-cart-item-title:hover {
+  text-decoration: underline;
+}
+
+.mobile-cart-item-price {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.mobile-checkout-form {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+}
+
+.mobile-checkout-form-title {
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+.mobile-form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-form-label {
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.mobile-form-input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #222;
+  color: white;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.mobile-form-group-two {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mobile-card-container {
+  margin: 10px 0;
+}
+
+.mobile-order-summary {
+  background: rgba(50, 50, 50, 0.4);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.mobile-order-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.mobile-order-total {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.mobile-checkout-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #3a014f, #b000ff);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: opacity 0.2s ease;
+}
+
+.mobile-checkout-button:hover:not(.mobile-checkout-button-disabled) {
+  opacity: 0.85;
+}
+
+.mobile-checkout-button-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mobile-order-message {
+  margin-top: 10px;
+  color: #00aa00;
+  font-size: 0.9rem;
+}

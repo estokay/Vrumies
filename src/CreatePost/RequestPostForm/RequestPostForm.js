@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './RequestPostForm.css';
-
 import { db } from '../../Components/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
-
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import LocationField from './LocationField';
 import LinkField from './LinkField';
@@ -15,6 +14,7 @@ import TokensField from './TokensField';
 import UrgencyField from './UrgencyField';
 
 const RequestPostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -205,6 +205,7 @@ const RequestPostForm = () => {
         name="title"
         value={formData.title}
         onChange={handleChange}
+        placeholder="Write a title here"
         required
       />
 
@@ -213,11 +214,12 @@ const RequestPostForm = () => {
         name="description"
         value={formData.description}
         onChange={handleChange}
+        placeholder="Write a detailed description here"
         required
       />
-
+      
       {/* Toggle bar (UNCHANGED) */}
-      <div className="toggle-buttons-row">
+      <div className={isMobile ? "toggle-buttons-row-mobile" : "toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} onClick={() => toggleField('location')} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} />

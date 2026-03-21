@@ -49,19 +49,33 @@
 }
 
 /* Toggle icon buttons */
-.directory-toggle-buttons-row {
+.directory-toggle-buttons-row,
+.directory-toggle-buttons-row-mobile {
   display: flex;
   gap: 10px;
   margin: 10px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 4px;
+}
+
+.directory-toggle-buttons-row {
   justify-content: center;
 }
 
-.directory-toggle-buttons-row img.active {
+.directory-toggle-buttons-row-mobile {
+  justify-content: flex-start;
+}
+
+.directory-toggle-buttons-row img.active,
+.directory-toggle-buttons-row-mobile img.active {
   background-color: #f72b07;
   transform: scale(1.1);
 }
 
-.directory-toggle-buttons-row img {
+.directory-toggle-buttons-row img,
+.directory-toggle-buttons-row-mobile img {
   width: 48px;
   height: 48px;
   background-color: #1a1a1a;
@@ -71,7 +85,8 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.directory-toggle-buttons-row img:hover {
+.directory-toggle-buttons-row img:hover,
+.directory-toggle-buttons-row-mobile img:hover {
   background-color: #f72b07;
   transform: scale(1.05);
 }

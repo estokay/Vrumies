@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { FaComment } from 'react-icons/fa';
@@ -15,6 +15,11 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
   const [tokens, setTokens] = useState(0);
   const averageRating = useUserAverageRating(userId);
   const [videoDuration, setVideoDuration] = useState(null);
+  const location = useLocation();
+  const isMobileRoute = location.pathname.includes("mobile");
+  const postLink = isMobileRoute
+  ? `/videopostmobile/${id}`
+  : `/videopost/${id}`;
 
   const formattedDate = createdAt
     ? new Date(createdAt.seconds * 1000).toLocaleDateString()
@@ -78,7 +83,7 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
   }, [id]);
 
   return (
-    <Link to={`/videopost/${id}`} className="events-post-layout">
+    <Link to={postLink} className="events-post-layout">
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt="Creator" className="profile-pic" />

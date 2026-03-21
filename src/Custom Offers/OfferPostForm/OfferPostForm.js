@@ -5,18 +5,20 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import PostLocation from './PostLocation';
 import PostLink from './PostLink';
 import PostImages from './PostImages';
 import PostTokens from './PostTokens';
-import PostPrice from './PostPrice';
+import PostPrice from '../../Components/CreateSellerPost/Price/PostPrice';
 
 import useSendNotificationOffer from '../../Components/Notifications/useSendNotificationOffer';
 import useGetSellerId from '../../Hooks/useGetSellerId';
 
 
 const OfferPostForm = ({ originalPost }) => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState('');
@@ -46,7 +48,7 @@ const OfferPostForm = ({ originalPost }) => {
     link: '',
     tokens: 0,
     images: [],
-    price: ''
+    price: 0,
   });
 
   useSendNotificationOffer(notificationData || {});
@@ -220,12 +222,12 @@ const OfferPostForm = ({ originalPost }) => {
   return (
     <form className="mpf-post-form" onSubmit={handleSubmit}>
       <label className="mpf-form-label">Title</label>
-      <input name="title" value={formData.title} onChange={handleChange} required />
+      <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 
       <label className="mpf-form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" required />
 
-      <div className="mpf-toggle-buttons-row">
+      <div className={isMobile ? "mpf-toggle-buttons-row-mobile" : "mpf-toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} onClick={() => toggleField('location')} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} />
@@ -263,14 +265,7 @@ const OfferPostForm = ({ originalPost }) => {
       {activeField === 'price' && (
         <PostPrice
           value={formData.price}
-          onChange={(e) => {
-            let val = e.target.value.replace(/[^0-9.]/g, '');
-            const num = parseFloat(val);
-            setFormData(prev => ({
-              ...prev,
-              price: !isNaN(num) ? `$${num.toFixed(2)}` : ''
-            }));
-          }}
+          setFormData={setFormData}
         />
       )}
 

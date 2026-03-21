@@ -1,0 +1,26 @@
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #2f2f2f;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* Mobile: stacked content */
+.home-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Desktop layout */
+@media (min-width: 900px) {
+  .home-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}

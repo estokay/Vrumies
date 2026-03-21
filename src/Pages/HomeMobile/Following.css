@@ -1,0 +1,128 @@
+.following-panel {
+  width: 100%;
+  min-height: 300px;
+  background: #050505;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.following-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.following-header h3 {
+  color: #00ff88;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.following-subtitle {
+  font-size: 0.75rem;
+  color: #6f8a73;
+  margin-top: 2px;
+}
+
+/* SCROLL AREA */
+.following-scroll {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 12px 0;
+  flex: 1;
+}
+
+.following-scroll > *:first-child {
+  margin-left: 4px;
+}
+
+/* POST WRAPPER */
+.following-post-wrapper {
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+}
+
+/* SCROLLBAR */
+.following-scroll {
+  scrollbar-width: thin; 
+  scrollbar-color: #00ff66 transparent;
+}
+
+.following-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+.following-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.following-scroll::-webkit-scrollbar-thumb {
+  background: #00ff66;
+  border-radius: 3px;
+}
+
+/* LOADING / EMPTY */
+.following-loading,
+.following-empty {
+  color: #8aa38f;
+  font-size: 0.8rem;
+  margin-left: 4px;
+}
+
+/* TABLET / SMALL DESKTOP */
+@media screen and (min-width: 640px) {
+  .following-panel {
+    padding: 16px;
+  }
+
+  .following-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .following-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .following-post-wrapper {
+    width: 270px;
+    height: 270px;
+    box-sizing: border-box;
+  }
+
+  .following-scroll {
+    gap: 20px;
+    padding: 16px 0;
+  }
+}
+
+/* DESKTOP */
+@media screen and (min-width: 1024px) {
+  .following-panel {
+    padding: 20px;
+  }
+
+  .following-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .following-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .following-post-wrapper {
+    width: 270px;
+    height: 270px;
+  }
+
+  .following-scroll {
+    gap: 28px;
+    padding: 20px 0;
+  }
+}

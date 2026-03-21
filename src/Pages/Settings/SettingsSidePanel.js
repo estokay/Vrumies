@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaCode, FaUserTie, FaLifeRing } from "react-icons/fa";
+import { FaCode, FaUserTie, FaLifeRing, FaMobileAlt, FaDesktop } from "react-icons/fa";
 import "./SettingsSidePanel.css";
 
 export default function SettingsSidePanel({ onSelect }) {
@@ -32,6 +32,15 @@ export default function SettingsSidePanel({ onSelect }) {
       >
         <FaUserTie className="settings-icon" />
         <span>Blocked Users</span>
+      </button>
+
+      {/* ViewMode Button */}
+      <button
+        className={`settings-btn ${selected === "viewmode" ? "active" : ""}`}
+        onClick={() => handleSelect("viewmode")}
+      >
+        <FaDesktop className="settings-icon" />
+        <span>View Mode</span>
       </button>
 
       {/* Help Button */}

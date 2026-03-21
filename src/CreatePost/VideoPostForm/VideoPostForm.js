@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import AddressField from './AddressField';
 import LinkField from './LinkField';
@@ -13,6 +14,7 @@ import ImageUploadField from './ImageUploadField';
 import TokenField from './TokenField';
 
 const VideoPostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -74,13 +76,13 @@ const VideoPostForm = () => {
   ) : (
     <form className="post-form" onSubmit={handleSubmit}>
       <label className="form-label">Title</label>
-      <input name="title" value={formData.title} onChange={handleChange} />
+      <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" />
 
       <label className="form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} />
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" />
 
       {/* TOGGLE BAR */}
-      <div className="toggle-buttons-row">
+      <div className={isMobile ? "toggle-buttons-row-mobile" : "toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} onClick={() => toggleField('address')} className={activeField === 'address' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} onClick={() => toggleField('link')} className={activeField === 'link' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Video-Icon.png`} onClick={() => toggleField('video')} className={activeField === 'video' ? 'active' : ''} />

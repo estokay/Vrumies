@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { CLOUDINARY_CONFIG, GOOGLE_API_KEY } from '../../Components/config';
+import { useIsMobile } from '../../Hooks/useIsMobile';
 
 import PostLocation from './PostLocation';
 import PostLink from './PostLink';
@@ -12,13 +13,14 @@ import PostImages from './PostImages';
 import PostTokens from './PostTokens';
 import PostCondition from './PostCondition';
 import PostShippingTime from './PostShippingTime';
-import PostPrice from './PostPrice';
+import PostPrice from '../../Components/CreateSellerPost/Price/PostPrice';
 
 const MarketPostForm = () => {
+  const isMobile = useIsMobile();
   const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     title: '', description: '', location: '', city: '', state: '',
-    link: '', tokens: 0, images: [], condition: '', shippingTime: '', price: '',
+    link: '', tokens: 0, images: [], condition: '', shippingTime: '', price: 0,
   });
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -130,12 +132,12 @@ const MarketPostForm = () => {
   return (
     <form className="mpf-post-form" onSubmit={handleSubmit}>
       <label className="mpf-form-label">Title</label>
-      <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+      <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 
       <label className="mpf-form-label">Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
+      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Write a detailed description here" required />
 
-      <div className="mpf-toggle-buttons-row">
+      <div className={isMobile ? "mpf-toggle-buttons-row-mobile" : "mpf-toggle-buttons-row"}>
         <img src={`${publicPath}/PostCreationIcons/Map-Icon.png`} alt="Location" onClick={() => toggleField('location')} className={activeField==='location'?'active':''} />
         <img src={`${publicPath}/PostCreationIcons/Link-Icon.png`} alt="Link" onClick={() => toggleField('link')} className={activeField==='link'?'active':''} />
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} alt="Image" onClick={() => toggleField('image')} className={activeField==='image'?'active':''} />
@@ -154,12 +156,7 @@ const MarketPostForm = () => {
       {activeField === 'price' && (
         <PostPrice
           value={formData.price}
-          onChange={(e) => {
-            let value = e.target.value.replace(/[^0-9.]/g, '');
-            const floatVal = parseFloat(value);
-            value = !isNaN(floatVal) ? `$${floatVal.toFixed(2)}` : '$0.00';
-            setFormData(prev => ({ ...prev, price: value }));
-          }}
+          setFormData={setFormData}
         />
       )}
 

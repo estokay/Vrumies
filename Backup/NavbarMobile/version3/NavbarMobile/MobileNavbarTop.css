@@ -1,0 +1,192 @@
+/* ------------------------- */
+/* Top Navbar */
+.top-navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+  box-sizing: border-box;
+}
+
+.top-navbar-left,
+.top-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.top-navbar-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+
+.top-navbar-btn:hover {
+  transform: scale(1.1);
+}
+
+.top-navbar-icon {
+  color: #fff;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+/* Notifications Dropdown */
+.notifications-wrapper {
+  position: relative;
+}
+
+.top-navbar-notifications-dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  min-width: 150px;
+  max-width: 220px;
+  background-color: #111;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2000;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  box-sizing: border-box;
+}
+
+.top-navbar-notification-empty {
+  color: #fff;
+  padding: 10px;
+}
+
+/* ------------------------- */
+/* Top Slide-Down Sidebar */
+.top-navbar-sidebar-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 90vh;
+  background: rgba(20,20,20,0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 1100;
+  overflow-y: auto;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+  box-sizing: border-box;
+}
+
+.top-navbar-sidebar-top.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Sidebar Close Button */
+.sidebar-close-btn {
+  align-self: flex-end;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.05);
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Modern Category Card */
+.sidebar-category.modern {
+  background: rgba(30,30,30,0.7);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+.sidebar-category-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00ff99;
+  margin-bottom: 10px;
+}
+
+/* Grid layout for buttons */
+.sidebar-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* Modern button design */
+.sidebar-btn.modern-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(0,255,153,0.1);
+  color: #00ff99;
+  border: 1px solid rgba(0,255,153,0.3);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar-btn.modern-btn:hover {
+  background: rgba(0,255,153,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0,255,153,0.3);
+}
+
+.sidebar-btn-icon {
+  font-size: 20px;
+}
+
+.sidebar-btn-text {
+  font-size: 13px;
+}
+
+/* Scrollbar */
+.top-navbar-sidebar-top::-webkit-scrollbar {
+  width: 6px;
+}
+
+.top-navbar-sidebar-top::-webkit-scrollbar-thumb {
+  background-color: rgba(0,255,153,0.4);
+  border-radius: 3px;
+}
+
+.top-navbar-sidebar-top::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.top-navbar-image-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}

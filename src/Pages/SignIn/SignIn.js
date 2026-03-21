@@ -8,6 +8,7 @@ import {
   setDoc  
 } from 'firebase/firestore';
 import generateUniqueReferralCode from "../../AsyncFunctions/generateUniqueReferralCode";
+import uploadGoogleProfilePic from "../../AsyncFunctions/uploadGoogleProfilePic";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -32,13 +33,19 @@ const SignIn = () => {
       if (!userSnap.exists()) {
         const referralCode = await generateUniqueReferralCode();
 
+        let profilePicUrl = "";
+
+        if (user.photoURL) {
+          profilePicUrl = await uploadGoogleProfilePic(user.photoURL);
+        }
+
         await setDoc(userRef, {
           userid: user.uid,
           username: user.displayName || 'Anonymous',
           aboutme: '',
           email: user.email || '',
           tokens: 0,
-          profilepic: user.photoURL || '', // just save Google photo URL
+          profilepic: profilePicUrl || '', // just save Google photo URL
           photos: [],
           banned: false,
           following: [],

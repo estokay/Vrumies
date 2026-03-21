@@ -1,0 +1,143 @@
+.ecnav-top-navbar-container {
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+  box-sizing: border-box;
+}
+
+.ecnav-top-navbar-left,
+.ecnav-top-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ecnav-top-navbar-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+
+.ecnav-top-navbar-btn:hover {
+  transform: scale(1.1);
+}
+
+.ecnav-top-navbar-icon {
+  color: #fff;
+  font-size: 26px;
+}
+
+/* Sidebar */
+.ecnav-top-navbar-sidebar-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 90vh;
+  background: rgba(20,20,20,0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 2500;
+  overflow-y: auto;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  border-radius: 0 0 16px 16px;
+}
+
+.ecnav-top-navbar-sidebar-top.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ecnav-sidebar-close-btn {
+  background: rgba(255,255,255,0.05);
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.ecnav-sidebar-category.modern {
+  background: rgba(30,30,30,0.7);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.ecnav-sidebar-category-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00ff99;
+  margin-bottom: 10px;
+}
+
+.ecnav-sidebar-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ecnav-sidebar-btn.modern-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,255,153,0.1);
+  color: #00ff99;
+  border: 1px solid rgba(0,255,153,0.3);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ecnav-sidebar-btn-icon {
+  font-size: 20px;
+}
+
+.ecnav-sidebar-btn-text {
+  font-size: 13px;
+}
+
+.ecnav-top-navbar-image-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.ecnav-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ecnav-sidebar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ecnav-top-navbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.ecnav-top-navbar-label {
+  font-size: 10px;
+  color: #fff;
+}
