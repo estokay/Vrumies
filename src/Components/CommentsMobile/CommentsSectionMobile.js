@@ -80,10 +80,12 @@ const CommentsSectionMobile = ({ postId }) => {
 
   const handleVote = async (type) => {
     if (!currentUserData) return alert('Login required');
+
     const userId = currentUserData.uid;
     const postRef = doc(db, 'Posts', postId);
 
     try {
+      // Step 1: Update arrays
       if (type === 'like') {
         await updateDoc(postRef, {
           likes: arrayUnion(userId),
@@ -95,6 +97,22 @@ const CommentsSectionMobile = ({ postId }) => {
           likes: arrayRemove(userId),
         });
       }
+
+      // ✅ Step 2: Recalculate counters (ADD THIS)
+      const updatedSnap = await getDoc(postRef);
+
+      if (updatedSnap.exists()) {
+        const updatedData = updatedSnap.data();
+
+        const likesCount = updatedData.likes?.length || 0;
+        const dislikesCount = updatedData.dislikes?.length || 0;
+
+        await updateDoc(postRef, {
+          likesCounter: likesCount,
+          dislikesCounter: dislikesCount,
+        });
+      }
+
     } catch (err) {
       console.error('Vote error:', err);
     }
@@ -138,10 +156,10 @@ const CommentsSectionMobile = ({ postId }) => {
         <span className="csm-count-label">{comments.length} Comments</span>
         <div className="csm-vote-group">
           <button className={`csm-vote-pill ${hasLiked ? 'liked' : ''}`} onClick={() => handleVote('like')}>
-            <FaThumbsUp /> {post?.likes?.length || 0}
+            <FaThumbsUp /> {post?.likesCounter ?? (post?.likes?.length || 0)}
           </button>
           <button className={`csm-vote-pill ${hasDisliked ? 'disliked' : ''}`} onClick={() => handleVote('dislike')}>
-            <FaThumbsDown /> {post?.dislikes?.length || 0}
+            <FaThumbsDown /> {post?.dislikesCounter ?? (post?.dislikes?.length || 0)}
           </button>
         </div>
       </div>

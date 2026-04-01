@@ -10,10 +10,12 @@ import PageHeader from '../../../Components/PageHeader';
 import '../../../App.css';
 import './EventPost.css';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const EventPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/eventpostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

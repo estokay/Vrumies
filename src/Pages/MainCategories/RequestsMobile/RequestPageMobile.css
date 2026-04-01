@@ -77,14 +77,19 @@
 .r-promoted-scroll {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
   gap: 15px;
-  padding: 0 15px 15px;
+  padding: 10px 15px 25px;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 .r-card-promoted {
-  flex: 0 0 160px;
-  height: 220px !important;
+  flex: 0 0 270px;
+  height: 270px;
+  width: 270px;
+  overflow: visible;
 }
 
 /* Main Feed List */

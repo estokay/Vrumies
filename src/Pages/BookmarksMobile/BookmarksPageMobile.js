@@ -20,7 +20,7 @@ const BookmarksPageMobile = () => {
       <header className="bookmarksmobile-bookmarks-header">
         <div className="bookmarksmobile-header-content">
           <h1 className="bookmarksmobile-title-text">
-            BOOK <span className="bookmarksmobile-highlight">MARKS</span>
+            BOOKMARKED<span className="bookmarksmobile-highlight"> POSTS</span>
           </h1>
           <p className="bookmarksmobile-subtitle-text">YOUR SAVED CONTENT</p>
         </div>

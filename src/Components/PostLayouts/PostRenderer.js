@@ -8,6 +8,7 @@ import TruckPostLayout from "../../Pages/MainCategories/Trucks/TruckPostLayout";
 import VehiclePostLayout from "../../Pages/MainCategories/Vehicles/VehiclePostLayout";
 import LoadPostLayout from "../../Pages/MainCategories/Loads/LoadPostLayout";
 import VideosPostLayout from "../../Pages/MainCategories/Videos/VideosPostLayout";
+import OfferPostLayout from "../../Custom Offers/OfferPostLayout";
 
 const PostLayouts = {
   video: VideosPostLayout,
@@ -19,6 +20,7 @@ const PostLayouts = {
   trucks: TruckPostLayout,
   vehicle: VehiclePostLayout,
   loads: LoadPostLayout,
+  offer: OfferPostLayout,
 };
 
 function PostRenderer({ post }) {

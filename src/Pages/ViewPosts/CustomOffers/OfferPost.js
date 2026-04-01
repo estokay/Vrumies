@@ -9,10 +9,12 @@ import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './OfferPost.css'; // renamed for clarity
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const OfferPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/offerpostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

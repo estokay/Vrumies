@@ -10,10 +10,12 @@ import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './DirectoryPost.css';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const DirectoryPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/directorypostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

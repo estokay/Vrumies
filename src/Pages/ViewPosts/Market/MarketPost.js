@@ -9,10 +9,12 @@ import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './MarketPost.css';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const MarketPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/marketpostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

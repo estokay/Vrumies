@@ -40,7 +40,9 @@ const LoadPageMobile = () => {
         <h3 className="l-section-label">PROMOTED</h3>
         <div className="l-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <LoadPostLayout key={post.id} {...post} />
+            <div key={post.id} className="l-card-promoted">
+              <LoadPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

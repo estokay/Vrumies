@@ -16,6 +16,8 @@
   border-radius: 20px 20px 0 0;
   padding: 20px 20px 40px 20px;
   animation: slideUp 0.3s ease-out;
+  max-height: 90%;
+  overflow-y: auto;
 }
 
 .v-filter-sheet-header {
@@ -27,7 +29,7 @@
 }
 
 .v-filter-group {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 .v-filter-group label {
@@ -37,21 +39,17 @@
   color: #888;
 }
 
-.v-radio-group {
-  display: flex;
-  gap: 10px;
-}
-
-.v-radio-group button {
-  flex: 1;
-  padding: 10px;
+.v-filter-group button {
+  margin: 3px 3px 0 0;
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #333;
   background: transparent;
   color: white;
+  font-size: 12px;
 }
 
-.v-radio-group button.active {
+.v-filter-group button.active {
   background: #00ff66;
   color: black;
   border-color: #00ff66;
@@ -60,15 +58,17 @@
 .v-price-inputs {
   display: flex;
   gap: 10px;
+  margin-top: 5px;
 }
 
 .v-price-inputs input {
   flex: 1;
   background: #222;
   border: 1px solid #333;
-  padding: 10px;
+  padding: 8px;
   border-radius: 8px;
   color: white;
+  font-size: 12px;
 }
 
 .v-apply-btn {
@@ -78,7 +78,44 @@
   border: none;
   border-radius: 12px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.v-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.v-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.v-chip:first-child {
+  font-weight: bold;
+}
+
+.v-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
+}
+
+.v-filter-group select {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 8px;
+  font-size: 13px;
 }
 
 @keyframes slideUp {

@@ -37,40 +37,6 @@
   color: #888;
 }
 
-.b-radio-group {
-  display: flex;
-  gap: 10px;
-}
-
-.b-radio-group button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background: transparent;
-  color: white;
-}
-
-.b-radio-group button.active {
-  background: #00ff66;
-  color: black;
-  border-color: #00ff66;
-}
-
-.b-price-inputs {
-  display: flex;
-  gap: 10px;
-}
-
-.b-price-inputs input {
-  flex: 1;
-  background: #222;
-  border: 1px solid #333;
-  padding: 10px;
-  border-radius: 8px;
-  color: white;
-}
-
 .b-apply-btn {
   width: 100%;
   padding: 15px;
@@ -79,6 +45,41 @@
   border-radius: 12px;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.b-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.b-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.b-chip:first-child {
+  font-weight: bold;
+}
+
+.b-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
+}
+
+.b-filter-group select {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 8px;
 }
 
 @keyframes slideUp {

@@ -13,8 +13,10 @@
 .r-filter-sheet {
   background: #1a1a1a;
   width: 100%;
+  max-height: 95%;
   border-radius: 20px 20px 0 0;
-  padding: 20px 20px 40px 20px;
+  padding: 20px;
+  overflow-y: auto;
   animation: slideUp 0.3s ease-out;
 }
 
@@ -26,49 +28,49 @@
   padding-bottom: 10px;
 }
 
-.r-filter-group {
-  margin: 20px 0;
-}
-
-.r-filter-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: #888;
-}
-
-.r-radio-group {
+.r-filter-sheet-body {
+  margin-top: 10px;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.r-radio-group button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background: transparent;
-  color: white;
-}
-
-.r-radio-group button.active {
-  background: #00ff66;
-  color: black;
-  border-color: #00ff66;
-}
-
-.r-price-inputs {
+.r-filter-section {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
 }
 
-.r-price-inputs input {
-  flex: 1;
-  background: #222;
-  border: 1px solid #333;
-  padding: 10px;
-  border-radius: 8px;
-  color: white;
+.r-filter-section-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: #72ff6a;
+  cursor: pointer;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.r-filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.r-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  color: #fff;
+}
+
+.r-filter-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: #00ff66;
 }
 
 .r-apply-btn {
@@ -79,6 +81,66 @@
   border-radius: 12px;
   font-weight: bold;
   margin-top: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.r-filter-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* dropdown style */
+.r-filter-select {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 8px;
+}
+
+/* chips */
+.r-filter-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.r-filter-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.r-filter-chip:first-child {
+  font-weight: bold;
+}
+
+.r-filter-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
+}
+
+.r-filter-price-row {
+  display: flex;
+  gap: 10px;
+}
+
+.r-filter-input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #1c1c1c;
+  border: 1px solid #2a2a2a;
+  color: white;
 }
 
 @keyframes slideUp {

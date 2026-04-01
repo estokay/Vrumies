@@ -40,7 +40,9 @@ const TruckPageMobile = () => {
         <h3 className="t-section-label">PROMOTED</h3>
         <div className="t-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <TruckPostLayout key={post.id} {...post} />
+            <div key={post.id} className="t-card-promoted">
+              <TruckPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

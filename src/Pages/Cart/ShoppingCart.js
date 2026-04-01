@@ -4,8 +4,10 @@ import '../../App.css';
 import './ShoppingCart.css';
 import CartBody from './CartBody';
 import CheckoutForm from './CheckoutForm';
+import { useRedirectMobile } from "../../Hooks/useRedirectMobile";
 
 const ShoppingCart = () => {
+  useRedirectMobile(`/cartmobile/`);
   return (
     <div className="content-page">
       

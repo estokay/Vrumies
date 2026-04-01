@@ -56,17 +56,4 @@
 /* Individual cards inside posts container */
 .events-main-panel-posts > * {
   width: 270px !important;
-  height: 270px !important;
-  box-sizing: border-box; /* include padding/border in width/height */
-  border-radius: 10px;
-  background-color: #0a0f0a;
-  box-shadow: 0 0 12px #00ff66;
-  color: white;
-  text-align: left;
-  overflow: hidden; /* prevent internal content from breaking square */
-  flex-shrink: 0; /* prevent flex shrinking */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* optional, aligns content nicely */
-  padding: 12px; /* internal padding if needed */
 }

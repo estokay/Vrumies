@@ -3,13 +3,14 @@ import { initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import cors from "cors";
 import Stripe from "stripe";
+import { getStripeSecretKey } from "../config/stripeConfig.js";
 
 initializeApp();
 
 const corsHandler = cors({ origin: true });
 
 export const createPaymentIntent = functions.onRequest(
-  { secrets: [] },
+  { secrets: ["STRIPE_SECRET_TEST", "STRIPE_SECRET_LIVE"] },
   async (req, res) => {
     // Handle CORS preflight
     if (req.method === "OPTIONS") {

@@ -260,3 +260,19 @@
 .filterpanel-clear-btn:hover {
   background: #fee2e2;
 }
+
+.filterpanel-select {
+  width: 100%;
+  padding: 12px;
+  background: #000000;
+  border: 1px solid #00ff66;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filterpanel-select:focus {
+  outline: none;
+  border-color: #00ff66;
+}

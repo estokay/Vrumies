@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import "./CalendarDateRangeOverlay.css";
+import { useIsMobile } from "../../Hooks/useIsMobile";
 
 export default function CalendarDateRangeOverlay({
   range,
@@ -9,6 +10,8 @@ export default function CalendarDateRangeOverlay({
   onClose
 }) {
   const overlayRef = useRef(null);
+  const isMobile = useIsMobile();
+
 
   // Close when clicking outside
   useEffect(() => {
@@ -53,7 +56,7 @@ export default function CalendarDateRangeOverlay({
             mode="range"
             selected={range}
             onSelect={handleSelect}
-            numberOfMonths={2}
+            numberOfMonths={isMobile ? 1 : 2}
           />
         </div>
 

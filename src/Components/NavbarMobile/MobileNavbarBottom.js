@@ -58,10 +58,7 @@ const MobileNavbarBottom = () => {
               onClick={() => navigate("/myprofilemobile")}
             >
               <img
-                src={
-                  profilePic ||
-                  `${process.env.PUBLIC_URL}/default-profile.png`
-                }
+                src={profilePic}
                 alt="User"
                 className="mobile-nav-profile-pic"
                 onError={(e) => {

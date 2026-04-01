@@ -10,6 +10,7 @@ import LinkField from './LinkField';
 import ImageUploadField from './ImageUploadField';
 import TokenField from './TokenField';
 import VehicleInfoField from './VehicleInfoField';
+import PostPrice from '../../Components/CreatePost/Price/PostPrice';
 
 const VehiclePostForm = () => {
   const isMobile = useIsMobile();
@@ -34,6 +35,7 @@ const VehiclePostForm = () => {
     cylinders: '',
     drive: '',
     trim: '',
+    price: 0,
   });
 
   const [message, setMessage] = useState('');
@@ -116,6 +118,7 @@ const VehiclePostForm = () => {
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} className={activeField === 'image' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Token-Icon.png`} onClick={() => toggleField('tokens')} className={activeField === 'tokens' ? 'active' : ''} />
         <img src={`${publicPath}/PostCreationIcons/Vehicles-Icon.png`} onClick={() => toggleField('vehicleInfo')} className={activeField === 'vehicleInfo' ? 'active' : ''} />
+        <img src={`${publicPath}/PostCreationIcons/Price-Icon.png`} onClick={() => toggleField('price')} className={activeField === 'price' ? 'active' : ''} />
       </div>
 
       {activeField === 'address' && (
@@ -148,6 +151,13 @@ const VehiclePostForm = () => {
           drive={formData.drive}
           trim={formData.trim}
           onChange={handleChange} // same handler
+        />
+      )}
+
+      {activeField === 'price' && (
+        <PostPrice
+          value={formData.price}
+          setFormData={setFormData}
         />
       )}
 

@@ -193,8 +193,7 @@ export default function MyProfileSidePanel() {
           <div className="mpsp-image-wrapper">
 
             <img
-              key={profilePic} 
-              src={profilePic || `${process.env.PUBLIC_URL}/default-profile.png`} 
+              src={profilePic} 
               alt="Profile" 
               className="mpsp-image"
               onError={(e) => {

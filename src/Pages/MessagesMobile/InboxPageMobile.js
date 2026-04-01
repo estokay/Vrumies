@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../../AuthContext";
 import axios from "axios";
+import useGetProfilePic from "../../Hooks/useGetProfilePic";
 
 const CLOUDINARY_UPLOAD_PRESET = "vrumies_preset";
 const CLOUDINARY_CLOUD_NAME = "dmjvngk3o";
@@ -30,7 +31,7 @@ const InboxPageMobile = () => {
 
   const [messages, setMessages] = useState([]);
   const [otherUser, setOtherUser] = useState(null);
-
+  const otherProfilePic = useGetProfilePic(otherUser?.userId);
   const [newMessage, setNewMessage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [localPreview, setLocalPreview] = useState("");
@@ -61,11 +62,16 @@ const InboxPageMobile = () => {
           const otherId =
             data.userA === currentUser.uid ? data.userB : data.userA;
 
-          let other = { username: "Unknown", profilepic: "" };
+          let other = { username: "Unknown", profilepic: "", userId: otherId };
 
           try {
             const userSnap = await getDoc(doc(db, "Users", otherId));
-            if (userSnap.exists()) other = userSnap.data();
+            if (userSnap.exists()) {
+              other = {
+                userId: otherId,
+                ...userSnap.data()
+              };
+            }
           } catch {}
 
           return {
@@ -96,7 +102,12 @@ const InboxPageMobile = () => {
         data.userA === currentUser.uid ? data.userB : data.userA;
 
       const userSnap = await getDoc(doc(db, "Users", otherId));
-      if (userSnap.exists()) setOtherUser(userSnap.data());
+      if (userSnap.exists()) {
+        setOtherUser({
+          userId: otherId,
+          ...userSnap.data()
+        });
+      }
     };
 
     load();
@@ -154,6 +165,27 @@ const InboxPageMobile = () => {
     setLocalPreview("");
   };
 
+  const ChatRow = ({ chat, onClick }) => {
+    const profilePic = useGetProfilePic(chat.other.userId); // make sure you have userId
+
+    return (
+      <div className="mobileChatRow" onClick={onClick}>
+        <img
+          src={profilePic}
+          className="mobileAvatar"
+          onError={(e) => {
+            const src = e.currentTarget.src;
+            e.currentTarget.src = src + "?t=" + Date.now();
+          }}
+        />
+        <div>
+          <h4>{chat.other.username}</h4>
+          <p>{chat.lastMessage}</p>
+        </div>
+      </div>
+    );
+  };
+
   const uploadImage = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -183,23 +215,16 @@ const InboxPageMobile = () => {
     return (
       <div className="mobileInbox">
         <h2 className="mobileTitle">Messages</h2>
-
-        {chats.map((c) => (
-          <div
-            key={c.chatId}
-            className="mobileChatRow"
-            onClick={() => {
-              setActiveChat(c.chatId);
-              setView("chat");
-            }}
-          >
-            <img src={c.other.profilepic} className="mobileAvatar" />
-            <div>
-              <h4>{c.other.username}</h4>
-              <p>{c.lastMessage}</p>
-            </div>
-          </div>
-        ))}
+          {chats.map((c) => (
+            <ChatRow
+              key={c.chatId}
+              chat={c}
+              onClick={() => {
+                setActiveChat(c.chatId);
+                setView("chat");
+              }}
+            />
+          ))}
       </div>
     );
 
@@ -215,7 +240,13 @@ const InboxPageMobile = () => {
 
         {otherUser && (
           <div className="mobileProfile">
-            <img src={otherUser.profilepic} />
+            <img
+              src={otherProfilePic}
+              onError={(e) => {
+                const src = e.currentTarget.src;
+                e.currentTarget.src = src + "?t=" + Date.now();
+              }}
+            />
             <h3>{otherUser.username}</h3>
           </div>
         )}

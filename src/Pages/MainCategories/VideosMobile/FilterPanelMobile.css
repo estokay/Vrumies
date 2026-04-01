@@ -16,6 +16,8 @@
   border-radius: 20px 20px 0 0;
   padding: 20px 20px 40px 20px;
   animation: slideUp 0.3s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .videos-filter-sheet-header {
@@ -30,45 +32,20 @@
   margin: 20px 0;
 }
 
+.videos-filter-group select {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 8px;
+}
+
 .videos-filter-group label {
   display: block;
   margin-bottom: 8px;
   font-size: 12px;
   color: #888;
-}
-
-.videos-radio-group {
-  display: flex;
-  gap: 10px;
-}
-
-.videos-radio-group button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background: transparent;
-  color: white;
-}
-
-.videos-radio-group button.active {
-  background: #00ff66;
-  color: black;
-  border-color: #00ff66;
-}
-
-.videos-price-inputs {
-  display: flex;
-  gap: 10px;
-}
-
-.videos-price-inputs input {
-  flex: 1;
-  background: #222;
-  border: 1px solid #333;
-  padding: 10px;
-  border-radius: 8px;
-  color: white;
 }
 
 .videos-apply-btn {
@@ -79,6 +56,34 @@
   border-radius: 12px;
   font-weight: bold;
   margin-top: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.videos-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.videos-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.videos-chip:first-child {
+  font-weight: bold;
+}
+
+.videos-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
 }
 
 @keyframes slideUp {

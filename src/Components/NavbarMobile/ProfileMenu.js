@@ -91,6 +91,7 @@ const ProfileMenu = ({ isOpen, onClose }) => {
             <button
               key={idx}
               className="pm-btn"
+              onTouchEnd={(e) => e.stopPropagation()}
               onClick={() => {
                 btn.action();
                 onClose();

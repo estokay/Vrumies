@@ -2,30 +2,38 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
+import PostLocationMultiSelect from '../../../Components/FiltersMobile/PostLocationMultiSelect';
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
   const [availableLocations, setAvailableLocations] = useState([]);
-
-  
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [dateFilter, setDateFilter] = useState('Show All');
   const [sortBy, setSortBy] = useState('Show All');
-
-
-
-  
-
   const [availableUrgencies, setAvailableUrgencies] = useState([]);
   const [selectedUrgencies, setSelectedUrgencies] = useState([]);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
-  
+  const parsePrice = (price) => {
+    if (price === undefined || price === null) return null;
+
+    if (typeof price === 'number') return price;
+
+    if (typeof price === 'string') {
+      const num = Number(price.replace(/[^0-9.]/g, ''));
+      return isNaN(num) ? null : num;
+    }
+
+    return null;
+  };
 
   const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
     date: true,
     sort: true,
     urgency: true,
+    price: true,
   });
 
   // 🔹 Fetch directory posts + extract locations
@@ -50,7 +58,7 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         )
       );
 
-setAvailableUrgencies(urgencies);
+      setAvailableUrgencies(urgencies);
 
       // 🔹 Get unique locations from Firestore posts
       const locations = Array.from(
@@ -124,6 +132,21 @@ setAvailableUrgencies(urgencies);
       );
     }
 
+    // Price filter
+    if (minPrice !== '') {
+      filtered = filtered.filter(p => {
+        const priceNum = parsePrice(p.price);
+        return priceNum !== null && priceNum >= Number(minPrice);
+      });
+    }
+
+    if (maxPrice !== '') {
+      filtered = filtered.filter(p => {
+        const priceNum = parsePrice(p.price);
+        return priceNum !== null && priceNum <= Number(maxPrice);
+      });
+    }
+
     // Sorting
     if (sortBy === 'Newest') {
       filtered.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
@@ -147,6 +170,8 @@ setAvailableUrgencies(urgencies);
     allPosts,
     onFilteredPosts,
     selectedUrgencies,
+    minPrice,
+    maxPrice,
   ]);
 
   const toggleSection = (key) => {
@@ -166,32 +191,11 @@ setAvailableUrgencies(urgencies);
           <div className="filterpanel-options">
 
             {/* SHOW ALL */}
-            <label className="filterpanel-option">
-              <input
-                type="checkbox"
-                checked={selectedLocations.length === 0}
-                onChange={() => setSelectedLocations([])}
-              />
-              Show All
-            </label>
-
-            {/* FIRESTORE LOCATIONS */}
-            {availableLocations.map(loc => (
-              <label key={loc} className="filterpanel-option">
-                <input
-                  type="checkbox"
-                  checked={selectedLocations.includes(loc)}
-                  onChange={() =>
-                    setSelectedLocations(prev =>
-                      prev.includes(loc)
-                        ? prev.filter(l => l !== loc)
-                        : [...prev, loc]
-                    )
-                  }
-                />
-                {loc}
-              </label>
-            ))}
+            <PostLocationMultiSelect
+              options={availableLocations}
+              selected={selectedLocations}
+              onChange={setSelectedLocations}
+            />
           </div>
         )}
       </div>
@@ -203,66 +207,98 @@ setAvailableUrgencies(urgencies);
         </div>
         {sectionsOpen.date && (
           <div className="filterpanel-options">
-            {['Show All', 'Today', 'This Week', 'This Month', 'Last Three Months'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={dateFilter === opt}
-                  onChange={() => setDateFilter(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+              <option>Last Three Months</option>
+            </select>
           </div>
         )}
       </div>
 
       
 
-    {/* URGENCY */}
-    <div className="filterpanel-section">
-      <div
-        className="filterpanel-header"
-        onClick={() => toggleSection('urgency')}
-      >
-        Urgency <span>{sectionsOpen.urgency ? '−' : '+'}</span>
-      </div>
+      {/* URGENCY */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('urgency')}
+        >
+          Urgency <span>{sectionsOpen.urgency ? '−' : '+'}</span>
+        </div>
 
-      {sectionsOpen.urgency && (
-        <div className="filterpanel-options">
+        {sectionsOpen.urgency && (
+          <div className="filterpanel-options">
 
-          {/* SHOW ALL */}
-          <label className="filterpanel-option">
-            <input
-              type="checkbox"
-              checked={selectedUrgencies.length === 0}
-              onChange={() => setSelectedUrgencies([])}
-            />
-            Show All
-          </label>
-
-          {/* DYNAMIC URGENCY OPTIONS */}
-          {availableUrgencies.map(urgency => (
-            <label key={urgency} className="filterpanel-option">
+            {/* SHOW ALL */}
+            <label className="filterpanel-option">
               <input
                 type="checkbox"
-                checked={selectedUrgencies.includes(urgency)}
-                onChange={() =>
-                  setSelectedUrgencies(prev =>
-                    prev.includes(urgency)
-                      ? prev.filter(u => u !== urgency)
-                      : [...prev, urgency]
-                  )
-                }
+                checked={selectedUrgencies.length === 0}
+                onChange={() => setSelectedUrgencies([])}
               />
-              {urgency}
+              Show All
             </label>
-          ))}
-        </div>
-      )}
-    </div>
 
-      
+            {/* DYNAMIC URGENCY OPTIONS */}
+            {availableUrgencies.map(urgency => (
+              <label key={urgency} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedUrgencies.includes(urgency)}
+                  onChange={() =>
+                    setSelectedUrgencies(prev =>
+                      prev.includes(urgency)
+                        ? prev.filter(u => u !== urgency)
+                        : [...prev, urgency]
+                    )
+                  }
+                />
+                {urgency}
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* PRICE */}
+      <div className="filterpanel-section">
+        <div className="filterpanel-header" onClick={() => toggleSection('price')}>
+          Willing to Pay ($) <span>{sectionsOpen.price ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.price && (
+          <div className="filterpanel-options">
+            <div className="filterpanel-price-inline">
+              <span className="filterpanel-price-label"></span>
+              <input
+                type="number"
+                className="filterpanel-input"
+                placeholder="Min"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+              />
+
+              <span className="filterpanel-price-separator">–</span>
+
+              <span className="filterpanel-price-label"></span>
+              <input
+                type="number"
+                className="filterpanel-input"
+                placeholder="Max"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* SORT */}
       <div className="filterpanel-section">
@@ -271,16 +307,16 @@ setAvailableUrgencies(urgencies);
         </div>
         {sectionsOpen.sort && (
           <div className="filterpanel-options">
-            {['Show All', 'Newest', 'Oldest', 'Most Liked'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={sortBy === opt}
-                  onChange={() => setSortBy(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Newest</option>
+              <option>Oldest</option>
+              <option>Most Liked</option>
+            </select>
           </div>
         )}
       </div>

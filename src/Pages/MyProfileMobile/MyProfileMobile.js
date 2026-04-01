@@ -183,7 +183,7 @@ export default function MyProfileMobile() {
       <div className="mob-header-card">
         <div className="mob-avatar-container">
           <div className="mob-avatar-wrapper">
-            <img src={profilePic || ""} className="mob-avatar-img" alt="Profile" />
+            <img src={profilePic} className="mob-avatar-img" alt="Profile" />
             <button className="mob-avatar-edit-badge" onClick={() => profileInputRef.current.click()}>
               <FaCamera />
             </button>

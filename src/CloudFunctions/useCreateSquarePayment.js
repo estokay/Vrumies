@@ -1,19 +1,29 @@
 import { useState } from "react";
 import { useAuth } from "../AuthContext";
-import { SQUARE_APPLICATION_ID as SQUARE_APP_ID} from '../Components/config';
-import { SQUARE_LOCATION_ID as SQUARE_LOC_ID} from '../Components/config';
+import usePaymentModes from "../Hooks/usePaymentModes";
+import { SQUARE_APP_IDS, SQUARE_LOC_IDS } from "../Components/config";
 
 export default function useCreateSquarePayment() {
   const { currentUser } = useAuth();
+  const { squareMode, loading: modeLoading, error: modeError } = usePaymentModes();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const SQUARE_APPLICATION_ID = SQUARE_APP_ID;
-  const SQUARE_LOCATION_ID = SQUARE_LOC_ID;
+  const SQUARE_APPLICATION_ID = SQUARE_APP_IDS[squareMode];
+  const SQUARE_LOCATION_ID = SQUARE_LOC_IDS[squareMode];
 
   const processPayment = async ({ amount, nonce }) => {
+    if (modeLoading) {
+      throw new Error("Square configuration still loading.");
+    }
     if (!currentUser) throw new Error("User must be logged in.");
     if (!amount || !nonce) throw new Error("Missing amount or card nonce.");
+    if (!squareMode) throw new Error("Square mode not loaded.");
+    if (!SQUARE_APPLICATION_ID || !SQUARE_LOCATION_ID) {
+      throw new Error("Square configuration not ready.");
+    }
+    
 
     setLoading(true);
     setError(null);
@@ -47,5 +57,5 @@ export default function useCreateSquarePayment() {
     }
   };
 
-  return { processPayment, loading, error, SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID };
+  return { processPayment, loading, error: error || modeError, SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID, modeLoading };
 }

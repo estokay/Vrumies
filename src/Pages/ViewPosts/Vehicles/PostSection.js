@@ -403,6 +403,7 @@ function PostSection({ postId }) {
                   </a>
                 ) : "N/A"}
               </p>
+              <p><strong>Price:</strong>{" "} {post.price != null ? `$${post.price.toFixed(2)}` : "N/A"}</p>
             </div>
           )}
           {activeTab === "reviews" && (

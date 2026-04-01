@@ -1,11 +1,9 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { SquareClient, SquareEnvironment } from "square";
-import crypto from "crypto";
 import cors from "cors";
+import { getFirestore } from "firebase-admin/firestore";
 
 const corsHandler = cors({ origin: true });
-
-const SQUARE_MODE = "SANDBOX"; // change to "PRODUCTION" in production
 
 export const createSquarePayment = onRequest(
   {
@@ -35,10 +33,37 @@ export const createSquarePayment = onRequest(
         const authHeader = req.headers.authorization || "";
         if (!authHeader.startsWith("Bearer ")) return res.status(401).json({ error: "Unauthorized" });
 
-        const isProd = SQUARE_MODE === "PRODUCTION";
-        const accessToken = isProd ? process.env.SQUARE_ACCESS_TOKEN_PRODUCTION : process.env.SQUARE_ACCESS_TOKEN_SANDBOX;
-        const locationId = isProd ? process.env.SQUARE_LOCATION_ID_PRODUCTION : process.env.SQUARE_LOCATION_ID_SANDBOX;
-        const environment = isProd ? SquareEnvironment.Production : SquareEnvironment.Sandbox;
+        const db = getFirestore();
+
+        const configSnap = await db
+          .collection("SystemConfig")
+          .doc("PaymentProcessors")
+          .get();
+
+        if (!configSnap.exists) {
+          throw new Error("PaymentProcessors config missing");
+        }
+
+        const squareMode = configSnap.data().Square;
+
+        if (!squareMode) {
+          throw new Error("Square mode not set in config");
+        }
+
+        // Convert mode → environment
+        const isProd = squareMode === "LIVE";
+
+        const accessToken = isProd
+          ? process.env.SQUARE_ACCESS_TOKEN_PRODUCTION
+          : process.env.SQUARE_ACCESS_TOKEN_SANDBOX;
+
+        const locationId = isProd
+          ? process.env.SQUARE_LOCATION_ID_PRODUCTION
+          : process.env.SQUARE_LOCATION_ID_SANDBOX;
+
+        const environment = isProd
+          ? SquareEnvironment.Production
+          : SquareEnvironment.Sandbox;
 
         const squareClient = new SquareClient({ environment, token: accessToken });
 

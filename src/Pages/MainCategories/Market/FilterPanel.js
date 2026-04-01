@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
+import PostLocationMultiSelect from '../../../Components/FiltersMobile/PostLocationMultiSelect';
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -21,11 +22,13 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [selectedShippingTimes, setSelectedShippingTimes] = useState([]);
 
   const parsePrice = (price) => {
-  if (typeof price !== 'string') return null;
-
-  const num = Number(price.replace(/[^0-9.]/g, ''));
-  return isNaN(num) ? null : num;
-};
+    if (typeof price === 'number') return price;  // allow numbers directly
+    if (typeof price === 'string') {
+      const num = Number(price.replace(/[^0-9.]/g, ''));
+      return isNaN(num) ? null : num;
+    }
+    return null;  // fallback for null/undefined
+  };
 
   const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
@@ -192,32 +195,11 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
           <div className="filterpanel-options">
 
             {/* SHOW ALL */}
-            <label className="filterpanel-option">
-              <input
-                type="checkbox"
-                checked={selectedLocations.length === 0}
-                onChange={() => setSelectedLocations([])}
-              />
-              Show All
-            </label>
-
-            {/* FIRESTORE LOCATIONS */}
-            {availableLocations.map(loc => (
-              <label key={loc} className="filterpanel-option">
-                <input
-                  type="checkbox"
-                  checked={selectedLocations.includes(loc)}
-                  onChange={() =>
-                    setSelectedLocations(prev =>
-                      prev.includes(loc)
-                        ? prev.filter(l => l !== loc)
-                        : [...prev, loc]
-                    )
-                  }
-                />
-                {loc}
-              </label>
-            ))}
+            <PostLocationMultiSelect
+              options={availableLocations}
+              selected={selectedLocations}
+              onChange={setSelectedLocations}
+            />
           </div>
         )}
       </div>
@@ -229,16 +211,17 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
         {sectionsOpen.date && (
           <div className="filterpanel-options">
-            {['Show All', 'Today', 'This Week', 'This Month', 'Last Three Months'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={dateFilter === opt}
-                  onChange={() => setDateFilter(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+              <option>Last Three Months</option>
+            </select>
           </div>
         )}
       </div>
@@ -314,28 +297,28 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       {/* PRICE */}
       <div className="filterpanel-section">
         <div className="filterpanel-header" onClick={() => toggleSection('price')}>
-          Price <span>{sectionsOpen.price ? '−' : '+'}</span>
+          Price ($) <span>{sectionsOpen.price ? '−' : '+'}</span>
         </div>
 
         {sectionsOpen.price && (
         <div className="filterpanel-options">
           <div className="filterpanel-price-inline">
-            <span className="filterpanel-price-label">Min ($)</span>
+            <span className="filterpanel-price-label"></span>
             <input
               type="number"
               className="filterpanel-input"
-              placeholder="0"
+              placeholder="Min"
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
             />
 
             <span className="filterpanel-price-separator">–</span>
 
-            <span className="filterpanel-price-label">Max ($)</span>
+            <span className="filterpanel-price-label"></span>
             <input
               type="number"
               className="filterpanel-input"
-              placeholder="Any"
+              placeholder="Max"
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
             />
@@ -351,16 +334,16 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
         {sectionsOpen.sort && (
           <div className="filterpanel-options">
-            {['Show All', 'Newest', 'Oldest', 'Most Liked'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={sortBy === opt}
-                  onChange={() => setSortBy(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Newest</option>
+              <option>Oldest</option>
+              <option>Most Liked</option>
+            </select>
           </div>
         )}
       </div>

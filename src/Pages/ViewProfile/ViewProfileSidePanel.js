@@ -134,7 +134,7 @@ const ViewProfileSidePanel = () => {
       {/* Profile image */}
       <div className="vpsp-profile-image-wrapper">
         <img
-          src={profilePic || `${process.env.PUBLIC_URL}/default-profile.png`}
+          src={profilePic}
           alt={user.username}
           className="vpsp-profile-image"
           onError={(e) => {

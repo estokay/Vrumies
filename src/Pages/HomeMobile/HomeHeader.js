@@ -38,12 +38,12 @@ const HomeHeader = () => {
         <SearchBar />
 
         <div className="hh-header-categories">
-          <Link to="/market"><button>Market <FaArrowRight /></button></Link>
-          <Link to="/directory"><button>Directory <FaArrowRight /></button></Link>
-          <Link to="/request"><button>Requests <FaArrowRight /></button></Link>
-          <Link to="/vehicles"><button>Vehicles <FaArrowRight /></button></Link>
-          <Link to="/trucks"><button>Freight Truck Services <FaArrowRight /></button></Link>
-          <Link to="/events"><button>Events <FaArrowRight /></button></Link>
+          <Link to="/marketmobile"><button>Market <FaArrowRight /></button></Link>
+          <Link to="/directorymobile"><button>Directory <FaArrowRight /></button></Link>
+          <Link to="/requestmobile"><button>Requests <FaArrowRight /></button></Link>
+          <Link to="/vehiclesmobile"><button>Vehicles <FaArrowRight /></button></Link>
+          <Link to="/trucksmobile"><button>Freight Truck Services <FaArrowRight /></button></Link>
+          <Link to="/eventsmobile"><button>Events <FaArrowRight /></button></Link>
         </div>
       </div>
     </div>

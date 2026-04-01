@@ -40,7 +40,9 @@ const VehiclePageMobile = () => {
         <h3 className="v-section-label">PROMOTED</h3>
         <div className="v-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <VehiclePostLayout key={post.id} {...post} />
+            <div key={post.id} className="v-card-promoted">
+              <VehiclePostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

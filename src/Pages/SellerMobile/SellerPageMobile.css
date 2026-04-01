@@ -1,4 +1,4 @@
-/* CONTAINER & GENERAL */
+/* ================= CONTAINER ================= */
 .spm-container {
   background-color: #0e0e0e;
   color: #ffffff;
@@ -9,7 +9,7 @@
 
 .spm-green { color: #02c202; }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .spm-header {
   padding: 25px 20px;
   background: linear-gradient(180deg, #1a1a1a 0%, #0e0e0e 100%);
@@ -38,6 +38,7 @@
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .spm-create-btn {
@@ -49,60 +50,27 @@
   color: white;
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
 
-/* ORDER CARDS */
-.spm-list { padding: 15px; }
-
-.spm-order-card {
-  background: #1c1c1c;
-  border-radius: 16px;
-  padding: 15px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+/* ================= CONTENT ================= */
+.spm-content {
+  padding-bottom: 20px;
 }
 
-.spm-icon-bg {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+.spm-loader {
+  text-align: center;
+  padding: 40px;
+  color: #888;
 }
 
-.spm-icon-bg.market { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
-.spm-icon-bg.trucks { background: rgba(226, 19, 199, 0.2); color: #e213c7; }
-.spm-icon-bg.directory { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
-.spm-icon-bg.offer { background: rgba(255, 217, 61, 0.2); color: #ffd93d; }
-
-.spm-card-body { flex: 1; }
-.spm-card-title { font-weight: bold; font-size: 15px; margin-bottom: 4px; }
-.spm-card-subtitle { font-size: 12px; color: #888; }
-
-.spm-card-status {
-  font-size: 10px;
-  text-transform: uppercase;
-  font-weight: 900;
-  padding: 4px 8px;
-  border-radius: 6px;
+.spm-auth-error {
+  text-align: center;
+  padding: 40px;
+  color: #ff4d4d;
 }
 
-.status-in-progress { background: #333; color: #aaa; }
-.status-completed { background: rgba(2, 194, 2, 0.2); color: #02c202; }
-.status-dispute { background: rgba(255, 0, 0, 0.2); color: #ff0000; }
-
-/* DETAIL VIEW */
-.spm-detail-view { padding: 20px; }
-.spm-nav-bar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 25px;
-}
+/* ================= BACK LINK ================= */
 .spm-back-link {
   background: none;
   border: none;
@@ -111,71 +79,22 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 
-.spm-section {
-  background: #1c1c1c;
+/* ================= PAYOUT VIEW ================= */
+.spm-payout-view {
   padding: 20px;
-  border-radius: 20px;
-  margin-bottom: 20px;
 }
 
-.spm-item-box {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-}
-.spm-item-box img {
-  width: 80px;
-  height: 80px;
-  border-radius: 12px;
-  object-fit: cover;
+.spm-payout-header {
+  text-align: center;
 }
 
-.spm-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+.spm-payout-header h2 {
+  margin-bottom: 10px;
 }
-.spm-input-group input {
-  background: #333;
-  border: 1px solid #444;
-  padding: 12px;
-  border-radius: 8px;
-  color: white;
-}
-.spm-track-btn {
-  background: #02c202;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.spm-action-footer {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-.spm-btn-complete { flex: 2; background: #02c202; border: none; padding: 12px; border-radius: 10px; font-weight: bold; }
-.spm-btn-dispute { flex: 1; background: #444; border: none; color: white; border-radius: 10px; }
-
-/* PAYOUT VIEW */
-.spm-balance-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 20px 0;
-}
-.spm-balance-card {
-  padding: 20px;
-  border-radius: 16px;
-  background: #1c1c1c;
-}
-.spm-balance-card.available { border-left: 4px solid #02c202; }
-.spm-balance-card.sent { border-left: 4px solid #ffd93d; }
-.spm-amount { font-size: 22px; font-weight: 900; margin-top: 10px; }
 
 .spm-fee-banner {
   background: rgba(255, 217, 61, 0.1);
@@ -184,4 +103,40 @@
   border-radius: 8px;
   font-size: 12px;
   text-align: center;
+}
+
+/* BALANCE CARDS */
+.spm-balance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.spm-balance-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: #1c1c1c;
+}
+
+.spm-balance-card.available {
+  border-left: 4px solid #02c202;
+}
+
+.spm-balance-card.sent {
+  border-left: 4px solid #ffd93d;
+}
+
+.spm-amount {
+  font-size: 22px;
+  font-weight: 900;
+  margin-top: 10px;
+}
+
+/* USER INFO */
+.spm-user-info {
+  background: #1c1c1c;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 14px;
 }

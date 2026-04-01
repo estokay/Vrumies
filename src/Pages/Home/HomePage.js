@@ -10,10 +10,13 @@ import PromotedPosts from './PromotedPosts';
 import MoreFromSellers from './MoreFromSellers';
 import NewPosts from './NewPosts';
 import AuthOverlay from "../../Portal/AuthOverlay";
+import { useRedirectMobile } from '../../Hooks/useRedirectMobile';
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useRedirectMobile("/homemobile");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

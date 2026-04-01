@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import generateUniqueReferralCode from "../../AsyncFunctions/generateUniqueReferralCode";
 import uploadGoogleProfilePic from "../../AsyncFunctions/uploadGoogleProfilePic";
+import { isMobileOnly } from 'react-device-detect';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const SignIn = () => {
     try {
       // 1️⃣ Just sign in with Google (old working code)
       user = await signInWithGoogle();
-      navigate('/home'); // redirect immediately after login
+      navigate(isMobileOnly ? '/home-mobile' : '/home'); // redirect immediately after login
     } catch (error) {
       console.error('Google sign-in failed:', error);
       alert('Google sign-in failed. Please try again.');

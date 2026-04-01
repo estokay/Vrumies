@@ -37,7 +37,9 @@ const BlogPageMobile = () => {
         <h3 className="b-section-label">PROMOTED</h3>
         <div className="b-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <BlogPostLayout key={post.id} {...post} />
+            <div key={post.id} className="b-card-promoted">
+              <BlogPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

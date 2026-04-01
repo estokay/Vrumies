@@ -1,0 +1,117 @@
+.plms-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Input */
+.plms-input {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.plms-input.open {
+  border-color: #00ff66;
+}
+
+.plms-input-desktop {
+  width: 100%;
+  padding: 12px;
+  background: #000000;
+  border: 1px solid #00ff66;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.plms-input-desktop.open {
+  border-color: #00ff66;
+}
+
+.plms-placeholder {
+  color: #777;
+}
+
+.plms-placeholder-desktop {
+  color: #ffffff;
+  font: 14px;
+}
+
+.plms-values {
+  color: #fff;
+}
+
+/* Dropdown */
+.plms-dropdown {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  z-index: 4000;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+/* Search */
+.plms-dropdown .plms-search {
+  width: 100%;
+  padding: 10px;
+  background: #111;
+  border: none;
+  outline: none;
+  color: white;
+  border-bottom: 1px solid #333;
+  box-sizing: border-box;
+}
+
+/* Options */
+.plms-options {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.plms-option {
+  padding: 10px 12px;
+  color: #ccc;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.plms-option:hover {
+  background: #2a2a2a;
+}
+
+.plms-option.active {
+  background: rgba(0,255,102,0.15);
+  color: #00ff66;
+  font-weight: 500;
+}
+
+.plms-empty {
+  padding: 12px;
+  text-align: center;
+  color: #777;
+}
+
+.plms-arrow {
+  color: white;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.plms-input-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

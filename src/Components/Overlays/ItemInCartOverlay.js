@@ -1,12 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./ItemInCartOverlay.css";
+import { useIsMobile } from "../../Hooks/useIsMobile";
 
 const ItemInCartOverlay = ({ productName, onClose }) => {
   const navigate = useNavigate();
-
+  const isMobile = useIsMobile();
+  
   const handleGoToCart = () => {
-    navigate("/cart");
+    navigate(isMobile ? "/cartmobile" : "/cart");
     onClose(); // optional: closes overlay after navigating
   };
 

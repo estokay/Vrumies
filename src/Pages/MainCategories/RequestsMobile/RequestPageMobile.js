@@ -40,7 +40,9 @@ const RequestPageMobile = () => {
         <h3 className="r-section-label">PROMOTED</h3>
         <div className="r-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <RequestPostLayout key={post.id} {...post} />
+            <div key={post.id} className="r-card-promoted">
+              <RequestPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

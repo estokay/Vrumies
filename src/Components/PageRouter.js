@@ -54,8 +54,11 @@ import SellerPageMobile from '../Pages/SellerMobile/SellerPageMobile';
 import EventPost from '../Pages/ViewPosts/Events/EventPost';
 import EventPostMobile from '../Pages/ViewPosts/EventsMobile/EventPostMobile';
 import DirectoryPost from '../Pages/ViewPosts/Directory/DirectoryPost';
+import DirectoryPostMobile from '../Pages/ViewPosts/DirectoryMobile/DirectoryPostMobile';
 import OfferPost from '../Pages/ViewPosts/CustomOffers/OfferPost';
+import OfferPostMobile from '../Pages/ViewPosts/CustomOffersMobile/OfferPostMobile';
 import BlogPost from '../Pages/ViewPosts/Blogs/BlogPost';
+import BlogPostMobile from '../Pages/ViewPosts/BlogsMobile/BlogPostMobile';
 import RequestPost from '../Pages/ViewPosts/Requests/RequestPost';
 import RequestPostMobile from '../Pages/ViewPosts/RequestsMobile/RequestPostMobile';
 import VehiclePost from '../Pages/ViewPosts/Vehicles/VehiclePost';
@@ -103,7 +106,9 @@ const PageRouter = () => (
     <Route path="/eventpost/:id" element={<ProtectedRoute><PageWithNavbar><EventPost /></PageWithNavbar></ProtectedRoute>} />
     <Route path="/eventpostmobile/:id" element={<ProtectedRoute><MobileLayout><EventPostMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/directorypost/:id" element={<ProtectedRoute><PageWithNavbar><DirectoryPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/directorypostmobile/:id" element={<ProtectedRoute><MobileLayout><DirectoryPostMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/offerpost/:id" element={<ProtectedRoute><PageWithNavbar><OfferPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/offerpostmobile/:id" element={<ProtectedRoute><MobileLayout><OfferPostMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/trucks" element={<ProtectedRoute><PageWithNavbar><TruckPage /></PageWithNavbar></ProtectedRoute>} />
     <Route path="/trucksmobile" element={<ProtectedRoute><MobileLayout><TruckPageMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/truckpost/:id" element={<ProtectedRoute><PageWithNavbar><TruckPost /></PageWithNavbar></ProtectedRoute>} />
@@ -113,6 +118,7 @@ const PageRouter = () => (
     <Route path="/loadpost/:id" element={<ProtectedRoute><PageWithNavbar><LoadPost /></PageWithNavbar></ProtectedRoute>} />
     <Route path="/loadpostmobile/:id" element={<ProtectedRoute><MobileLayout><LoadPostMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/blogpost/:id" element={<ProtectedRoute><PageWithNavbar><BlogPost /></PageWithNavbar></ProtectedRoute>} />
+    <Route path="/blogpostmobile/:id" element={<ProtectedRoute><MobileLayout><BlogPostMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/requestpost/:id" element={<ProtectedRoute><PageWithNavbar><RequestPost /></PageWithNavbar></ProtectedRoute>} />
     <Route path="/requestpostmobile/:id" element={<ProtectedRoute><MobileLayout><RequestPostMobile /></MobileLayout></ProtectedRoute>} />
     <Route path="/vehiclepost/:id" element={<ProtectedRoute><PageWithNavbar><VehiclePost /></PageWithNavbar></ProtectedRoute>} />

@@ -150,7 +150,7 @@ export default function ViewProfileMobile() {
       <div className="vpm-header-card">
         <div className="vpm-avatar-container">
           <img 
-            src={profilePic || userData?.profilePic || "https://via.placeholder.com/150"} 
+            src={profilePic} 
             alt="Profile" 
             className="vpm-avatar" 
           />

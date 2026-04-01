@@ -8,29 +8,22 @@ export const GOOGLE_API_KEY = 'AIzaSyAF-Y9M2YTMmMBu6RU7sDh4vRM9gFdC5MI';
 export const DISTANCE_MATRIX_API_KEY = 'AIzaSyAnfsiGM1qhmERiAzHBm0pN7UjrydylDag';
 
 export const ENV = {
-  stripeMode: "test"
+  stripeMode: "TEST"
 };
 
 export const STRIPE_PUBLIC_KEYS = {
-  test: 'pk_test_51JN8mDDR30hjV6c2f6WkKbqaLIJ91qsbyfK9Ho1Ge3hCwL2b3aZnWim7Ew9RhfprRoiInPWDRsXC8gqcdW6v4ST700vBUAakpE',
-  live: 'pk_live_51JN8mDDR30hjV6c21Ni6BomHMySk86EywjrEhOiNg50zMCTOrOMUP6hPapaoco6ROfs0OqhAHWb8u1Pu8C9LlMFV00XLvfzaLK'
+  TEST: 'pk_test_51JN8mDDR30hjV6c2f6WkKbqaLIJ91qsbyfK9Ho1Ge3hCwL2b3aZnWim7Ew9RhfprRoiInPWDRsXC8gqcdW6v4ST700vBUAakpE',
+  LIVE: 'pk_live_51JN8mDDR30hjV6c21Ni6BomHMySk86EywjrEhOiNg50zMCTOrOMUP6hPapaoco6ROfs0OqhAHWb8u1Pu8C9LlMFV00XLvfzaLK'
 };
 
 export const STRIPE_API_KEY = STRIPE_PUBLIC_KEYS[ENV.stripeMode];
 
-export const MODE = {
-  squareMode: "sandbox"
-};
-
 export const SQUARE_APP_IDS = {
-  sandbox: 'sandbox-sq0idb-tTYhzOc2LyiJfGtfly1t1g',
-  production: 'sq0idp-97HKWnSfFj162v6fqGDH0w'
+  TEST: 'sandbox-sq0idb-tTYhzOc2LyiJfGtfly1t1g',
+  LIVE: 'sq0idp-97HKWnSfFj162v6fqGDH0w'
 };
 
 export const SQUARE_LOC_IDS = {
-  sandbox: 'LQYFMFQE0QAPP',
-  production: 'YP9F6PNK9YX2A'
+  TEST: 'LQYFMFQE0QAPP',
+  LIVE: 'YP9F6PNK9YX2A'
 };
-
-export const SQUARE_APPLICATION_ID = SQUARE_APP_IDS[MODE.squareMode];
-export const SQUARE_LOCATION_ID = SQUARE_LOC_IDS[MODE.squareMode];

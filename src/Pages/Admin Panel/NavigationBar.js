@@ -8,6 +8,7 @@ import DeleteOrder from './DeleteOrder';
 import Payouts from './Payouts';
 import AffiliatePayouts from './AffiliatePayouts';
 import DeleteCategories from './DeleteCategories';
+import PaymentMode from './PaymentMode';
 
 const NavigationBar = () => {
   const [activeTab, setActiveTab] = useState('viewData');
@@ -31,6 +32,8 @@ const NavigationBar = () => {
         return <Payouts />;
       case 'affiliatePayouts':
         return <AffiliatePayouts />;
+      case 'PaymentMode':
+        return <PaymentMode />;
       default:
         return null;
     }
@@ -68,6 +71,12 @@ const NavigationBar = () => {
           onClick={() => setActiveTab('affiliatePayouts')}
         >
           Affiliate Payouts
+        </button>
+        <button
+          className={activeTab === 'PaymentMode' ? 'ap-active' : ''}
+          onClick={() => setActiveTab('PaymentMode')}
+        >
+          Payment Mode
         </button>
       </nav>
 

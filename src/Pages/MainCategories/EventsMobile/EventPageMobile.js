@@ -5,7 +5,7 @@ import EventsPostLayout from '../Events/EventsPostLayout';
 import FilterPanelMobile from "./FilterPanelMobile";
 import SearchBarMobile from "../../../Components/SearchBarMobile/SearchBarMobile";
 
-const LoadPageMobile = () => {
+const EventPageMobile = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,7 +40,9 @@ const LoadPageMobile = () => {
         <h3 className="e-section-label">PROMOTED</h3>
         <div className="e-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <EventsPostLayout key={post.id} {...post} />
+            <div key={post.id} className="e-card-promoted">
+              <EventsPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>
@@ -68,4 +70,4 @@ const LoadPageMobile = () => {
   );
 };
 
-export default LoadPageMobile;
+export default EventPageMobile;

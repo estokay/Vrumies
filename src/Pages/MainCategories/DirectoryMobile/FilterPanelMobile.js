@@ -3,6 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { db } from "../../../Components/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import "./FilterPanelMobile.css";
+import PostLocationMultiSelect from "../../../Components/FiltersMobile/PostLocationMultiSelect";
 
 const FilterPanelMobile = ({
   show,
@@ -12,14 +13,23 @@ const FilterPanelMobile = ({
   setFilteredPosts
 }) => {
   const [allPostsLocal, setAllPostsLocal] = useState([]);
+  const [availableLocations, setAvailableLocations] = useState([]);
 
   // Filters
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [serviceLocation, setServiceLocation] = useState("Show All");
+  const [dateFilter, setDateFilter] = useState("Show All");
   const [sortBy, setSortBy] = useState("Show All");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [conditionFilter, setConditionFilter] = useState("Show All");
 
-  // Fetch posts
+  const parsePrice = (price) => {
+    if (!price) return null;
+    const num = Number(price.toString().replace(/[^0-9.]/g, ""));
+    return isNaN(num) ? null : num;
+  };
+
+  // Fetch posts + locations
   useEffect(() => {
     const fetchPosts = async () => {
       const ref = collection(db, "Posts");
@@ -32,54 +42,95 @@ const FilterPanelMobile = ({
       }));
 
       setAllPostsLocal(posts);
-      setAllPosts(posts); // send to parent
+      setAllPosts(posts);
+
+      // Extract unique locations
+      const locations = Array.from(new Set(posts.map(p => p.location).filter(Boolean)));
+      setAvailableLocations(locations);
     };
 
     fetchPosts();
   }, []);
 
-  // Filtering logic
+  // Apply filters
   useEffect(() => {
-    let result = [...allPostsLocal];
+    let filtered = [...allPostsLocal];
 
+    // Search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(p =>
-        (p.title || "").toLowerCase().includes(q)
+      filtered = filtered.filter(
+        p => (p.title || "").toLowerCase().includes(q) ||
+             (p.description || "").toLowerCase().includes(q)
       );
     }
 
-    const getPrice = (price) =>
-      parseFloat((price || "").replace(/[^0-9.]/g, "")) || 0;
-
-    if (minPrice)
-      result = result.filter(p => getPrice(p.price) >= Number(minPrice));
-
-    if (maxPrice)
-      result = result.filter(p => getPrice(p.price) <= Number(maxPrice));
-
-    if (conditionFilter !== "Show All") {
-      result = result.filter(p => p.condition === conditionFilter);
+    // Post locations
+    if (selectedLocations.length > 0) {
+      filtered = filtered.filter(p => selectedLocations.includes(p.location));
     }
 
+    // Service location
+    if (serviceLocation !== "Show All") {
+      filtered = filtered.filter(p => p.serviceLocation === serviceLocation);
+    }
+
+    // Price
+    if (minPrice) {
+      filtered = filtered.filter(p => {
+        const priceNum = parsePrice(p.price);
+        return priceNum !== null && priceNum >= Number(minPrice);
+      });
+    }
+
+    if (maxPrice) {
+      filtered = filtered.filter(p => {
+        const priceNum = parsePrice(p.price);
+        return priceNum !== null && priceNum <= Number(maxPrice);
+      });
+    }
+
+    // Date filter
+    if (dateFilter !== "Show All") {
+      const now = new Date();
+      filtered = filtered.filter(p => {
+        const postDate = new Date(p.createdAt?.seconds * 1000);
+        if (dateFilter === "Today") return postDate.toDateString() === now.toDateString();
+        if (dateFilter === "This Week") return now - postDate <= 7 * 86400000;
+        if (dateFilter === "This Month")
+          return postDate.getMonth() === now.getMonth() && postDate.getFullYear() === now.getFullYear();
+        if (dateFilter === "Last Three Months") {
+          const threeMonthsAgo = new Date();
+          threeMonthsAgo.setMonth(now.getMonth() - 3);
+          return postDate >= threeMonthsAgo && postDate <= now;
+        }
+        return true;
+      });
+    }
+
+    // Sorting
     if (sortBy === "Newest") {
-      result.sort(
-        (a, b) =>
-          (b.createdAt?.seconds || 0) -
-          (a.createdAt?.seconds || 0)
-      );
+      filtered.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
     }
-
+    if (sortBy === "Oldest") {
+      filtered.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+    }
     if (sortBy === "Most Liked") {
-      result.sort(
-        (a, b) =>
-          (b.likesCounter || 0) -
-          (a.likesCounter || 0)
-      );
+      filtered.sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0));
     }
 
-    setFilteredPosts(result); // send to parent
-  }, [searchQuery, sortBy, minPrice, maxPrice, conditionFilter, allPostsLocal]);
+    setFilteredPosts(filtered);
+  }, [
+    searchQuery,
+    selectedLocations,
+    serviceLocation,
+    dateFilter,
+    minPrice,
+    maxPrice,
+    sortBy,
+    allPostsLocal,
+    setFilteredPosts
+  ]);
 
   if (!show) return null;
 
@@ -92,49 +143,88 @@ const FilterPanelMobile = ({
         </div>
 
         <div className="d-filter-sheet-body">
-          {/* Sort */}
+          {/* Post Locations */}
           <div className="d-filter-group">
-            <label>Sort By</label>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option>Show All</option>
-              <option>Newest</option>
-              <option>Most Liked</option>
-            </select>
+            <label>
+              Post Locations
+            </label>
+            <PostLocationMultiSelect
+              options={availableLocations}
+              selected={selectedLocations}
+              onChange={setSelectedLocations}
+            />
           </div>
 
-          {/* Condition */}
+          {/* Service Location */}
           <div className="d-filter-group">
-            <label>Condition</label>
-            <div className="d-radio-group">
-              {["Show All", "New", "Used"].map(c => (
-                <button
-                  key={c}
-                  className={conditionFilter === c ? "active" : ""}
-                  onClick={() => setConditionFilter(c)}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
+            <label>
+              Service Location
+            </label>
+              <div className="d-radio-group">
+                {["Show All", "Customer Address", "Business Address"].map(opt => (
+                  <button
+                    key={opt}
+                    className={serviceLocation === opt ? "active" : ""}
+                    onClick={() => setServiceLocation(opt)}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+          </div>
+
+          {/* Date */}
+          <div className="d-filter-group">
+            <label>
+              Date Posted
+            </label>
+              <select
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
+              >
+                <option>Show All</option>
+                <option>Today</option>
+                <option>This Week</option>
+                <option>This Month</option>
+                <option>Last Three Months</option>
+              </select>
           </div>
 
           {/* Price */}
           <div className="d-filter-group">
-            <label>Price Range</label>
-            <div className="d-price-inputs">
-              <input
-                type="number"
-                placeholder="Min"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Max"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-              />
-            </div>
+            <label>
+              Price
+            </label>
+              <div className="d-price-inputs">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                />
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                />
+              </div>
+          </div>
+
+          {/* Sort */}
+          <div className="d-filter-group">
+            <label>
+              Sort By
+            </label>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Newest</option>
+              <option>Oldest</option>
+              <option>Most Liked</option>
+            </select>
           </div>
 
           <button className="d-apply-btn" onClick={onClose}>

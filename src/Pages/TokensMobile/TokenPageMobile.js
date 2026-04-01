@@ -6,11 +6,23 @@ import { doc, onSnapshot, collection, query, orderBy } from "firebase/firestore"
 import useCreateTokenPurchase from "../../CloudFunctions/useCreateTokenPurchase";
 import useCreditTokens from "../../CloudFunctions/useCreditTokens";
 import "./TokenPageMobile.css";
-
-import { STRIPE_API_KEY } from '../../Components/config';
-const stripePromise = loadStripe(STRIPE_API_KEY);
+import usePaymentModes from "../../Hooks/usePaymentModes";
+import { STRIPE_PUBLIC_KEYS } from '../../Components/config';
+import { useMemo } from 'react';
 
 const TokenPageMobile = () => {
+  const { stripeMode, loading: modeLoading, error: modeError } = usePaymentModes();
+
+  const stripePromise = useMemo(() => {
+    if (!stripeMode) return null;
+    const key = STRIPE_PUBLIC_KEYS[stripeMode];
+    return key ? loadStripe(key) : null;
+  }, [stripeMode]);
+
+  if (modeLoading) return <div>Loading payment config...</div>;
+  if (modeError) return <div>Error loading payment config</div>;
+  if (!stripePromise) return <div>Stripe not configured</div>;
+
   return (
     <div className="mp-container">
       <TokenHeaderMobile />
@@ -189,7 +201,7 @@ const TokenBodyMobile = () => {
         </div>
       </div>
 
-      <button className="mp-pay-btn" onClick={handlePay} disabled={payLoading}>
+      <button className="mp-pay-btn" onClick={handlePay} disabled={payLoading || !stripe || !elements}>
         {payLoading ? "Processing..." : purchaseSuccess ? "Purchase Again" : "Pay"}
       </button>
     </div>

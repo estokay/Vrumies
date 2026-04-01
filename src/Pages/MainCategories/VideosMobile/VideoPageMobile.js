@@ -40,7 +40,9 @@ const VideoPageMobile = () => {
         <h3 className="videos-section-label">PROMOTED</h3>
         <div className="videos-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <VideosPostLayout key={post.id} {...post} />
+            <div key={post.id} className="videos-card-promoted">
+              <VideosPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

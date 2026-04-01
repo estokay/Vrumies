@@ -6,30 +6,51 @@ import { doc, getDoc } from "firebase/firestore";
  * Hook: useGetProfilePic
  * Returns the profile picture URL of a given userId
  */
+
 function useGetProfilePic(userId) {
-  const [profilePic, setProfilePic] = useState("");
+  const DEFAULT = `${process.env.PUBLIC_URL}/default-profile.png`;
+
+  const [profilePic, setProfilePic] = useState(DEFAULT);
 
   useEffect(() => {
-    const fetchProfilePic = async () => {
-      if (!userId) return;
+    let isMounted = true;
 
+    if (!userId) {
+      setProfilePic(DEFAULT);
+      return;
+    }
+
+    // Optional: show default immediately while loading
+    setProfilePic(DEFAULT);
+
+    const fetchProfilePic = async () => {
       try {
         const userRef = doc(db, "Users", userId);
         const userSnap = await getDoc(userRef);
 
+        if (!isMounted) return;
+
         if (!userSnap.exists()) {
-          setProfilePic("");
+          setProfilePic(DEFAULT);
           return;
         }
 
-        setProfilePic(userSnap.data().profilepic || "");
+        const url = userSnap.data().profilepic;
+
+        setProfilePic(url || DEFAULT);
       } catch (err) {
-        console.error("Error fetching profile picture:", err);
-        setProfilePic("");
+        if (isMounted) {
+          console.error("Error fetching profile picture:", err);
+          setProfilePic(DEFAULT);
+        }
       }
     };
 
     fetchProfilePic();
+
+    return () => {
+      isMounted = false;
+    };
   }, [userId]);
 
   return profilePic;

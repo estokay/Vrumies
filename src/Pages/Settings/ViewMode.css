@@ -37,7 +37,7 @@
 }
 
 /* Hover */
-.viewmode-option:hover {
+.viewmode-option:not(.active):hover {
   color: #fff;
 }
 

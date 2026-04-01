@@ -10,10 +10,12 @@ import PageHeader from '../../../Components/PageHeader';
 import '../../../App.css';
 import './TruckPost.css';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const TruckPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/truckpostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

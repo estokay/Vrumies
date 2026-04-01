@@ -1,19 +1,18 @@
 .t-filter-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.8);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
   z-index: 2500;
   display: flex;
   align-items: flex-end;
 }
 
 .t-filter-sheet {
-  background: #1a1a1a;
+  background: #111;
   width: 100%;
   border-radius: 20px 20px 0 0;
+  max-height: 90vh;
+  overflow-y: auto;
   padding: 20px 20px 40px 20px;
   animation: slideUp 0.3s ease-out;
 }
@@ -26,59 +25,116 @@
   padding-bottom: 10px;
 }
 
+.t-filter-sheet-body {
+  margin-top: 10px;
+}
+
 .t-filter-group {
-  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  gap: 8px;
 }
 
 .t-filter-group label {
   display: block;
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: #888;
+  font-size: 14px;
+  color: #ccc;
 }
 
-.t-radio-group {
-  display: flex;
-  gap: 10px;
-}
-
-.t-radio-group button {
-  flex: 1;
+.t-filter-group input[type="number"],
+.t-filter-group select {
+  width: 100%;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #333;
-  background: transparent;
-  color: white;
-}
-
-.t-radio-group button.active {
-  background: #00ff66;
-  color: black;
-  border-color: #00ff66;
-}
-
-.t-price-inputs {
-  display: flex;
-  gap: 10px;
-}
-
-.t-price-inputs input {
-  flex: 1;
   background: #222;
-  border: 1px solid #333;
-  padding: 10px;
-  border-radius: 8px;
   color: white;
 }
 
 .t-apply-btn {
   width: 100%;
-  padding: 15px;
-  background: #00ff66;
+  padding: 14px;
+  margin-top: 20px;
   border: none;
   border-radius: 12px;
   font-weight: bold;
-  margin-top: 10px;
+  background: #00ff66;
+  cursor: pointer;
+}
+
+.t-date-btn {
+  background: #111827;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.t-date-btn:hover {
+  background: #1f2937;
+}
+
+.t-date-selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  background: #222;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: white;
+}
+
+.t-date-selected button {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.t-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.t-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+  user-select: none;
+}
+
+.t-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
+}
+
+.t-range-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t-range-row input {
+  flex: 1;
+}
+
+.t-range-separator {
+  color: #aaa;
+  font-size: 14px;
 }
 
 @keyframes slideUp {

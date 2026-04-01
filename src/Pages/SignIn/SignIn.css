@@ -52,3 +52,46 @@
   z-index: 1;
   cursor: pointer;
 }
+
+/* 📱 Mobile only */
+@media (max-width: 768px) {
+  .vrumies-signin-center {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .vrumies-signin-screen {
+    width: 100%;
+    height: 100vh;
+
+    background-size: cover;
+
+    background-position: right center; /* ✅ key: anchor to right side */
+    background-repeat: no-repeat;
+  }
+
+  .vrumies-signin-logo {
+    width: 50vw;
+    top: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .vrumies-signin-welcome-image {
+    position: absolute;
+    top: 40vh;
+    left: 65%;
+    height: auto;
+    
+    width: 136%;
+    transform: translateX(calc(-50% - 3rem));
+  }
+
+  .vrumies-signin-google-image {
+    top: 70vh;
+    width: 90%;
+    background-color: black;
+    border-radius: 7px;
+  }
+}

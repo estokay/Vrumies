@@ -16,6 +16,7 @@ import sendNotificationOrder from "../../Components/Notifications/sendNotificati
 import PurchaseCompleteOverlay from "../../Components/Overlays/PurchaseCompleteOverlay";
 import useCreateSquarePayment from "../../CloudFunctions/useCreateSquarePayment";
 import "./ShoppingCartMobile.css";
+import SellerRating from "../../Components/Reviews/SellerRating";
 
 export default function ShoppingCartMobile() {
   const { currentUser } = useAuth();
@@ -50,10 +51,60 @@ export default function ShoppingCartMobile() {
   // Load cart items
   useEffect(() => {
     if (!currentUser) return;
+
     const cartRef = collection(db, "Users", currentUser.uid, "cart");
-    const unsubscribe = onSnapshot(cartRef, (snapshot) => {
-      setCartItems(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+
+    const unsubscribe = onSnapshot(cartRef, async (snapshot) => {
+      const items = [];
+
+      for (const d of snapshot.docs) {
+        const data = d.data();
+
+        // 1. ACTIVE CLEANUP: Check if postId exists in the cart entry
+        if (!data.postId) {
+          await deleteDoc(doc(db, "Users", currentUser.uid, "cart", d.id));
+          continue;
+        }
+
+        // 2. VALIDATION: Check if the actual Post document still exists in Firestore
+        const postRef = doc(db, "Posts", data.postId);
+        const postSnap = await getDoc(postRef);
+
+        if (!postSnap.exists()) {
+          await deleteDoc(doc(db, "Users", currentUser.uid, "cart", d.id));
+          continue;
+        }
+
+        const postData = postSnap.data();
+        const sellerId = postData.userId;
+
+        // 3. SELLER CONTEXT: Fetch seller name and avatar
+        let sellerName = "Unknown Seller";
+        let sellerAvatar = `${process.env.PUBLIC_URL}/default-profile.png`;
+
+        if (sellerId) {
+          const userRef = doc(db, "Users", sellerId);
+          const userSnap = await getDoc(userRef);
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+            sellerName = userData.username || sellerName;
+            sellerAvatar = userData.profilepic || sellerAvatar;
+          }
+        }
+
+        items.push({
+          id: d.id,
+          sellerId,
+          sellerName,
+          sellerAvatar,
+          postType: postData.type || "offer",
+          ...data,
+        });
+      }
+
+      setCartItems(items);
     });
+
     return () => unsubscribe();
   }, [currentUser]);
 
@@ -388,17 +439,36 @@ export default function ShoppingCartMobile() {
         {cartItems.length === 0 && <p className="mobile-cart-empty">Your cart is empty.</p>}
         {cartItems.map((item) => (
           <div key={item.id} className="mobile-cart-item">
+            {/* Remove item */}
             <div className="mobile-cart-remove" onClick={() => handleRemove(item.id)}>
               <FaTimes />
             </div>
-            <Link to={getPostLink(item.type, item.postId)}>
-              <img src={item.image} alt={item.title} className="mobile-cart-image" />
-            </Link>
-            <div className="mobile-cart-info">
-              <Link to={getPostLink(item.type, item.postId)} className="mobile-cart-item-title">
-                {item.title}
+
+            {/* ADDED: Seller Info Header (Matches Desktop Logic) */}
+            <div className="mobile-seller-header" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', gap: '10px' }}>
+              <img
+                src={item.sellerAvatar}
+                alt={item.sellerName}
+                style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+              />
+              <div className="mobile-seller-details">
+                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{item.sellerName}</div>
+                <SellerRating userId={item.sellerId} />
+              </div>
+            </div>
+
+            {/* Product Info */}
+            <div className="mobile-cart-content" style={{ display: 'flex', gap: '15px' }}>
+              <Link to={getPostLink(item.type, item.postId)}>
+                <img src={item.image} alt={item.title} className="mobile-cart-image" />
               </Link>
-              <span className="mobile-cart-item-price">${parsePrice(item.price).toFixed(2)}</span>
+              <div className="mobile-cart-info">
+                <Link to={getPostLink(item.type, item.postId)} className="mobile-cart-item-title">
+                  {item.title}
+                </Link>
+                <span className="mobile-cart-item-price">${parsePrice(item.price).toFixed(2)}</span>
+                <span className="mobile-cart-item-type">{item.postType}</span>
+              </div>
             </div>
           </div>
         ))}

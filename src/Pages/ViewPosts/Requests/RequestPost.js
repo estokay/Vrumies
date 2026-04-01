@@ -11,10 +11,12 @@ import '../../../App.css';
 import './RequestPost.css'; // renamed for clarity
 import ViewOffers from '../../../Custom Offers/ViewOffers';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const RequestPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/requestpostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

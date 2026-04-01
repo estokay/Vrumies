@@ -10,7 +10,7 @@ initializeApp();
 const corsHandler = cors({ origin: true });
 
 export const createTokenPurchase = functions.onRequest(
-  { secrets: [] },
+  { secrets: ["STRIPE_SECRET_TEST", "STRIPE_SECRET_LIVE"] },
   async (req, res) => {
     corsHandler(req, res, async () => {
       try {

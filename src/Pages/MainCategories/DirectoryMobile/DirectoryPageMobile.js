@@ -40,7 +40,9 @@ const DirectoryPageMobile = () => {
         <h3 className="d-section-label">PROMOTED</h3>
         <div className="d-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <DirectoryPostLayout key={post.id} {...post} />
+            <div key={post.id} className="d-card-promoted">
+              <DirectoryPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

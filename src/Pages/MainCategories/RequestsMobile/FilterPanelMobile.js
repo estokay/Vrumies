@@ -3,23 +3,26 @@ import { FaTimes } from "react-icons/fa";
 import { db } from "../../../Components/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import "./FilterPanelMobile.css";
+import PostLocationMultiSelect from "../../../Components/FiltersMobile/PostLocationMultiSelect";
 
-const FilterPanelMobile = ({
-  show,
-  onClose,
-  searchQuery,
-  setAllPosts,
-  setFilteredPosts
-}) => {
-  const [allPostsLocal, setAllPostsLocal] = useState([]);
+const FilterPanelMobile = ({ show, onClose, searchQuery, setFilteredPosts }) => {
+  const [allPosts, setAllPosts] = useState([]);
 
   // Filters
-  const [sortBy, setSortBy] = useState("Show All");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [conditionFilter, setConditionFilter] = useState("Show All");
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [availableLocations, setAvailableLocations] = useState([]);
 
-  // Fetch posts
+  const [dateFilter, setDateFilter] = useState("Show All");
+
+  const [selectedUrgencies, setSelectedUrgencies] = useState([]);
+  const [availableUrgencies, setAvailableUrgencies] = useState([]);
+
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+
+  const [sortBy, setSortBy] = useState("Show All");
+
+  // Fetch posts + extract locations and urgencies
   useEffect(() => {
     const fetchPosts = async () => {
       const ref = collection(db, "Posts");
@@ -28,58 +31,82 @@ const FilterPanelMobile = ({
 
       const posts = snap.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
 
-      setAllPostsLocal(posts);
-      setAllPosts(posts); // send to parent
+      setAllPosts(posts);
+
+      // Extract unique locations
+      const locations = Array.from(new Set(posts.map(p => p.location).filter(Boolean)));
+      setAvailableLocations(locations);
+
+      // Extract unique urgencies
+      const urgencies = Array.from(
+        new Set(posts.map(p => p.urgency).filter(u => u && u.trim() !== ""))
+      );
+      setAvailableUrgencies(urgencies);
     };
 
     fetchPosts();
   }, []);
 
-  // Filtering logic
+  // Apply filters
   useEffect(() => {
-    let result = [...allPostsLocal];
+    let filtered = [...allPosts];
 
+    // Search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(p =>
-        (p.title || "").toLowerCase().includes(q)
+      filtered = filtered.filter(
+        p =>
+          (p.title || "").toLowerCase().includes(q) ||
+          (p.description || "").toLowerCase().includes(q)
       );
     }
 
-    const getPrice = (price) =>
-      parseFloat((price || "").replace(/[^0-9.]/g, "")) || 0;
-
-    if (minPrice)
-      result = result.filter(p => getPrice(p.price) >= Number(minPrice));
-
-    if (maxPrice)
-      result = result.filter(p => getPrice(p.price) <= Number(maxPrice));
-
-    if (conditionFilter !== "Show All") {
-      result = result.filter(p => p.condition === conditionFilter);
+    // Location filter
+    if (selectedLocations.length > 0) {
+      filtered = filtered.filter(p => selectedLocations.includes(p.location));
     }
 
-    if (sortBy === "Newest") {
-      result.sort(
-        (a, b) =>
-          (b.createdAt?.seconds || 0) -
-          (a.createdAt?.seconds || 0)
-      );
+    // Date filter
+    if (dateFilter !== "Show All") {
+      const now = new Date();
+      filtered = filtered.filter(p => {
+        const postDate = new Date(p.createdAt?.seconds * 1000);
+        if (dateFilter === "Today") return postDate.toDateString() === now.toDateString();
+        if (dateFilter === "This Week") return now - postDate <= 7 * 86400000;
+        if (dateFilter === "This Month") return postDate.getMonth() === now.getMonth() && postDate.getFullYear() === now.getFullYear();
+        if (dateFilter === "Last Three Months") {
+          const threeMonthsAgo = new Date();
+          threeMonthsAgo.setMonth(now.getMonth() - 3);
+          return postDate >= threeMonthsAgo && postDate <= now;
+        }
+        return true;
+      });
     }
 
-    if (sortBy === "Most Liked") {
-      result.sort(
-        (a, b) =>
-          (b.likesCounter || 0) -
-          (a.likesCounter || 0)
-      );
+    // Urgency filter
+    if (selectedUrgencies.length > 0) {
+      filtered = filtered.filter(p => selectedUrgencies.includes(p.urgency));
     }
 
-    setFilteredPosts(result); // send to parent
-  }, [searchQuery, sortBy, minPrice, maxPrice, conditionFilter, allPostsLocal]);
+    // Price filter
+    if (minPrice !== '') {
+      filtered = filtered.filter(p => p.price !== undefined && p.price >= Number(minPrice));
+    }
+
+    if (maxPrice !== '') {
+      filtered = filtered.filter(p => p.price !== undefined && p.price <= Number(maxPrice));
+    }
+
+    // Sorting
+    if (sortBy === "Newest") filtered.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
+    if (sortBy === "Oldest") filtered.sort((a, b) => a.createdAt?.seconds - b.createdAt?.seconds);
+    if (sortBy === "Most Liked") filtered.sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0));
+
+    setFilteredPosts(filtered);
+  }, [searchQuery, selectedLocations, dateFilter, selectedUrgencies, sortBy, allPosts, setFilteredPosts]);
 
   if (!show) return null;
 
@@ -92,49 +119,105 @@ const FilterPanelMobile = ({
         </div>
 
         <div className="r-filter-sheet-body">
-          {/* Sort */}
-          <div className="r-filter-group">
-            <label>Sort By</label>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+
+          {/* LOCATION */}
+          <div className="r-filter-section">
+            <label className="r-filter-label">Post Locations</label>
+            <PostLocationMultiSelect
+              options={availableLocations}
+              selected={selectedLocations}
+              onChange={setSelectedLocations}
+            />
+          </div>
+
+          {/* DATE */}
+          <div className="r-filter-section">
+            <label className="r-filter-label">Date Posted</label>
+
+            <select
+              className="r-filter-select"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
               <option>Show All</option>
-              <option>Newest</option>
-              <option>Most Liked</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+              <option>Last Three Months</option>
             </select>
           </div>
 
-          {/* Condition */}
-          <div className="r-filter-group">
-            <label>Condition</label>
-            <div className="r-radio-group">
-              {["Show All", "New", "Used"].map(c => (
-                <button
-                  key={c}
-                  className={conditionFilter === c ? "active" : ""}
-                  onClick={() => setConditionFilter(c)}
+          {/* URGENCY */}
+          <div className="r-filter-section">
+            <label className="r-filter-label">
+              Urgency
+            </label>
+            <div className="r-filter-chip-group">
+              {/* Show All */}
+              <div
+                className={`r-filter-chip ${selectedUrgencies.length === 0 ? "active" : ""}`}
+                onClick={() => setSelectedUrgencies([])}
+              >
+                Show All
+              </div>
+              {/* All urgency options */}
+              {availableUrgencies.map(urgency => (
+                <div
+                  key={urgency}
+                  className={`r-filter-chip ${selectedUrgencies.includes(urgency) ? "active" : ""}`}
+                  onClick={() =>
+                    setSelectedUrgencies(prev =>
+                      prev.includes(urgency)
+                        ? prev.filter(u => u !== urgency)
+                        : [...prev, urgency]
+                    )
+                  }
                 >
-                  {c}
-                </button>
+                  {urgency}
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Price */}
-          <div className="r-filter-group">
-            <label>Price Range</label>
-            <div className="r-price-inputs">
+          {/* PRICE */}
+          <div className="r-filter-section">
+            <label className="r-filter-label">
+              Willing to Pay ($)
+            </label>
+
+            <div className="r-filter-price-row">
               <input
+                className="r-filter-input"
                 type="number"
                 placeholder="Min"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
               />
               <input
+                className="r-filter-input"
                 type="number"
                 placeholder="Max"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
               />
             </div>
+            
+          </div>
+
+          {/* SORT */}
+          <div className="r-filter-section">
+            <label className="r-filter-label">Sort By</label>
+
+            <select
+              className="r-filter-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Newest</option>
+              <option>Oldest</option>
+              <option>Most Liked</option>
+            </select>
           </div>
 
           <button className="r-apply-btn" onClick={onClose}>

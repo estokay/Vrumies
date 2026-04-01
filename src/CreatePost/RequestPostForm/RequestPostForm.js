@@ -12,6 +12,7 @@ import LinkField from './LinkField';
 import ImageUploadField from './ImageUploadField';
 import TokensField from './TokensField';
 import UrgencyField from './UrgencyField';
+import RequestPostPrice from '../../Components/CreatePost/Price/RequestPostPrice';
 
 const RequestPostForm = () => {
   const isMobile = useIsMobile();
@@ -24,7 +25,8 @@ const RequestPostForm = () => {
     location: '',
     link: '',
     tokens: 0,
-    urgency: 'I Can Wait'
+    urgency: 'I Can Wait',
+    price: 0,
   });
 
   const [cityInput, setCityInput] = useState('');
@@ -225,6 +227,7 @@ const RequestPostForm = () => {
         <img src={`${publicPath}/PostCreationIcons/Image-Icon.png`} onClick={() => toggleField('image')} />
         <img src={`${publicPath}/PostCreationIcons/Token-Icon.png`} onClick={() => toggleField('tokens')} />
         <img src={`${publicPath}/PostCreationIcons/Urgency-Icon.png`} onClick={() => toggleField('urgency')} />
+        <img src={`${publicPath}/PostCreationIcons/Price-Icon.png`} onClick={() => toggleField('price')} className={activeField === 'price' ? 'active' : ''} />
       </div>
 
       {activeField === 'location' && (
@@ -264,6 +267,13 @@ const RequestPostForm = () => {
         <UrgencyField
           urgency={formData.urgency}
           handleChange={handleChange}
+        />
+      )}
+
+      {activeField === 'price' && (
+        <RequestPostPrice
+          value={formData.price}
+          setFormData={setFormData}
         />
       )}
 

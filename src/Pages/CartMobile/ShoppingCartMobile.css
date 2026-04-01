@@ -5,6 +5,13 @@
   min-height: 100vh;
 }
 
+.mobile-seller-details {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
 .mobile-cart-title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -70,6 +77,11 @@
 
 .mobile-cart-item-price {
   color: #fff;
+  font-size: 0.95rem;
+}
+
+.mobile-cart-item-type {
+  color: #afafaf;
   font-size: 0.95rem;
 }
 

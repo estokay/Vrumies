@@ -11,10 +11,12 @@ import '../../../App.css';
 import './BlogPost.css'; // renamed for clarity
 import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const BlogPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/blogpostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

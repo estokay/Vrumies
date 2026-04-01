@@ -1,4 +1,4 @@
-.e-filter-overlay {
+.events-filter-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,15 +10,17 @@
   align-items: flex-end;
 }
 
-.e-filter-sheet {
+.events-filter-sheet {
   background: #1a1a1a;
   width: 100%;
+  max-height: 90vh;
   border-radius: 20px 20px 0 0;
-  padding: 20px 20px 40px 20px;
+  padding: 20px;
+  overflow-y: auto;
   animation: slideUp 0.3s ease-out;
 }
 
-.e-filter-sheet-header {
+.events-filter-sheet-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,52 +28,65 @@
   padding-bottom: 10px;
 }
 
-.e-filter-group {
+.events-filter-group {
   margin: 20px 0;
 }
 
-.e-filter-group label {
+.events-filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.events-filter-group label {
   display: block;
   margin-bottom: 8px;
   font-size: 12px;
   color: #888;
 }
 
-.e-radio-group {
-  display: flex;
-  gap: 10px;
+.events-filter-group input[type="checkbox"],
+.events-filter-group input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #00ff66;
 }
 
-.e-radio-group button {
-  flex: 1;
-  padding: 10px;
+.events-date-btn {
+  background: #111827;
+  color: #fff;
+  padding: 10px 14px;
   border-radius: 8px;
-  border: 1px solid #333;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.events-date-btn:hover {
+  background: #1f2937;
+}
+
+.events-date-selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #111827;
+}
+
+.events-date-selected button {
   background: transparent;
-  color: white;
+  border: none;
+  color: #ef4444;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-.e-radio-group button.active {
-  background: #00ff66;
-  color: black;
-  border-color: #00ff66;
-}
-
-.e-price-inputs {
-  display: flex;
-  gap: 10px;
-}
-
-.e-price-inputs input {
-  flex: 1;
-  background: #222;
-  border: 1px solid #333;
-  padding: 10px;
-  border-radius: 8px;
-  color: white;
-}
-
-.e-apply-btn {
+.events-apply-btn {
   width: 100%;
   padding: 15px;
   background: #00ff66;
@@ -79,6 +94,43 @@
   border-radius: 12px;
   font-weight: bold;
   margin-top: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.events-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.events-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.events-chip:first-child {
+  font-weight: bold;
+}
+
+.events-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
+}
+
+.events-filter-group select {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 8px;
 }
 
 @keyframes slideUp {

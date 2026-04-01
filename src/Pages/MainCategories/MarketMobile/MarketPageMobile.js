@@ -40,7 +40,9 @@ const MarketPageMobile = () => {
         <h3 className="m-section-label">PROMOTED</h3>
         <div className="m-promoted-scroll">
           {allPosts.filter(p => p.tokens > 0).map(post => (
-            <MarketPostLayout key={post.id} {...post} />
+            <div key={post.id} className="m-card-promoted">
+              <MarketPostLayout key={post.id} {...post} />
+            </div>
           ))}
         </div>
       </div>

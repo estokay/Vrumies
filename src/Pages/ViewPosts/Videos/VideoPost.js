@@ -11,10 +11,12 @@ import PromotedPanel from '../../../Components/ViewPosts/PromotedPanel';
 import '../../../App.css';
 import './VideoPost.css';
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
 
 const VideoPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useRedirectMobile(`/videopostmobile/${id}`);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

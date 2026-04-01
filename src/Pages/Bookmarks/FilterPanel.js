@@ -10,9 +10,11 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [dateFilter, setDateFilter] = useState('Show All');
   const [sortBy, setSortBy] = useState('Show All');
+  const [selectedPostTypes, setSelectedPostTypes] = useState([]);
 
   const [sectionsOpen, setSectionsOpen] = useState({
     location: true,
+    postTypes: true,
     date: true,
     sort: true,
   });
@@ -90,6 +92,13 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     if (selectedLocations.length > 0) {
       filtered = filtered.filter(p =>
         selectedLocations.includes(p.location)
+      );
+    }
+
+    // Post Types filter (Show All = none selected)
+    if (selectedPostTypes.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedPostTypes.includes((p.type || '').toLowerCase())
       );
     }
 
@@ -230,6 +239,60 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
                 {opt}
               </label>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* POST TYPES */}
+      <div className="filterpanel-section">
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('postTypes')}
+        >
+          Post Types <span>{sectionsOpen.postTypes ? '−' : '+'}</span>
+        </div>
+
+        {sectionsOpen.postTypes && (
+          <div className="filterpanel-options">
+
+            {/* SHOW ALL */}
+            <label className="filterpanel-option">
+              <input
+                type="checkbox"
+                checked={selectedPostTypes.length === 0}
+                onChange={() => setSelectedPostTypes([])}
+              />
+              Show All
+            </label>
+
+            {[
+              { label: "Video", value: "video" },
+              { label: "Blog", value: "blog" },
+              { label: "Event", value: "event" },
+              { label: "Request", value: "request" },
+              { label: "Market", value: "market" },
+              { label: "Directory", value: "directory" },
+              { label: "Trucks", value: "trucks" },
+              { label: "Vehicle", value: "vehicle" },
+              { label: "Loads", value: "loads" },
+              { label: "Offer", value: "offer" },
+            ].map(item => (
+              <label key={item.value} className="filterpanel-option">
+                <input
+                  type="checkbox"
+                  checked={selectedPostTypes.includes(item.value)}
+                  onChange={() =>
+                    setSelectedPostTypes(prev =>
+                      prev.includes(item.value)
+                        ? prev.filter(t => t !== item.value)
+                        : [...prev, item.value]
+                    )
+                  }
+                />
+                {item.label}
+              </label>
+            ))}
+
           </div>
         )}
       </div>

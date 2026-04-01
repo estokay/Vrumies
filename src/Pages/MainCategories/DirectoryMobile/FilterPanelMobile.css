@@ -16,6 +16,8 @@
   border-radius: 20px 20px 0 0;
   padding: 20px 20px 40px 20px;
   animation: slideUp 0.3s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .d-filter-sheet-header {
@@ -27,23 +29,33 @@
 }
 
 .d-filter-group {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
-.d-filter-group label {
-  display: block;
+.d-filter-group-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  cursor: pointer;
   margin-bottom: 8px;
-  font-size: 12px;
-  color: #888;
+}
+
+.d-filter-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  color: #fff;
 }
 
 .d-radio-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
 .d-radio-group button {
-  flex: 1;
+  flex: 1 1 45%;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #333;
@@ -79,6 +91,49 @@
   border-radius: 12px;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.d-filter-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #888;
+}
+
+.d-filter-group select {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 8px;
+}
+
+/* Chips */
+.d-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.d-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #222;
+  border: 1px solid #333;
+  font-size: 13px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.d-chip:first-child {
+  font-weight: bold;
+}
+
+.d-chip.active {
+  background: #00ff66;
+  color: black;
+  border-color: #00ff66;
 }
 
 @keyframes slideUp {

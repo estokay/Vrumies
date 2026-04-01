@@ -3,6 +3,8 @@ import { db } from '../../../Components/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
 import CalendarDateRangeOverlay from "../../../Components/Overlays/CalendarDateRangeOverlay";
+import PostLocationMultiSelect from '../../../Components/FiltersMobile/PostLocationMultiSelect';
+import TruckCitiesMultiSelect from '../../../Components/FiltersMobile/TruckCitiesMultiSelect';
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -25,6 +27,7 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [minLoadWeight, setMinLoadWeight] = useState('');
   const [minLoadLength, setMinLoadLength] = useState('');
 
+  const [minPerMileRate, setMinPerMileRate] = useState('');
   const [maxPerMileRate, setMaxPerMileRate] = useState('');
 
   const [availableRange, setAvailableRange] = useState();
@@ -196,13 +199,23 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
       );
     }
 
-    // Minimum Per Mile Rate filter (AT OR BELOW)
-    if (maxPerMileRate !== '') {
-      filtered = filtered.filter(
-        p =>
-          typeof p.minPerMile === 'number' &&
-          p.minPerMile <= Number(maxPerMileRate)
-      );
+    // Per Mile Rate range filter
+    if (minPerMileRate !== '' || maxPerMileRate !== '') {
+      filtered = filtered.filter(p => {
+        if (typeof p.minPerMile !== 'number') return false;
+
+        const rate = p.minPerMile;
+
+        if (minPerMileRate !== '' && rate < Number(minPerMileRate)) {
+          return false;
+        }
+
+        if (maxPerMileRate !== '' && rate > Number(maxPerMileRate)) {
+          return false;
+        }
+
+        return true;
+      });
     }
 
     // Sorting
@@ -231,6 +244,7 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
     selectedDestinationCities,
     minLoadWeight,
     minLoadLength,
+    minPerMileRate,
     maxPerMileRate,
     allPosts,
     onFilteredPosts,
@@ -253,32 +267,11 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
           <div className="filterpanel-options">
 
             {/* SHOW ALL */}
-            <label className="filterpanel-option">
-              <input
-                type="checkbox"
-                checked={selectedLocations.length === 0}
-                onChange={() => setSelectedLocations([])}
-              />
-              Show All
-            </label>
-
-            {/* FIRESTORE LOCATIONS */}
-            {availableLocations.map(loc => (
-              <label key={loc} className="filterpanel-option">
-                <input
-                  type="checkbox"
-                  checked={selectedLocations.includes(loc)}
-                  onChange={() =>
-                    setSelectedLocations(prev =>
-                      prev.includes(loc)
-                        ? prev.filter(l => l !== loc)
-                        : [...prev, loc]
-                    )
-                  }
-                />
-                {loc}
-              </label>
-            ))}
+            <PostLocationMultiSelect
+              options={availableLocations}
+              selected={selectedLocations}
+              onChange={setSelectedLocations}
+            />
           </div>
         )}
       </div>
@@ -290,16 +283,17 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
         {sectionsOpen.date && (
           <div className="filterpanel-options">
-            {['Show All', 'Today', 'This Week', 'This Month', 'Last Three Months'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={dateFilter === opt}
-                  onChange={() => setDateFilter(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+              <option>Last Three Months</option>
+            </select>
           </div>
         )}
       </div>
@@ -392,35 +386,15 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
 
         {sectionsOpen.originCities && (
-        <div className="filterpanel-options">
-          {/* SHOW ALL */}
-          <label className="filterpanel-option">
-            <input
-              type="checkbox"
-              checked={selectedOriginCities.length === 0}
-              onChange={() => setSelectedOriginCities([])}
+          <div className="filterpanel-options">
+            <TruckCitiesMultiSelect
+              options={availableOriginCities}
+              selected={selectedOriginCities}
+              onChange={setSelectedOriginCities}
+              placeholder="All Origins"
+              searchPlaceholder="Search origin cities..."
             />
-            Show All
-          </label>
-
-          {/* FIRESTORE ORIGIN CITIES */}
-          {availableOriginCities.map(city => (
-            <label key={city} className="filterpanel-option">
-              <input
-                type="checkbox"
-                checked={selectedOriginCities.includes(city)}
-                onChange={() =>
-                  setSelectedOriginCities(prev =>
-                    prev.includes(city)
-                      ? prev.filter(c => c !== city)
-                      : [...prev, city]
-                  )
-                }
-              />
-              {city}
-            </label>
-          ))}
-        </div>
+          </div>
         )}
       </div>
 
@@ -431,42 +405,22 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
 
         {sectionsOpen.destinationCities && (
-        <div className="filterpanel-options">
-          {/* SHOW ALL */}
-          <label className="filterpanel-option">
-            <input
-              type="checkbox"
-              checked={selectedDestinationCities.length === 0}
-              onChange={() => setSelectedDestinationCities([])}
+          <div className="filterpanel-options">
+            <TruckCitiesMultiSelect
+              options={availableDestinationCities}
+              selected={selectedDestinationCities}
+              onChange={setSelectedDestinationCities}
+              placeholder="All Destinations"
+              searchPlaceholder="Search destination cities..."
             />
-            Show All
-          </label>
-
-          {/* FIRESTORE DESTINATION CITIES */}
-          {availableDestinationCities.map(city => (
-            <label key={city} className="filterpanel-option">
-              <input
-                type="checkbox"
-                checked={selectedDestinationCities.includes(city)}
-                onChange={() =>
-                  setSelectedDestinationCities(prev =>
-                    prev.includes(city)
-                      ? prev.filter(c => c !== city)
-                      : [...prev, city]
-                  )
-                }
-              />
-              {city}
-            </label>
-          ))}
-        </div>
+          </div>
         )}
       </div>
     
       {/* LOAD WEIGHT */}
       <div className="filterpanel-section">
         <div className="filterpanel-header" onClick={() => toggleSection('loadWeight')}>
-          Load Weight Max Limit <span>{sectionsOpen.loadWeight ? '−' : '+'}</span>
+          Load Weight Max Limit<span>{sectionsOpen.loadWeight ? '−' : '+'}</span>
         </div>
 
         {sectionsOpen.loadWeight && (
@@ -513,29 +467,46 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         )}
       </div>
 
-      {/* MINIMUM PER MILE RATE */}
+      {/* RATE PER MILE */}
       <div className="filterpanel-section">
-        <div className="filterpanel-header" onClick={() => toggleSection('minPerMile')}>
-          Minimum Per Mile Rate <span>{sectionsOpen.minPerMile ? '−' : '+'}</span>
+        <div
+          className="filterpanel-header"
+          onClick={() => toggleSection('minPerMile')}
+        >
+          Rate Per Mile ($) <span>{sectionsOpen.minPerMile ? '−' : '+'}</span>
         </div>
 
         {sectionsOpen.minPerMile && (
-        <div className="filterpanel-options">
-          <div className="filterpanel-price-inline">
-            <span className="filterpanel-price-label">At or below ($)</span>
+          <div className="filterpanel-options">
+            <div className="filterpanel-price-inline">
+              
+              <span className="filterpanel-price-label"></span>
 
-            <input
-              type="number"
-              step="0.01"
-              className="filterpanel-input"
-              placeholder="e.g. 2.50"
-              value={maxPerMileRate}
-              onChange={(e) => setMaxPerMileRate(e.target.value)}
-            />
+              <input
+                type="number"
+                step="0.01"
+                className="filterpanel-input"
+                placeholder="Min"
+                value={minPerMileRate}
+                onChange={(e) => setMinPerMileRate(e.target.value)}
+              />
 
-            <span className="filterpanel-price-label">per mile</span>
+              <span className="filterpanel-price-separator">-</span>
+
+              <span className="filterpanel-price-label"></span>
+
+              <input
+                type="number"
+                step="0.01"
+                className="filterpanel-input"
+                placeholder="Max"
+                value={maxPerMileRate}
+                onChange={(e) => setMaxPerMileRate(e.target.value)}
+              />
+
+              <span className="filterpanel-price-label"></span>
+            </div>
           </div>
-        </div>
         )}
       </div>
 
@@ -546,16 +517,16 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
         {sectionsOpen.sort && (
           <div className="filterpanel-options">
-            {['Show All', 'Newest', 'Oldest', 'Most Liked'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={sortBy === opt}
-                  onChange={() => setSortBy(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Newest</option>
+              <option>Oldest</option>
+              <option>Most Liked</option>
+            </select>
           </div>
         )}
       </div>

@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import '../../../Components/Css/MainFilterPanel.css';
 import CalendarDateRangeOverlay from "../../../Components/Overlays/CalendarDateRangeOverlay";
 import { format } from "date-fns";
+import PostLocationMultiSelect from '../../../Components/FiltersMobile/PostLocationMultiSelect';
 
 const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
   const [allPosts, setAllPosts] = useState([]);
@@ -43,12 +44,6 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
 
       setAvailableLocations(locations);
 
-      
-
-      
-    
-
-      
     };
 
     fetchPosts();
@@ -160,34 +155,11 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
 
         {sectionsOpen.location && (
           <div className="filterpanel-options">
-
-            {/* SHOW ALL */}
-            <label className="filterpanel-option">
-              <input
-                type="checkbox"
-                checked={selectedLocations.length === 0}
-                onChange={() => setSelectedLocations([])}
-              />
-              Show All
-            </label>
-
-            {/* FIRESTORE LOCATIONS */}
-            {availableLocations.map(loc => (
-              <label key={loc} className="filterpanel-option">
-                <input
-                  type="checkbox"
-                  checked={selectedLocations.includes(loc)}
-                  onChange={() =>
-                    setSelectedLocations(prev =>
-                      prev.includes(loc)
-                        ? prev.filter(l => l !== loc)
-                        : [...prev, loc]
-                    )
-                  }
-                />
-                {loc}
-              </label>
-            ))}
+            <PostLocationMultiSelect
+              options={availableLocations}
+              selected={selectedLocations}
+              onChange={setSelectedLocations}
+            />
           </div>
         )}
       </div>
@@ -199,16 +171,17 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
         {sectionsOpen.date && (
           <div className="filterpanel-options">
-            {['Show All', 'Today', 'This Week', 'This Month', 'Last Three Months'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={dateFilter === opt}
-                  onChange={() => setDateFilter(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            <select
+              className="filterpanel-select"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option>Show All</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+              <option>Last Three Months</option>
+            </select>
           </div>
         )}
       </div>
@@ -265,16 +238,20 @@ const FilterPanel = ({ searchQuery = '', onFilteredPosts }) => {
         </div>
         {sectionsOpen.sort && (
           <div className="filterpanel-options">
-            {['Show All', 'Newest', 'Oldest', 'Most Liked'].map(opt => (
-              <label key={opt} className="filterpanel-option">
-                <input
-                  type="radio"
-                  checked={sortBy === opt}
-                  onChange={() => setSortBy(opt)}
-                />
-                {opt}
-              </label>
-            ))}
+            {sectionsOpen.sort && (
+              <div className="filterpanel-options">
+                <select
+                  className="filterpanel-select"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option>Show All</option>
+                  <option>Newest</option>
+                  <option>Oldest</option>
+                  <option>Most Liked</option>
+                </select>
+              </div>
+            )}
           </div>
         )}
       </div>
