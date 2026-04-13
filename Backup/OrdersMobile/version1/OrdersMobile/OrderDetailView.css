@@ -1,0 +1,21 @@
+.bd-container { padding: 20px; max-width: 900px; margin: auto; color: white; }
+.bd-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.bd-back { background: none; border: none; color: #02c202; cursor: pointer; font-size: 1.1rem; }
+.bd-id-badge { background: #333; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; }
+
+.bd-section {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  padding: 25px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+.bd-image { width: 100px; height: 100px; object-fit: cover; border-radius: 15px; margin-right: 15px; }
+.bd-item-card { display: flex; align-items: center; }
+
+.bd-payment-summary { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #444; }
+.bd-total { font-size: 1.2rem; font-weight: bold; color: #02c202; margin-top: 10px; }
+
+.bd-actions { display: flex; gap: 10px; margin-top: 20px; }
+.bd-btn-complete { flex: 1; background: #02c202; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; }
+.bd-btn-dispute { flex: 1; background: #444; color: white; border: none; padding: 12px; border-radius: 12px; }

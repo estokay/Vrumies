@@ -130,7 +130,15 @@ const MarketPostForm = () => {
   if (submitted) return <div className="mpf-post-success-message"><p>{message}</p></div>;
 
   return (
-    <form className="mpf-post-form" onSubmit={handleSubmit}>
+    <form
+      className="mpf-post-form"
+      onSubmit={handleSubmit}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
+      }}
+    >
       <label className="mpf-form-label">Title</label>
       <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 

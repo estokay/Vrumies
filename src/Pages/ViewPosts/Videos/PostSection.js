@@ -191,38 +191,6 @@ function PostSection({ postId: propPostId }) {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const handleAddToCart = async () => {
-    if (!currentUser) {
-      alert("Login required");
-      return;
-    }
-    try {
-      const cartRef = collection(db, "Users", currentUser.uid, "cart");
-      const itemRef = doc(cartRef, postId);
-      const existing = await getDoc(itemRef);
-      if (existing.exists()) {
-        alert("Already in cart");
-        return;
-      }
-
-      await setDoc(itemRef, {
-        postId,
-        title: post.title || "Untitled",
-        price: post.price || 0,
-        sellerId: post.userId,
-        sellerName: seller?.username || "Unknown Seller",
-        sellerAvatar: seller?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`,
-        image: post.image || `${process.env.PUBLIC_URL}/default-thumbnail.png`,
-        reviews: post.sellerReviews || 0,
-        addedAt: new Date(),
-      });
-
-      alert("Item added to cart!");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const handleShare = () => {
     if (navigator.clipboard) {
       navigator.clipboard
@@ -302,7 +270,7 @@ function PostSection({ postId: propPostId }) {
   const canBlock = currentUser?.uid !== post.userId;
 
   const videoUrl = post.type === "video" ? post.video : null;
-  const displayImage = post.image || `${process.env.PUBLIC_URL}/default-thumbnail.png`;
+  const displayImage = post.image || post.videoPreviewImage || `${process.env.PUBLIC_URL}/default-thumbnail.png`;
 
   return (
     <div className="post-section">

@@ -195,7 +195,15 @@ const EventPostForm = () => {
   }
 
   return (
-    <form className="event-post-form" onSubmit={handleSubmit}>
+    <form
+      className="event-post-form"
+      onSubmit={handleSubmit}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
+      }}
+    >
       <label className="event-form-label">Title</label>
       <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 

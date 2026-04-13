@@ -145,11 +145,51 @@ const MarketPostMobile = () => {
     showNotification("Link copied!");
   };
 
+  const handleReport = async () => {
+    if (!currentUser) return;
+    const postRef = doc(db, "Posts", id);
+    try {
+      const postSnap = await getDoc(postRef);
+      if (!postSnap.exists()) return;
+
+      const postData = postSnap.data();
+      const reportArray = postData.report || [];
+
+      if (reportArray.includes(currentUser.uid)) {
+        await updateDoc(postRef, { report: arrayRemove(currentUser.uid) });
+        setReported(false);
+        showNotification("Report removed");
+      } else {
+        await updateDoc(postRef, { report: arrayUnion(currentUser.uid) });
+        setReported(true);
+        showNotification("Reported");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleConfirmDelete = async (id) => {
+    try {
+      // Delete the post from Firestore
+      await deleteDoc(doc(db, "Posts", id));
+      showNotification("Post deleted successfully!");
+      setShowDeletePostOverlay(false);
+      navigate("/"); // or redirect wherever
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      showNotification("Failed to delete post");
+    }
+  };
+
   if (loading) return <div className="dpm-loader">Loading...</div>;
   if (!post) return null;
 
   const images = post.images?.length > 0 ? post.images : ["/default-thumbnail.png"];
   const isSeller = currentUser?.uid === post.userId;
+
+  const formatLink = (url) =>
+    url ? (url.startsWith("http") ? url : `https://${url}`) : null;
 
   return (
     <div className="dpm-container">
@@ -202,7 +242,11 @@ const MarketPostMobile = () => {
       {/* Content Body */}
       <div className="dpm-body">
         <h1 className="dpm-title">{post.title?.toUpperCase()}</h1>
-        <div className="dpm-price-tag">{post.price ?? "Price N/A"}</div>
+        <div className="dpm-price-tag">
+          {post.price !== undefined
+            ? `$${post.price.toFixed(2)}`
+            : "Price N/A"}
+        </div>
         
         <div className="dpm-seller-card">
           <Link to={`/viewprofile/${post.userId}`}>
@@ -234,9 +278,19 @@ const MarketPostMobile = () => {
           {activeTab === "description" && <p>{post.description}</p>}
           {activeTab === "details" && (
             <div className="dpm-details-list">
-              <p><strong>Condition:</strong> {post.condition || "N/A"}</p>
-              <p><strong>Shipping:</strong> {post.shippingTime || "N/A"}</p>
-              <p><strong>Tokens:</strong> {post.tokens || "0"}</p>
+              <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
+              <p><strong>Post Location:</strong> {post.location ?? "N/A"}</p>
+              <p><strong>Link:</strong>{" "}
+                {post.link ? (
+                  <a href={formatLink(post.link)} target="_blank" rel="noopener noreferrer">
+                    {post.link}
+                  </a>
+                ) : "N/A"}
+              </p>
+              <p><strong>Service Location:</strong>{" "} {post.serviceLocation ?? "N/A"}</p>
+              {post.serviceLocation === "Business Address" && (
+              <p><strong>Business Address:</strong>{" "} {post.businessAddress ?? "N/A"}</p>
+              )}
             </div>
           )}
           {activeTab === "reviews" && <PostSectionReviews userId={post.userId} />}
@@ -278,6 +332,22 @@ const MarketPostMobile = () => {
         <ItemInCartOverlay productName={post.title} onClose={() => setShowCartOverlay(false)} />
       )}
       {/* ... Other overlays follow same pattern ... */}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={id}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 };

@@ -1,0 +1,121 @@
+.tv-custom-panel {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  border-radius: 25px;
+  padding: 20px;
+  width: 700px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.tv-custom-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: rgb(2, 194, 2);
+}
+
+.tv-custom-section {
+  margin-bottom: 20px;
+}
+
+.tv-custom-section h3 {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.tv-custom-info {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+
+.tv-custom-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.tv-custom-item img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.tv-custom-btn-view {
+  background: linear-gradient(to right, purple, magenta);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-top: 5px;
+}
+
+.tv-custom-payment {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.tv-custom-btn-message {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 12px;
+}
+
+.tv-custom-status-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.tv-custom-btn-complete {
+  background: green;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.tv-custom-btn-dispute {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* Carrier + Tracking side by side */
+.tv-custom-tracking-display {
+  display: flex;
+  gap: 100px;
+  margin-top: 10px;
+}
+
+.tv-custom-tracking-display div {
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-custom-btn-completed {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.tv-custom-btn-disputed {
+  background: #b71c1c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0.8;
+}

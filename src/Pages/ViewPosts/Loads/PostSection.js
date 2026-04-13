@@ -429,7 +429,6 @@ function PostSection({ postId }) {
               <p><strong>Estimated Rate Per Mile (with Tolls):</strong> ${eRPMwithTolls.eRPM ?? "N/A"}</p>
               <p><strong>Estimated Rate Per Mile (no Tolls):</strong> ${eRPMwithoutTolls.eRPM ?? "N/A"}</p>
               <p><strong>Payout:</strong> ${post.payout ?? "N/A"}</p>
-              
             </div>
           )}
           {activeTab === "reviews" && (

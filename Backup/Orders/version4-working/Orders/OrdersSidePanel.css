@@ -1,0 +1,90 @@
+.osp-panel {
+  width: 350px;
+  height: 1000px;
+  background: linear-gradient(180deg, #636363, #2f2f2f);
+  border-radius: 25px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin: 40px;
+}
+
+.osp-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: rgb(2, 194, 2);
+  text-shadow: '2px 2px 6px #000';
+}
+
+.osp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 900px;
+  padding: 10px 5px 5px 5px;
+  box-sizing: border-box;
+}
+
+.osp-card {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.osp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+.osp-highlight {
+  background-color: #d9d9d9;
+  color: black;
+}
+
+.osp-highlight .osp-card-bottom span {
+  color: black;
+}
+
+.osp-card-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Bottom row: type left, date center, price right */
+.osp-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.osp-card-type {
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.osp-card-date {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.osp-card-price {
+  text-align: right;
+}

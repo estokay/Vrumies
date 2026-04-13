@@ -225,3 +225,36 @@
   margin-bottom: 15px;
   color: #aaa;
 }
+
+.vipm-video-container {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.vipm-video-thumbnail,
+.vipm-video-player {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.vipm-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+}
+
+.vipm-video-duration {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+}

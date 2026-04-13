@@ -1,0 +1,231 @@
+/* Container */
+.opm-full-container {
+  width: 95%;
+  max-width: 480px;
+  margin: 10px auto;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Title */
+.opm-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #02c202;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Order Card */
+.opm-card {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  border-radius: 15px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #444;
+}
+
+/* Card Header */
+.opm-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.opm-card-header p {
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
+  margin: 0;
+}
+
+.opm-card-icons {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.opm-badge-dispute {
+  background: #b71c1c;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.opm-badge-complete {
+  background: #2e7d32;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* Expandable Panel */
+.opm-detail-panel {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeSlide 0.3s ease;
+}
+
+/* Animation for panel */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Info */
+.opm-info, .opm-payment, .opm-tracking-display {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.opm-info div, .opm-payment div, .opm-tracking-display div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+/* Tracking display (for trucks/market) */
+.opm-tracking-display {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Ordered Item */
+.opm-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.opm-item img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Buttons */
+.opm-btn-view,
+.opm-btn-message,
+.opm-btn-complete,
+.opm-btn-dispute {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.opm-btn-view {
+  background: linear-gradient(to right, purple, magenta);
+  color: white;
+}
+
+.opm-btn-message {
+  background: #444;
+  color: white;
+}
+
+.opm-btn-complete {
+  background: green;
+  color: white;
+}
+
+.opm-btn-dispute {
+  background: #444;
+  color: white;
+}
+
+.opm-btn-completed {
+  background: #2e7d32;
+  opacity: 0.8;
+  color: white;
+}
+
+.opm-btn-disputed {
+  background: #b71c1c;
+  opacity: 0.8;
+  color: white;
+}
+
+/* Timeline */
+.opm-timeline-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.opm-timeline-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.opm-step {
+  background: #444;
+  color: gray;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.opm-step.active {
+  background: green;
+  color: white;
+  font-weight: bold;
+}
+
+/* Dispute */
+.opm-timeline-dispute {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.opm-circle-dispute {
+  width: 25px;
+  height: 25px;
+  border: 2px solid gray;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.opm-circle-dispute.active {
+  background: #b71c1c;
+  border-color: #be3535;
+  color: white;
+}
+
+.opm-dispute-label.active {
+  color: white;
+  font-weight: bold;
+}
+
+/* Collapse/Expand icon styling */
+.opm-card-icons svg {
+  color: #fff;
+  font-size: 14px;
+}

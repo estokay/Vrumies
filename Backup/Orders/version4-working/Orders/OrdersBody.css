@@ -1,0 +1,14 @@
+.orders-body-container {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.orders-body-right {
+  flex: 1;
+  background-color: #1c1c1c;
+  padding: 20px;
+  color: white;
+  overflow-y: auto;
+}

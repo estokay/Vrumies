@@ -6,7 +6,7 @@ import { FaComment } from 'react-icons/fa';
 import './VideosPostLayout.css';
 import useUserAverageRating from "../../../Components/Reviews/useUserAverageRating";
 
-function VideosPostLayout({ id, image, title, createdAt, userId }) {
+function VideosPostLayout({ id, image, videoPreviewImage, title, createdAt, userId }) {
   const [profilePic, setProfilePic] = useState(`${process.env.PUBLIC_URL}/default-profile.png`);
   const [username, setUsername] = useState("Unknown");
   const [likes, setLikes] = useState(0);
@@ -109,7 +109,7 @@ function VideosPostLayout({ id, image, title, createdAt, userId }) {
           </div>
         )}
         <img
-          src={image ? image : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
+          src={image || videoPreviewImage || `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Event Thumbnail'}
           className="thumbnail"
         />

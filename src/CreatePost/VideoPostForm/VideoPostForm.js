@@ -25,12 +25,14 @@ const VideoPostForm = () => {
     link: '',
     image: '',
     video: '',
+    videoPreviewImage: '',
     videoDuration: 0,
     tokens: 0,
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState('');
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
 
   const toggleField = (field) =>
     setActiveField((prev) => (prev === field ? null : field));
@@ -74,7 +76,15 @@ const VideoPostForm = () => {
   return submitted ? (
     <div className="post-success-message">{message}</div>
   ) : (
-    <form className="post-form" onSubmit={handleSubmit}>
+    <form
+      className="post-form"
+      onSubmit={handleSubmit}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
+      }}
+    >
       <label className="form-label">Title</label>
       <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" />
 
@@ -99,7 +109,7 @@ const VideoPostForm = () => {
       )}
 
       {activeField === 'video' && (
-        <VideoUploadField formData={formData} setFormData={setFormData} />
+        <VideoUploadField formData={formData} setFormData={setFormData} onUploadStateChange={setIsUploadingVideo} />
       )}
 
       {activeField === 'image' && (
@@ -110,7 +120,13 @@ const VideoPostForm = () => {
         <TokenField value={formData.tokens} onChange={handleChange} />
       )}
 
-      <button type="submit" className="submit-btn">Submit</button>
+      <button
+        type="submit"
+        className="submit-btn"
+        disabled={isUploadingVideo}
+      >
+        {isUploadingVideo ? 'Uploading video...' : 'Submit'}
+      </button>
       {message && <p>{message}</p>}
     </form>
   );

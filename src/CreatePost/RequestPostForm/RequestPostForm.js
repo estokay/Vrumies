@@ -200,7 +200,15 @@ const RequestPostForm = () => {
   }
 
   return (
-    <form className="post-form" onSubmit={handleSubmit}>
+    <form
+      className="post-form"
+      onSubmit={handleSubmit}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
+      }}
+    >
       <label className="form-label">Title</label>
       <input
         type="text"

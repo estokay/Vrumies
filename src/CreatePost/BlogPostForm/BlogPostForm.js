@@ -170,7 +170,15 @@ const BlogPostForm = () => {
   }
 
   return (
-    <form className="post-form" onSubmit={handleSubmit}>
+    <form
+      className="post-form"
+      onSubmit={handleSubmit}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
+      }}
+    >
       <label className="form-label">Title</label>
       <input name="title" value={formData.title} onChange={handleChange} placeholder="Write a title here" required />
 

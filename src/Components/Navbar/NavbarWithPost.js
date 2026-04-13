@@ -222,14 +222,13 @@ function NavbarWithPost() {
           </button>
           <button className="profile-btn" onClick={toggleDropdown}>
             <img src={`${process.env.PUBLIC_URL}/profile.png`} alt="Profile" />
-            <img 
-              src={profilePic || `${process.env.PUBLIC_URL}/default-profile.png`} 
-              alt="User" 
-              className="profile-photo" 
-              onError={(e) => {
-                e.target.src = `${process.env.PUBLIC_URL}/default-profile.png`;
-              }} 
-            />
+            {profilePic && (
+              <img 
+                src={profilePic} 
+                alt="User" 
+                className="profile-photo"
+              />
+            )}
           </button>
         </div>
 

@@ -131,3 +131,25 @@
   border-radius: 12px;
   cursor: pointer;
 }
+
+.od-btn-completed {
+  background: #1e7e34;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.od-btn-disputed {
+  background: #a94442;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0.85;
+  cursor: not-allowed;
+}

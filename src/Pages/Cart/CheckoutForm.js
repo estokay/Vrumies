@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../AuthContext";
 import {
   collection,
@@ -19,6 +19,7 @@ function CheckoutFormInner() {
   const { currentUser } = useAuth();
   const [showOverlay, setShowOverlay] = useState(false);
   const [paymentComplete, setPaymentComplete] = useState(false);
+  const cardRef = useRef(null);
 
   const {
     processPayment,
@@ -85,9 +86,7 @@ function CheckoutFormInner() {
 
   useEffect(() => {
     if (!SQUARE_APPLICATION_ID || !SQUARE_LOCATION_ID || total <= 0) return;
-
-    const cardContainer = document.querySelector("#card-container");
-    if (!cardContainer) return; // wait until element exists
+    if (!cardRef.current || card) return;
 
     async function initSquare() {
       if (!window.Square) {
@@ -101,7 +100,7 @@ function CheckoutFormInner() {
       );
 
       const cardInstance = await payments.card();
-      await cardInstance.attach("#card-container");
+      await cardInstance.attach(cardRef.current);
       setCard(cardInstance);
     }
 
@@ -460,7 +459,7 @@ function CheckoutFormInner() {
         <h4 className="cb-section-title">Payment Information</h4>
         {total > 0 && (
           <div className="cb-card-light">
-            <div id="card-container"></div>
+            <div ref={cardRef}></div> {/* ✅ no id needed */}
           </div>
         )}
       </div>

@@ -29,8 +29,6 @@ import {
 
 // Context & Hooks
 import { useAuth } from "../../../AuthContext";
-import { useCheckForAffiliateLink } from "../../../Hooks/useCheckForAffiliateLink";
-import useIsItemInCart from "../../../Hooks/useIsItemInCart";
 
 // Components
 import PageHeader from "../../../Components/PageHeader";
@@ -38,10 +36,8 @@ import SellerRating from "../../../Components/Reviews/SellerRating";
 import ViewPhotoOverlay from "../../../Components/Overlays/ViewPhotoOverlay";
 import PostSectionReviews from "../../../Components/PostSectionReviews";
 import PostDropMenu from "../../../Components/PostDropMenu";
-import ItemInCartOverlay from "../../../Components/Overlays/ItemInCartOverlay";
 import MainCommentsSection from "../../../Components/CommentsMobile/CommentsSectionMobile";
 import PromotedPanel from "../../../Components/ViewPostsMobile/PromotedPanelMobile";
-import CreateAffiliateLinkOverlay from "../../../Components/Overlays/CreateAffiliateLinkOverlay";
 import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 import GetPostRoute from "../../../Functions/GetPostRoute";
@@ -67,13 +63,8 @@ const RequestPostMobile = () => {
   // Overlay States
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayImage, setOverlayImage] = useState(null);
-  const [showCartOverlay, setShowCartOverlay] = useState(false);
-  const [showAffiliateLinkOverlay, setShowAffiliateLinkOverlay] = useState(false);
   const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
   const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
-
-  const { affiliateDocId: affiliateLinkId } = useCheckForAffiliateLink(post?.userId);
-  const { isInCart } = useIsItemInCart(id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,25 +115,46 @@ const RequestPostMobile = () => {
     setTimeout(() => setNotification(""), 3000);
   };
 
-  const handleAddToCart = async () => {
-    if (!currentUser) return alert("Login required");
-    try {
-      const itemRef = doc(db, "Users", currentUser.uid, "cart", id);
-      await setDoc(itemRef, {
-        postId: id,
-        title: post.title,
-        price: post.price,
-        sellerId: post.userId,
-        image: post.images?.[0],
-        addedAt: new Date(),
-      });
-      setShowCartOverlay(true);
-    } catch (err) { console.error(err); }
-  };
-
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     showNotification("Link copied!");
+  };
+
+  const handleReport = async () => {
+    if (!currentUser) return;
+    const postRef = doc(db, "Posts", id);
+    try {
+      const postSnap = await getDoc(postRef);
+      if (!postSnap.exists()) return;
+
+      const postData = postSnap.data();
+      const reportArray = postData.report || [];
+
+      if (reportArray.includes(currentUser.uid)) {
+        await updateDoc(postRef, { report: arrayRemove(currentUser.uid) });
+        setReported(false);
+        showNotification("Report removed");
+      } else {
+        await updateDoc(postRef, { report: arrayUnion(currentUser.uid) });
+        setReported(true);
+        showNotification("Reported");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleConfirmDelete = async (id) => {
+    try {
+      // Delete the post from Firestore
+      await deleteDoc(doc(db, "Posts", id));
+      showNotification("Post deleted successfully!");
+      setShowDeletePostOverlay(false);
+      navigate("/"); // or redirect wherever
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      showNotification("Failed to delete post");
+    }
   };
 
   if (loading) return <div className="rpm-loader">Loading...</div>;
@@ -150,6 +162,9 @@ const RequestPostMobile = () => {
 
   const images = post.images?.length > 0 ? post.images : ["/default-thumbnail.png"];
   const isSeller = currentUser?.uid === post.userId;
+
+  const formatLink = (url) =>
+    url ? (url.startsWith("http") ? url : `https://${url}`) : null;
 
   return (
     <div className="rpm-container">
@@ -168,8 +183,6 @@ const RequestPostMobile = () => {
           onDelete={() => setShowDeletePostOverlay(true)} 
           canBlock={!isSeller} 
           onBlock={() => setShowBlockUserOverlay(true)} 
-          canAffiliate={!isSeller} 
-          onAffiliate={() => setShowAffiliateLinkOverlay(true)}
           canReport={true}
           reported={reported} 
         />
@@ -202,7 +215,7 @@ const RequestPostMobile = () => {
       {/* Content Body */}
       <div className="rpm-body">
         <h1 className="rpm-title">{post.title?.toUpperCase()}</h1>
-        <div className="rpm-price-tag">{post.price ?? "Price N/A"}</div>
+        
         
         <div className="rpm-seller-card">
           <Link to={`/viewprofile/${post.userId}`}>
@@ -234,9 +247,17 @@ const RequestPostMobile = () => {
           {activeTab === "description" && <p>{post.description}</p>}
           {activeTab === "details" && (
             <div className="rpm-details-list">
-              <p><strong>Condition:</strong> {post.condition || "N/A"}</p>
-              <p><strong>Shipping:</strong> {post.shippingTime || "N/A"}</p>
-              <p><strong>Tokens:</strong> {post.tokens || "0"}</p>
+              <p><strong>Tokens:</strong> {post.tokens ?? "N/A"}</p>
+              <p><strong>Post Location:</strong> {typeof post.location === "string" ? post.location : "N/A"}</p>
+              <p><strong>Link:</strong>{" "}
+                {post.link ? (
+                  <a href={formatLink(post.link)} target="_blank" rel="noopener noreferrer">
+                    {post.link}
+                  </a>
+                ) : "N/A"}
+              </p>
+              <p><strong>Urgency:</strong>{" "} {post.urgency ?? "N/A"}</p>
+              <p><strong>Willing to Pay:</strong>{" "} {post.price != null ? `$${post.price.toFixed(2)}` : "N/A"}</p>
             </div>
           )}
           {activeTab === "reviews" && <PostSectionReviews userId={post.userId} />}
@@ -248,14 +269,6 @@ const RequestPostMobile = () => {
           <button className={`rpm-grid-btn ${bookmarked ? 'active' : ''}`}><FaBookmark /> Bookmark</button>
           <button className="rpm-grid-btn"><FaFlag /> Report</button>
         </div>
-
-        <button 
-          className="rpm-add-cart-btn" 
-          disabled={isSeller || isInCart}
-          onClick={handleAddToCart}
-        >
-          {isInCart ? "ITEM IN CART" : isSeller ? "YOUR POST" : "ADD TO CART"}
-        </button>
 
         <hr className="rpm-divider" />
 
@@ -274,10 +287,23 @@ const RequestPostMobile = () => {
       {showOverlay && (
         <ViewPhotoOverlay photoUrl={overlayImage} onClose={() => setShowOverlay(false)} />
       )}
-      {showCartOverlay && (
-        <ItemInCartOverlay productName={post.title} onClose={() => setShowCartOverlay(false)} />
-      )}
       {/* ... Other overlays follow same pattern ... */}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={id}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 };

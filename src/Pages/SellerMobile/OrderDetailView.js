@@ -9,10 +9,16 @@ import checkPrice from "../../Functions/checkPrice";
 import "./OrderDetailView.css";
 import useGetUsername from "../../Hooks/useGetUsername";
 
-export default function OrderDetailView({ order, onBack }) {
+export default function OrderDetailView({ order: initialOrder, onBack }) {
+  const [order, setOrder] = useState(initialOrder);
   const navigate = useNavigate();
   const { setOrderStatus, loading } = useSetOrderStatus();
-  const buyerUsername = useGetUsername(order.buyerInfo?.buyerId);
+
+  useEffect(() => {
+    setOrder(initialOrder);
+  }, [initialOrder]);
+
+  const buyerUsername = useGetUsername(order?.buyerInfo?.buyerId);
   const [carrier, setCarrier] = useState("");
   const [tracking, setTracking] = useState("");
 
@@ -31,11 +37,28 @@ export default function OrderDetailView({ order, onBack }) {
 
   const handleAction = async (type) => {
     const payload = { orderId: order.id };
+
     if (type === "complete") payload.sellerPressedCompleted = true;
     if (type === "dispute") payload.sellerPressedDispute = true;
 
     const res = await setOrderStatus(payload);
-    if (res?.success) window.location.reload();
+
+    if (res?.success) {
+      setOrder((prev) => ({
+        ...prev,
+        sellerInfo: {
+          ...prev.sellerInfo,
+          sellerMarkedCompleted:
+            type === "complete"
+              ? true
+              : prev.sellerInfo?.sellerMarkedCompleted,
+          sellerDispute:
+            type === "dispute"
+              ? true
+              : prev.sellerInfo?.sellerDispute,
+        },
+      }));
+    }
   };
 
   const updateTracking = async () => {
@@ -78,7 +101,9 @@ export default function OrderDetailView({ order, onBack }) {
         <span className="od-id-badge">ID: {order.id}</span>
       </div>
 
+      {/* Post Information */}
       <div className="od-section">
+        <h3>Post Information</h3>
         <h2 className="od-title">{order.postData?.title}</h2>
         <div className="od-item-card">
           <img 
@@ -89,7 +114,6 @@ export default function OrderDetailView({ order, onBack }) {
           <div className="od-summary">
             <p><strong>Date:</strong> {order.orderCreated?.toDate?.().toLocaleDateString() || "N/A"}</p>
             <p><strong>Type:</strong> <span className="od-type-tag">{order.type?.toUpperCase()}</span></p>
-            <p><strong>Buyer:</strong> {buyerUsername || "N/A"}</p>
             <p><strong>Description:</strong> {order.postData?.description || "N/A"}</p>
             {getViewPath() && (
               <button className="od-btn-view" onClick={() => navigate(getViewPath())}>
@@ -97,6 +121,14 @@ export default function OrderDetailView({ order, onBack }) {
               </button>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Buyer Information */}
+      <div className="od-section">
+        <h3>Buyer Information</h3>
+        <div className="od-data-row">
+          <span>Username:</span> <strong>{buyerUsername}</strong>
         </div>
       </div>
 
@@ -153,14 +185,38 @@ export default function OrderDetailView({ order, onBack }) {
         <OrderStatusTimeline postId={order.id} orderSide="seller" />
 
         <div className="od-actions">
-          {!order.sellerInfo?.sellerMarkedCompleted && (
-            <button className="od-btn-complete" onClick={() => handleAction("complete")} disabled={loading}>
-              Complete Order
+          {!order.sellerInfo?.sellerMarkedCompleted &&
+          !order.sellerInfo?.sellerDispute &&
+          !order.buyerInfo?.buyerDispute && (
+            <button
+              className="od-btn-complete"
+              onClick={() => handleAction("complete")}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Mark as Completed"}
             </button>
           )}
-          {!order.sellerInfo?.sellerDispute && (
-            <button className="od-btn-dispute" onClick={() => handleAction("dispute")} disabled={loading}>
-              Dispute
+
+          {order.sellerInfo?.sellerMarkedCompleted && (
+            <button className="od-btn-completed" disabled>
+              ✓ Marked Completed
+            </button>
+          )}
+
+          {!order.sellerInfo?.sellerDispute &&
+          !order.sellerInfo?.sellerMarkedCompleted && (
+            <button
+              className="od-btn-dispute"
+              onClick={() => handleAction("dispute")}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Dispute"}
+            </button>
+          )}
+
+          {order.sellerInfo?.sellerDispute && (
+            <button className="od-btn-disputed" disabled>
+              ⚠ Disputed Order
             </button>
           )}
         </div>

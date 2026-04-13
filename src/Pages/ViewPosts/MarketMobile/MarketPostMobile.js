@@ -145,6 +145,43 @@ const MarketPostMobile = () => {
     showNotification("Link copied!");
   };
 
+  const handleReport = async () => {
+    if (!currentUser) return;
+    const postRef = doc(db, "Posts", id);
+    try {
+      const postSnap = await getDoc(postRef);
+      if (!postSnap.exists()) return;
+
+      const postData = postSnap.data();
+      const reportArray = postData.report || [];
+
+      if (reportArray.includes(currentUser.uid)) {
+        await updateDoc(postRef, { report: arrayRemove(currentUser.uid) });
+        setReported(false);
+        showNotification("Report removed");
+      } else {
+        await updateDoc(postRef, { report: arrayUnion(currentUser.uid) });
+        setReported(true);
+        showNotification("Reported");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleConfirmDelete = async (id) => {
+    try {
+      // Delete the post from Firestore
+      await deleteDoc(doc(db, "Posts", id));
+      showNotification("Post deleted successfully!");
+      setShowDeletePostOverlay(false);
+      navigate("/"); // or redirect wherever
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      showNotification("Failed to delete post");
+    }
+  };
+
   if (loading) return <div className="mpm-loader">Loading...</div>;
   if (!post) return null;
 
@@ -202,7 +239,11 @@ const MarketPostMobile = () => {
       {/* Content Body */}
       <div className="mpm-body">
         <h1 className="mpm-title">{post.title?.toUpperCase()}</h1>
-        <div className="mpm-price-tag">{post.price ?? "Price N/A"}</div>
+        <div className="mpm-price-tag">
+          {post.price !== undefined
+            ? `$${post.price.toFixed(2)}`
+            : "Price N/A"}
+        </div>
         
         <div className="mpm-seller-card">
           <Link to={`/viewprofile/${post.userId}`}>
@@ -278,6 +319,22 @@ const MarketPostMobile = () => {
         <ItemInCartOverlay productName={post.title} onClose={() => setShowCartOverlay(false)} />
       )}
       {/* ... Other overlays follow same pattern ... */}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={id}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 };

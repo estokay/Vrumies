@@ -1,0 +1,88 @@
+.bd-container { padding: 20px; max-width: 900px; margin: auto; color: white; }
+.bd-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.bd-back { background: none; border: none; color: #02c202; cursor: pointer; font-size: 1.1rem; }
+.bd-id-badge { background: #333; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; }
+
+.bd-section {
+  background: linear-gradient(180deg, #292727, #3a3737);
+  padding: 25px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+.bd-section h3 {
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  color: #02c202;
+}
+
+.bd-payment-summary {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.bd-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.bd-type-tag {
+  background: #111;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  margin-left: 5px;
+}
+
+.bd-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.bd-item-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.bd-summary p {
+  margin: 6px 0;
+  color: #ccc;
+}
+
+.bd-total { font-size: 1.2rem; font-weight: bold; color: #02c202; margin-top: 10px; }
+
+.bd-actions { display: flex; gap: 10px; margin-top: 20px; }
+.bd-btn-complete { flex: 1; background: #02c202; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; }
+.bd-btn-dispute { flex: 1; background: #444; color: white; border: none; padding: 12px; border-radius: 12px; }
+
+/* Completed (green, disabled look) */
+.bd-btn-completed {
+  flex: 1;
+  background: #1e7e34; /* darker green */
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* Disputed (warning style) */
+.bd-btn-disputed {
+  flex: 1;
+  background: #a94442; /* red */
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0.85;
+  cursor: not-allowed;
+}
