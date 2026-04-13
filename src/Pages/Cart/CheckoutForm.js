@@ -86,11 +86,19 @@ function CheckoutFormInner() {
 
   useEffect(() => {
     if (!SQUARE_APPLICATION_ID || !SQUARE_LOCATION_ID || total <= 0) return;
-    if (!cardRef.current || card) return;
+    if (card) return;
+
+    let isMounted = true;
 
     async function initSquare() {
       if (!window.Square) {
         console.error("Square SDK not loaded");
+        return;
+      }
+
+      // 🔥 WAIT until the ref exists
+      if (!cardRef.current) {
+        requestAnimationFrame(initSquare);
         return;
       }
 
@@ -100,11 +108,21 @@ function CheckoutFormInner() {
       );
 
       const cardInstance = await payments.card();
+
+      if (!cardRef.current) return; // double safety
+
       await cardInstance.attach(cardRef.current);
-      setCard(cardInstance);
+
+      if (isMounted) {
+        setCard(cardInstance);
+      }
     }
 
     initSquare();
+
+    return () => {
+      isMounted = false;
+    };
   }, [SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID, total]);
 
   const handleChange = (e) => {

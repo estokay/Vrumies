@@ -184,6 +184,7 @@ const BlogPostMobile = () => {
           canBlock={!isSeller} 
           onBlock={() => setShowBlockUserOverlay(true)} 
           canReport={true}
+          onReport={handleReport}
           reported={reported} 
         />
       </div>
@@ -286,6 +287,22 @@ const BlogPostMobile = () => {
         <ViewPhotoOverlay photoUrl={overlayImage} onClose={() => setShowOverlay(false)} />
       )}
       {/* ... Other overlays follow same pattern ... */}
+      {showBlockUserOverlay && (
+        <BlockUserOverlay
+          userId={post.userId}
+          from="post"
+          isOpen={showBlockUserOverlay}
+          onClose={() => setShowBlockUserOverlay(false)}
+        />
+      )}
+      {showDeletePostOverlay && (
+        <DeletePostOverlay
+          postId={id}
+          isOpen={showDeletePostOverlay}
+          onClose={() => setShowDeletePostOverlay(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 };

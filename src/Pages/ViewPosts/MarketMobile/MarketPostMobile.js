@@ -208,6 +208,7 @@ const MarketPostMobile = () => {
           canAffiliate={!isSeller} 
           onAffiliate={() => setShowAffiliateLinkOverlay(true)}
           canReport={true}
+          onReport={handleReport}
           reported={reported} 
         />
       </div>
@@ -319,6 +320,13 @@ const MarketPostMobile = () => {
         <ItemInCartOverlay productName={post.title} onClose={() => setShowCartOverlay(false)} />
       )}
       {/* ... Other overlays follow same pattern ... */}
+      {showAffiliateLinkOverlay && (
+        <CreateAffiliateLinkOverlay
+          postId={id}
+          isOpen={showAffiliateLinkOverlay}
+          onClose={() => setShowAffiliateLinkOverlay(false)}
+        />
+      )}
       {showBlockUserOverlay && (
         <BlockUserOverlay
           userId={post.userId}

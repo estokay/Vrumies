@@ -210,6 +210,7 @@ const OfferPostMobile = () => {
           canBlock={!isSeller} 
           onBlock={() => setShowBlockUserOverlay(true)} 
           canReport={true}
+          onReport={handleReport}
           reported={reported} 
         />
       </div>

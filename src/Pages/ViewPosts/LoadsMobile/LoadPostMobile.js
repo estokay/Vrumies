@@ -228,6 +228,7 @@ const LoadPostMobile = () => {
           canAffiliate={!isSeller} 
           onAffiliate={() => setShowAffiliateLinkOverlay(true)}
           canReport={true}
+          onReport={handleReport}
           reported={reported} 
         />
       </div>
