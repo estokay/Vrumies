@@ -226,11 +226,11 @@ const VehiclePostMobile = () => {
         </div>
         
         <div className="vpm-seller-card">
-          <Link to={`/viewprofile/${post.userId}`}>
+          <Link to={`/viewprofilemobile/${post.userId}`}>
             <img src={seller?.profilepic || "/default-profile.png"} className="vpm-seller-avatar" alt="seller" />
           </Link>
           <div className="vpm-seller-info">
-            <Link to={`/viewprofile/${post.userId}`} className="vpm-seller-name">{seller?.username}</Link>
+            <Link to={`/viewprofilemobile/${post.userId}`} className="vpm-seller-name">{seller?.username}</Link>
             <SellerRating userId={post.userId} />
           </div>
           <button className={`vpm-follow-btn ${followed ? 'active' : ''}`} onClick={() => setFollowed(!followed)}>

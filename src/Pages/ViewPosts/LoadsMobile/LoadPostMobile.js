@@ -270,11 +270,11 @@ const LoadPostMobile = () => {
         </div>
         
         <div className="lpm-seller-card">
-          <Link to={`/viewprofile/${post.userId}`}>
+          <Link to={`/viewprofilemobile/${post.userId}`}>
             <img src={seller?.profilepic || "/default-profile.png"} className="lpm-seller-avatar" alt="seller" />
           </Link>
           <div className="lpm-seller-info">
-            <Link to={`/viewprofile/${post.userId}`} className="lpm-seller-name">{seller?.username}</Link>
+            <Link to={`/viewprofilemobile/${post.userId}`} className="lpm-seller-name">{seller?.username}</Link>
             <SellerRating userId={post.userId} />
           </div>
           <button className={`lpm-follow-btn ${followed ? 'active' : ''}`} onClick={() => setFollowed(!followed)}>

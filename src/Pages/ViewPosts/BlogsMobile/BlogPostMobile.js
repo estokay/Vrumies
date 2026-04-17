@@ -222,11 +222,11 @@ const BlogPostMobile = () => {
         
         
         <div className="bpm-seller-card">
-          <Link to={`/viewprofile/${post.userId}`}>
+          <Link to={`/viewprofilemobile/${post.userId}`}>
             <img src={seller?.profilepic || "/default-profile.png"} className="bpm-seller-avatar" alt="seller" />
           </Link>
           <div className="bpm-seller-info">
-            <Link to={`/viewprofile/${post.userId}`} className="bpm-seller-name">{seller?.username}</Link>
+            <Link to={`/viewprofilemobile/${post.userId}`} className="bpm-seller-name">{seller?.username}</Link>
             <SellerRating userId={post.userId} />
           </div>
           <button className={`bpm-follow-btn ${followed ? 'active' : ''}`} onClick={() => setFollowed(!followed)}>

@@ -227,11 +227,11 @@ const EventPostMobile = () => {
         
         
         <div className="epm-seller-card">
-          <Link to={`/viewprofile/${post.userId}`}>
+          <Link to={`/viewprofilemobile/${post.userId}`}>
             <img src={seller?.profilepic || "/default-profile.png"} className="epm-seller-avatar" alt="seller" />
           </Link>
           <div className="epm-seller-info">
-            <Link to={`/viewprofile/${post.userId}`} className="epm-seller-name">{seller?.username}</Link>
+            <Link to={`/viewprofilemobile/${post.userId}`} className="epm-seller-name">{seller?.username}</Link>
             <SellerRating userId={post.userId} />
           </div>
           <button className={`epm-follow-btn ${followed ? 'active' : ''}`} onClick={() => setFollowed(!followed)}>

@@ -253,11 +253,11 @@ const MarketPostMobile = () => {
         </div>
         
         <div className="dpm-seller-card">
-          <Link to={`/viewprofile/${post.userId}`}>
+          <Link to={`/viewprofilemobile/${post.userId}`}>
             <img src={seller?.profilepic || "/default-profile.png"} className="dpm-seller-avatar" alt="seller" />
           </Link>
           <div className="dpm-seller-info">
-            <Link to={`/viewprofile/${post.userId}`} className="dpm-seller-name">{seller?.username}</Link>
+            <Link to={`/viewprofilemobile/${post.userId}`} className="dpm-seller-name">{seller?.username}</Link>
             <SellerRating userId={post.userId} />
           </div>
           <button className={`dpm-follow-btn ${followed ? 'active' : ''}`} onClick={() => setFollowed(!followed)}>
