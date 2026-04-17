@@ -66,7 +66,7 @@ const MarketPostMobile = () => {
   
   // Overlay States
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayImage, setOverlayImage] = useState(null);
+  const [overlayIndex, setOverlayIndex] = useState(0);
   const [showCartOverlay, setShowCartOverlay] = useState(false);
   const [showAffiliateLinkOverlay, setShowAffiliateLinkOverlay] = useState(false);
   const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
@@ -220,7 +220,10 @@ const MarketPostMobile = () => {
             src={images[currentImage]} 
             alt="Product" 
             className="mpm-main-image"
-            onClick={() => { setOverlayImage(images[currentImage]); setShowOverlay(true); }}
+            onClick={() => {
+              setOverlayIndex(currentImage);
+              setShowOverlay(true);
+            }}
           />
           <div className="mpm-image-counter">{currentImage + 1} / {images.length}</div>
         </div>
@@ -314,7 +317,15 @@ const MarketPostMobile = () => {
 
       {/* Overlays */}
       {showOverlay && (
-        <ViewPhotoOverlay photoUrl={overlayImage} onClose={() => setShowOverlay(false)} />
+        <ViewPhotoOverlay
+          photos={images}
+          startIndex={overlayIndex}
+          caption={post.title}
+          createdAt={post.createdAt}
+          onClose={() => {
+            setShowOverlay(false);
+          }}
+        />
       )}
       {showCartOverlay && (
         <ItemInCartOverlay productName={post.title} onClose={() => setShowCartOverlay(false)} />

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import {
   FaTimes,
   FaSearchPlus,
@@ -10,56 +10,21 @@ import {
 import "./ViewPhotoOverlay.css";
 import useTimestampObjectToDate from "../../Hooks/useTimestampObjectToDate";
 
-export default function ViewPhotoOverlay({ photoUrl, photos = null, startIndex = 0, onClose, caption, createdAt }) {
+export default function ViewPhotoOverlay({ photoUrl, onClose, caption, createdAt }) {
   const [zoom, setZoom] = useState(1);
   const imageRef = useRef(null);
   const dateString = useTimestampObjectToDate(createdAt);
 
-  const imageList = photos && photos.length > 0 ? photos : [photoUrl];
-  const [currentIndex, setCurrentIndex] = useState(startIndex);
-  const currentPhoto = imageList[currentIndex];
-
-  
+  if (!photoUrl) return null;
 
   const stopClick = (e) => e.stopPropagation();
 
   const zoomIn = () => setZoom((z) => Math.min(z + 0.2, 3));
   const zoomOut = () => setZoom((z) => Math.max(z - 0.2, 1));
 
-  const hasMultiple = imageList.length > 1;
-
-  const nextImage = () => {
-    setCurrentIndex((i) => (i + 1) % imageList.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((i) => (i - 1 + imageList.length) % imageList.length);
-  };
-
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (!hasMultiple) return;
-
-      const tag = e.target.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
-
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
-    };
-
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [hasMultiple, imageList.length]);
-
-  useEffect(() => {
-    setZoom(1);
-  }, [currentIndex]);
-
-  if (!imageList || imageList.length === 0 || !imageList[0]) return null;
-
   const downloadImage = async () => {
     try {
-      const res = await fetch(currentPhoto);
+      const res = await fetch(photoUrl);
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
 
@@ -78,9 +43,9 @@ export default function ViewPhotoOverlay({ photoUrl, photos = null, startIndex =
 
   const shareImage = async () => {
     if (navigator.share) {
-      await navigator.share({ url: currentPhoto });
+      await navigator.share({ url: photoUrl });
     } else {
-      await navigator.clipboard.writeText(currentPhoto);
+      await navigator.clipboard.writeText(photoUrl);
       alert("Image link copied");
     }
   };
@@ -93,16 +58,10 @@ export default function ViewPhotoOverlay({ photoUrl, photos = null, startIndex =
     <div className="viewphotooverlay-container" onClick={onClose}>
       <div className="viewphotooverlay-inner" onClick={stopClick}>
         <div className="viewphotooverlay-image-container">
-          {hasMultiple && (
-            <>
-              <button className="nav-arrow left" onClick={prevImage}>‹</button>
-              <button className="nav-arrow right" onClick={nextImage}>›</button>
-            </>
-          )}
           {/* IMAGE ZOOM LAYER */}
           <img
             ref={imageRef}
-            src={currentPhoto}
+            src={photoUrl}
             alt="Expanded"
             className="viewphotooverlay-image"
             style={{ transform: `scale(${zoom})` }}

@@ -7,9 +7,20 @@ import { useParams } from "react-router-dom";
 export default function ViewPhotosBody() {
   const { userId } = useParams();
   const { photos: userPhotos, loading, error } = useGetPhotos(userId);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const photoUrls = (userPhotos || []).map(p => p.photoUrl);
 
   const galleryRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      selectedIndex !== null &&
+      userPhotos &&
+      selectedIndex >= userPhotos.length
+    ) {
+      setSelectedIndex(null);
+    }
+  }, [userPhotos, selectedIndex]);
 
   return (
     <>
@@ -24,17 +35,17 @@ export default function ViewPhotosBody() {
           className="myphotos-gallery-scroll"
           ref={galleryRef}
         >
-          {userPhotos.length === 0 ? (
+          {!userPhotos || userPhotos.length === 0 ? (
             <div className="myphotos-no-posts-message">
               No photos uploaded yet.
             </div>
           ) : (
             <div className="myphotos-gallery-grid">
-              {userPhotos.map((photo) => (
+              {userPhotos.map((photo, index) => (
                 <div
                   className="myphotos-card"
                   key={photo.id}
-                  onClick={() => setSelectedPhoto(photo)}
+                  onClick={() => setSelectedIndex(index)}
                   style={{ cursor: "pointer" }}
                 >
                   <img src={photo.photoUrl} alt={photo.caption || "User upload"} />
@@ -46,12 +57,13 @@ export default function ViewPhotosBody() {
       </div>
 
       {/* Photo Overlay */}
-      {selectedPhoto && (
+      {selectedIndex !== null && (
       <ViewPhotoOverlay
-        photoUrl={selectedPhoto.photoUrl}
-        onClose={() => setSelectedPhoto(null)}
-        caption={selectedPhoto.caption}
-        createdAt={selectedPhoto.createdAt}
+        photos={photoUrls}
+        startIndex={selectedIndex}
+        onClose={() => setSelectedIndex(null)}
+        caption={userPhotos[selectedIndex]?.caption}
+        createdAt={userPhotos[selectedIndex]?.createdAt}
       />
       )}
     </>

@@ -18,8 +18,13 @@ export default function MyPhotosBody() {
   const galleryRef = useRef(null);
 
   // Overlay state
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
+  useEffect(() => {
+    if (selectedIndex !== null && selectedIndex >= userPhotos.length) {
+      setSelectedIndex(null);
+    }
+  }, [userPhotos, selectedIndex]);
 
   // Delete photo
   const handleDelete = async (photoId) => {
@@ -30,6 +35,8 @@ export default function MyPhotosBody() {
 
     await deletePhoto(userId, photoId);
   };
+
+  const photoUrls = userPhotos.map(p => p.photoUrl);
 
   return (
     <div className="myphotos-profile-body">
@@ -53,12 +60,12 @@ export default function MyPhotosBody() {
           <div className="myphotos-no-posts-message">No photos uploaded yet.</div>
         ) : (
           <div className="myphotos-gallery-grid">
-            {userPhotos.map((photo) => (
+            {userPhotos.map((photo, index) => (
               <div className="myphotos-card" key={photo.id}>
                 <img
                   src={photo.photoUrl}
                   alt="User upload"
-                  onClick={() => setSelectedPhoto(photo)}
+                  onClick={() => setSelectedIndex(index)}
                   style={{ cursor: "pointer" }}
                 />
                 <button
@@ -75,12 +82,13 @@ export default function MyPhotosBody() {
       </div>
 
       {/* ViewPhotoOverlay */}
-      {selectedPhoto && (
+      {selectedIndex !== null && (
         <ViewPhotoOverlay 
-          photoUrl={selectedPhoto.photoUrl} 
-          onClose={() => setSelectedPhoto(null)}
-          caption={selectedPhoto.caption}
-          createdAt={selectedPhoto.createdAt}
+          photos={photoUrls}
+          startIndex={selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+          caption={userPhotos[selectedIndex]?.caption}
+          createdAt={userPhotos[selectedIndex]?.createdAt}
         />
       )}
 

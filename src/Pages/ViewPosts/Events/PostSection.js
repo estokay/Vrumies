@@ -461,7 +461,7 @@ function PostSection({ postId }) {
             alt="Product"
             className="main-image"
             onClick={() => {
-              setOverlayImage(images[currentImage]);
+              setOverlayImage(currentImage);
               setShowOverlay(true);
             }}
             style={{ cursor: "zoom-in" }}
@@ -470,7 +470,7 @@ function PostSection({ postId }) {
           <FaExpand
             className="expand-icon"
             onClick={() => {
-              setOverlayImage(images[currentImage]);
+              setOverlayImage(currentImage);
               setShowOverlay(true);
             }}
           />
@@ -497,7 +497,8 @@ function PostSection({ postId }) {
       </div>
       {showOverlay && (
         <ViewPhotoOverlay
-          photoUrl={overlayImage}
+          photos={images}
+          startIndex={overlayImage}
           caption={post.title}
           createdAt={post.createdAt}
           onClose={() => {

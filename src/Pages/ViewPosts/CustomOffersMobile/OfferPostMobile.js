@@ -69,7 +69,7 @@ const OfferPostMobile = () => {
   
   // Overlay States
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayImage, setOverlayImage] = useState(null);
+  const [overlayIndex, setOverlayIndex] = useState(0);
   const [showCartOverlay, setShowCartOverlay] = useState(false);
   const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
   const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
@@ -222,7 +222,10 @@ const OfferPostMobile = () => {
             src={images[currentImage]} 
             alt="Product" 
             className="opm-main-image"
-            onClick={() => { setOverlayImage(images[currentImage]); setShowOverlay(true); }}
+            onClick={() => {
+              setOverlayIndex(currentImage);
+              setShowOverlay(true);
+            }}
           />
           <div className="opm-image-counter">{currentImage + 1} / {images.length}</div>
         </div>
@@ -336,7 +339,16 @@ const OfferPostMobile = () => {
 
       {/* Overlays */}
       {showOverlay && (
-        <ViewPhotoOverlay photoUrl={overlayImage} onClose={() => setShowOverlay(false)} />
+        <ViewPhotoOverlay
+          photos={images}
+          startIndex={overlayIndex}
+          caption={post.title}
+          createdAt={post.createdAt}
+          onClose={() => {
+            setShowOverlay(false);
+            setOverlayIndex(0);
+          }}
+        />
       )}
       {showCartOverlay && (
         <ItemInCartOverlay productName={post.title} onClose={() => setShowCartOverlay(false)} />

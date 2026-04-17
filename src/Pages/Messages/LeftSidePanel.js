@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
+import ChatItem from "./ChatItem";
 
 const LeftSidePanel = ({ setActiveChat }) => {
   const { currentUser } = useAuth();
@@ -33,12 +34,20 @@ const LeftSidePanel = ({ setActiveChat }) => {
           const otherUserId = data.userA === currentUser.uid ? data.userB : data.userA;
           let otherUser = {
             username: "Unknown",
-            profilepic: `${process.env.PUBLIC_URL}/default-profile.png`,
+            profilepic: null,
           };
 
           try {
             const userSnap = await getDoc(doc(db, "Users", otherUserId));
-            if (userSnap.exists()) otherUser = userSnap.data();
+
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+
+              otherUser = {
+                username: userData.username || "Unknown",
+                profilepic: userData.profilepic || null,
+              };
+            }
           } catch (err) {
             console.error("Error fetching user:", err);
           }
@@ -63,6 +72,7 @@ const LeftSidePanel = ({ setActiveChat }) => {
 
           return {
             chatId,
+            otherUserId,
             otherUser,
             lastMessage: data.lastMessage || "",
             lastTimestamp: data.lastTimestamp?.toDate() || null,
@@ -100,35 +110,13 @@ const LeftSidePanel = ({ setActiveChat }) => {
       <input type="text" placeholder="Search username..." className="lsp-search" />
       <ul className="lsp-user-list">
         {chats.map((chat) => (
-          <li
+          <ChatItem
             key={chat.chatId}
-            className="lsp-user-item"
-            onClick={() => {
-              navigate(`/inbox?chat=${chat.chatId}`);
-              if (setActiveChat) setActiveChat(chat.chatId);
-            }}
-          >
-            <div className="lsp-user-left">
-              <div className="lsp-pic-wrapper">
-                <img
-                  src={chat.otherUser.profilepic}
-                  alt={chat.otherUser.username}
-                  className="lsp-user-pic"
-                />
-                <span className="lsp-online-dot"></span>
-              </div>
-              <div className="lsp-user-info">
-                <h4>{chat.otherUser.username}</h4>
-                <p>{chat.lastMessage || "No messages yet..."}</p>
-              </div>
-            </div>
-            <div className="lsp-right">
-              <span className="lsp-timestamp">{formatTime(chat.lastTimestamp)}</span>
-              {chat.unreadCount > 0 && (
-                <span className="lsp-unread-count">{chat.unreadCount}</span>
-              )}
-            </div>
-          </li>
+            chat={chat}
+            navigate={navigate}
+            setActiveChat={setActiveChat}
+            formatTime={formatTime}
+          />
         ))}
       </ul>
     </div>

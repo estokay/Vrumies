@@ -62,7 +62,7 @@ const VehiclePostMobile = () => {
   
   // Overlay States
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayImage, setOverlayImage] = useState(null);
+  const [overlayIndex, setOverlayIndex] = useState(0);
   const [showBlockUserOverlay, setShowBlockUserOverlay] = useState(false);
   const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
 
@@ -196,7 +196,10 @@ const VehiclePostMobile = () => {
             src={images[currentImage]} 
             alt="Product" 
             className="vpm-main-image"
-            onClick={() => { setOverlayImage(images[currentImage]); setShowOverlay(true); }}
+            onClick={() => {
+              setOverlayIndex(currentImage);
+              setShowOverlay(true);
+            }}
           />
           <div className="vpm-image-counter">{currentImage + 1} / {images.length}</div>
         </div>
@@ -289,7 +292,16 @@ const VehiclePostMobile = () => {
 
       {/* Overlays */}
       {showOverlay && (
-        <ViewPhotoOverlay photoUrl={overlayImage} onClose={() => setShowOverlay(false)} />
+        <ViewPhotoOverlay
+          photos={images}
+          startIndex={overlayIndex}
+          caption={post.title}
+          createdAt={post.createdAt}
+          onClose={() => {
+            setShowOverlay(false);
+            setOverlayIndex(0);
+          }}
+        />
       )}
       {/* ... Other overlays follow same pattern ... */}
       {showBlockUserOverlay && (
