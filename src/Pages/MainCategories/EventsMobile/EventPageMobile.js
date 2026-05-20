@@ -22,7 +22,7 @@ const EventPageMobile = () => {
           <p className="e-subtitle-text">AUTOMOTIVE EVENTS</p>
         </div>
         <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
+          src={`${process.env.PUBLIC_URL}/category-icons/event.png`}
           alt="Icon"
           className="e-header-logo"
         />

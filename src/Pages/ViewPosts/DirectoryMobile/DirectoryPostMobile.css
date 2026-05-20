@@ -99,7 +99,7 @@
   font-size: 1.8rem;
   color: #00ff00;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .dpm-seller-card {
@@ -224,4 +224,33 @@
   font-size: 1.1rem;
   margin-bottom: 15px;
   color: #aaa;
+}
+
+.dpm-price-row {
+  margin: 10px 0 20px;
+}
+
+.dpm-price-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.dpm-starting-price-label {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  font-size: 0.65rem;
+  color: #00ff00;
+  letter-spacing: 0.8px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.dpm-price-tag {
+  font-size: 1.8rem;
+  color: #00ff00;
+  font-weight: bold;
+  margin: 10px 0;
 }

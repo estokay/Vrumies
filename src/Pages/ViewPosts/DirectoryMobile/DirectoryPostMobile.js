@@ -45,10 +45,12 @@ import CreateAffiliateLinkOverlay from "../../../Components/Overlays/CreateAffil
 import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 import GetPostRoute from "../../../Functions/GetPostRoute";
+import ViewRequestedQuotesMobile from "./ViewRequestedQuotesMobile";
+import GetQuoteOverlay from "../../../Components/Overlays/GetQuoteOverlay";
 
 import "./DirectoryPostMobile.css";
 
-const MarketPostMobile = () => {
+const DirectoryPostMobile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -63,6 +65,9 @@ const MarketPostMobile = () => {
   const [bookmarked, setBookmarked] = useState(false);
   const [reported, setReported] = useState(false);
   const [followed, setFollowed] = useState(false);
+  const [selectedQuote, setSelectedQuote] = useState(null);
+  const [addQuoteToCartHandler, setAddQuoteToCartHandler] = useState(null);
+  const [showGetQuoteOverlay, setShowGetQuoteOverlay] = useState(false);
   
   // Overlay States
   const [showOverlay, setShowOverlay] = useState(false);
@@ -124,21 +129,57 @@ const MarketPostMobile = () => {
     setTimeout(() => setNotification(""), 3000);
   };
 
-  const handleAddToCart = async () => {
-    if (!currentUser) return alert("Login required");
+  const handleAddToCart = async (quoteData = selectedQuote) => {
+    if (!currentUser) {
+      alert("Login required");
+      return;
+    }
+
     try {
-      const itemRef = doc(db, "Users", currentUser.uid, "cart", id);
+      const cartRef = collection(db, "Users", currentUser.uid, "cart");
+      const itemRef = doc(cartRef, id);
+
+      const existing = await getDoc(itemRef);
+
+      if (existing.exists()) {
+        alert("Already in cart");
+        return;
+      }
+
       await setDoc(itemRef, {
         postId: id,
-        title: post.title,
-        price: post.price,
+        title: post.title || "Untitled",
+        description: post.description || "No Description Available.",
+        type: post.type,
+        price: quoteData?.quotePrice || 0,
         sellerId: post.userId,
-        image: post.images?.[0],
+        sellerName: seller?.username || "Unknown Seller",
+        sellerAvatar:
+          seller?.profilepic ||
+          `${process.env.PUBLIC_URL}/default-profile.png`,
+        image:
+          post.images?.[0] ||
+          `${process.env.PUBLIC_URL}/default-thumbnail.png`,
+        reviews: post.sellerReviews || 0,
+        affiliateLinkId: affiliateLinkId || null,
         addedAt: new Date(),
+        requestedQuoteId: quoteData?.requestedQuoteId || null,
+        vehicleInfo: quoteData?.vehicleInfo || null,
+        additionalInfo: quoteData?.additionalInfo || null,
+        quoteImages:
+          quoteData?.images ||
+          `${process.env.PUBLIC_URL}/default-thumbnail.png`,
       });
+
       setShowCartOverlay(true);
-    } catch (err) { console.error(err); }
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  useEffect(() => {
+    setAddQuoteToCartHandler(() => handleAddToCart);
+  }, [post, seller, currentUser, selectedQuote]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -191,13 +232,30 @@ const MarketPostMobile = () => {
   const formatLink = (url) =>
     url ? (url.startsWith("http") ? url : `https://${url}`) : null;
 
+  const isAddToCartDisabled =
+    !currentUser ||
+    !post ||
+    currentUser.uid === post.userId ||
+    isInCart;
+
+  const disabledReason =
+    !currentUser
+      ? "Login to get quote"
+      : !post
+      ? ""
+      : currentUser.uid === post.userId
+      ? "You can’t request quotes on your own post"
+      : isInCart
+      ? "Item already in cart"
+      : "";
+
   return (
     <div className="dpm-container">
       {notification && <div className="dpm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Directory Post" 
+        backgroundUrl="https://assets.goaaa.com/image/upload/w_2880,c_fill,q_auto,f_auto/v1742591982/AAAGilbert-428_retouched.jpg" 
       />
 
       {/* Header Info */}
@@ -246,10 +304,18 @@ const MarketPostMobile = () => {
       {/* Content Body */}
       <div className="dpm-body">
         <h1 className="dpm-title">{post.title?.toUpperCase()}</h1>
-        <div className="dpm-price-tag">
-          {post.price !== undefined
-            ? `$${post.price.toFixed(2)}`
-            : "Price N/A"}
+        <div className="dpm-price-row">
+          <div className="dpm-price-wrapper">
+            <span className="dpm-starting-price-label">
+              Starting At
+            </span>
+
+            <div className="dpm-price-tag">
+              {post.price !== undefined
+                ? `~$${post.price.toFixed(2)}`
+                : "Price N/A"}
+            </div>
+          </div>
         </div>
         
         <div className="dpm-seller-card">
@@ -307,15 +373,27 @@ const MarketPostMobile = () => {
           <button className="dpm-grid-btn"><FaFlag /> Report</button>
         </div>
 
-        <button 
-          className="dpm-add-cart-btn" 
-          disabled={isSeller || isInCart}
-          onClick={handleAddToCart}
+        <button
+          className="dpm-add-cart-btn"
+          onClick={() => setShowGetQuoteOverlay(true)}
+          disabled={isAddToCartDisabled || loading}
+          title={disabledReason}
         >
-          {isInCart ? "ITEM IN CART" : isSeller ? "YOUR POST" : "ADD TO CART"}
+          {isInCart
+            ? "✓ IN CART"
+            : isSeller
+            ? "YOUR POST"
+            : "GET QUOTE"}
         </button>
 
         <hr className="dpm-divider" />
+
+        <ViewRequestedQuotesMobile
+          directoryPostId={id}
+          sellerUserId={post.userId}
+          onSelectQuote={setSelectedQuote}
+          onAddQuoteToCart={addQuoteToCartHandler}
+        />
 
         <div className="dpm-comments-section">
           <h3>Comments</h3>
@@ -368,8 +446,14 @@ const MarketPostMobile = () => {
           onConfirm={handleConfirmDelete}
         />
       )}
+      {showGetQuoteOverlay && (
+        <GetQuoteOverlay
+          postId={id}
+          onClose={() => setShowGetQuoteOverlay(false)}
+        />
+      )}
     </div>
   );
 };
 
-export default MarketPostMobile;
+export default DirectoryPostMobile;

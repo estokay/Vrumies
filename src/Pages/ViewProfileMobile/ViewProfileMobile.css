@@ -57,7 +57,7 @@
   display: block;
 }
 
-.vpm-username { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+.vpm-username { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
 .vpm-email { font-size: 13px; color: #888; margin-bottom: 15px; }
 .vpm-rating-row { margin-bottom: 25px; }
 
@@ -241,4 +241,23 @@
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+.vpm-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+}
+
+.vpm-photo-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* 🔥 THIS is the key */
+  overflow: hidden;
+}
+
+.vpm-photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

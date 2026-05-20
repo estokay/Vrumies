@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
+import { FaTruck } from 'react-icons/fa';
 import './TruckPageMobile.css';
 import TruckPostLayout from '../Trucks/TruckPostLayout';
 import FilterPanelMobile from "./FilterPanelMobile";
@@ -21,10 +21,11 @@ const TruckPageMobile = () => {
           </h1>
           <p className="t-subtitle-text">AUTOMOTIVE FREIGHT TRUCKS</p>
         </div>
-        <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
-          alt="Icon"
+        <FaTruck
+          size={50}
+          color="#39FF14"
           className="t-header-logo"
+          style={{ filter: "drop-shadow(0 0 6px #000000ff)" }}
         />
       </header>
 

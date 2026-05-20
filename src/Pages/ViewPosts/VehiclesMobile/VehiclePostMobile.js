@@ -171,8 +171,8 @@ const VehiclePostMobile = () => {
       {notification && <div className="vpm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Vehicle Post" 
+        backgroundUrl="https://res.cloudinary.com/https://hips.hearstapps.com/autoweek/assets/craing_0.jpg/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
       />
 
       {/* Header Info */}

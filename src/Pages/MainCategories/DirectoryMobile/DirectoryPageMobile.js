@@ -22,7 +22,7 @@ const DirectoryPageMobile = () => {
           <p className="d-subtitle-text">AUTOMOTIVE DIRECTORY</p>
         </div>
         <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
+          src={`${process.env.PUBLIC_URL}/category-icons/directory.png`}
           alt="Icon"
           className="d-header-logo"
         />

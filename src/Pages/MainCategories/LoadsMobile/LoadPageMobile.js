@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
+import { FaClipboardList } from 'react-icons/fa';
 import './LoadPageMobile.css';
 import LoadPostLayout from '../Loads/LoadPostLayout';
 import FilterPanelMobile from "./FilterPanelMobile";
@@ -21,10 +21,11 @@ const LoadPageMobile = () => {
           </h1>
           <p className="l-subtitle-text">AUTOMOTIVE LOADS</p>
         </div>
-        <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
-          alt="Icon"
+        <FaClipboardList
+          size={50}
+          color="#39FF14"
           className="l-header-logo"
+          style={{ filter: "drop-shadow(0 0 6px #000000ff)" }}
         />
       </header>
 

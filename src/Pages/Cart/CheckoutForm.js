@@ -14,6 +14,7 @@ import "./CheckoutForm.css";
 import sendNotificationOrder from "../../Components/Notifications/sendNotificationOrder";
 import PurchaseCompleteOverlay from "../../Components/Overlays/PurchaseCompleteOverlay";
 import useCreateSquarePayment from "../../CloudFunctions/useCreateSquarePayment";
+import { loadSquareSDK } from "../../Functions/loadSquareSDK";
 
 function CheckoutFormInner() {
   const { currentUser } = useAuth();
@@ -85,36 +86,63 @@ function CheckoutFormInner() {
   const total = subtotal + taxes;
 
   useEffect(() => {
+    if (card) {
+      try {
+        card.destroy();
+      } catch (e) {
+        console.warn("Card destroy failed:", e);
+      }
+    }
+    setCard(null);
+  }, [SQUARE_APPLICATION_ID]);
+
+  useEffect(() => {
     if (!SQUARE_APPLICATION_ID || !SQUARE_LOCATION_ID || total <= 0) return;
     if (card) return;
 
     let isMounted = true;
 
     async function initSquare() {
-      if (!window.Square) {
-        console.error("Square SDK not loaded");
-        return;
-      }
+      try {
+        const mode = SQUARE_APPLICATION_ID?.startsWith("sq0idp-")
+          ? "production"
+          : "sandbox";
 
-      // 🔥 WAIT until the ref exists
-      if (!cardRef.current) {
-        requestAnimationFrame(initSquare);
-        return;
-      }
+        await loadSquareSDK(mode);
 
-      const payments = window.Square.payments(
-        SQUARE_APPLICATION_ID,
-        SQUARE_LOCATION_ID
-      );
+        if (!window.Square) {
+          console.error("Square SDK unavailable");
+          setMessage("Payment system failed to load. Please refresh.");
+          return;
+        }
 
-      const cardInstance = await payments.card();
+        // Wait for DOM mount
+        if (!cardRef.current) {
+          requestAnimationFrame(initSquare);
+          return;
+        }
 
-      if (!cardRef.current) return; // double safety
+        const payments = window.Square.payments(
+          SQUARE_APPLICATION_ID,
+          SQUARE_LOCATION_ID
+        );
 
-      await cardInstance.attach(cardRef.current);
+        const cardInstance = await payments.card();
 
-      if (isMounted) {
-        setCard(cardInstance);
+        if (!cardRef.current) {
+          await cardInstance.destroy();
+          return;
+        }
+
+        await cardInstance.attach(cardRef.current);
+
+        if (isMounted) {
+          setCard(cardInstance);
+        } else {
+          await cardInstance.destroy();
+        }
+      } catch (err) {
+        console.error("Square init error:", err);
       }
     }
 
@@ -216,6 +244,9 @@ function CheckoutFormInner() {
             orderData.directorySpecific = {
               serviceLocation: postData.serviceLocation || "",
               businessAddress: postData.businessAddress || "",
+              additionalInfo: item.additionalInfo || null,
+              vehicleInfo: item.vehicleInfo || null,
+              quoteImages: item.quoteImages || [],
             };
           }
 
@@ -361,6 +392,9 @@ function CheckoutFormInner() {
           orderData.directorySpecific = {
             serviceLocation: postData.serviceLocation || "",
             businessAddress: postData.businessAddress || "",
+            additionalInfo: item.additionalInfo || null,
+            vehicleInfo: item.vehicleInfo || null,
+            quoteImages: item.quoteImages || [],
           };
         }
 

@@ -93,6 +93,7 @@ export default function DirectoryVariant({ orderId }) {
   const type = order.type || "N/A";
   const orderID = order.id || "N/A";
 
+  const serviceLocation = order.directorySpecific?.serviceLocation || "N/A";
   const delivery = order.deliveryInfo &&
                  (order.deliveryInfo.deliveryStreetAddress ||
                   order.deliveryInfo.deliveryCity ||
@@ -119,6 +120,12 @@ export default function DirectoryVariant({ orderId }) {
   const paymentMethod = order.paymentInfo?.paymentmethod || "N/A";
   const lastFour = order.paymentInfo?.lastfour || "N/A";
 
+  // Quote Info
+  const quoteImages = order.directorySpecific?.quoteImages || [];
+  const vehicleInfo = order.directorySpecific?.vehicleInfo || {};
+  const additionalInfo = order.directorySpecific?.additionalInfo || "N/A";
+
+
   return (
     <div className="od-order-details-panel">
       <h2 className="od-panel-title">ORDER INFORMATION</h2>
@@ -132,6 +139,8 @@ export default function DirectoryVariant({ orderId }) {
           <div><strong>Order ID</strong><p>{orderID}</p></div>
         </div>
         <div>
+          <strong>Service Location</strong>
+          <p>{serviceLocation}</p>
           <strong>Service Address</strong>
           <p>{delivery}</p>
         </div>
@@ -145,14 +154,39 @@ export default function DirectoryVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{title}</p></div>
             <div><strong>Description</strong><p>{description}</p></div>
-            <button
-              className="od-btn-view"
-              onClick={() => (window.location.href = `/directorypost/${postId}`)}
-            >
-              View Post
-            </button>
           </div>
         </div>
+      </section>
+
+      {/* QUOTE INFORMATION */}
+      <section className="od-section">
+        <h3>Quote Information</h3>
+
+        {/* Vehicle Info */}
+        <div className="od-quote-vehicle">
+          <strong>Vehicle</strong>
+          <p>
+            {vehicleInfo.year || ""} {vehicleInfo.make || ""} {vehicleInfo.model || ""} {vehicleInfo.trim || ""}
+          </p>
+        </div>
+
+        {/* Additional Info */}
+        <div className="od-quote-additional">
+          <strong>Additional Information</strong>
+          <p>{additionalInfo}</p>
+        </div>
+
+        {/* Images */}
+        {quoteImages.length > 0 && (
+          <div className="od-quote-images">
+            <strong>Quote Images</strong>
+            <div className="od-quote-image-grid">
+              {quoteImages.map((img, idx) => (
+                <img key={idx} src={img} alt={`quote-${idx}`} />
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Payment Information */}

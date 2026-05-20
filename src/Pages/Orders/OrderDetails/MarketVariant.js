@@ -158,12 +158,6 @@ export default function MarketVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{title}</p></div>
             <div><strong>Description</strong><p>{description}</p></div>
-            <button
-              className="mv-custom-btn-view"
-              onClick={() => (window.location.href = `/marketpost/${postId}`)}
-            >
-              View Post
-            </button>
           </div>
         </div>
       </section>

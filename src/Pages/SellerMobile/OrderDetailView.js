@@ -82,6 +82,10 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
   const transactionFee = (price * 0.15).toFixed(2);
   const total = (price + parseFloat(transactionFee)).toFixed(2);
 
+  const quoteImages = order.directorySpecific?.quoteImages || [];
+  const vehicleInfo = order.directorySpecific?.vehicleInfo || {};
+  const additionalInfo = order.directorySpecific?.additionalInfo || "N/A";
+
   // Determine Navigation Path based on type
   const getViewPath = () => {
     const postId = order.postData?.postId;
@@ -102,7 +106,7 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
       </div>
 
       {/* Post Information */}
-      <div className="od-section">
+      <div className="odm-section">
         <h3>Post Information</h3>
         <h2 className="od-title">{order.postData?.title}</h2>
         <div className="od-item-card">
@@ -115,17 +119,78 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
             <p><strong>Date:</strong> {order.orderCreated?.toDate?.().toLocaleDateString() || "N/A"}</p>
             <p><strong>Type:</strong> <span className="od-type-tag">{order.type?.toUpperCase()}</span></p>
             <p><strong>Description:</strong> {order.postData?.description || "N/A"}</p>
-            {getViewPath() && (
-              <button className="od-btn-view" onClick={() => navigate(getViewPath())}>
-                View Original Post
-              </button>
+            {/* DIRECTORY ONLY */}
+            {order.type === "directory" && (
+              <>
+                <p>
+                  <strong>Service Location:</strong>{" "}
+                  {order.directorySpecific?.serviceLocation || "N/A"}
+                </p>
+
+                <p>
+                  <strong>Service Address:</strong>{" "}
+                  {order.deliveryInfo
+                    ? (
+                        `${order.deliveryInfo.deliveryStreetAddress || ""} ${
+                          order.deliveryInfo.deliveryCity || ""
+                        } ${order.deliveryInfo.deliveryState || ""} ${
+                          order.deliveryInfo.deliveryZipCode || ""
+                        }`.trim() || "N/A"
+                      )
+                    : "N/A"}
+                </p>
+              </>
             )}
           </div>
         </div>
       </div>
 
+      {/* Quote Information */}
+      {order.type === "directory" && (
+        <div className="odm-section">
+          <h3>Quote Information</h3>
+
+          {/* Vehicle */}
+          <div className="od-quote-vehicle">
+            <strong>Vehicle</strong>
+
+            <p>
+              {vehicleInfo?.year || ""}{" "}
+              {vehicleInfo?.make || ""}{" "}
+              {vehicleInfo?.model || ""}{" "}
+              {vehicleInfo?.trim || ""}
+            </p>
+          </div>
+
+          {/* Additional Information */}
+          <div className="od-quote-additional">
+            <strong>Additional Information</strong>
+
+            <p>{additionalInfo}</p>
+          </div>
+
+          {/* Quote Images */}
+          {quoteImages.length > 0 && (
+            <div className="od-quote-images">
+              <strong>Quote Images</strong>
+
+              <div className="od-quote-image-grid">
+                {quoteImages.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`quote-${idx}`}
+                    className="od-quote-image"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Buyer Information */}
-      <div className="od-section">
+      <div className="odm-section">
         <h3>Buyer Information</h3>
         <div className="od-data-row">
           <span>Username:</span> <strong>{buyerUsername}</strong>
@@ -134,23 +199,68 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
 
       {/* Type Specific Logistics: MARKET */}
       {order.type === "market" && (
-        <div className="od-section">
+        <div className="odm-section">
           <h3>Shipping & Tracking</h3>
+
           <div className="od-data-row">
             <strong>Shipping Address:</strong>
-            <p>{`${order.deliveryInfo?.deliveryStreetAddress || ""} ${order.deliveryInfo?.deliveryCity || ""} ${order.deliveryInfo?.deliveryState || ""} ${order.deliveryInfo?.deliveryZipCode || ""}`}</p>
+
+            <p>
+              {order.deliveryInfo &&
+              (
+                order.deliveryInfo.deliveryStreetAddress ||
+                order.deliveryInfo.deliveryCity ||
+                order.deliveryInfo.deliveryState ||
+                order.deliveryInfo.deliveryZipCode
+              )
+                ? `${order.deliveryInfo.deliveryStreetAddress || ""}${
+                    order.deliveryInfo.deliveryStreetAddress ? ", " : ""
+                  }${order.deliveryInfo.deliveryCity || ""}${
+                    order.deliveryInfo.deliveryCity ? " " : ""
+                  }${order.deliveryInfo.deliveryState || ""}${
+                    order.deliveryInfo.deliveryState ? " " : ""
+                  }${order.deliveryInfo.deliveryZipCode || ""}`
+                : "N/A"}
+            </p>
           </div>
-          <div className="od-tracking-input">
-            <input value={carrier} onChange={(e) => setCarrier(e.target.value)} placeholder="Carrier (e.g. FEDEX)" />
-            <input value={tracking} onChange={(e) => setTracking(e.target.value)} placeholder="Tracking #" />
-            <button onClick={updateTracking}>Save Tracking</button>
+
+          {/* Carrier + Tracking Fields */}
+          <div className="od-tracking-fields">
+            <div>
+              <strong>Carrier</strong>
+
+              <input
+                type="text"
+                placeholder="Enter Carrier (e.g., FEDEX)"
+                value={carrier}
+                onChange={(e) => setCarrier(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <strong>Tracking Number</strong>
+
+              <input
+                type="text"
+                placeholder="Enter Tracking Number"
+                value={tracking}
+                onChange={(e) => setTracking(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="od-tracking-btn-wrapper">
+            <button className="od-btn-save" onClick={updateTracking}>
+              Save
+            </button>
           </div>
         </div>
       )}
 
       {/* Type Specific Logistics: TRUCKS */}
       {order.type === "trucks" && (
-        <div className="od-section">
+        <div className="odm-section">
           <h3>Freight Logistics</h3>
           <div className="od-grid">
             <div><strong>Pickup:</strong><p>{order.trucksSpecific?.pickupAddress || "N/A"}</p></div>
@@ -163,18 +273,7 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
         </div>
       )}
 
-      {/* Type Specific Logistics: DIRECTORY / OFFER */}
-      {(order.type === "directory" || order.type === "offer") && (
-        <div className="od-section">
-          <h3>Service Details</h3>
-          <div className="od-data-row">
-            <strong>Service Address:</strong>
-            <p>{order.deliveryInfo ? `${order.deliveryInfo.deliveryStreetAddress || ""} ${order.deliveryInfo.deliveryCity || ""} ${order.deliveryInfo.deliveryState || ""} ${order.deliveryInfo.deliveryZipCode || ""}` : "N/A"}</p>
-          </div>
-        </div>
-      )}
-
-      <div className="od-section">
+      <div className="odm-section">
         <h3>Payment & Status</h3>
         <div className="od-payment-summary">
           <p>Subtotal: ${price.toFixed(2)}</p>

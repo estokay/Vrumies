@@ -199,8 +199,8 @@ const TruckPostMobile = () => {
       {notification && <div className="tpm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Truck Post" 
+        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770816086/67fdf9af062252f0b85b1813_6377b53b0b2bd628e3eeb4b5_8_ucpg9a.jpg" 
       />
 
       {/* Header Info */}

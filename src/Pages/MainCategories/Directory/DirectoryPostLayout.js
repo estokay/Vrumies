@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { db } from '../../../Components/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { FaComment } from 'react-icons/fa';
-import '../../../Components/Css/MarketPostLayout.css'; // changed to use MarketPostLayout CSS
+import './DirectoryPostLayout.css'; // changed to use MarketPostLayout CSS
 import useUserAverageRating from "../../../Components/Reviews/useUserAverageRating";
 
 function DirectoryPostLayout({ id, images, title, createdAt, userId, price }) {
@@ -63,7 +63,7 @@ function DirectoryPostLayout({ id, images, title, createdAt, userId, price }) {
   }, [id]);
 
   return (
-    <Link to={postLink} className="events-post-layout"> {/* updated className */}
+    <Link to={postLink} className="directory-post-layout"> {/* updated className */}
       <div className="card-header">
         <div className="header-left">
           <img src={profilePic} alt="Creator" className="profile-pic" />
@@ -82,16 +82,23 @@ function DirectoryPostLayout({ id, images, title, createdAt, userId, price }) {
         </div>
       </div>
 
-      <div className="thumbnail-container">
-        {price && <span className="price-overlay">{typeof price === "number" ? `$${price.toFixed(2)}` : price}</span>}
+      <div className="d-thumbnail-container">
+        {price && (
+          <span className="price-overlay">
+            <span className="d-price-label">Starts At:</span>
+            <span className="price-value">
+              {typeof price === "number" ? `$${price.toFixed(2)}` : price}
+            </span>
+          </span>
+        )}
         <img
           src={images && images.length > 0 ? images[0] : `${process.env.PUBLIC_URL}/default-thumbnail.png`}
           alt={title || 'Post Thumbnail'}
-          className="thumbnail"
+          className="d-thumbnail"
         />
       </div>
 
-      <h4 className="events-post-title">{(title || 'Untitled Post').toUpperCase()}</h4> {/* updated className */}
+      <h4 className="directory-post-title">{(title || 'Untitled Post').toUpperCase()}</h4> {/* updated className */}
 
       <div className="card-footer">
         <div className="footer-left">

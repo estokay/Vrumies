@@ -84,21 +84,28 @@ export default function DirectoryVariant({ orderId }) {
             }
           }
 
-          const rawPrice = order?.price;
+          const rawPrice = data?.price;
           const price = checkPrice(rawPrice);
 
           setOrder({
             date,
             type: data.type || "N/A",
             id: orderSnap.id || "N/A",
+            serviceLocation: data.directorySpecific?.serviceLocation || "N/A",
             serviceAddress: data.deliveryInfo
-              ? `${data.deliveryInfo.deliveryStreetAddress || ""} ${data.deliveryInfo.deliveryCity || ""} ${data.deliveryInfo.deliveryState || ""} ${data.deliveryInfo.deliveryZipCode || ""}`
-              : "N/A",
+            ? (
+                `${data.deliveryInfo.deliveryStreetAddress || ""} ${data.deliveryInfo.deliveryCity || ""} ${data.deliveryInfo.deliveryState || ""} ${data.deliveryInfo.deliveryZipCode || ""}`
+                  .trim() || "N/A"
+              )
+            : "N/A",
             image: data.postData?.images?.[0] || null,
             title: data.postData?.title || "N/A",
             description: data.postData?.description || "N/A",
             price,
             postId: data.postData?.postId || "N/A",
+            quoteImages: data.directorySpecific?.quoteImages || [],
+            vehicleInfo: data.directorySpecific?.vehicleInfo || {},
+            additionalInfo: data.directorySpecific?.additionalInfo || "N/A",
             paymentMethod: data.paymentInfo?.paymentMethod || "N/A",
             lastFour: data.paymentInfo?.lastFour || "N/A",
             buyerInfo: {
@@ -140,6 +147,8 @@ export default function DirectoryVariant({ orderId }) {
           <div><strong>Order ID</strong><p>{order.id}</p></div>
         </div>
         <div>
+          <strong>Service Location</strong>
+          <p>{order.serviceLocation}</p>
           <strong>Service Address</strong>
           <p>{order.serviceAddress}</p>
         </div>
@@ -153,17 +162,47 @@ export default function DirectoryVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{order.title}</p></div>
             <div><strong>Description</strong><p>{order.description}</p></div>
-            {/* Changed Link to button */}
-            {order.postId && (
-              <button
-                className="seller-btn-view"
-                onClick={() => navigate(`/directorypost/${order.postId}`)}
-              >
-                View Post
-              </button>
-            )}
           </div>
         </div>
+      </section>
+
+      {/* QUOTE INFORMATION */}
+      <section className="seller-section">
+        <h3>Quote Information</h3>
+
+        {/* Vehicle Info */}
+        <div className="seller-quote-vehicle">
+          <strong>Vehicle</strong>
+          <p>
+            {order.vehicleInfo?.year || ""}{" "}
+            {order.vehicleInfo?.make || ""}{" "}
+            {order.vehicleInfo?.model || ""}{" "}
+            {order.vehicleInfo?.trim || ""}
+          </p>
+        </div>
+
+        {/* Additional Info */}
+        <div className="seller-quote-additional">
+          <strong>Additional Information</strong>
+          <p>{order.additionalInfo}</p>
+        </div>
+
+        {/* Images */}
+        {order.quoteImages?.length > 0 && (
+          <div className="seller-quote-images">
+            <strong>Quote Images</strong>
+
+            <div className="seller-quote-image-grid">
+              {order.quoteImages.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`quote-${idx}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Payment Information */}

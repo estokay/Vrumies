@@ -19,7 +19,6 @@ const SignIn = () => {
     try {
       // 1️⃣ Just sign in with Google (old working code)
       user = await signInWithGoogle();
-      navigate(isMobileOnly ? '/home-mobile' : '/home'); // redirect immediately after login
     } catch (error) {
       console.error('Google sign-in failed:', error);
       alert('Google sign-in failed. Please try again.');
@@ -71,6 +70,8 @@ const SignIn = () => {
           console.log('Referral code added to existing user');
         }
       }
+
+    navigate(isMobileOnly ? '/homemobile' : '/home'); // redirect immediately after login
     
     } catch (firestoreError) {
       console.error('Error creating Firestore user document:', firestoreError);

@@ -162,12 +162,6 @@ export default function TruckVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{title}</p></div>
             <div><strong>Description</strong><p>{description}</p></div>
-            <button
-              className="tv-custom-btn-view"
-              onClick={() => (window.location.href = `/truckpost/${postId}`)}
-            >
-              View Post
-            </button>
           </div>
         </div>
       </section>

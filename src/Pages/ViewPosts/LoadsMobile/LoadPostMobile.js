@@ -213,8 +213,8 @@ const LoadPostMobile = () => {
       {notification && <div className="lpm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Load Post" 
+        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770816758/Drayage2_blog_featured-1200x675_mvno48.jpg" 
       />
 
       {/* Header Info */}

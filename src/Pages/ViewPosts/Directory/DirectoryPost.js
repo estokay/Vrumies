@@ -11,12 +11,16 @@ import '../../../App.css';
 import './DirectoryPost.css';
 import GetPostRoute from "../../../Functions/GetPostRoute";
 import { useRedirectMobile } from "../../../Hooks/useRedirectMobile";
+import ViewRequestedQuotes from './ViewRequestedQuotes';
 
 const DirectoryPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   useRedirectMobile(`/directorypostmobile/${id}`);
   const [loading, setLoading] = useState(true);
+  const [postData, setPostData] = useState(null);
+  const [selectedQuote, setSelectedQuote] = useState(null);
+  const [addQuoteToCartHandler, setAddQuoteToCartHandler] = useState(null);
 
   useEffect(() => {
     const checkPostExists = async () => {
@@ -30,6 +34,7 @@ const DirectoryPost = () => {
           return;
         }
         const post = postSnap.data();
+        setPostData(post);
         if (post.type !== 'directory') {
           console.warn('Post not a directory post');
           const postRoute = GetPostRoute(post.type);
@@ -58,8 +63,17 @@ const DirectoryPost = () => {
         title="Directory Post" 
         backgroundUrl="https://assets.goaaa.com/image/upload/w_2880,c_fill,q_auto,f_auto/v1742591982/AAAGilbert-428_retouched.jpg" 
       />
-      <PostSection postId={id} />
-
+      <PostSection 
+        postId={id}
+        selectedQuote={selectedQuote}
+        setAddQuoteToCartHandler={setAddQuoteToCartHandler}
+        />
+      <ViewRequestedQuotes
+        directoryPostId={id}
+        sellerUserId={postData?.userId}
+        onSelectQuote={setSelectedQuote}
+        onAddQuoteToCart={addQuoteToCartHandler}
+      />
       <div className="vpe-bottom-section-container">
         <div className="vpe-bottom-section-main-content">
           <MainCommentsSection postId={id} />

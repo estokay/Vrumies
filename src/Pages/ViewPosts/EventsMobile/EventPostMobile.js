@@ -176,8 +176,8 @@ const EventPostMobile = () => {
       {notification && <div className="epm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Event Post" 
+        backgroundUrl="https://images.squarespace-cdn.com/content/v1/6598c8e83ff0af0197ff19f9/a05c7d5e-3711-48bb-a4c8-f3ce0f076355/JCCI-2024-Banner.jpg" 
       />
 
       {/* Header Info */}

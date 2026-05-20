@@ -1,4 +1,4 @@
-.events-post-layout {
+.directory-post-layout {
   box-sizing: border-box;
   display: block;
   background: #0a0f0a;
@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-.events-post-layout:hover {
+.directory-post-layout:hover {
   transform: scale(1.02);
 }
 
@@ -71,20 +71,20 @@
   border-radius: 50%;
 }
 
-.thumbnail-container {
+.d-thumbnail-container {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 0px;
   height: 120px;
 }
 
-.thumbnail {
+.d-thumbnail {
   width: 100%;
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
 }
 
-.events-post-title {
+.directory-post-title {
   text-align: center;
   font-size: 14px;
   font-weight: bold;
@@ -155,8 +155,23 @@
   font-weight: bold;
   padding: 4px 8px;
   border-radius: 6px;
-  font-size: 20px;
+  /* font size: 20px; */
   z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.d-price-label {
+  font-size: 10px;   /* smaller "Starts At:" */
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.price-value {
+  font-size: 18px;   /* larger price */
+  font-weight: bold;
 }
 
 .post-type-label {

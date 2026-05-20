@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
+import { FaVideo  } from 'react-icons/fa';
 import './VideoPageMobile.css';
 import VideosPostLayout from '../Videos/VideosPostLayout';
 import FilterPanelMobile from "./FilterPanelMobile";
@@ -21,10 +21,13 @@ const VideoPageMobile = () => {
           </h1>
           <p className="videos-subtitle-text">AUTOMOTIVE VIDEOS</p>
         </div>
-        <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
-          alt="Icon"
+        <FaVideo
+          size={50}
+          color="#39FF14"
           className="videos-header-logo"
+          style={{
+            filter: "drop-shadow(0 0 6px #000000ff)",
+          }}
         />
       </header>
 

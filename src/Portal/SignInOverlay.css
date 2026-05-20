@@ -150,3 +150,43 @@
     box-shadow:0 0 0px #1ef81e;
   }
 }
+
+@media (max-width: 768px) {
+  .signin-overlay-container::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: -1;
+    pointer-events: auto;
+  }
+
+  .signin-overlay-container {
+    top: 50%;
+    left: 50%; /* 👈 change this */
+    right: auto; /* 👈 reset */
+    transform: translate(-50%, -50%); /* 👈 fix direction */
+    pointer-events: auto;
+  }
+
+  .signin-overlay-card {
+    width: 95vw;
+    max-width: 320px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: signinFadeIn 0.25s ease !important;
+    box-sizing: border-box;
+  }
+}
+
+@keyframes signinFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

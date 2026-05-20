@@ -12,7 +12,7 @@ import PostLink from './PostLink';
 import PostImages from './PostImages';
 import PostTokens from './PostTokens';
 import PostServiceLocation from './PostServiceLocation';
-import PostPrice from '../../Components/CreateSellerPost/Price/PostPrice';
+import DirectoryPostPrice from '../../Components/CreateSellerPost/Price/DirectoryPostPrice';
 
 const DirectoryPostForm = () => {
   const isMobile = useIsMobile();
@@ -244,7 +244,7 @@ const DirectoryPostForm = () => {
       {activeField === 'serviceLocation' && <PostServiceLocation formData={formData} handleChange={handleChange} />}
 
       {activeField === 'price' && (
-        <PostPrice
+        <DirectoryPostPrice
           value={formData.price}
           setFormData={setFormData}
         />

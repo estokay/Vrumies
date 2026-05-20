@@ -3,7 +3,7 @@ import React from 'react';
 const PostLocation = ({ formData, setFormData, locationInput, setLocationInput, suggestions, setSuggestions, selectLocation, handleLocationChange }) => {
   return (
     <div>
-      <label className="directory-form-label">Post Location (City)</label>
+      <label className="directory-form-sublabel">Post Location (City)</label>
       <input
         type="text"
         placeholder="Type a city..."

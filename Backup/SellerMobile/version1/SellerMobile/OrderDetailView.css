@@ -1,0 +1,187 @@
+.od-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  color: white;
+}
+
+.od-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.od-back {
+  background: none;
+  border: none;
+  color: #02c202;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.od-id-badge {
+  background: #333;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.odm-section {
+  background: linear-gradient(180deg, #292727, #3a3737); /* Matches variant styling */
+  padding: 25px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.od-section h3 {
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  color: #02c202;
+}
+
+.od-item-card {
+  display: flex;
+  gap: 20px;
+}
+
+.od-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.od-btn-view {
+  background: linear-gradient(to right, purple, magenta); /* Matches variant buttons */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.od-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.od-tracking-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.od-tracking-input input {
+  background: #111;
+  border: 1px solid #444;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.od-tracking-input button {
+  background: #02c202;
+  border: none;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.od-payment-summary {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.od-total {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #02c202;
+  margin-top: 5px;
+}
+
+.od-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.od-btn-complete {
+  background: #02c202;
+  color: black;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.od-btn-dispute {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.od-btn-completed {
+  background: #1e7e34;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.od-btn-disputed {
+  background: #a94442;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+.od-quote-vehicle,
+.od-quote-additional {
+  margin-bottom: 15px;
+}
+
+.od-quote-vehicle p,
+.od-quote-additional p {
+  margin-top: 5px;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.od-quote-images {
+  margin-top: 15px;
+}
+
+.od-quote-image-grid {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-top: 12px;
+  padding-bottom: 5px;
+}
+
+.od-quote-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}

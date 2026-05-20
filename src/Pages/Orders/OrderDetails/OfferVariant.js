@@ -110,6 +110,18 @@ export default function OfferVariant({ orderId }) {
   const paymentMethod = order.paymentInfo?.paymentMethod || "N/A";
   const lastFour = order.paymentInfo?.lastFour || "N/A";
 
+  const originalPost = order.offerSpecific?.originalPostObject || {};
+  const originalTitle = originalPost.title || "N/A";
+  const originalDescription = originalPost.description || "N/A";
+  const originalType = originalPost.type || "N/A";
+  const originalTruckType = originalPost.truckType || "N/A";
+  const originalPickupAddress = originalPost.pickupAddress || "N/A";
+  const originalDropoffAddress = originalPost.dropoffAddress || "N/A";
+  const originalPayout = originalPost.payout || 0;
+  const originalWeight = originalPost.loadWeight || "N/A";
+  const originalLength = originalPost.loadLength || "N/A";
+  const originalAvailableDate = originalPost.availableDate || "N/A";
+
   return (
     <div className="oe-event-details-panel">
       <h2 className="oe-panel-title">ORDER INFORMATION</h2>
@@ -134,13 +146,70 @@ export default function OfferVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{title}</p></div>
             <div><strong>Description</strong><p>{description}</p></div>
-            <button
-              className="oe-btn-view"
-              onClick={() => (window.location.href = `/eventpost/${postId}`)}
-            >
-              View Post
-            </button>
           </div>
+        </div>
+      </section>
+
+      {/* Original Post Information */}
+      <section className="oe-section">
+        <h3>Original Post Information</h3>
+
+        <div className="oe-original-post-info">
+
+          <div>
+            <strong>Title</strong>
+            <p>{originalTitle}</p>
+          </div>
+
+          <div>
+            <strong>Description</strong>
+            <p>{originalDescription}</p>
+          </div>
+
+          <div>
+            <strong>Type</strong>
+            <p>{originalType}</p>
+          </div>
+          {originalType === "loads" && (
+            <>
+                <div>
+                  <strong>Available Date</strong>
+                  <p>{originalAvailableDate}</p>
+                </div>
+
+                <div>
+                  <strong>Truck Type</strong>
+                  <p>{originalTruckType}</p>
+                </div>
+
+                <div>
+                  <strong>Pickup Address</strong>
+                  <p>{originalPickupAddress}</p>
+                </div>
+
+                <div>
+                  <strong>Dropoff Address</strong>
+                  <p>{originalDropoffAddress}</p>
+                </div>
+
+                <div>
+                  <strong>Load Weight</strong>
+                  <p>{originalWeight} lbs</p>
+                </div>
+
+                <div>
+                  <strong>Load Length</strong>
+                  <p>{originalLength} ft</p>
+                </div>
+
+                <div>
+                  <strong>Payout</strong>
+                  <p>${originalPayout}</p>
+                </div>
+
+            </>
+          )}
+
         </div>
       </section>
 

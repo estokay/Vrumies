@@ -171,8 +171,8 @@ const BlogPostMobile = () => {
       {notification && <div className="bpm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Blog Post" 
+        backgroundUrl="https://blog.shift4shop.com/hubfs/How%20to%20Manage%20an%20eCommerce%20Blog.jpg" 
       />
 
       {/* Header Info */}

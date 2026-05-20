@@ -197,8 +197,8 @@ const OfferPostMobile = () => {
       {notification && <div className="opm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Custom Offer Post" 
+        backgroundUrl="https://timelinecovers.pro/facebook-cover/download/hand-shake-facebook-cover.jpg" 
       />
 
       {/* Header Info */}

@@ -180,14 +180,6 @@ export default function TruckVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{title}</p></div>
             <div><strong>Description</strong><p>{description}</p></div>
-            {postId && (
-              <button
-                className="st-btn-view"
-                onClick={() => navigate(`/truckpost/${postId}`)}
-              >
-                View Post
-              </button>
-            )}
           </div>
         </div>
       </section>

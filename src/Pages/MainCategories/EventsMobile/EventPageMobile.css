@@ -12,7 +12,7 @@
   height: 200px; /* Increased height for mobile visibility */
   /* Ensure the URL is correctly formatted and the gradient doesn't fully opaque the image */
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-              url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png");
+              url("https://res.cloudinary.com/dmjvngk3o/image/upload/v1770818142/Events_z9rhv3.jpg");
   background-size: cover;
   background-position: center;
   display: flex;

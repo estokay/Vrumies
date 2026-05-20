@@ -122,3 +122,26 @@
   border-radius: 8px;
   opacity: 0.8;
 }
+
+.seller-quote-images {
+  margin-top: 10px;
+}
+
+.seller-quote-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.seller-quote-image-grid img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.seller-quote-vehicle,
+.seller-quote-additional {
+  margin-bottom: 10px;
+}

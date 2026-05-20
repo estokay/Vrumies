@@ -55,7 +55,7 @@ export default function ViewProfileMobile() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingPosts, setLoadingPosts] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   // Data Hooks
   const { isFollowing, toggleFollow } = useFollow(userId);
@@ -157,7 +157,6 @@ export default function ViewProfileMobile() {
         </div>
         
         <h2 className="vpm-username">{userData?.username || "User"}</h2>
-        <p className="vpm-email">{userData?.email}</p>
         
         <div className="vpm-rating-row">
           <ProfileRating userId={userId} />
@@ -240,8 +239,12 @@ export default function ViewProfileMobile() {
             {userPhotos.length === 0 ? (
               <p className="vpm-no-data">No photos yet.</p>
             ) : (
-              userPhotos.map(photo => (
-                <div key={photo.id} className="vpm-photo-card" onClick={() => setSelectedPhoto(photo.photoUrl)}>
+              userPhotos.map((photo, index) => (
+                <div 
+                  key={photo.id} 
+                  className="vpm-photo-card" 
+                  onClick={() => setSelectedIndex(index)}
+                >
                   <img src={photo.photoUrl} alt="" />
                 </div>
               ))
@@ -289,7 +292,13 @@ export default function ViewProfileMobile() {
         )}
       </div>
 
-      {selectedPhoto && <ViewPhotoOverlay photoUrl={selectedPhoto} onClose={() => setSelectedPhoto(null)} />}
+      {selectedIndex !== null && (
+        <ViewPhotoOverlay
+          photos={userPhotos.map(p => p.photoUrl)}
+          startIndex={selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+        />
+      )}
     </div>
   );
 }

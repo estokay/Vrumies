@@ -1,0 +1,71 @@
+/* ================= CONTAINER ================= */
+.spm-container {
+  background-color: #0e0e0e;
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding-bottom: 40px;
+}
+
+.spm-green { color: #02c202; }
+
+/* ================= HEADER ================= */
+.spm-header {
+  padding: 25px 20px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0e0e0e 100%);
+  border-bottom: 1px solid #333;
+}
+
+.spm-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.spm-title {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.spm-payout-btn {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.spm-create-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #8B0000, #FF0000);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ================= CONTENT ================= */
+.spm-content {
+  padding-bottom: 20px;
+}
+
+.spm-loader {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
+
+.spm-auth-error {
+  text-align: center;
+  padding: 40px;
+  color: #ff4d4d;
+}

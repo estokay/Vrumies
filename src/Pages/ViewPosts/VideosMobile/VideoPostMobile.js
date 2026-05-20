@@ -193,8 +193,8 @@ const VideoPostMobile = () => {
       {notification && <div className="vipm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Video Post" 
+        backgroundUrl="https://cdn.skoda-storyboard.com/2018/08/influencer-bloger-event-skoda-classic-car.jpg" 
       />
 
       {/* Header Info */}

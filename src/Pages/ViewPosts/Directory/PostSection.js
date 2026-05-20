@@ -38,8 +38,9 @@ import BlockUserOverlay from "../../../Components/Overlays/BlockUserOverlay";
 import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 import useIsItemInCart from "../../../Hooks/useIsItemInCart";
 import { Link } from "react-router-dom";
+import GetQuoteOverlay from "../../../Components/Overlays/GetQuoteOverlay";
 
-function PostSection({ postId }) {
+function PostSection({ postId, selectedQuote, setAddQuoteToCartHandler, }) {
   const [post, setPost] = useState(null);
   const [seller, setSeller] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
@@ -62,6 +63,7 @@ function PostSection({ postId }) {
   const [showDeletePostOverlay, setShowDeletePostOverlay] = useState(false);
 
   const { isInCart, loading: isInCartLoading } = useIsItemInCart(postId);
+  const [showGetQuoteOverlay, setShowGetQuoteOverlay] = useState(false);
 
   const isAddToCartDisabled = !currentUser || !post || currentUser.uid === post.userId || isInCart;
     const disabledReason =
@@ -233,7 +235,7 @@ function PostSection({ postId }) {
     }
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (quoteData = selectedQuote) => {
     if (!currentUser) {
       alert("Login required");
       return;
@@ -252,7 +254,7 @@ function PostSection({ postId }) {
         title: post.title || "Untitled",
         description: post.description || "No Description Available.",
         type: post.type,
-        price: post.price || 0,
+        price: quoteData?.quotePrice || 0,
         sellerId: post.userId,
         sellerName: seller?.username || "Unknown Seller",
         sellerAvatar: seller?.profilepic || `${process.env.PUBLIC_URL}/default-profile.png`,
@@ -260,6 +262,10 @@ function PostSection({ postId }) {
         reviews: post.sellerReviews || 0,
         affiliateLinkId: affiliateLinkId || null,
         addedAt: new Date(),
+        requestedQuoteId: quoteData?.requestedQuoteId || null,
+        vehicleInfo: quoteData?.vehicleInfo || null,
+        additionalInfo: quoteData?.additionalInfo || null,
+        quoteImages: quoteData?.images || `${process.env.PUBLIC_URL}/default-thumbnail.png`,
       });
 
       setShowCartOverlay(true);
@@ -267,6 +273,10 @@ function PostSection({ postId }) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    setAddQuoteToCartHandler(() => handleAddToCart);
+  }, [post, seller, currentUser]);
 
   const handleShare = () => {
     if (navigator.clipboard) {
@@ -474,18 +484,22 @@ function PostSection({ postId }) {
             {post.price == null
               ? "Price: N/A"
               : typeof post.price === "number"
-                ? `$${post.price.toFixed(2)}`
+                ? `~$${post.price.toFixed(2)}`
                 : post.price}
+          </span>
+
+          <span className="starting-price-label">
+            {"Starting At"}
           </span>
 
           <div className="add-to-cart-wrapper">
             <button
               className="addtoCart"
-              onClick={handleAddToCart}
+              onClick={() => setShowGetQuoteOverlay(true)}
               disabled={isAddToCartDisabled || loading}
               title={disabledReason}
             >
-              {isInCart ? "✓ In Cart" : "ADD TO CART"}
+              {isInCart ? "✓ In Cart" : "Get Quote"}
             </button>
           </div>
         </div>
@@ -571,6 +585,12 @@ function PostSection({ postId }) {
           isOpen={showDeletePostOverlay}
           onClose={() => setShowDeletePostOverlay(false)}
           onConfirm={handleConfirmDelete}
+        />
+      )}
+      {showGetQuoteOverlay && (
+        <GetQuoteOverlay
+          postId={postId}
+          onClose={() => setShowGetQuoteOverlay(false)}
         />
       )}
     </div>

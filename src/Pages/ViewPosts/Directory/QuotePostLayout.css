@@ -1,0 +1,257 @@
+.quote-post-layout {
+  box-sizing: border-box;
+  display: block;
+  background: #0a0f0a;
+  border: 2px solid #00ff66;
+  border-radius: 16px;
+  padding: 18px;
+  color: white;
+  /*width: 270px !important;*/
+  /*height: 270px !important;*/
+  width: 320px;
+  min-width: 290px;
+  min-height: 320px;
+  height: auto;
+
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  box-shadow: 0 0 12px #00ff66;
+  transition: transform 0.2s;
+  overflow: hidden;
+}
+
+.quote-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.quote-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.quote-creator-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+}
+
+.quote-creator-name {
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+}
+
+.quote-date {
+  font-size: 11px;
+  color: #ccc;
+}
+
+.quote-header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quote-star-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.quote-review-text {
+  font-size: 11px;
+  color: #ffff00;
+}
+
+.quote-profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.quote-thumbnail-container {
+  position: relative;
+  margin-bottom: 12px;
+  height: 120px;
+}
+
+.quote-thumbnail {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.quote-post-title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #fff;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  height: 22px;
+  line-height: 22px;
+}
+
+.quote-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 6px 0;
+  margin-top: 8px;
+  border-top: none;
+}
+
+.quote-footer-left, .footer-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quote-footer-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Like/Dislike images (static, not interactable) */
+.quote-footer-icon.custom-like,
+.quote-footer-icon.custom-dislike {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Comment icon */
+.quote-footer-icon.comment {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+/* Small token icon in footer */
+.quote-token-icon-small {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Price overlay on top of thumbnail */
+.quote-price-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(6, 60, 5, 0.85); /* semi-transparent green */
+  color: #ffffff;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 20px;
+  z-index: 2;
+}
+
+.quote-post-type-label {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: rgba(0,0,0,0.85);
+  color: #00ff00;
+
+  padding: 4px 12px;
+  border-radius: 6px;
+
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.quote-quote-price {
+  color: #00ff66;
+  font-weight: bold;
+}
+
+.quote-waiting-on-seller {
+  color: #ffaa00;
+  font-size: 12px;
+}
+
+.quote-respond-button,
+.quote-responded-button,
+.quote-add-to-cart-button {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.quote-respond-button {
+  background: #920592;
+  color: rgb(255, 255, 255);
+}
+
+.quote-respond-button:hover {
+  transform: scale(1.05);
+}
+
+.quote-responded-button {
+  background: #444;
+  color: #ccc;
+  cursor: default;
+}
+
+.quote-add-to-cart-button {
+  background: #ffaa00;
+  color: black;
+}
+
+.quote-add-to-cart-button:hover {
+  transform: scale(1.05);
+}
+
+.quote-price-input {
+  width: 90px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #00ff66;
+  background: #0a0f0a;
+  color: white;
+  font-size: 12px;
+  outline: none;
+}
+
+.quote-cancel-button {
+  background: linear-gradient(135deg, #ff0000, #8b0000);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+}
+
+.quote-cancel-button:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+}

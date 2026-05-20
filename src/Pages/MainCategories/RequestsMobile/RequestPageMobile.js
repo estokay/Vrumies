@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
+import { FaHandsHelping } from 'react-icons/fa';
 import './RequestPageMobile.css';
 import RequestPostLayout from '../Requests/RequestPostLayout';
 import FilterPanelMobile from "./FilterPanelMobile";
@@ -21,10 +21,11 @@ const RequestPageMobile = () => {
           </h1>
           <p className="r-subtitle-text">AUTOMOTIVE REQUESTS</p>
         </div>
-        <img
-          src={`${process.env.PUBLIC_URL}/category-icons/market.png`}
-          alt="Icon"
+        <FaHandsHelping
+          size={50}
+          color="#39FF14"
           className="r-header-logo"
+          style={{ filter: "drop-shadow(0 0 6px #000000ff)" }}
         />
       </header>
 

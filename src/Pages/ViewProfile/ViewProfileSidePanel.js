@@ -153,7 +153,7 @@ const ViewProfileSidePanel = () => {
       </div>
 
       {/* Email */}
-      <div className="vpsp-profile-email">{user.email}</div>
+      
 
       {/* Stars */}
       <div className="vpsp-stars">

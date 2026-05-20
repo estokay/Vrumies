@@ -1,0 +1,85 @@
+.vrqm-container {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  margin-top: 25px;
+}
+
+.vrqm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.vrqm-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #72ff6a;
+  margin: 0;
+}
+
+/* Horizontal mobile scroll */
+.vrqm-posts-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  gap: 16px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 4px 2px 14px 2px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #00ff66 transparent;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Webkit scrollbar */
+.vrqm-posts-wrapper::-webkit-scrollbar {
+  height: 4px;
+}
+
+.vrqm-posts-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.vrqm-posts-wrapper::-webkit-scrollbar-thumb {
+  background: #00ff66;
+  border-radius: 20px;
+}
+
+/* Quote cards */
+.vrqm-quote-card {
+  display: flex;
+  flex-shrink: 0;
+  width: auto;
+  min-width: auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* Empty card */
+.vrqm-empty-card {
+  min-width: 100%;
+  background: #111111;
+  border: 1px dashed #00ff66;
+  border-radius: 14px;
+  padding: 20px;
+  color: #72ff6a;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* Loading */
+.vrqm-loading {
+  color: #cccccc;
+  font-size: 0.95rem;
+  padding: 10px 0;
+}

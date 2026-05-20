@@ -36,6 +36,56 @@ export default function ViewPhotoOverlay({ photoUrl, photos = null, startIndex =
     setCurrentIndex((i) => (i - 1 + imageList.length) % imageList.length);
   };
 
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const touchStartY = useRef(0);
+  const touchEndY = useRef(0);
+
+  const handleTouchStart = (e) => {
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+
+    touchStartX.current = x;
+    touchStartY.current = y;
+
+    touchEndX.current = x;
+    touchEndY.current = y;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    if (zoom > 1) return;
+
+    const deltaX = touchStartX.current - touchEndX.current;
+    const deltaY = Math.abs(touchStartY.current - touchEndY.current);
+
+    const swipeThreshold = 50;
+    const verticalThreshold = 60;
+
+    // ❌ user is scrolling vertically → ignore swipe
+    if (deltaY > verticalThreshold) return;
+
+    if (Math.abs(deltaX) < swipeThreshold) return;
+
+    if (deltaX > 0) nextImage();
+    else prevImage();
+
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
+  const handleTouchCancel = () => {
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+    touchStartY.current = 0;
+    touchEndY.current = 0;
+  };
+
   useEffect(() => {
     const handleKey = (e) => {
       if (!hasMultiple) return;
@@ -92,7 +142,22 @@ export default function ViewPhotoOverlay({ photoUrl, photos = null, startIndex =
   return (
     <div className="viewphotooverlay-container" onClick={onClose}>
       <div className="viewphotooverlay-inner" onClick={stopClick}>
-        <div className="viewphotooverlay-image-container">
+        <div
+          className="viewphotooverlay-image-container"
+          onTouchStart={(e) => {
+            if (e.target.closest("button")) return;
+            handleTouchStart(e);
+          }}
+          onTouchMove={(e) => {
+            if (e.target.closest("button")) return;
+            handleTouchMove(e);
+          }}
+          onTouchEnd={(e) => {
+            if (e.target.closest("button")) return;
+            handleTouchEnd(e);
+          }}
+          onTouchCancel={handleTouchCancel}
+        >
           {hasMultiple && (
             <>
               <button className="nav-arrow left" onClick={prevImage}>‹</button>
@@ -100,14 +165,18 @@ export default function ViewPhotoOverlay({ photoUrl, photos = null, startIndex =
             </>
           )}
           {/* IMAGE ZOOM LAYER */}
-          <img
-            ref={imageRef}
-            src={currentPhoto}
-            alt="Expanded"
-            className="viewphotooverlay-image"
+          <div
+            className="viewphotooverlay-image-wrapper"
             style={{ transform: `scale(${zoom})` }}
-            draggable={false}
-          />
+          >
+            <img
+              ref={imageRef}
+              src={currentPhoto}
+              alt="Expanded"
+              className="viewphotooverlay-image"
+              draggable={false}
+            />
+          </div>
 
           {/* DATE TOP LEFT */}
           {createdAt && (

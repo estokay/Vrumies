@@ -17,6 +17,7 @@ import PurchaseCompleteOverlay from "../../Components/Overlays/PurchaseCompleteO
 import useCreateSquarePayment from "../../CloudFunctions/useCreateSquarePayment";
 import "./ShoppingCartMobile.css";
 import SellerRating from "../../Components/Reviews/SellerRating";
+import { loadSquareSDK } from "../../Functions/loadSquareSDK";
 
 export default function ShoppingCartMobile() {
   const { currentUser } = useAuth();
@@ -134,21 +135,50 @@ export default function ShoppingCartMobile() {
   const taxes = subtotal * 0.15;
   const total = subtotal + taxes;
 
+  useEffect(() => {
+    return () => {
+      if (card) {
+        try {
+          card.destroy();
+        } catch (e) {
+          console.warn("Card destroy failed:", e);
+        }
+      }
+    };
+  }, [card]);
+
   // Square card init
   useEffect(() => {
     if (!SQUARE_APPLICATION_ID || !SQUARE_LOCATION_ID || total <= 0) return;
-    const cardContainer = document.querySelector("#mobile-card-container");
-    if (!cardContainer) return;
+    if (card) return;
+
+    let isMounted = true;
 
     async function initSquare() {
-      if (!window.Square) return console.error("Square SDK not loaded");
-      const payments = window.Square.payments(SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID);
+      const mode = SQUARE_APPLICATION_ID?.startsWith("sq0idp-")
+        ? "production"
+        : "sandbox";
+
+      await loadSquareSDK(mode);
+
+      if (!window.Square || !isMounted) return;
+
+      const payments = window.Square.payments(
+        SQUARE_APPLICATION_ID,
+        SQUARE_LOCATION_ID
+      );
+
       const cardInstance = await payments.card();
       await cardInstance.attach("#mobile-card-container");
+
       setCard(cardInstance);
     }
 
     initSquare();
+
+    return () => {
+      isMounted = false;
+    };
   }, [SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID, total]);
 
   const handleChange = (e) => {
@@ -251,6 +281,9 @@ export default function ShoppingCartMobile() {
             orderData.directorySpecific = {
               serviceLocation: postData.serviceLocation || "",
               businessAddress: postData.businessAddress || "",
+              additionalInfo: item.additionalInfo || null,
+              vehicleInfo: item.vehicleInfo || null,
+              quoteImages: item.quoteImages || [],
             };
           }
           if (item.type === "trucks") {
@@ -381,6 +414,9 @@ export default function ShoppingCartMobile() {
           orderData.directorySpecific = {
             serviceLocation: postData.serviceLocation || "",
             businessAddress: postData.businessAddress || "",
+            additionalInfo: item.additionalInfo || null,
+            vehicleInfo: item.vehicleInfo || null,
+            quoteImages: item.quoteImages || [],
           };
         }
         if (item.type === "trucks") {
@@ -479,12 +515,12 @@ export default function ShoppingCartMobile() {
 
         <div className="mobile-form-group">
           <label className="mobile-form-label">Full Name</label>
-          <input className="mobile-form-input" name="billingFullName" value={formData.billingFullName} onChange={handleChange} required />
+          <input className="mobile-form-input" name="billingFullName" placeholder="e.g. John Smith" value={formData.billingFullName} onChange={handleChange} required />
         </div>
 
         <div className="mobile-form-group">
           <label className="mobile-form-label">Address</label>
-          <input className="mobile-form-input" name="billingAddress" value={formData.billingAddress} onChange={handleChange} required />
+          <input className="mobile-form-input" name="billingAddress" placeholder="Street Address" value={formData.billingAddress} onChange={handleChange} required />
         </div>
 
         <div className="mobile-form-group-two">

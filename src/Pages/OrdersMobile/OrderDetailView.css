@@ -86,3 +86,75 @@
   opacity: 0.85;
   cursor: not-allowed;
 }
+
+.bd-quote-vehicle,
+.bd-quote-additional {
+  margin-bottom: 15px;
+}
+
+.bd-quote-vehicle p,
+.bd-quote-additional p {
+  margin-top: 5px;
+  color: #ccc;
+}
+
+.bd-quote-images {
+  margin-top: 15px;
+}
+
+.bd-quote-image-grid {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-top: 10px;
+}
+
+.bd-quote-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* Shipping Information */
+.bd-shipping-group {
+  margin-bottom: 15px;
+}
+
+.bd-shipping-group p {
+  margin-top: 5px;
+  color: #ccc;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.bd-shipping-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.bd-shipping-row .bd-shipping-group {
+  flex: 1;
+}
+
+/* Freight Logistics */
+.bd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.bd-grid div {
+  background: rgba(0,0,0,0.18);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.bd-grid p {
+  margin-top: 5px;
+  color: #ccc;
+  line-height: 1.4;
+  word-break: break-word;
+}

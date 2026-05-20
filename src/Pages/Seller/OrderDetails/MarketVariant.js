@@ -139,8 +139,21 @@ export default function MarketVariant({ orderId }) {
     : "N/A";
   const type = order.type || "N/A";
   const id = order.id || "N/A"; // ✅ Now correctly shows document ID
-  const shippingAddress = order.deliveryInfo
-    ? `${order.deliveryInfo.deliveryStreetAddress || ""} ${order.deliveryInfo.deliveryCity || ""} ${order.deliveryInfo.deliveryState || ""} ${order.deliveryInfo.deliveryZipCode || ""}`
+  const shippingAddress =
+  order.deliveryInfo &&
+  (
+    order.deliveryInfo.deliveryStreetAddress ||
+    order.deliveryInfo.deliveryCity ||
+    order.deliveryInfo.deliveryState ||
+    order.deliveryInfo.deliveryZipCode
+  )
+    ? `${order.deliveryInfo.deliveryStreetAddress || ""}${
+        order.deliveryInfo.deliveryStreetAddress ? ", " : ""
+      }${order.deliveryInfo.deliveryCity || ""}${
+        order.deliveryInfo.deliveryCity ? " " : ""
+      }${order.deliveryInfo.deliveryState || ""}${
+        order.deliveryInfo.deliveryState ? " " : ""
+      }${order.deliveryInfo.deliveryZipCode || ""}`
     : "N/A";
 
   const image = order.postData?.images?.[0] || "";
@@ -209,14 +222,6 @@ export default function MarketVariant({ orderId }) {
           <div>
             <div><strong>Title</strong><p>{title}</p></div>
             <div><strong>Description</strong><p>{description}</p></div>
-            {postId && (
-              <button
-                className="sm-btn-view"
-                onClick={() => navigate(`/marketpost/${postId}`)}
-              >
-                View Post
-              </button>
-            )}
           </div>
         </div>
       </section>

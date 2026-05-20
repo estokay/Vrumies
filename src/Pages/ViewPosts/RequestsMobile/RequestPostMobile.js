@@ -171,8 +171,8 @@ const RequestPostMobile = () => {
       {notification && <div className="rpm-toast">{notification}</div>}
       
       <PageHeader 
-        title="Market Post" 
-        backgroundUrl="https://res.cloudinary.com/dmjvngk3o/image/upload/v1770817699/71d90db6-3ded-4f1d-831d-61c8a2fc96be_sqmlwb.png" 
+        title="Request Post" 
+        backgroundUrl="https://media.istockphoto.com/id/1271779268/photo/calling-roadside-assistance.jpg?s=612x612&w=0&k=20&c=JxOZbwpnSE_vxFWZ5Te1-Y4QrUMsiLFaDyXu_uMX1ok=" 
       />
 
       {/* Header Info */}

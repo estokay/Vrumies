@@ -20,6 +20,7 @@ import useUserAverageRating from "../../Components/Reviews/useUserAverageRating"
 import useUserTotalRatings from "../../Components/Reviews/useUserTotalRatings";
 import useGetUserDisputes from "../../Hooks/useGetUserDisputes";
 import useGetProfilePic from "../../Hooks/useGetProfilePic";
+import ViewPhotoOverlay from "../../Components/Overlays/ViewPhotoOverlay";
 
 // Post Layouts
 import VideosPostLayout from "../MainCategories/Videos/VideosPostLayout";
@@ -78,6 +79,7 @@ export default function MyProfileMobile() {
 
   // Data Hooks
   const { photos: userPhotos } = useGetPhotos(userId);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const dbCoverPhoto = useGetProfileCover(userId);
   const { uploadImage, loading: uploadingFile } = useUploadToCloudinary();
   const { changeCoverPhoto } = useChangeCoverPhoto();
@@ -267,8 +269,12 @@ export default function MyProfileMobile() {
 
         {activeTab === "photos" && (
           <div className="mob-photo-grid">
-            {userPhotos.length === 0 ? <p className="mob-empty-msg">No photos yet.</p> : userPhotos.map(photo => (
-              <div key={photo.id} className="mob-photo-item">
+            {userPhotos.length === 0 ? <p className="mob-empty-msg">No photos yet.</p> : userPhotos.map((photo, index) => (
+              <div 
+                key={photo.id} 
+                className="mob-photo-item"
+                onClick={() => setSelectedIndex(index)}
+              >
                 <img src={photo.photoUrl} alt="User" />
               </div>
             ))}
@@ -305,6 +311,15 @@ export default function MyProfileMobile() {
           </div>
         )}
       </div>
+      {selectedIndex !== null && (
+        <ViewPhotoOverlay
+          photos={userPhotos.map(p => p.photoUrl)}
+          startIndex={selectedIndex}
+          caption={userPhotos[selectedIndex]?.caption}
+          createdAt={userPhotos[selectedIndex]?.createdAt}
+          onClose={() => setSelectedIndex(null)}
+        />
+      )}
     </div>
   );
 }

@@ -27,7 +27,7 @@
   font-size: 0.9rem;
 }
 
-.od-section {
+.odm-section {
   background: linear-gradient(180deg, #292727, #3a3737); /* Matches variant styling */
   padding: 25px;
   border-radius: 25px;
@@ -152,4 +152,81 @@
   font-weight: bold;
   opacity: 0.85;
   cursor: not-allowed;
+}
+
+.od-quote-vehicle,
+.od-quote-additional {
+  margin-bottom: 15px;
+}
+
+.od-quote-vehicle p,
+.od-quote-additional p {
+  margin-top: 5px;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.od-quote-images {
+  margin-top: 15px;
+}
+
+.od-quote-image-grid {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-top: 12px;
+  padding-bottom: 5px;
+}
+
+.od-quote-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* Tracking Fields */
+.od-tracking-fields {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  align-items: flex-end;
+}
+
+.od-tracking-fields div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.od-tracking-fields input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #111;
+  color: white;
+  margin-top: 4px;
+  font-size: 14px;
+  height: 36px;
+}
+
+/* Buttons */
+.od-tracking-btn-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: nowrap;
+}
+
+.od-btn-save {
+  padding: 0 14px;
+  height: 36px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  background: green;
 }

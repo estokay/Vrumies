@@ -53,6 +53,10 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
   const fee = (price * 0.15).toFixed(2);
   const total = (parseFloat(price) + parseFloat(fee)).toFixed(2);
 
+  const quoteImages = order.directorySpecific?.quoteImages || [];
+  const vehicleInfo = order.directorySpecific?.vehicleInfo || {};
+  const additionalInfo = order.directorySpecific?.additionalInfo || "N/A";
+
   return (
     <div className="bd-container">
       <nav className="bd-nav">
@@ -91,9 +95,179 @@ export default function OrderDetailView({ order: initialOrder, onBack }) {
               <strong>Description:</strong>{" "}
               {order.postData?.description || "N/A"}
             </p>
+
+            {/* DIRECTORY ONLY */}
+            {order.type === "directory" && (
+              <>
+                <p>
+                  <strong>Service Location:</strong>{" "}
+                  {order.postData?.serviceLocation || "N/A"}
+                </p>
+
+                <p>
+                  <strong>Service Address:</strong>{" "}
+                  {order.deliveryInfo &&
+                  (
+                    order.deliveryInfo.deliveryStreetAddress ||
+                    order.deliveryInfo.deliveryCity ||
+                    order.deliveryInfo.deliveryState ||
+                    order.deliveryInfo.deliveryZipCode
+                  )
+                    ? `${order.deliveryInfo.deliveryStreetAddress || ""}${
+                        order.deliveryInfo.deliveryStreetAddress ? ", " : ""
+                      }${order.deliveryInfo.deliveryCity || ""}${
+                        order.deliveryInfo.deliveryCity ? " " : ""
+                      }${order.deliveryInfo.deliveryState || ""}${
+                        order.deliveryInfo.deliveryState ? " " : ""
+                      }${order.deliveryInfo.deliveryZipCode || ""}`
+                    : "N/A"}
+                </p>
+              </>
+            )}
           </div>
         </div>
       </section>
+
+      {/* MARKET SHIPPING INFO */}
+      {order.type === "market" && (
+        <section className="bd-section">
+          <h3>Shipping Information</h3>
+
+          <div className="bd-shipping-group">
+            <strong>Shipping Address</strong>
+
+            <p>
+              {order.deliveryInfo &&
+              (
+                order.deliveryInfo.deliveryStreetAddress ||
+                order.deliveryInfo.deliveryCity ||
+                order.deliveryInfo.deliveryState ||
+                order.deliveryInfo.deliveryZipCode
+              )
+                ? `${order.deliveryInfo.deliveryStreetAddress || ""}${
+                    order.deliveryInfo.deliveryStreetAddress ? ", " : ""
+                  }${order.deliveryInfo.deliveryCity || ""}${
+                    order.deliveryInfo.deliveryCity ? " " : ""
+                  }${order.deliveryInfo.deliveryState || ""}${
+                    order.deliveryInfo.deliveryState ? " " : ""
+                  }${order.deliveryInfo.deliveryZipCode || ""}`
+                : "N/A"}
+            </p>
+          </div>
+
+          <div className="bd-shipping-row">
+            <div className="bd-shipping-group">
+              <strong>Carrier</strong>
+              <p>{order.marketSpecific?.Carrier || "N/A"}</p>
+            </div>
+
+            <div className="bd-shipping-group">
+              <strong>Tracking Number</strong>
+              <p>{order.marketSpecific?.trackingNumber || "N/A"}</p>
+            </div>
+        </div>
+        </section>
+      )}
+
+            {/* TRUCKS FREIGHT LOGISTICS */}
+      {order.type === "trucks" && (
+        <section className="bd-section">
+          <h3>Freight Logistics</h3>
+
+          <div className="bd-grid">
+            <div>
+              <strong>Pickup</strong>
+              <p>{order.trucksSpecific?.pickupAddress || "N/A"}</p>
+            </div>
+
+            <div>
+              <strong>Drop-off</strong>
+              <p>{order.trucksSpecific?.dropoffAddress || "N/A"}</p>
+            </div>
+
+            <div>
+              <strong>Weight</strong>
+              <p>
+                {order.trucksSpecific?.loadWeight
+                  ? `${order.trucksSpecific.loadWeight} lbs`
+                  : "N/A"}
+              </p>
+            </div>
+
+            <div>
+              <strong>Length</strong>
+              <p>
+                {order.trucksSpecific?.loadLength
+                  ? `${order.trucksSpecific.loadLength} ft`
+                  : "N/A"}
+              </p>
+            </div>
+
+            <div>
+              <strong>Distance</strong>
+              <p>
+                {order.trucksSpecific?.distance
+                  ? `${order.trucksSpecific.distance} miles`
+                  : "N/A"}
+              </p>
+            </div>
+
+            <div>
+              <strong>RPM</strong>
+              <p>
+                {typeof order.trucksSpecific?.rpm === "number"
+                  ? `$${order.trucksSpecific.rpm.toFixed(2)}`
+                  : "N/A"}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {order.type === "directory" && (
+        <section className="bd-section">
+          <h3>Quote Information</h3>
+
+          {/* Vehicle Info */}
+          <div className="bd-quote-vehicle">
+            <strong>Vehicle</strong>
+            <p>
+              {vehicleInfo?.year ||
+              vehicleInfo?.make ||
+              vehicleInfo?.model ||
+              vehicleInfo?.trim
+                ? `${vehicleInfo?.year || ""} ${vehicleInfo?.make || ""} ${
+                    vehicleInfo?.model || ""
+                  } ${vehicleInfo?.trim || ""}`.trim()
+                : "N/A"}
+            </p>
+          </div>
+
+          {/* Additional Info */}
+          <div className="bd-quote-additional">
+            <strong>Additional Information</strong>
+            <p>{additionalInfo}</p>
+          </div>
+
+          {/* Images */}
+          {quoteImages.length > 0 && (
+            <div className="bd-quote-images">
+              <strong>Quote Images</strong>
+
+              <div className="bd-quote-image-grid">
+                {quoteImages.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`quote-${idx}`}
+                    className="bd-quote-image"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
 
       <section className="bd-section">
         <h3>Seller Info</h3>
