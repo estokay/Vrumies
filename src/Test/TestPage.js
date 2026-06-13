@@ -8,10 +8,20 @@ import ProfileCardLayout from "../Components/Profile/ProfileCardLayout";
 import SignInOverlay from "../Portal/SignInOverlay"; // adjust path if needed
 //import AuthOverlay from "../Portal/AuthOverlay";
 import React, { useState } from "react";
+import createDummyCalendarData from "./createDummyCalendarData";
 
 const TestPage = () => {
   const [manualOverlayOpen, setManualOverlayOpen] = useState(false);
   const [userSignedIn, setUserSignedIn] = useState(false);
+
+  const handleCreateCalendar = async () => {
+    try {
+      const calendarId = await createDummyCalendarData();
+      alert(`Calendar created: ${calendarId}`);
+    } catch (error) {
+      alert("Failed to create calendar");
+    }
+  };
 
   return (
     <div className="content-page">
@@ -36,6 +46,14 @@ const TestPage = () => {
 
       {/* Automatic interaction overlay */}
       {/* <AuthOverlay isSignedIn={userSignedIn} /> */}
+
+      <div style={{ marginTop: "40px" }}>
+        <button onClick={handleCreateCalendar}>
+          Create Availability Calendar
+        </button>
+      </div>
+
+      
     </div>
   );
 };

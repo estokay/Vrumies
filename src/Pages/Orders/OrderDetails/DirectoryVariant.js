@@ -124,7 +124,8 @@ export default function DirectoryVariant({ orderId }) {
   const quoteImages = order.directorySpecific?.quoteImages || [];
   const vehicleInfo = order.directorySpecific?.vehicleInfo || {};
   const additionalInfo = order.directorySpecific?.additionalInfo || "N/A";
-
+  const customerPreferredAddress = order.directorySpecific?.preferredServiceAddress || "N/A";
+  const desiredDateTime = order.directorySpecific?.desiredServiceDateTime || "N/A";   
 
   return (
     <div className="od-order-details-panel">
@@ -166,7 +167,12 @@ export default function DirectoryVariant({ orderId }) {
         <div className="od-quote-vehicle">
           <strong>Vehicle</strong>
           <p>
-            {vehicleInfo.year || ""} {vehicleInfo.make || ""} {vehicleInfo.model || ""} {vehicleInfo.trim || ""}
+            {vehicleInfo.year ||
+            vehicleInfo.make ||
+            vehicleInfo.model ||
+            vehicleInfo.trim
+              ? `${vehicleInfo.year || ""} ${vehicleInfo.make || ""} ${vehicleInfo.model || ""} ${vehicleInfo.trim || ""}`.trim()
+              : "N/A"}
           </p>
         </div>
 
@@ -174,6 +180,18 @@ export default function DirectoryVariant({ orderId }) {
         <div className="od-quote-additional">
           <strong>Additional Information</strong>
           <p>{additionalInfo}</p>
+        </div>
+
+        {/* Customer Preferred Address */}
+        <div className="od-quote-additional">
+          <strong>Customer Preferred Address</strong>
+          <p>{customerPreferredAddress}</p>
+        </div>
+
+        {/* Desired Date and Time for Service */}
+        <div className="od-quote-additional">
+          <strong>Desired Date and Time for Service</strong>
+          <p>{desiredDateTime}</p>
         </div>
 
         {/* Images */}

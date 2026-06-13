@@ -380,3 +380,20 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+.availability-calendar-btn {
+  margin-left: 8px;
+  padding: 6px 12px;
+  background: linear-gradient(to bottom, #444, #000);
+  color: white;
+  border: 1px solid #666;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.availability-calendar-btn:hover {
+  transform: scale(1.05);
+}

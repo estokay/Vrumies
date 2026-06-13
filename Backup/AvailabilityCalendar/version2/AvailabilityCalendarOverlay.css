@@ -1,0 +1,191 @@
+.aco-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.aco-container {
+  width: 95%;
+  max-width: 1200px;
+  height: 85vh;
+
+  background: rgba(20,20,20,.95);
+
+  border: 1px solid rgba(155,89,182,.4);
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 25px 80px rgba(155,89,182,.3);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  color: white;
+}
+
+.aco-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 22px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.aco-header h2 {
+  margin: 0;
+}
+
+.aco-close-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.aco-close-btn:hover {
+  color: #ff4f4f;
+}
+
+.aco-content {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+
+.aco-calendar-panel {
+  width: 40%;
+
+  padding: 20px;
+
+  border-right:
+    1px solid rgba(255,255,255,.08);
+}
+
+.aco-calendar-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(7, 1fr);
+
+  gap: 10px;
+}
+
+.aco-day {
+  height: 50px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  background:
+    rgba(255,255,255,.05);
+
+  color: white;
+
+  transition: .2s;
+}
+
+.aco-day:hover {
+  background:
+    rgba(155,89,182,.4);
+}
+
+.aco-day.selected {
+  background:
+    linear-gradient(
+      90deg,
+      #3a014f,
+      #b000ff
+    );
+}
+
+.aco-schedule-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden; /* important */
+}
+
+.aco-schedule-panel h3 {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.aco-hours {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding-right: 6px;
+
+  scroll-padding-bottom: 80px; /* ✅ THIS is the real fix */
+}
+
+.aco-hour-block {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 12px 15px;
+
+  border-radius: 10px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+}
+
+.aco-hour-block:last-child {
+  margin-bottom: 80px; /* ensures last item is never clipped */
+}
+
+.aco-hour-block.available {
+  background:
+    rgba(0,255,136,.15);
+
+  border:
+    1px solid rgba(0,255,136,.5);
+}
+
+.aco-hour-block.unavailable {
+  background:
+    rgba(255,255,255,.05);
+
+  color: #999;
+}
+
+@media (max-width: 900px) {
+
+  .aco-content {
+    flex-direction: column;
+  }
+
+  .aco-calendar-panel {
+    width: 100%;
+    border-right: none;
+
+    border-bottom:
+      1px solid rgba(255,255,255,.08);
+  }
+}

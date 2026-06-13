@@ -106,6 +106,15 @@ export default function DirectoryVariant({ orderId }) {
             quoteImages: data.directorySpecific?.quoteImages || [],
             vehicleInfo: data.directorySpecific?.vehicleInfo || {},
             additionalInfo: data.directorySpecific?.additionalInfo || "N/A",
+            customerPreferredAddress:
+              data.directorySpecific?.preferredServiceAddress?.trim()
+                ? data.directorySpecific.preferredServiceAddress
+                : "N/A",
+
+            desiredDateTime:
+              data.directorySpecific?.desiredServiceDateTime?.trim()
+                ? data.directorySpecific.desiredServiceDateTime
+                : "N/A",
             paymentMethod: data.paymentInfo?.paymentMethod || "N/A",
             lastFour: data.paymentInfo?.lastFour || "N/A",
             buyerInfo: {
@@ -174,10 +183,16 @@ export default function DirectoryVariant({ orderId }) {
         <div className="seller-quote-vehicle">
           <strong>Vehicle</strong>
           <p>
-            {order.vehicleInfo?.year || ""}{" "}
-            {order.vehicleInfo?.make || ""}{" "}
-            {order.vehicleInfo?.model || ""}{" "}
-            {order.vehicleInfo?.trim || ""}
+            {order.vehicleInfo?.year ||
+            order.vehicleInfo?.make ||
+            order.vehicleInfo?.model ||
+            order.vehicleInfo?.trim
+              ? `${order.vehicleInfo?.year || ""} ${
+                  order.vehicleInfo?.make || ""
+                } ${order.vehicleInfo?.model || ""} ${
+                  order.vehicleInfo?.trim || ""
+                }`.trim()
+              : "N/A"}
           </p>
         </div>
 
@@ -185,6 +200,18 @@ export default function DirectoryVariant({ orderId }) {
         <div className="seller-quote-additional">
           <strong>Additional Information</strong>
           <p>{order.additionalInfo}</p>
+        </div>
+
+        {/* Customer Preferred Address */}
+        <div className="seller-quote-additional">
+          <strong>Customer Preferred Address</strong>
+          <p>{order.customerPreferredAddress}</p>
+        </div>
+
+        {/* Desired Date and Time for Service */}
+        <div className="seller-quote-additional">
+          <strong>Desired Date and Time for Service</strong>
+          <p>{order.desiredDateTime}</p>
         </div>
 
         {/* Images */}

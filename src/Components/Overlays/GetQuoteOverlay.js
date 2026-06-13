@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./GetQuoteOverlay.css";
 import { CLOUDINARY_CONFIG } from "../../Components/config";
 import axios from 'axios';
@@ -6,7 +6,9 @@ import { db } from "../../Components/firebase";
 import {
   collection,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  getDoc
 } from "firebase/firestore";
 import { useAuth } from "../../AuthContext";
 
@@ -23,6 +25,10 @@ const GetQuoteOverlay = ({ postId, onClose }) => {
   const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
 
+  const [serviceLocation, setServiceLocation] = useState("");
+  const [preferredServiceAddress, setPreferredServiceAddress] = useState("");
+  const [desiredServiceDateTime, setDesiredServiceDateTime] = useState("");
+
   const handleVehicleChange = (e) => {
     const { name, value } = e.target;
 
@@ -31,6 +37,25 @@ const GetQuoteOverlay = ({ postId, onClose }) => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    const fetchServiceLocation = async () => {
+      try {
+        const postRef = doc(db, "Posts", postId);
+        const postSnap = await getDoc(postRef);
+
+        if (postSnap.exists()) {
+          setServiceLocation(postSnap.data().serviceLocation || "");
+        }
+      } catch (error) {
+        console.error("Error fetching serviceLocation:", error);
+      }
+    };
+
+    if (postId) {
+      fetchServiceLocation();
+    }
+  }, [postId]);
 
   const handleSubmit = async () => {
     if (!currentUser) {
@@ -45,6 +70,8 @@ const GetQuoteOverlay = ({ postId, onClose }) => {
         vehicleInfo,
         additionalInfo,
         images,
+        preferredServiceAddress,
+        desiredServiceDateTime,
         createdAt: serverTimestamp(),
       };
 
@@ -68,6 +95,8 @@ const GetQuoteOverlay = ({ postId, onClose }) => {
       });
 
       setAdditionalInfo("");
+      setPreferredServiceAddress("");
+      setDesiredServiceDateTime("");
       setImages([]);
 
       onClose();
@@ -166,6 +195,27 @@ const GetQuoteOverlay = ({ postId, onClose }) => {
             value={additionalInfo}
             onChange={(e) => setAdditionalInfo(e.target.value)}
             placeholder="Enter any special instructions"
+          />
+
+          {serviceLocation === "Customer Address" && (
+            <>
+              <label>Your Preferred Address for Service</label>
+
+              <input
+                type="text"
+                value={preferredServiceAddress}
+                onChange={(e) => setPreferredServiceAddress(e.target.value)}
+                placeholder="Enter service address"
+              />
+            </>
+          )}
+
+          <label>Desired Date and Time for Service</label>
+
+          <input
+            type="datetime-local"
+            value={desiredServiceDateTime}
+            onChange={(e) => setDesiredServiceDateTime(e.target.value)}
           />
 
           <label>Upload Images (optional)</label>

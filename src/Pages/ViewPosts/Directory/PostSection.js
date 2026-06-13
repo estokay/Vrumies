@@ -39,6 +39,7 @@ import DeletePostOverlay from "../../../Components/Overlays/DeletePostOverlay";
 import useIsItemInCart from "../../../Hooks/useIsItemInCart";
 import { Link } from "react-router-dom";
 import GetQuoteOverlay from "../../../Components/Overlays/GetQuoteOverlay";
+import AvailabilityCalendarOverlay from "../../../Components/Overlays/AvailabilityCalendarOverlay";
 
 function PostSection({ postId, selectedQuote, setAddQuoteToCartHandler, }) {
   const [post, setPost] = useState(null);
@@ -64,6 +65,8 @@ function PostSection({ postId, selectedQuote, setAddQuoteToCartHandler, }) {
 
   const { isInCart, loading: isInCartLoading } = useIsItemInCart(postId);
   const [showGetQuoteOverlay, setShowGetQuoteOverlay] = useState(false);
+
+  const [showAvailabilityCalendar, setShowAvailabilityCalendar] = useState(false);
 
   const isAddToCartDisabled = !currentUser || !post || currentUser.uid === post.userId || isInCart;
     const disabledReason =
@@ -448,6 +451,16 @@ function PostSection({ postId, selectedQuote, setAddQuoteToCartHandler, }) {
               {post.serviceLocation === "Business Address" && (
               <p><strong>Business Address:</strong>{" "} {post.businessAddress ?? "N/A"}</p>
               )}
+              <p>
+                <strong>Availability Calendar:</strong>{" "}
+                <button
+                  type="button"
+                  className="availability-calendar-btn"
+                  onClick={() => setShowAvailabilityCalendar(true)}
+                >
+                  View Calendar
+                </button>
+              </p>
             </div>
           )}
           {activeTab === "reviews" && (
@@ -591,6 +604,13 @@ function PostSection({ postId, selectedQuote, setAddQuoteToCartHandler, }) {
         <GetQuoteOverlay
           postId={postId}
           onClose={() => setShowGetQuoteOverlay(false)}
+        />
+      )}
+      {showAvailabilityCalendar && (
+        <AvailabilityCalendarOverlay
+          onClose={() =>
+            setShowAvailabilityCalendar(false)
+          }
         />
       )}
     </div>
